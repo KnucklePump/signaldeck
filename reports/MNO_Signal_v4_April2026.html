@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNO Stock Signal Report v4 — April 5, 2026</title>
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3347; --text: #e1e4ed; --text2: #8b90a5;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; padding:20px; max-width:1200px; margin:0 auto; }
+.disclaimer { background:var(--surface); border:1px solid var(--yellow); border-radius:8px; padding:14px 18px; margin-bottom:24px; font-size:13px; color:var(--yellow); }
+h1 { font-size:28px; margin-bottom:4px; }
+h2 { font-size:20px; margin:32px 0 16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+h3 { font-size:16px; margin:20px 0 10px; color:var(--blue); }
+.header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.header-left h1 span { color:var(--text2); font-weight:400; font-size:18px; }
+.header-right { text-align:right; color:var(--text2); font-size:14px; }
+.price-box { font-size:36px; font-weight:700; color:var(--green); }
+.price-change { font-size:14px; color:var(--green); }
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-right:6px; }
+.tag-sector { background:var(--blue-bg); color:var(--blue); }
+.tag-horizon { background:var(--purple); color:#fff; opacity:0.85; }
+.tag-warn { background:var(--yellow-bg); color:var(--yellow); }
+
+/* Signal Banner */
+.signal-banner { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:24px; }
+.signal-table { width:100%; border-collapse:collapse; }
+.signal-table th, .signal-table td { padding:10px 14px; text-align:center; border-bottom:1px solid var(--border); }
+.signal-table th { color:var(--text2); font-size:13px; font-weight:500; text-transform:uppercase; }
+.signal-table td { font-size:15px; }
+.signal-buy { background:var(--green-bg); color:var(--green); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-hold { background:var(--yellow-bg); color:var(--yellow); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-sell { background:var(--red-bg); color:var(--red); font-weight:700; border-radius:6px; padding:4px 12px; }
+
+/* Scorecard */
+.scorecard-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
+.score-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.score-card .label { font-size:13px; color:var(--text2); text-transform:uppercase; margin-bottom:8px; }
+.score-card .score { font-size:42px; font-weight:700; margin-bottom:4px; }
+.score-card .conf { font-size:12px; color:var(--text2); }
+.score-card .summary { font-size:13px; margin-top:8px; font-style:italic; }
+.score-bar { height:6px; background:var(--surface2); border-radius:3px; margin:8px 0; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; }
+.score-green { color:var(--green); }
+.score-yellow { color:var(--yellow); }
+.score-red { color:var(--red); }
+.bar-green { background:var(--green); }
+.bar-yellow { background:var(--yellow); }
+.bar-red { background:var(--red); }
+
+/* Tables */
+table.data-table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
+table.data-table th { background:var(--surface2); color:var(--text2); font-size:12px; text-transform:uppercase; padding:8px 12px; text-align:left; }
+table.data-table td { padding:8px 12px; border-bottom:1px solid var(--border); }
+table.data-table tr:hover { background:var(--surface2); }
+.text-green { color:var(--green); }
+.text-red { color:var(--red); }
+.text-yellow { color:var(--yellow); }
+.text-blue { color:var(--blue); }
+
+/* Gates */
+.gate-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:10px; }
+.gate-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; align-items:center; gap:10px; font-size:14px; }
+.gate-clear { border-color:var(--green); }
+.gate-warn { border-color:var(--yellow); }
+.gate-trig { border-color:var(--red); }
+.gate-icon { font-size:20px; }
+
+/* Detail Sections */
+.detail-section { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:20px; }
+.metric-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; }
+.metric-row:last-child { border-bottom:none; }
+.metric-label { color:var(--text2); }
+.metric-value { font-weight:600; }
+
+/* Chart */
+.chart-container { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:20px; }
+canvas { width:100%; }
+
+/* Moat */
+.moat-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:12px 0; }
+.moat-item { background:var(--surface2); border-radius:8px; padding:12px; text-align:center; }
+.moat-item .moat-score { font-size:28px; font-weight:700; }
+.moat-item .moat-label { font-size:11px; color:var(--text2); text-transform:uppercase; margin-top:4px; }
+
+/* Entry/Exit Rules */
+.rule-box { background:var(--surface2); border-left:3px solid var(--blue); border-radius:0 8px 8px 0; padding:14px 18px; margin:10px 0; font-size:14px; }
+.rule-box.entry { border-left-color:var(--green); }
+.rule-box.exit { border-left-color:var(--red); }
+
+/* Scenario */
+.scenario-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.scenario-bull { background:var(--green-bg); border:1px solid rgba(34,197,94,0.3); border-radius:12px; padding:18px; }
+.scenario-bear { background:var(--red-bg); border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:18px; }
+.scenario-title { font-weight:700; margin-bottom:8px; }
+
+/* Calibration */
+.calibration { background:var(--surface2); border-radius:8px; padding:16px; margin:12px 0; font-family:'Fira Code',monospace; font-size:12px; overflow-x:auto; white-space:pre-wrap; color:var(--text2); }
+
+/* MTF Table */
+.mtf-bullish { background:rgba(34,197,94,0.08); }
+.mtf-neutral { background:rgba(234,179,8,0.08); }
+.mtf-bearish { background:rgba(239,68,68,0.08); }
+
+/* Driver */
+.driver-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:20px; }
+.driver-score-display { font-size:48px; font-weight:700; text-align:center; margin:12px 0; }
+
+/* Resource table */
+.resource-highlight { background:var(--orange-bg); border:1px solid rgba(249,115,22,0.3); border-radius:12px; padding:18px; margin:12px 0; }
+
+@media(max-width:768px) {
+  .scorecard-grid { grid-template-columns:1fr; }
+  .moat-grid { grid-template-columns:repeat(3,1fr); }
+  .scenario-grid { grid-template-columns:1fr; }
+  .header { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<div class="disclaimer">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>MNO <span>Meridian Mining PLC</span></h1>
+    <div style="margin-top:8px;">
+      <span class="tag tag-sector">Materials / Copper-Gold Developer</span>
+      <span class="tag tag-sector">TSX</span>
+      <span class="tag tag-horizon">All Horizons</span>
+      <span class="tag tag-warn">Pre-Revenue Explorer</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="price-box">C$1.94</div>
+    <div class="price-change">+313% 1Y &nbsp;|&nbsp; +123% 6M &nbsp;|&nbsp; +23% YTD</div>
+    <div style="margin-top:4px;">April 5, 2026 &nbsp;|&nbsp; Stock Signal v4</div>
+  </div>
+</div>
+
+<!-- SIGNAL BANNER -->
+<div class="signal-banner">
+  <h2 style="margin-top:0; border:none; padding:0;">Signal Summary — All Horizons</h2>
+  <table class="signal-table">
+    <thead>
+      <tr><th>Horizon</th><th>Signal</th><th>Weighted Score</th><th>Confidence</th><th>Key Driver</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Short-term (1-3 mo)</td>
+        <td><span class="signal-hold">HOLD</span></td>
+        <td>58</td>
+        <td>45%</td>
+        <td>At all-time high, extended after 313% run; wait for pullback entry</td>
+      </tr>
+      <tr>
+        <td>Medium-term (6-12 mo)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>66</td>
+        <td>50%</td>
+        <td>DFS catalyst Q4 2026, P/NAV re-rating, strong commodity tailwinds</td>
+      </tr>
+      <tr>
+        <td>Long-term (3-5 yr)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>69</td>
+        <td>50%</td>
+        <td>Exceptional project economics; construction start H1 2027 transforms value</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- THREE-PILLAR SCORECARD -->
+<div class="scorecard-grid">
+  <div class="score-card">
+    <div class="label">Business Quality</div>
+    <div class="score score-green">65</div>
+    <div class="score-bar"><div class="score-bar-fill bar-green" style="width:65%"></div></div>
+    <div class="conf">Confidence: 55%</div>
+    <div class="summary">Exceptional project economics (61% IRR), pre-revenue stage limits data</div>
+  </div>
+  <div class="score-card">
+    <div class="label">Valuation Attractiveness</div>
+    <div class="score score-green">64</div>
+    <div class="score-bar"><div class="score-bar-fill bar-green" style="width:64%"></div></div>
+    <div class="conf">Confidence: 50%</div>
+    <div class="summary">0.63x PFS NAV; 0.44x spot NAV; +53% to analyst consensus</div>
+  </div>
+  <div class="score-card">
+    <div class="label">Entry/Exit Timing</div>
+    <div class="score score-green">67</div>
+    <div class="score-bar"><div class="score-bar-fill bar-green" style="width:67%"></div></div>
+    <div class="conf">Confidence: 50%</div>
+    <div class="summary">Strong uptrend + massive outperformance vs mining ETFs; ATH risk</div>
+  </div>
+</div>
+
+<!-- HARD GATES & DO-NOT-BUY -->
+<h2>Hard Gates & Do-Not-Buy Triggers</h2>
+<div class="gate-grid">
+  <div class="gate-item gate-clear">
+    <span class="gate-icon">&#9989;</span>
+    <div><strong>Financial Distress</strong><br>C$107.5M raised in last 12 months. Funded through DFS and into 2027 construction decision.</div>
+  </div>
+  <div class="gate-item gate-warn">
+    <span class="gate-icon">&#9888;&#65039;</span>
+    <div><strong>Dilution Watch</strong><br>37.6% share dilution YoY from two large raises (C$50M Aug 2025 + C$57.5M Feb 2026). Monitoring.</div>
+  </div>
+  <div class="gate-item gate-warn">
+    <span class="gate-icon">&#9888;&#65039;</span>
+    <div><strong>Insider Activity</strong><br>Net insider selling over past 3 months; no insider buying detected. Monitoring.</div>
+  </div>
+  <div class="gate-item gate-clear">
+    <span class="gate-icon">&#9989;</span>
+    <div><strong>Regulatory/Permitting</strong><br>Preliminary Licence received. Installation Licence (for construction) pending — normal stage progression.</div>
+  </div>
+  <div class="gate-item gate-clear">
+    <span class="gate-icon">&#9989;</span>
+    <div><strong>Do-Not-Buy Triggers</strong><br>None triggered. No fraud flags, no regulatory bans, no terminal thesis breakers.</div>
+  </div>
+</div>
+
+<!-- UNDERLYING DRIVER -->
+<h2>Underlying Driver Analysis</h2>
+<div class="driver-box">
+  <h3 style="margin-top:0;">Dominant Driver: Copper + Gold Prices (Dual Commodity)</h3>
+  <div class="driver-score-display score-green">72</div>
+  <p style="text-align:center; color:var(--text2); margin-bottom:16px;">Strong tailwind — Neutral high end</p>
+
+  <p style="margin-bottom:12px;">Meridian Mining's economics are driven almost entirely by the copper-gold price environment. As a pre-revenue developer, there is no operating business to assess — the entire investment thesis rests on whether the Cabaçal project gets built and what commodity prices look like when it does.</p>
+
+  <table class="data-table">
+    <thead><tr><th>Driver</th><th>Current State</th><th>Impact</th><th>Score</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Gold Price</strong></td><td>~US$4,686/oz — near all-time highs</td><td class="text-green">Massively bullish. PFS used lower base case; spot NPV 44% higher.</td><td class="text-green">85</td></tr>
+      <tr><td><strong>Copper Price</strong></td><td>~US$5.90/lb — elevated, structural deficit narrative</td><td class="text-green">Bullish. Supply deficit thesis intact; electrification demand growing.</td><td class="text-green">78</td></tr>
+      <tr><td><strong>USD/BRL</strong></td><td>Brazilian Real relatively stable</td><td>Neutral. Ops costs in BRL, revenue in USD — weak BRL is tailwind.</td><td>55</td></tr>
+      <tr><td><strong>Interest Rates</strong></td><td>Fed holding; Brazil rates elevated</td><td>Modest headwind for project financing costs.</td><td class="text-yellow">50</td></tr>
+      <tr><td><strong>Regulatory (Brazil)</strong></td><td>Mining-friendly; permits progressing</td><td class="text-green">Positive. Preliminary licence received; installation licence on track.</td><td class="text-green">70</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Dynamic Macro Weighting</h3>
+  <p style="font-size:14px; color:var(--text2);">For a copper-gold developer, commodity prices receive the highest macro weight (0.35) since they are the single most important variable in the project's NPV. Regulatory/permitting is secondary (0.25), financing environment tertiary (0.20), and FX residual (0.20).</p>
+</div>
+
+<!-- PILLAR 1: BUSINESS QUALITY -->
+<h2>Pillar 1: Business Quality — 65/100</h2>
+<div class="detail-section">
+  <h3>Company Overview</h3>
+  <p style="margin-bottom:12px;">Meridian Mining is a UK-domiciled, TSX-listed copper-gold developer focused on the Cabaçal VMS (Volcanogenic Massive Sulphide) belt in Mato Grosso, Brazil. The flagship Cabaçal Au-Cu-Ag project is a past-producing mine (operated 1987-1998) being advanced toward restart. A Pre-Feasibility Study (March 2025) delivered exceptional economics, and the Definitive Feasibility Study is expected in Q4 2026.</p>
+
+  <div class="resource-highlight">
+    <h3 style="color:var(--orange); margin-top:0;">Cabaçal Project — Key Economics (PFS, March 2025)</h3>
+    <table class="data-table">
+      <tbody>
+        <tr><td class="metric-label">After-Tax NPV (5% discount)</td><td class="metric-value text-green">US$984 million (base case) / US$1.41 billion (spot case)</td></tr>
+        <tr><td class="metric-label">After-Tax IRR</td><td class="metric-value text-green">61.2% (base) / 79.5% (spot)</td></tr>
+        <tr><td class="metric-label">Average Annual Production</td><td class="metric-value">141,000 AuEq oz (first 5 years: 178,000 AuEq oz)</td></tr>
+        <tr><td class="metric-label">Mine Life</td><td class="metric-value">10 years</td></tr>
+        <tr><td class="metric-label">Initial Capex</td><td class="metric-value text-green">US$248 million</td></tr>
+        <tr><td class="metric-label">AISC</td><td class="metric-value text-green">US$742/oz AuEq (first quartile globally)</td></tr>
+        <tr><td class="metric-label">Payback Period</td><td class="metric-value text-green">17 months</td></tr>
+        <tr><td class="metric-label">NPV/Capex Ratio</td><td class="metric-value text-green">3.97x</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Updated Resource Base (January 2026)</h3>
+  <table class="data-table">
+    <thead><tr><th>Deposit</th><th>Category</th><th>Tonnage</th><th>Au g/t</th><th>Cu %</th><th>Ag g/t</th><th>Contained Metal</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Cabaçal</strong></td><td>M&I</td><td>70.1 Mt</td><td>0.6</td><td>0.3</td><td>1.3</td><td>~1.3 Moz Au, 0.5 Blbs Cu, 3.0 Moz Ag</td></tr>
+      <tr><td><strong>Cabaçal</strong></td><td>Proven Reserve (PFS)</td><td>41.7 Mt</td><td>0.63</td><td>0.44</td><td>1.64</td><td>89% Proven category</td></tr>
+      <tr><td><strong>Santa Helena</strong></td><td>M&I (maiden)</td><td>5.3 Mt</td><td>0.6</td><td>0.4</td><td>15.5</td><td>~96 Koz Au, 50 Mlbs Cu, 2.6 Moz Ag, 217 Mlbs Zn</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:var(--text2); margin-top:8px;">M&I metals increased 14-39% from prior estimate. Santa Helena adds polymetallic optionality with significant zinc/lead credits.</p>
+
+  <h3>Quality Sub-Signal Scoring</h3>
+  <table class="data-table">
+    <thead><tr><th>Sub-Signal</th><th>Score</th><th>Commentary</th></tr></thead>
+    <tbody>
+      <tr><td>Revenue Trajectory</td><td class="text-yellow">30</td><td>Pre-revenue exploration/development stage. No income.</td></tr>
+      <tr><td>Profitability</td><td class="text-yellow">25</td><td>Net loss of $3.42M. Normal for pre-production miners.</td></tr>
+      <tr><td>Cash Generation</td><td class="text-red">20</td><td>Negative FCF — cash burn funding exploration and DFS.</td></tr>
+      <tr><td>Balance Sheet</td><td class="text-green">70</td><td>C$107.5M raised in 12 months. Funded through construction decision.</td></tr>
+      <tr><td>Resource Quality</td><td class="text-green">75</td><td>High-confidence resource (89% Proven), growing M&I base, polymetallic.</td></tr>
+      <tr><td>Project Economics</td><td class="text-green">85</td><td>Exceptional: 61% IRR, $742 AISC, 17-month payback, 3.97x NPV/Capex.</td></tr>
+      <tr><td>Exploration Upside</td><td class="text-green">70</td><td>Santa Helena maiden resource + belt-scale VMS potential with 10,750m 2026 drill program.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MOAT -->
+<div class="detail-section">
+  <h3>Competitive Moat — 56/100</h3>
+  <div class="moat-grid">
+    <div class="moat-item">
+      <div class="moat-score score-yellow">45</div>
+      <div class="moat-label">Pricing Power</div>
+    </div>
+    <div class="moat-item">
+      <div class="moat-score score-yellow">50</div>
+      <div class="moat-label">Network Effects</div>
+    </div>
+    <div class="moat-item">
+      <div class="moat-score score-yellow">50</div>
+      <div class="moat-label">Switching Costs</div>
+    </div>
+    <div class="moat-item">
+      <div class="moat-score score-green">75</div>
+      <div class="moat-label">Cost Advantage</div>
+    </div>
+    <div class="moat-item">
+      <div class="moat-score score-yellow">60</div>
+      <div class="moat-label">Intangible Assets</div>
+    </div>
+  </div>
+  <p style="font-size:13px; color:var(--text2);">Network effects and switching costs are scored at 50 (neutral) as they don't apply to mining operations. The standout moat dimension is <strong>cost advantage</strong>: AISC of US$742/oz AuEq places Cabaçal in the first cost quartile globally, providing substantial margin buffer even in commodity downturns. Intangible assets include the mining licenses, 89% proven reserve classification, and the past-producing mine advantage (known metallurgy, existing infrastructure).</p>
+</div>
+
+<!-- ROIC & CAPITAL ALLOCATION -->
+<div class="detail-section">
+  <h3>ROIC & Capital Allocation — 45/100</h3>
+  <table class="data-table">
+    <thead><tr><th>Sub-Signal</th><th>Score</th><th>Commentary</th></tr></thead>
+    <tbody>
+      <tr><td>ROIC (40%)</td><td class="text-yellow">40</td><td>N/A — pre-revenue. Scored neutral. Projected ROIC based on PFS is very high (61% IRR implies excellent capital returns).</td></tr>
+      <tr><td>Capital Allocation (30%)</td><td class="text-green">60</td><td>Two well-timed raises funded DFS and pre-construction work. Proceeds earmarked for high-ROI activities (DFS, long-lead items, civil works).</td></tr>
+      <tr><td>Management Skin in Game (30%)</td><td class="text-red">35</td><td>Net insider selling over last 3 months. 37.6% share dilution YoY is significant but typical for development-stage miners funding capex studies.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PILLAR 2: VALUATION -->
+<h2>Pillar 2: Valuation Attractiveness — 64/100</h2>
+<div class="detail-section">
+  <h3>Mining Valuation Framework</h3>
+  <p style="margin-bottom:12px;">Standard equity multiples (P/E, EV/EBITDA, FCF yield) don't apply to pre-revenue mining developers. Instead, we use mining-specific valuation methods: Price-to-NAV, EV per resource ounce, and analyst target analysis.</p>
+
+  <table class="data-table">
+    <thead><tr><th>Metric</th><th>Value</th><th>Benchmark</th><th>Score</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>P/NAV (PFS base case)</strong></td>
+        <td class="text-green">0.63x</td>
+        <td>Developer stage typical: 0.3-0.7x PFS NAV</td>
+        <td class="text-green">70</td>
+      </tr>
+      <tr>
+        <td><strong>P/NAV (spot prices)</strong></td>
+        <td class="text-green">0.44x</td>
+        <td>Gold $4,686 + copper $5.90/lb far above PFS base case</td>
+        <td class="text-green">78</td>
+      </tr>
+      <tr>
+        <td><strong>EV/M&I Resource oz (AuEq)</strong></td>
+        <td>~US$318/oz</td>
+        <td>Advanced developers: $100-400/oz (exceptional project quality justifies premium)</td>
+        <td class="text-yellow">55</td>
+      </tr>
+      <tr>
+        <td><strong>Analyst Consensus Target</strong></td>
+        <td class="text-green">C$2.97 (+53% upside)</td>
+        <td>6/6 Buy ratings; range C$2.50–$3.50; Scotiabank C$3.00</td>
+        <td class="text-green">75</td>
+      </tr>
+      <tr>
+        <td><strong>FCF Yield</strong></td>
+        <td>N/A</td>
+        <td>Pre-revenue; cash burn stage</td>
+        <td class="text-yellow">40</td>
+      </tr>
+      <tr>
+        <td><strong>Historical Decile</strong></td>
+        <td class="text-red">10th (all-time high)</td>
+        <td>Price at the very top of its historical range</td>
+        <td class="text-red">30</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Reverse DCF / Implied Probability Analysis</h3>
+  <p style="margin-bottom:12px;">For a pre-revenue developer, the "reverse DCF" question becomes: <em>"What probability of successful mine construction is the market pricing in?"</em></p>
+  <div class="rule-box">
+    <strong>At C$1.94 (EV ~US$620M):</strong> The market is pricing in roughly 63% probability that the Cabaçal PFS base-case NPV of US$984M will be realized. Given that the project has a Preliminary Licence, 89% Proven reserves, a 17-month payback, and a DFS on track for Q4 2026, a 63% probability seems conservative. The spot-case NPV of US$1.41B implies even greater upside if commodity prices hold.<br><br>
+    <strong>Interpretation:</strong> The market is pricing in meaningful execution/permitting/financing risk, which is appropriate at PFS stage but looks increasingly conservative as DFS delivery and permitting milestones are met. Score: 68
+  </div>
+
+  <h3>Key Financial Data</h3>
+  <table class="data-table">
+    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Market Cap (est.)</td><td>~C$930M (at ~480M shares diluted)</td></tr>
+      <tr><td>Enterprise Value (est.)</td><td>~US$620M (market cap - cash + minimal debt)</td></tr>
+      <tr><td>Cash Position (est.)</td><td>~C$70-80M (after C$107.5M raised, minus exploration/DFS burn)</td></tr>
+      <tr><td>Debt</td><td>Minimal — typical for exploration-stage</td></tr>
+      <tr><td>Shares Outstanding (est.)</td><td>~480M (after Aug 2025 + Feb 2026 placements)</td></tr>
+      <tr><td>Revenue / Net Income</td><td>$0 / -$3.42M (pre-revenue explorer)</td></tr>
+      <tr><td>Quarterly Burn Rate (est.)</td><td>~C$10-15M (exploration, DFS, corporate)</td></tr>
+      <tr><td>Cash Runway (est.)</td><td>~5-7 quarters (into 2027)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PILLAR 3: TIMING -->
+<h2>Pillar 3: Entry/Exit Timing — 67/100</h2>
+<div class="detail-section">
+  <h3>Multi-Timeframe Technical Analysis</h3>
+  <p style="font-size:13px; color:var(--text2); margin-bottom:12px;">Note: TSX-listed MNO.TO is not covered by the Polygon MCP data feed. Technical analysis is derived from web-sourced data (Barchart, TradingView, Yahoo Finance). Intraday timeframes are not available.</p>
+
+  <table class="data-table">
+    <thead><tr><th>Timeframe</th><th>Trend</th><th>Key Observation</th><th>Score</th></tr></thead>
+    <tbody>
+      <tr class="mtf-bullish"><td><strong>Monthly</strong></td><td class="text-green">BULLISH</td><td>Strong secular uptrend since Q3 2025 breakout. Sequential higher highs and higher lows. Up from C$0.46 low to C$1.94.</td><td class="text-green">80</td></tr>
+      <tr class="mtf-bullish"><td><strong>Weekly</strong></td><td class="text-green">BULLISH</td><td>Sustained uptrend with rising weekly lows. Major support at C$1.40-1.50 (Feb 2026 placement level). Above all key moving averages.</td><td class="text-green">75</td></tr>
+      <tr class="mtf-bullish"><td><strong>Daily</strong></td><td class="text-green">BULLISH (Extended)</td><td>Trading near all-time high of C$2.00. Barchart: 80% Buy signal. Momentum strong but potentially overbought at ATH.</td><td class="text-yellow">60</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:var(--text2); margin-top:8px;"><strong>MTF Confluence Score: 72</strong> — All timeframes aligned bullish. Weighted: Monthly 30% + Weekly 25% + Daily 25% + (Hourly/15-min unavailable, redistributed).</p>
+
+  <h3>Relative Strength vs Sector</h3>
+  <table class="data-table">
+    <thead><tr><th>Benchmark</th><th>MNO Performance</th><th>Benchmark Performance</th><th>Relative Strength</th></tr></thead>
+    <tbody>
+      <tr><td>COPX (Copper Miners ETF) — 1Y</td><td class="text-green">+313%</td><td>+108%</td><td class="text-green">+205% outperformance</td></tr>
+      <tr><td>GDX (Gold Miners ETF) — 1Y</td><td class="text-green">+313%</td><td>+93%</td><td class="text-green">+220% outperformance</td></tr>
+      <tr><td>COPX — YTD</td><td class="text-green">+23%</td><td>~flat to modest gain</td><td class="text-green">Strong outperformance</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:var(--text2); margin-top:8px;">MNO is massively outperforming both copper and gold mining ETFs across all timeframes. This reflects the market re-rating the Cabaçal project as it progresses through feasibility stages and commodity prices surge. Relative strength score: 85.</p>
+
+  <h3>Risk-Reward Assessment</h3>
+  <table class="data-table">
+    <tbody>
+      <tr><td class="metric-label">Upside Target (Analyst Median)</td><td class="metric-value text-green">C$2.97 (+53%)</td></tr>
+      <tr><td class="metric-label">Near-Term Support (Feb 2026 Placement)</td><td class="metric-value">C$1.50 (-23%)</td></tr>
+      <tr><td class="metric-label">Strong Support (Jan 2026 Resource Update)</td><td class="metric-value">C$1.30 (-33%)</td></tr>
+      <tr><td class="metric-label">Risk-Reward Ratio (to C$2.97 / C$1.50)</td><td class="metric-value text-green">2.3:1</td></tr>
+      <tr><td class="metric-label">Risk-Reward Score</td><td class="metric-value text-green">65</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Sentiment & Catalyst Layer</h3>
+  <table class="data-table">
+    <thead><tr><th>Factor</th><th>Score</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Analyst Consensus</strong></td><td class="text-green">75</td><td>6/6 analysts rate Buy. Avg target C$2.97. Recent upgrade from Scotiabank (C$2.50 → C$3.00, Jan 2026).</td></tr>
+      <tr><td><strong>Institutional Interest</strong></td><td class="text-green">70</td><td>C$57.5M bought deal fully subscribed (Feb 2026) — strong institutional demand.</td></tr>
+      <tr><td><strong>Catalyst Pipeline</strong></td><td class="text-green">80</td><td>DFS delivery Q4 2026 (6 months), 2026 drill results (ongoing), civil works dry season, Installation Licence.</td></tr>
+      <tr><td><strong>Commodity Tailwind</strong></td><td class="text-green">82</td><td>Gold at ATH ($4,686); copper structural deficit; both supportive of re-rating.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MACRO / ECONOMIC EVENT RISK -->
+<h2>Economic Event Risk</h2>
+<div class="detail-section">
+  <table class="data-table">
+    <thead><tr><th>Event</th><th>Risk Level</th><th>Impact on MNO</th></tr></thead>
+    <tbody>
+      <tr><td>Copper Price Correction</td><td class="text-yellow">Medium</td><td>A 20%+ copper pullback would compress the spot NAV significantly. AISC buffer ($742/oz) provides margin but market sentiment would suffer.</td></tr>
+      <tr><td>Gold Price Reversal</td><td class="text-yellow">Medium</td><td>Gold at ATH means risk of mean reversion. However, structural drivers (central bank buying, geopolitical uncertainty) support elevated prices.</td></tr>
+      <tr><td>US-China Trade Tensions</td><td class="text-yellow">Medium</td><td>Tariff escalation could impact copper demand narrative. Conversely, supply disruption concerns boost copper.</td></tr>
+      <tr><td>Brazil Regulatory Change</td><td class="text-yellow">Low-Medium</td><td>Mining regulatory shift could delay permitting. Currently mining-friendly environment. Preliminary Licence already secured.</td></tr>
+      <tr><td>DFS Disappointment</td><td class="text-red">High</td><td>If DFS economics are materially worse than PFS, stock could fall 30-50%. Key risk for medium-term thesis.</td></tr>
+      <tr><td>Capital Raise / Further Dilution</td><td class="text-yellow">Medium</td><td>Construction financing (~US$248M capex) will require additional capital. Equity component could dilute further.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PRICE CHART -->
+<h2>Price Chart — MNO.TO (12 Months)</h2>
+<div class="chart-container">
+  <canvas id="priceChart" height="300"></canvas>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('priceChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+
+  function draw() {
+    const W = canvas.parentElement.clientWidth - 40;
+    const H = 300;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.scale(dpr, dpr);
+
+    // Approximate monthly data points (MNO.TO)
+    const data = [
+      {label:'Apr 25', price:0.47}, {label:'May 25', price:0.52}, {label:'Jun 25', price:0.58},
+      {label:'Jul 25', price:0.65}, {label:'Aug 25', price:0.78}, {label:'Sep 25', price:0.87},
+      {label:'Oct 25', price:0.95}, {label:'Nov 25', price:1.08}, {label:'Dec 25', price:1.20},
+      {label:'Jan 26', price:1.42}, {label:'Feb 26', price:1.55}, {label:'Mar 26', price:1.78},
+      {label:'Apr 26', price:1.94}
+    ];
+
+    const pad = {top:30, right:60, bottom:40, left:55};
+    const cW = W - pad.left - pad.right;
+    const cH = H - pad.top - pad.bottom;
+    const minP = 0.30, maxP = 2.20;
+
+    const x = (i) => pad.left + (i / (data.length - 1)) * cW;
+    const y = (p) => pad.top + (1 - (p - minP) / (maxP - minP)) * cH;
+
+    // Background
+    ctx.fillStyle = '#1a1d27';
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid lines
+    ctx.strokeStyle = '#2e3347';
+    ctx.lineWidth = 0.5;
+    for (let p = 0.50; p <= 2.00; p += 0.25) {
+      ctx.beginPath();
+      ctx.moveTo(pad.left, y(p));
+      ctx.lineTo(W - pad.right, y(p));
+      ctx.stroke();
+      ctx.fillStyle = '#8b90a5';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText('C$' + p.toFixed(2), pad.left - 6, y(p) + 4);
+    }
+
+    // X labels
+    ctx.textAlign = 'center';
+    data.forEach((d, i) => {
+      if (i % 2 === 0 || i === data.length - 1) {
+        ctx.fillStyle = '#8b90a5';
+        ctx.fillText(d.label, x(i), H - pad.bottom + 20);
+      }
+    });
+
+    // Key levels
+    const levels = [
+      {price:2.97, label:'Analyst Target C$2.97', color:'#22c55e', dash:[6,4]},
+      {price:1.50, label:'Support C$1.50', color:'#3b82f6', dash:[4,4]},
+      {price:1.30, label:'Support C$1.30', color:'#eab308', dash:[4,4]}
+    ];
+    levels.forEach(lv => {
+      if (lv.price >= minP && lv.price <= maxP) {
+        ctx.strokeStyle = lv.color;
+        ctx.lineWidth = 1;
+        ctx.setLineDash(lv.dash);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y(lv.price));
+        ctx.lineTo(W - pad.right, y(lv.price));
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = lv.color;
+        ctx.textAlign = 'left';
+        ctx.font = '10px Inter, sans-serif';
+        ctx.fillText(lv.label, W - pad.right + 4, y(lv.price) + 3);
+      }
+    });
+
+    // Price line
+    ctx.strokeStyle = '#22c55e';
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    data.forEach((d, i) => {
+      i === 0 ? ctx.moveTo(x(i), y(d.price)) : ctx.lineTo(x(i), y(d.price));
+    });
+    ctx.stroke();
+
+    // Gradient fill
+    const grad = ctx.createLinearGradient(0, y(2.0), 0, y(0.4));
+    grad.addColorStop(0, 'rgba(34,197,94,0.25)');
+    grad.addColorStop(1, 'rgba(34,197,94,0.02)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    data.forEach((d, i) => {
+      i === 0 ? ctx.moveTo(x(i), y(d.price)) : ctx.lineTo(x(i), y(d.price));
+    });
+    ctx.lineTo(x(data.length - 1), y(minP));
+    ctx.lineTo(x(0), y(minP));
+    ctx.closePath();
+    ctx.fill();
+
+    // Current price dot
+    const last = data[data.length - 1];
+    ctx.beginPath();
+    ctx.arc(x(data.length - 1), y(last.price), 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#22c55e';
+    ctx.fill();
+    ctx.fillStyle = '#e1e4ed';
+    ctx.font = 'bold 13px Inter, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('C$' + last.price.toFixed(2), x(data.length - 1) + 10, y(last.price) + 4);
+
+    // Catalyst annotations
+    ctx.fillStyle = '#f97316';
+    ctx.font = '10px Inter, sans-serif';
+    ctx.textAlign = 'center';
+
+    // Aug 25 - C$50M raise
+    ctx.beginPath();
+    ctx.arc(x(4), y(data[4].price), 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillText('C$50M Raise', x(4), y(data[4].price) - 10);
+
+    // Jan 26 - Resource update
+    ctx.beginPath();
+    ctx.arc(x(9), y(data[9].price), 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillText('Resource Update', x(9), y(data[9].price) - 10);
+
+    // Feb 26 - C$57.5M raise
+    ctx.beginPath();
+    ctx.arc(x(10), y(data[10].price), 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillText('C$57.5M Raise', x(10), y(data[10].price) + 18);
+  }
+
+  draw();
+  window.addEventListener('resize', draw);
+})();
+</script>
+
+<!-- SCENARIO SUMMARY -->
+<h2>Scenario Summary</h2>
+<div class="scenario-grid">
+  <div class="scenario-bull">
+    <div class="scenario-title text-green">Bull Case — C$3.50+ (12-18 months)</div>
+    <p style="font-size:14px;">DFS confirms or exceeds PFS economics. Gold holds above $4,500 and copper maintains $5+/lb. Installation Licence granted on schedule. Market re-rates toward 0.8-1.0x NAV. Construction financing secured on favorable terms. Santa Helena resource adds further value. Stock approaches top of analyst range (C$3.50).</p>
+  </div>
+  <div class="scenario-bear">
+    <div class="scenario-title text-red">Bear Case — C$0.90-1.20 (12-18 months)</div>
+    <p style="font-size:14px;">Commodity prices correct sharply (gold below $3,500, copper below $4.00/lb). DFS reveals higher capex or lower IRR than PFS. Permitting delays push timeline back 12+ months. Further dilutive equity raise at lower prices. Market risk-off sends junior miners down 40-60%. Stock returns toward C$50M placement price area.</p>
+  </div>
+</div>
+
+<!-- ENTRY/EXIT RULES -->
+<h2>Entry/Exit Rules</h2>
+
+<h3>Entry Rules</h3>
+<div class="rule-box entry">
+  <strong>Fundamental Entry:</strong> Price pulls back below C$1.70 (12% below current) AND no major negative news (DFS delay, permitting issue) AND copper above US$4.50/lb AND gold above US$4,000/oz. Ideal entry zone: C$1.40-1.60 (near Feb 2026 placement level).
+</div>
+<div class="rule-box entry">
+  <strong>Technical Entry:</strong> Pullback to C$1.50 support level (Feb placement area) with RSI approaching 40, followed by green daily candle on volume &gt; 1.5x 20-day average. Confirms buyers defending key support.
+</div>
+<div class="rule-box entry">
+  <strong>Catalyst Entry:</strong> DFS release showing NPV &ge; PFS level (US$984M+) AND IRR &ge; 55% AND initial move &gt; +10% on day 1. Add on confirmation, not speculation.
+</div>
+
+<h3>Exit Rules</h3>
+<div class="rule-box exit">
+  <strong>Stop-Loss:</strong> Close below C$1.25 for 2 consecutive days. This is ~35% below current price but reflects the high-volatility nature of junior miners. A break below C$1.25 would violate the Jan 2026 support structure.
+</div>
+<div class="rule-box exit">
+  <strong>Thesis Invalidation:</strong> DFS shows IRR below 40% (vs 61% PFS) OR capex above US$400M (vs $248M PFS) OR permitting denied/indefinitely delayed OR copper crashes below US$3.50/lb for 30+ days.
+</div>
+<div class="rule-box exit">
+  <strong>Profit Target:</strong> Price reaches C$3.50+ (top of analyst range) AND relative strength vs COPX starts declining (sector rotation signal). Take partial profits at C$2.97 (analyst median).
+</div>
+
+<!-- VOLATILITY CONTEXT -->
+<h2>Volatility & Liquidity Context</h2>
+<div class="detail-section">
+  <table class="data-table">
+    <tbody>
+      <tr><td class="metric-label">52-Week Range</td><td class="metric-value">C$0.46 — C$2.00</td></tr>
+      <tr><td class="metric-label">52-Week Price Swing</td><td class="metric-value text-red">335% (extremely high volatility)</td></tr>
+      <tr><td class="metric-label">Current Price vs 52W Low</td><td class="metric-value text-green">+322% above low</td></tr>
+      <tr><td class="metric-label">Current Price vs 52W High</td><td class="metric-value">-3% from high (near ATH)</td></tr>
+      <tr><td class="metric-label">Liquidity</td><td class="metric-value text-yellow">Junior miner on TSX — lower liquidity than large-cap names. Wider bid-ask spreads. Limit orders recommended.</td></tr>
+      <tr><td class="metric-label">Dilution Risk</td><td class="metric-value text-yellow">37.6% YoY share growth. Further dilution likely for construction financing.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ANALYST NOTES -->
+<h2>Analyst Notes</h2>
+<div class="detail-section">
+  <p style="margin-bottom:10px;"><strong>What the framework likes:</strong> Exceptional project economics (61% IRR, 17-month payback, first-quartile AISC). Growing resource base with polymetallic optionality. Strong commodity tailwinds (gold ATH, copper structural deficit). Massive outperformance vs sector ETFs. Clear catalyst pipeline (DFS Q4 2026, drill results, permitting milestones). Unanimous analyst Buy consensus.</p>
+
+  <p style="margin-bottom:10px;"><strong>What the framework is cautious about:</strong> Stock at all-time highs after 313% run — risk of mean reversion or pullback. Pre-revenue stage means zero financial margin of safety. 37.6% dilution and net insider selling. DFS risk — if economics deteriorate from PFS, repricing could be severe. Construction financing will require further equity. Junior miner liquidity constraints.</p>
+
+  <p style="margin-bottom:10px;"><strong>Short-term HOLD rationale:</strong> The stock has had an extraordinary run and is trading at all-time highs. While momentum is strong, buying at the peak of a 313% move carries significant short-term drawdown risk. Wait for a 10-15% pullback or a clear catalyst (DFS) before adding.</p>
+
+  <p><strong>Medium/Long-term BUY rationale:</strong> The Cabaçal project is genuinely exceptional — few copper-gold developers offer 61% IRR with 17-month payback at sub-$750 AISC. At 0.63x PFS NAV (0.44x spot NAV), the market is still pricing in substantial execution risk that is progressively de-risking as DFS, permitting, and pre-construction work advance. For investors with a 6-12+ month horizon, the asymmetric risk-reward favors accumulation on any pullback.</p>
+</div>
+
+<!-- CALIBRATION JSON -->
+<h2>Calibration Snapshot</h2>
+<div class="calibration" id="calibrationJSON"></div>
+<script>
+document.getElementById('calibrationJSON').textContent = JSON.stringify({
+  "ticker": "MNO.TO",
+  "date": "2026-04-05",
+  "version": "v4",
+  "user_context": {
+    "horizon": "all_horizons",
+    "allocation_pct": null,
+    "portfolio_role": null
+  },
+  "price_at_rating": 1.94,
+  "currency": "CAD",
+  "signal_short": "HOLD",
+  "signal_medium": "BUY",
+  "signal_long": "BUY",
+  "primary_signal": "ALL_HORIZONS",
+  "quality_score": 65,
+  "quality_detail": {
+    "resource_quality": 75,
+    "project_economics": 85,
+    "exploration_upside": 70,
+    "balance_sheet": 70,
+    "moat_score": 56,
+    "roic_capital_allocation": 45,
+    "revenue_trajectory": "N/A (pre-revenue)"
+  },
+  "valuation_score": 64,
+  "valuation_detail": {
+    "p_nav_pfs_base": 0.63,
+    "p_nav_spot": 0.44,
+    "ev_per_resource_oz_aueq": 318,
+    "analyst_median_target": 2.97,
+    "analyst_consensus": "6/6 Buy",
+    "fcf_yield": "N/A (pre-revenue)",
+    "historical_decile": 10,
+    "implied_probability_of_build": "63%"
+  },
+  "timing_score": 67,
+  "timing_detail": {
+    "mtf_confluence": 72,
+    "risk_reward_score": 65,
+    "relative_strength_vs_copx_1y": "+205%",
+    "relative_strength_vs_gdx_1y": "+220%",
+    "sentiment_score": 75,
+    "catalyst_score": 80,
+    "dynamic_macro_weight": 0.35
+  },
+  "driver_score": 72,
+  "driver_label": "Strong tailwind (dual commodity)",
+  "overall_confidence": 48,
+  "pfs_npv5_base": 984000000,
+  "pfs_npv5_spot": 1410000000,
+  "pfs_irr": 61.2,
+  "pfs_aisc": 742,
+  "pfs_capex": 248000000,
+  "stop_loss": 1.25,
+  "support_1": 1.50,
+  "support_2": 1.30,
+  "analyst_target_low": 2.50,
+  "analyst_target_high": 3.50,
+  "gates_triggered": [],
+  "gates_monitoring": ["Dilution Watch (37.6% YoY)", "Insider Selling (net seller 3 months)"],
+  "do_not_buy_triggers": [],
+  "next_catalyst": "DFS Q4 2026",
+  "next_check_date": "2026-05-05"
+}, null, 2);
+</script>
+
+<!-- DISCLAIMER FOOTER -->
+<div class="disclaimer" style="margin-top:32px;">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions. Mining stocks carry elevated risks including exploration failure, permitting delays, commodity price volatility, and political risk.
+</div>
+
+</body>
+</html>

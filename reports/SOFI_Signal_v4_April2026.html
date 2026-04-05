@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOFI Stock Signal Report v4 — April 5, 2026</title>
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3347; --text: #e1e4ed; --text2: #8b90a5;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; padding:20px; max-width:1200px; margin:0 auto; }
+.disclaimer { background:var(--surface); border:1px solid var(--yellow); border-radius:8px; padding:14px 18px; margin-bottom:24px; font-size:13px; color:var(--yellow); }
+h1 { font-size:28px; margin-bottom:4px; }
+h2 { font-size:20px; margin:32px 0 16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+h3 { font-size:16px; margin:20px 0 10px; color:var(--blue); }
+.header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.header-left h1 span { color:var(--text2); font-weight:400; font-size:18px; }
+.header-right { text-align:right; color:var(--text2); font-size:14px; }
+.price-box { font-size:36px; font-weight:700; color:var(--red); }
+.price-change { font-size:14px; color:var(--red); }
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-right:6px; }
+.tag-sector { background:var(--blue-bg); color:var(--blue); }
+.tag-horizon { background:var(--purple); color:#fff; opacity:0.85; }
+
+/* Signal Banner */
+.signal-banner { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:24px; }
+.signal-table { width:100%; border-collapse:collapse; }
+.signal-table th, .signal-table td { padding:10px 14px; text-align:center; border-bottom:1px solid var(--border); }
+.signal-table th { color:var(--text2); font-size:13px; font-weight:500; text-transform:uppercase; }
+.signal-table td { font-size:15px; }
+.signal-buy { background:var(--green-bg); color:var(--green); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-hold { background:var(--yellow-bg); color:var(--yellow); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-sell { background:var(--red-bg); color:var(--red); font-weight:700; border-radius:6px; padding:4px 12px; }
+
+/* Scorecard */
+.scorecard-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
+.score-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.score-card .label { font-size:13px; color:var(--text2); text-transform:uppercase; margin-bottom:8px; }
+.score-card .score { font-size:42px; font-weight:700; margin-bottom:4px; }
+.score-card .conf { font-size:12px; color:var(--text2); }
+.score-card .summary { font-size:13px; margin-top:8px; font-style:italic; }
+.score-bar { height:6px; background:var(--surface2); border-radius:3px; margin:8px 0; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; }
+.score-green { color:var(--green); }
+.score-yellow { color:var(--yellow); }
+.score-red { color:var(--red); }
+.bar-green { background:var(--green); }
+.bar-yellow { background:var(--yellow); }
+.bar-red { background:var(--red); }
+
+/* Tables */
+table.data-table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
+table.data-table th { background:var(--surface2); color:var(--text2); font-size:12px; text-transform:uppercase; padding:8px 12px; text-align:left; }
+table.data-table td { padding:8px 12px; border-bottom:1px solid var(--border); }
+table.data-table tr:hover { background:var(--surface2); }
+.text-green { color:var(--green); }
+.text-red { color:var(--red); }
+.text-yellow { color:var(--yellow); }
+.text-blue { color:var(--blue); }
+
+/* Gates */
+.gate-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:10px; }
+.gate-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; align-items:center; gap:10px; font-size:14px; }
+.gate-clear { border-color:var(--green); }
+.gate-warn { border-color:var(--yellow); }
+.gate-icon { font-size:20px; }
+
+/* Detail Sections */
+.detail-section { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:20px; }
+.metric-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:14px; }
+.metric-row:last-child { border-bottom:none; }
+.metric-label { color:var(--text2); }
+.metric-value { font-weight:600; }
+
+/* Chart */
+.chart-container { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:20px; }
+canvas { width:100%; }
+
+/* Moat */
+.moat-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:12px 0; }
+.moat-item { background:var(--surface2); border-radius:8px; padding:12px; text-align:center; }
+.moat-item .moat-score { font-size:28px; font-weight:700; }
+.moat-item .moat-label { font-size:11px; color:var(--text2); text-transform:uppercase; margin-top:4px; }
+
+/* Entry/Exit Rules */
+.rule-box { background:var(--surface2); border-left:3px solid var(--blue); border-radius:0 8px 8px 0; padding:14px 18px; margin:10px 0; font-size:14px; }
+.rule-box.entry { border-left-color:var(--green); }
+.rule-box.exit { border-left-color:var(--red); }
+
+/* Scenario */
+.scenario-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.scenario-bull { background:var(--green-bg); border:1px solid rgba(34,197,94,0.3); border-radius:12px; padding:18px; }
+.scenario-bear { background:var(--red-bg); border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:18px; }
+.scenario-title { font-weight:700; margin-bottom:8px; }
+
+/* Calibration */
+.calibration { background:var(--surface2); border-radius:8px; padding:16px; margin:12px 0; font-family:'Fira Code',monospace; font-size:12px; overflow-x:auto; white-space:pre-wrap; color:var(--text2); }
+
+/* MTF Table */
+.mtf-bullish { background:rgba(34,197,94,0.08); }
+.mtf-neutral { background:rgba(234,179,8,0.08); }
+.mtf-bearish { background:rgba(239,68,68,0.08); }
+
+/* Driver */
+.driver-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:20px; }
+.driver-score-display { font-size:48px; font-weight:700; text-align:center; margin:12px 0; }
+
+@media(max-width:768px) {
+  .scorecard-grid { grid-template-columns:1fr; }
+  .moat-grid { grid-template-columns:repeat(3,1fr); }
+  .scenario-grid { grid-template-columns:1fr; }
+  .header { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<div class="disclaimer">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>SOFI <span>SoFi Technologies, Inc.</span></h1>
+    <div style="margin-top:8px;">
+      <span class="tag tag-sector">Fintech / Digital Banking</span>
+      <span class="tag tag-sector">NASDAQ</span>
+      <span class="tag tag-horizon">All Horizons</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="price-box">$15.85</div>
+    <div class="price-change">-42.3% YTD &nbsp;|&nbsp; -13.8% 1M</div>
+    <div style="margin-top:4px;">April 5, 2026 &nbsp;|&nbsp; Stock Signal v4</div>
+  </div>
+</div>
+
+<!-- SIGNAL BANNER -->
+<div class="signal-banner">
+  <h2 style="margin-top:0; border:none; padding:0;">Signal Summary — All Horizons</h2>
+  <table class="signal-table">
+    <thead>
+      <tr><th>Horizon</th><th>Signal</th><th>Weighted Score</th><th>Confidence</th><th>Key Driver</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Short-term (1-3 mo)</td>
+        <td><span class="signal-hold">HOLD</span></td>
+        <td>52</td>
+        <td>50%</td>
+        <td>Oversold but no reversal confirmed; earnings Apr 29</td>
+      </tr>
+      <tr>
+        <td>Medium-term (6-12 mo)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>62</td>
+        <td>55%</td>
+        <td>Quality + Valuation offset weak technicals</td>
+      </tr>
+      <tr>
+        <td>Long-term (3-5 yr)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>65</td>
+        <td>60%</td>
+        <td>Strong business quality dominates at this horizon</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- THREE-PILLAR SCORECARD -->
+<div class="scorecard-grid">
+  <div class="score-card">
+    <div class="label">Business Quality</div>
+    <div class="score score-green">69</div>
+    <div class="score-bar"><div class="score-bar-fill bar-green" style="width:69%"></div></div>
+    <div class="conf">Confidence: 65%</div>
+    <div class="summary">Strong growth, newly profitable, expanding moat</div>
+  </div>
+  <div class="score-card">
+    <div class="label">Valuation Attractiveness</div>
+    <div class="score score-green">67</div>
+    <div class="score-bar"><div class="score-bar-fill bar-green" style="width:67%"></div></div>
+    <div class="conf">Confidence: 55%</div>
+    <div class="summary">PEG &lt; 1 and price well below analyst targets</div>
+  </div>
+  <div class="score-card">
+    <div class="label">Entry/Exit Timing</div>
+    <div class="score score-yellow">47</div>
+    <div class="score-bar"><div class="score-bar-fill bar-yellow" style="width:47%"></div></div>
+    <div class="conf">Confidence: 55%</div>
+    <div class="summary">Strong downtrend, oversold, early reversal signs</div>
+  </div>
+</div>
+
+<!-- HARD GATES & DO NOT BUY -->
+<h2>Hard Gate & Do-Not-Buy Status</h2>
+<div class="gate-grid">
+  <div class="gate-item gate-clear"><span class="gate-icon">&#9989;</span> Financial Distress — Clear (D/E 0.17, net cash $3B)</div>
+  <div class="gate-item gate-clear"><span class="gate-icon">&#9989;</span> Earnings Event — Clear (Apr 29 = 24 days, &gt;14-day threshold)</div>
+  <div class="gate-item gate-clear"><span class="gate-icon">&#9989;</span> Valuation Ceiling — Clear (price well below analyst high of $38)</div>
+  <div class="gate-item gate-warn"><span class="gate-icon">&#9888;&#65039;</span> Dilution Watch — Shares +13.7% YoY (SBC + converts)</div>
+  <div class="gate-item gate-clear"><span class="gate-icon">&#9989;</span> Regulatory/Binary — Clear (no pending binary events)</div>
+  <div class="gate-item gate-clear"><span class="gate-icon">&#9989;</span> DNB: Leverage + Rates — Clear (low leverage, rates falling)</div>
+  <div class="gate-item gate-clear"><span class="gate-icon">&#9989;</span> DNB: Valuation Extreme — Clear (not at 5yr highs)</div>
+  <div class="gate-item gate-clear"><span class="gate-icon">&#9989;</span> DNB: Negative Revisions — Clear (beat + raised guidance)</div>
+  <div class="gate-item gate-clear"><span class="gate-icon">&#9989;</span> DNB: Insider Selling Spike — Clear (CEO bought in March)</div>
+  <div class="gate-item gate-clear"><span class="gate-icon">&#9989;</span> DNB: Structural Threat — Clear</div>
+</div>
+
+<!-- PILLAR 1: BUSINESS QUALITY -->
+<h2>Pillar 1: Business Quality — 69/100</h2>
+<div class="detail-section">
+  <h3>Revenue &amp; Growth</h3>
+  <table class="data-table">
+    <thead><tr><th>Metric</th><th>SOFI Value</th><th>Sector Median</th><th>Score</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Revenue Growth (FY2025)</td><td class="text-green">+38% YoY</td><td>~12-15%</td><td><strong>88</strong></td><td>$3.6B record revenue, well above fintech median. Accelerating from prior years.</td></tr>
+      <tr><td>2026 Revenue Guidance</td><td class="text-green">+30% ($4.66B)</td><td>~10-15%</td><td><strong>82</strong></td><td>Above-consensus guidance. Q1 2026 at $1.04B (+35% YoY).</td></tr>
+      <tr><td>Net Income Margin (Q4 2025)</td><td class="text-green">17%</td><td>~10-20%</td><td><strong>72</strong></td><td>$174M net income in Q4. First full year of profitability ($0.39 EPS).</td></tr>
+      <tr><td>Adj. EBITDA Margin (FY2025)</td><td class="text-green">29%</td><td>~15-25%</td><td><strong>78</strong></td><td>$1.1B EBITDA (+58% YoY). Margin expanding rapidly.</td></tr>
+      <tr><td>Member Growth (Q4 2025)</td><td class="text-green">+1M new members</td><td>n/a</td><td><strong>85</strong></td><td>Record quarterly member additions. Total members growing at scale.</td></tr>
+      <tr><td>Balance Sheet Health</td><td class="text-green">D/E 0.17, net cash $3B</td><td>D/E 0.5-1.5 (banks)</td><td><strong>85</strong></td><td>Substantially deleveraged from D/E 0.31 in Q3. Very strong liquidity.</td></tr>
+      <tr><td>Free Cash Flow</td><td class="text-red">Negative</td><td>Varies</td><td><strong>40</strong></td><td>Structural for growing bank (loan originations consume cash). Not a traditional FCF business yet.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Competitive Moat Scorecard — 57/100</h3>
+  <div class="moat-grid">
+    <div class="moat-item"><div class="moat-score score-yellow">55</div><div class="moat-label">Pricing Power</div></div>
+    <div class="moat-item"><div class="moat-score score-yellow">55</div><div class="moat-label">Network Effects</div></div>
+    <div class="moat-item"><div class="moat-score score-yellow">60</div><div class="moat-label">Switching Costs</div></div>
+    <div class="moat-item"><div class="moat-score score-green">65</div><div class="moat-label">Cost Advantage</div></div>
+    <div class="moat-item"><div class="moat-score score-yellow">50</div><div class="moat-label">Intangibles</div></div>
+  </div>
+  <p style="font-size:14px;color:var(--text2);margin-top:8px;">
+    <strong>Pricing Power (55):</strong> Competitive fintech space limits aggressive repricing. Bank charter provides some NIM advantage over non-bank competitors. &nbsp;
+    <strong>Network Effects (55):</strong> Cross-sell ecosystem (loans + banking + investing + credit card) creates mild engagement loops but not a true two-sided marketplace. &nbsp;
+    <strong>Switching Costs (60):</strong> Direct deposit + multiple products = moderate friction. Not as sticky as enterprise SaaS but better than single-product fintechs. &nbsp;
+    <strong>Cost Advantage (65):</strong> Bank charter enables lower-cost deposit funding vs non-bank lenders. This is a structural, durable advantage. &nbsp;
+    <strong>Intangibles (50):</strong> Growing brand among millennials/Gen-Z. Bank charter is a regulatory barrier to entry. Limited patent moat.
+  </p>
+
+  <h3>ROIC &amp; Capital Allocation — 53/100</h3>
+  <table class="data-table">
+    <thead><tr><th>Sub-Signal</th><th>Value</th><th>Score</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Return on Equity (ROE)</td><td>5.66%</td><td><strong>45</strong></td><td>Below mature bank median (10-15%), but rapidly improving from negative ROE just 2 years ago. Trajectory matters more than level at this stage.</td></tr>
+      <tr><td>Capital Allocation</td><td>Reinvesting in growth</td><td><strong>60</strong></td><td>Disciplined growth reinvestment. No dividends (appropriate at this stage). Galileo/Technisys platform investments expanding TAM.</td></tr>
+      <tr><td>Management Skin in Game</td><td>CEO bought $1M Mar 2</td><td><strong>55</strong></td><td>CEO Noto owns ~11.7M shares and bought 56K more at ~$17.88 in March. However, broader insider selling has been heavy (SBC-related, -$643M net over 2yr).</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PILLAR 2: VALUATION -->
+<h2>Pillar 2: Valuation Attractiveness — 67/100</h2>
+<div class="detail-section">
+  <h3>Sector-Appropriate Multiples (Fintech Profile)</h3>
+  <table class="data-table">
+    <thead><tr><th>Multiple</th><th>SOFI Value</th><th>Peer / Sector Median</th><th>Historical Decile</th><th>Score</th></tr></thead>
+    <tbody>
+      <tr><td>Forward P/E</td><td>26.4x</td><td>Credit Services: 8.5x / Fintech: ~20-27x</td><td>4th (mid-low range)</td><td><strong>55</strong></td></tr>
+      <tr><td>PEG Ratio</td><td class="text-green">0.88</td><td>1.0-1.5 (typical)</td><td>—</td><td><strong>78</strong></td></tr>
+      <tr><td>EV/Revenue</td><td>4.6x</td><td>SaaS: 8-12x / Banks: 2-3x</td><td>5th</td><td><strong>65</strong></td></tr>
+      <tr><td>Price/Book</td><td>3.01x</td><td>Banks: 1.0-1.5x</td><td>4th</td><td><strong>50</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Reverse DCF / Implied Growth Analysis</h3>
+  <div style="background:var(--surface2);border-radius:8px;padding:16px;margin:12px 0;font-size:14px;">
+    <p>At the current price of <strong>$15.85</strong>, with an enterprise value of approximately <strong>$16.4B</strong> (market cap ~$19.4B minus net cash ~$3B), the market is implying approximately <strong>15-18% annual revenue growth</strong> over the next 5 years (assuming terminal margins of ~20% and a 10% discount rate).</p>
+    <p style="margin-top:8px;">However, SoFi is guiding for <strong>30% revenue growth in 2026</strong>, and consensus analysts expect 20-25% growth over the medium term. <span class="text-green"><strong>The market is pricing in significantly LESS growth than both the company and analysts expect.</strong></span> This suggests the market is either: (a) skeptical about growth sustainability, or (b) pricing in macro/credit risk. Either way, the implied growth is conservative relative to demonstrated execution.</p>
+    <p style="margin-top:8px;"><strong>Score: 75/100</strong> — Market expectations are pessimistic relative to consensus.</p>
+  </div>
+
+  <h3>FCF Yield (Universal Anchor)</h3>
+  <div style="background:var(--surface2);border-radius:8px;padding:16px;margin:12px 0;font-size:14px;">
+    <p><strong>FCF Yield: N/A (negative FCF)</strong></p>
+    <p>SoFi's negative free cash flow is structural for a bank in growth mode — loan originations consume capital that generates future NII. This is not the same as a tech company burning cash on operations. As the loan book seasons and growth moderates, FCF should turn positive. Weighted other valuation references more heavily to compensate.</p>
+  </div>
+
+  <h3>Analyst Target Cross-Check</h3>
+  <table class="data-table">
+    <thead><tr><th>Source</th><th>Consensus</th><th>Median Target</th><th>Range</th><th>Upside</th></tr></thead>
+    <tbody>
+      <tr><td>Wall Street (31 analysts)</td><td>Hold (6 Buy, 11 Hold, 5 Sell)</td><td>$25.54 - $27.75</td><td>$12.00 - $38.00</td><td class="text-green"><strong>+61% to +75%</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--text2);margin-top:8px;">Note: Analyst targets may include stale estimates. The wide range ($12-$38) reflects high uncertainty around growth trajectory and macro sensitivity. Recency-weighted, the median is ~$25.5.</p>
+
+  <h3>Fair Value Estimate</h3>
+  <div style="background:var(--green-bg);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:16px;margin:12px 0;">
+    <p style="font-size:16px;font-weight:700;">Estimated Fair Value: $18.00 - $21.00</p>
+    <p style="font-size:13px;margin-top:6px;">Based on: Forward EPS $0.60 at 30-35x P/E (justified by 30% growth rate and PEG ~1.0). Current price of $15.85 represents 14-33% discount to estimated fair value.</p>
+  </div>
+</div>
+
+<!-- PILLAR 3: TIMING -->
+<h2>Pillar 3: Entry/Exit Timing — 47/100</h2>
+<div class="detail-section">
+  <h3>Multi-Timeframe Technical Analysis</h3>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:12px;">Intraday data unavailable (Polygon free tier). Weights reallocated: Monthly 35%, Weekly 30%, Daily 35%.</p>
+  <table class="data-table">
+    <thead><tr><th>Timeframe</th><th>Trend</th><th>Direction</th><th>RSI</th><th>MACD</th><th>Key S/R</th><th>Breakout</th><th>Vol</th></tr></thead>
+    <tbody>
+      <tr class="mtf-neutral">
+        <td><strong>Monthly</strong></td><td>Weakening</td><td style="color:var(--yellow)">&#8594; Neutral</td><td>~38</td><td>-, falling</td><td>S: $14.93 R: $25.00</td><td>None</td><td>—</td>
+      </tr>
+      <tr class="mtf-bearish">
+        <td><strong>Weekly</strong></td><td>Downtrend</td><td style="color:var(--red)">&#8595; Bearish</td><td>~30</td><td>-, falling</td><td>S: $14.93 R: $19.00</td><td>Breakdown</td><td>—</td>
+      </tr>
+      <tr class="mtf-bearish">
+        <td><strong>Daily</strong></td><td>Strong Downtrend</td><td style="color:var(--red)">&#8595; Bearish</td><td>33.6</td><td>-1.11, hist +0.02</td><td>S: $14.93 R: $16.89</td><td>None</td><td>0.9x</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr style="background:var(--surface2);font-weight:700;">
+        <td colspan="2">Confluence</td><td colspan="6" style="color:var(--red);">Mostly Bearish — MTF Score: 20</td>
+      </tr>
+    </tfoot>
+  </table>
+  <p style="font-size:14px;margin-top:12px;">The monthly chart is weakening after a strong 2024-2025 rally from the $5 lows to the $32 highs. Weekly and daily timeframes are firmly in downtrend territory with price well below all major moving averages (SMA20 $17.01, SMA50 $19.35, SMA200 $23.82). However, the daily RSI at 33.6 is approaching oversold territory, and the MACD histogram has turned slightly positive for the first time in weeks — the earliest hint of momentum exhaustion in the selloff. Key level: the $14.93 swing low is the last line of defense before new lows.</p>
+
+  <h3>Risk-Reward Assessment</h3>
+  <table class="data-table">
+    <thead><tr><th>Sub-Signal</th><th>Value</th><th>Score</th><th>Interpretation</th></tr></thead>
+    <tbody>
+      <tr><td>Stop Distance (ATR units)</td><td class="text-green">1.05 ATR to $14.93 support</td><td><strong>75</strong></td><td>Tight stop possible — favorable risk-reward entry zone</td></tr>
+      <tr><td>Proximity to Support</td><td class="text-green">Within 6% of 52-week low</td><td><strong>+15 bonus</strong></td><td>Near major weekly/monthly support at $14.93</td></tr>
+      <tr><td>RSI (14-day)</td><td class="text-yellow">33.6</td><td><strong>55</strong></td><td>Approaching oversold (&lt;30). Not yet triggering bounce signal.</td></tr>
+      <tr><td>MACD Histogram</td><td class="text-yellow">+0.022 (turning positive)</td><td><strong>50</strong></td><td>Early bullish divergence. Histogram has been rising for 3 days.</td></tr>
+      <tr><td>Volume / OBV</td><td class="text-red">OBV declining</td><td><strong>30</strong></td><td>Persistent distribution. No accumulation signal yet.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Relative Strength Benchmarking</h3>
+  <table class="data-table">
+    <thead><tr><th>Benchmark</th><th>1-Month Return</th><th>3-Month Return</th><th>SOFI vs</th></tr></thead>
+    <tbody>
+      <tr><td>SOFI</td><td class="text-red">-13.8%</td><td class="text-red">-42.3%</td><td>—</td></tr>
+      <tr><td>SPY (S&amp;P 500)</td><td class="text-red">-4.5%</td><td class="text-red">-4.0%</td><td class="text-red">Underperforming by -9.3pp (1M), -38.3pp (3M)</td></tr>
+      <tr><td>KRE (Regional Banks)</td><td class="text-red">-2.6%</td><td class="text-green">+1.2%</td><td class="text-red">Underperforming by -11.2pp (1M), -43.5pp (3M)</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:14px;margin-top:8px;">52-week range position: <strong>5.2%</strong> (near the absolute bottom). Relative strength score: <span class="text-red"><strong>5/100</strong></span> — SOFI is severely underperforming both the broad market and its financial sector peers on every timeframe.</p>
+
+  <h3>Macro Regime Overlay (Dynamic Weight: 15% — Medium Macro Sensitivity)</h3>
+  <table class="data-table">
+    <thead><tr><th>Indicator</th><th>Value</th><th>Assessment</th><th>Score</th></tr></thead>
+    <tbody>
+      <tr><td>Fed Funds Rate</td><td>3.64% (from 4.33% a year ago)</td><td class="text-green">Cutting cycle — favorable for fintech/lending</td><td><strong>80</strong></td></tr>
+      <tr><td>VIX</td><td>24.54</td><td class="text-yellow">Elevated — risk-off mood but not extreme</td><td><strong>40</strong></td></tr>
+      <tr><td>Yield Curve (10Y-2Y)</td><td>+0.51%</td><td class="text-green">Normal, positive — healthy for banks</td><td><strong>70</strong></td></tr>
+      <tr><td>Sector Rotation</td><td>KRE +1.2% YTD, SOFI -42.3%</td><td class="text-red">Banks in favor, SOFI lagging its own sector</td><td><strong>35</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:14px;margin-top:8px;">Macro average: <strong>56/100</strong>. The rate-cutting cycle is a clear tailwind for SoFi's lending business, but elevated VIX and SOFI's severe underperformance relative to its own sector suggest company-specific or sentiment-driven selling rather than pure macro pressure.</p>
+
+  <h3>Sentiment Layer (Weight: 18%)</h3>
+  <table class="data-table">
+    <thead><tr><th>Signal</th><th>Data</th><th>Recency</th><th>Score</th></tr></thead>
+    <tbody>
+      <tr><td>Analyst Consensus</td><td>Hold (6 Buy / 11 Hold / 5 Sell)</td><td>Current</td><td><strong>50</strong></td></tr>
+      <tr><td>CEO Insider Buying</td><td>$1M purchase on Mar 2, 2026 at ~$17.88</td><td>34 days (0.8x weight)</td><td><strong>65</strong></td></tr>
+      <tr><td>News Tone</td><td>Limited SOFI-specific coverage in last 14 days</td><td>—</td><td><strong>50</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:14px;margin-top:8px;">Sentiment average: <strong>55/100</strong>. Mixed. The CEO buying stock during the selloff is a positive signal (skin in the game at lower prices), but the Hold consensus and thin recent news coverage suggest the street is waiting for the Q1 earnings catalyst to reassess.</p>
+
+  <h3>Catalyst Layer (Weight: 17%)</h3>
+  <table class="data-table">
+    <thead><tr><th>Event</th><th>Date</th><th>Impact</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--orange);">&#9888; Q1 2026 Earnings</td><td><strong>April 29, 2026</strong></td><td>HIGH</td><td>24 days away. Q1 guidance: $1.04B revenue (+35% YoY). Historical post-earnings moves: 5-15%.</td></tr>
+      <tr><td>FOMC Rate Decision</td><td>May 6-7, 2026 (expected)</td><td>MEDIUM</td><td>Rate-sensitive stock. Market expecting hold or cut.</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:14px;margin-top:8px;">Catalyst clustering score: <strong>60/100</strong> (moderate — one clear catalyst within 30 days). The April 29 earnings report is the primary catalyst. SoFi has a pattern of beating estimates (Q4 2025 beat on both revenue and EPS), which could serve as a positive catalyst if the trend continues.</p>
+</div>
+
+<!-- ECONOMIC EVENT RISK -->
+<h2>Economic Event Risk</h2>
+<div class="detail-section">
+  <p style="font-size:13px;color:var(--text2);margin-bottom:12px;">Note: FMP economic calendar API key expired. Events sourced from FRED data and web search.</p>
+  <table class="data-table">
+    <thead><tr><th>Date</th><th>Event</th><th>Impact</th><th>Forecast</th><th>Previous</th><th>Relevant?</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Apr 10</td><td>CPI (YoY)</td><td>High</td><td>~2.7%</td><td>2.8%</td><td class="text-green">Yes</td><td>Inflation trend affects Fed rate path → directly impacts SOFI's NIM</td></tr>
+      <tr><td>Apr 15</td><td>Retail Sales (MoM)</td><td>Medium</td><td>—</td><td>—</td><td class="text-yellow">Medium</td><td>Consumer spending signal for SOFI's lending and banking products</td></tr>
+      <tr><td>Apr 29</td><td style="color:var(--orange);">SOFI Q1 Earnings</td><td>HIGH</td><td>$1.04B rev</td><td>$1.01B (Q4)</td><td class="text-green">Yes</td><td>Company-specific catalyst. Guidance update will reset sentiment.</td></tr>
+      <tr><td>May 2</td><td>Nonfarm Payrolls (Apr)</td><td>High</td><td>—</td><td>—</td><td class="text-green">Yes</td><td>Employment health → consumer credit quality → SOFI loan performance</td></tr>
+      <tr><td>May 6-7</td><td>FOMC Rate Decision</td><td>High</td><td>Hold/Cut</td><td>Hold (3.64%)</td><td class="text-green">Yes</td><td>Directly impacts SOFI's funding costs and NIM outlook</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:14px;margin-top:12px;">Two high-impact events within the next 30 days are directly relevant to SOFI: the April CPI report (which could influence Fed rate path expectations) and SOFI's own Q1 earnings on April 29. The May FOMC meeting follows shortly after. This creates a concentrated catalyst window — consider sizing smaller or staging entries around these events.</p>
+</div>
+
+<!-- UNDERLYING DRIVER -->
+<h2>Underlying Driver Analysis</h2>
+<div class="driver-box">
+  <h3>Primary Driver: Interest Rate Regime &amp; Consumer Credit Health</h3>
+  <p style="font-size:14px;margin:8px 0;">SoFi is a fintech bank — its economics are driven primarily by the interest rate environment (which determines net interest margin on its loan book and deposits) and secondarily by consumer credit health (which determines loan performance and origination volume).</p>
+
+  <div class="driver-score-display score-yellow">64</div>
+  <p style="text-align:center;color:var(--text2);font-size:14px;">Neutral (high end) — No pillar adjustment applied</p>
+
+  <table class="data-table" style="margin-top:16px;">
+    <thead><tr><th>Horizon</th><th>Assessment</th><th>Score</th><th>Weight</th></tr></thead>
+    <tbody>
+      <tr><td>Historical (12-24 mo)</td><td class="text-green">Fed cut from 4.33% to 3.64%. NIM expanding. Consumer credit stable but delinquencies rising modestly.</td><td><strong>70</strong></td><td>25%</td></tr>
+      <tr><td>Current State</td><td class="text-yellow">Fed on hold at 3.64%. Yield curve positive (+0.51%). Personal loan delinquencies at 3.99% (up from 3.57% YoY). Newer loan vintages performing better.</td><td><strong>60</strong></td><td>50%</td></tr>
+      <tr><td>Forward Outlook</td><td class="text-green">Market expects further rate cuts in 2026. Consumer credit expected to stabilize. Fintech market share still growing (42% of personal loans).</td><td><strong>65</strong></td><td>25%</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:16px;">Pillar Impact</h3>
+  <table class="data-table">
+    <thead><tr><th>Pillar</th><th>Pre-Adjustment</th><th>Driver Adjustment</th><th>Post-Adjustment</th></tr></thead>
+    <tbody>
+      <tr><td>Business Quality</td><td>69</td><td>+0 (Neutral)</td><td><strong>69</strong></td></tr>
+      <tr><td>Valuation Attractiveness</td><td>67</td><td>+0 (Neutral)</td><td><strong>67</strong></td></tr>
+      <tr><td>Entry/Exit Timing</td><td>47</td><td>+0 (Neutral)</td><td><strong>47</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:14px;margin-top:12px;">The rate environment is net positive for SoFi (cutting cycle, positive yield curve), but rising consumer credit delinquencies provide an offset. The driver sits at the top of the "Neutral" band — close to becoming a tailwind but not there yet. If the Fed resumes cutting and delinquencies stabilize, this driver would shift to Tailwind territory and boost all three pillars.</p>
+</div>
+
+<!-- PRICE CHART -->
+<h2>6-Month Price Chart</h2>
+<div class="chart-container">
+  <canvas id="priceChart" height="320"></canvas>
+</div>
+
+<!-- SCENARIO SUMMARY -->
+<h2>Scenario Summary</h2>
+<div class="scenario-grid">
+  <div class="scenario-bull">
+    <div class="scenario-title text-green">Bull Case — Target: $24-28 (55% probability)</div>
+    <p style="font-size:14px;">Q1 2026 earnings beat + raised guidance confirms 30%+ growth trajectory. Fed cuts again in summer, expanding NIM. Consumer credit stabilizes. The market re-rates SOFI toward its median analyst target of ~$25.5 as growth proves durable. The bank charter advantage becomes more apparent as non-bank fintechs struggle with funding costs.</p>
+  </div>
+  <div class="scenario-bear">
+    <div class="scenario-title text-red">Bear Case — Target: $10-13 (25% probability)</div>
+    <p style="font-size:14px;">Consumer credit deteriorates further — personal loan delinquencies spike above 5%. SoFi's loan quality comes under scrutiny. Growth decelerates below 20% as macro headwinds hit lending volumes. Share dilution from SBC continues to erode per-share value. The stock de-rates to 15-20x forward earnings, implying $9-12.</p>
+  </div>
+</div>
+<p style="font-size:14px;margin-top:12px;"><strong>What would change the signal:</strong> If Q1 earnings on April 29 beat estimates AND the company raises full-year guidance above $4.66B, the Timing pillar could shift from Neutral to Improving as sentiment resets — changing the medium-term signal from BUY to STRONG BUY. Conversely, a miss or guidance cut would trigger a HOLD downgrade across all horizons.</p>
+
+<!-- ENTRY/EXIT RULES -->
+<h2>Entry/Exit Rules</h2>
+<div class="detail-section">
+  <h3>Entry Rules</h3>
+  <div class="rule-box entry">
+    <strong>ENTRY RULE 1 (Fundamental):</strong> BUY if price &lt; $18.00 (fair value floor) AND no earnings within 7 calendar days AND RSI &gt; 30 (not in freefall).
+  </div>
+  <div class="rule-box entry">
+    <strong>ENTRY RULE 2 (Technical):</strong> BUY if 1-day close above SMA20 ($17.01) on volume &gt; 1.5x 20-day average AND MACD histogram positive for 3+ consecutive days AND RSI &gt; 35.
+  </div>
+  <div class="rule-box entry">
+    <strong>ENTRY RULE 3 (Catalyst):</strong> BUY if post-earnings (Apr 29) move is &gt; +5% AND guidance raised AND volume &gt; 2x average. This confirms the fundamental thesis.
+  </div>
+
+  <h3>Exit Rules</h3>
+  <div class="rule-box exit">
+    <strong>EXIT RULE 1 (Stop-Loss):</strong> SELL if price closes below <strong>$14.50</strong> (below swing low $14.93 minus 0.5 ATR buffer) for 2 consecutive days.
+  </div>
+  <div class="rule-box exit">
+    <strong>EXIT RULE 2 (Thesis Invalidation):</strong> SELL if Q1 2026 revenue misses below $1.0B OR full-year guidance cut below $4.4B OR delinquency rates spike in shareholder letter.
+  </div>
+  <div class="rule-box exit">
+    <strong>EXIT RULE 3 (Profit Target):</strong> Consider trimming at $21.00 (upper fair value) and again at $25.50 (median analyst target) if RSI &gt; 70.
+  </div>
+
+  <h3>Key Price Levels</h3>
+  <table class="data-table">
+    <thead><tr><th>Level</th><th>Price</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td class="text-green">Fair Value (low)</td><td><strong>$18.00</strong></td><td>30x forward P/E on $0.60 EPS</td></tr>
+      <tr><td class="text-green">Fair Value (high)</td><td><strong>$21.00</strong></td><td>35x forward P/E on $0.60 EPS</td></tr>
+      <tr><td class="text-blue">Stop-Loss</td><td><strong>$14.50</strong></td><td>Below 52-week low ($14.93) minus 0.5 ATR</td></tr>
+      <tr><td>Support 1</td><td><strong>$14.93</strong></td><td>52-week low / recent swing low</td></tr>
+      <tr><td>Support 2</td><td><strong>$16.48</strong></td><td>Prior swing low (March 16)</td></tr>
+      <tr><td>Resistance 1</td><td><strong>$16.89</strong></td><td>EMA20 (daily)</td></tr>
+      <tr><td>Resistance 2</td><td><strong>$19.35</strong></td><td>SMA50 (daily)</td></tr>
+      <tr><td>Resistance 3</td><td><strong>$23.82</strong></td><td>SMA200 (daily)</td></tr>
+      <tr><td class="text-green">Analyst Median Target</td><td><strong>$25.50</strong></td><td>31-analyst consensus</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- VOLATILITY CONTEXT -->
+<h2>Volatility Context</h2>
+<div class="detail-section">
+  <table class="data-table">
+    <thead><tr><th>Metric</th><th>SOFI</th><th>SPY (Benchmark)</th></tr></thead>
+    <tbody>
+      <tr><td>ATR (14-day)</td><td>$0.90 (5.7% of price)</td><td>~$8.50 (1.3% of price)</td></tr>
+      <tr><td>Annualized Volatility</td><td>~60-65%</td><td>~16-18%</td></tr>
+      <tr><td>Max Drawdown (6 mo)</td><td class="text-red">-51.6% (from $32.73 high)</td><td>-7.9%</td></tr>
+      <tr><td>Approximate Beta</td><td>~2.5x</td><td>1.0x</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:14px;margin-top:8px;">SOFI is approximately 2.5x more volatile than the S&P 500. A position in SOFI will experience daily swings of ~5-6% of position value. The stock has drawn down over 50% from its November 2025 high, demonstrating the extreme volatility inherent in high-beta growth fintechs.</p>
+</div>
+
+<!-- ANALYST NOTE -->
+<h2>Analyst Notes</h2>
+<div class="detail-section">
+  <p style="font-size:14px;"><strong>Note 1 — Dilution Watch:</strong> Shares outstanding grew 13.7% YoY to 1.252B (Q4 2025). Much of this is from stock-based compensation and convertible note conversion. While not yet triggering the Dilution Gate (would need 2+ consecutive years &gt;5%), this is a material concern for per-share value creation. Investors should monitor whether revenue and earnings growth outpace dilution.</p>
+  <p style="font-size:14px;margin-top:12px;"><strong>Note 2 — Price Dislocation:</strong> SOFI's -42% YTD performance is striking given that KRE (regional banks) is +1.2% and the company beat Q4 estimates. This suggests the selloff is driven by: (a) multiple compression from elevated 2025 valuations (stock peaked at $32+), (b) broader growth-stock de-rating, and (c) potentially forced selling / momentum unwind. The magnitude of the dislocation relative to fundamentals is unusual.</p>
+  <p style="font-size:14px;margin-top:12px;"><strong>Note 3 — Negative FCF is Structural:</strong> Traditional FCF analysis doesn't apply cleanly to a bank that's growing its loan book. Every loan originated consumes capital upfront but generates NII over its lifetime. SoFi's "negative FCF" is actually investment in future revenue streams. As growth moderates and the loan book seasons, FCF should turn meaningfully positive.</p>
+</div>
+
+<!-- CALIBRATION -->
+<h2>Calibration Snapshot</h2>
+<div class="calibration" id="calibrationJson"></div>
+
+<!-- DISCLAIMER BOTTOM -->
+<div class="disclaimer" style="margin-top:32px;">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions. Past performance does not guarantee future results. Stock prices can go to zero.
+</div>
+
+<script>
+// === PRICE CHART ===
+const canvas = document.getElementById('priceChart');
+const ctx = canvas.getContext('2d');
+
+const priceData = [
+  {d:'2025-10-01',c:25.97},{d:'2025-10-06',c:28.14},{d:'2025-10-09',c:26.19},{d:'2025-10-14',c:28.03},
+  {d:'2025-10-19',c:28.68},{d:'2025-10-23',c:29.01},{d:'2025-10-27',c:31.66},{d:'2025-10-30',c:29.68},
+  {d:'2025-11-04',c:30.07},{d:'2025-11-09',c:30.54},{d:'2025-11-11',c:32.21},{d:'2025-11-13',c:27.82},
+  {d:'2025-11-18',c:26.72},{d:'2025-11-20',c:25.19},{d:'2025-11-25',c:28.49},{d:'2025-11-30',c:29.03},
+  {d:'2025-12-03',c:29.6},{d:'2025-12-07',c:27.61},{d:'2025-12-10',c:27.07},{d:'2025-12-15',c:26.58},
+  {d:'2025-12-18',c:27.24},{d:'2025-12-23',c:27.48},{d:'2025-12-30',c:26.18},
+  {d:'2026-01-01',c:27.46},{d:'2026-01-05',c:26.98},{d:'2026-01-08',c:27.4},{d:'2026-01-13',c:26.67},
+  {d:'2026-01-19',c:25.49},{d:'2026-01-22',c:25.85},{d:'2026-01-27',c:24.6},{d:'2026-01-29',c:22.81},
+  {d:'2026-02-03',c:20.75},{d:'2026-02-05',c:20.86},{d:'2026-02-10',c:20.55},{d:'2026-02-12',c:19.61},
+  {d:'2026-02-18',c:19.3},{d:'2026-02-22',c:18.22},{d:'2026-02-25',c:19.1},{d:'2026-02-26',c:17.76},
+  {d:'2026-03-02',c:18.61},{d:'2026-03-05',c:18.9},{d:'2026-03-09',c:18.29},{d:'2026-03-12',c:17.76},
+  {d:'2026-03-16',c:17.37},{d:'2026-03-19',c:16.9},{d:'2026-03-23',c:16.7},{d:'2026-03-25',c:15.87},
+  {d:'2026-03-29',c:15.15},{d:'2026-03-31',c:15.63},{d:'2026-04-01',c:15.85}
+];
+
+// SMA calculations
+function calcSMA(data, period) {
+  return data.map((_, i) => {
+    if (i < period - 1) return null;
+    let sum = 0;
+    for (let j = i - period + 1; j <= i; j++) sum += data[j].c;
+    return sum / period;
+  });
+}
+
+const sma20 = calcSMA(priceData, 10); // approximate with available data
+const sma50 = calcSMA(priceData, 25);
+
+function drawChart() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 320 * dpr;
+  ctx.scale(dpr, dpr);
+  canvas.style.height = '320px';
+
+  const W = rect.width, H = 320;
+  const pad = {t:20, r:60, b:40, l:10};
+  const cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+
+  const prices = priceData.map(d => d.c);
+  const minP = Math.floor(Math.min(...prices) - 1);
+  const maxP = Math.ceil(Math.max(...prices) + 1);
+
+  const xScale = i => pad.l + (i / (priceData.length - 1)) * cW;
+  const yScale = p => pad.t + (1 - (p - minP) / (maxP - minP)) * cH;
+
+  // Background
+  ctx.fillStyle = '#1a1d27';
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid lines
+  ctx.strokeStyle = '#2e3347';
+  ctx.lineWidth = 0.5;
+  for (let p = minP; p <= maxP; p += 2) {
+    const y = yScale(p);
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+    ctx.fillStyle = '#8b90a5'; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText('$' + p, W - pad.r + 35, y + 4);
+  }
+
+  // Key levels
+  const levels = [
+    {p:23.82, c:'rgba(139,144,165,0.3)', l:'SMA200'},
+    {p:19.35, c:'rgba(59,130,246,0.3)', l:'SMA50'},
+    {p:17.01, c:'rgba(234,179,8,0.3)', l:'SMA20'},
+    {p:14.93, c:'rgba(239,68,68,0.4)', l:'Support'},
+  ];
+  levels.forEach(lv => {
+    const y = yScale(lv.p);
+    ctx.strokeStyle = lv.c; ctx.lineWidth = 1; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = lv.c.replace('0.3','0.8').replace('0.4','0.8');
+    ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText(lv.l + ' $' + lv.p, pad.l + 4, y - 4);
+  });
+
+  // Price line
+  ctx.strokeStyle = '#e1e4ed'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  priceData.forEach((d, i) => {
+    const x = xScale(i), y = yScale(d.c);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Gradient fill
+  ctx.beginPath();
+  priceData.forEach((d, i) => {
+    const x = xScale(i), y = yScale(d.c);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.lineTo(xScale(priceData.length - 1), yScale(minP));
+  ctx.lineTo(xScale(0), yScale(minP));
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0, pad.t, 0, H - pad.b);
+  grad.addColorStop(0, 'rgba(239,68,68,0.15)');
+  grad.addColorStop(1, 'rgba(239,68,68,0)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Current price dot
+  const lastX = xScale(priceData.length - 1), lastY = yScale(priceData[priceData.length - 1].c);
+  ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(lastX, lastY, 5, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#ef4444'; ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('$15.85', lastX + 8, lastY + 4);
+
+  // X-axis labels
+  ctx.fillStyle = '#8b90a5'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  const months = ['Oct','Nov','Dec','Jan','Feb','Mar','Apr'];
+  const monthIdxs = [0, 8, 17, 23, 33, 40, 48];
+  monthIdxs.forEach((idx, mi) => {
+    if (idx < priceData.length) {
+      ctx.fillText(months[mi], xScale(idx), H - pad.b + 16);
+    }
+  });
+}
+
+drawChart();
+window.addEventListener('resize', drawChart);
+
+// === CALIBRATION JSON ===
+const calibration = {
+  ticker: "SOFI",
+  date: "2026-04-05",
+  version: "v4",
+  user_context: {
+    horizon: "all_horizons",
+    allocation_pct: null,
+    portfolio_role: null
+  },
+  price_at_rating: 15.85,
+  signal_short: "HOLD",
+  signal_medium: "BUY",
+  signal_long: "BUY",
+  primary_signal: "ALL_HORIZONS",
+  quality_score: 69,
+  quality_detail: {
+    revenue_growth: "38% YoY (FY2025)",
+    ebitda_margin: "29%",
+    moat_score: 57,
+    roic_score: 45,
+    capital_allocation: 60,
+    management_skin_in_game: 55
+  },
+  valuation_score: 67,
+  valuation_detail: {
+    forward_pe: 26.33,
+    peg_ratio: 0.88,
+    ev_revenue: 4.6,
+    price_to_book: 3.01,
+    fcf_yield: "N/A (negative - structural for bank)",
+    implied_growth_rate: "15-18%",
+    consensus_growth_rate: "25-30%",
+    historical_valuation_decile: 4
+  },
+  timing_score: 47,
+  timing_detail: {
+    mtf_confluence: 20,
+    risk_reward_score: 65,
+    relative_strength_vs_spy_3m: -38.3,
+    relative_strength_vs_sector_3m: -43.5,
+    catalyst_clustering_score: 60,
+    dynamic_macro_weight: 0.15,
+    rsi_14: 33.6,
+    macd_histogram: 0.022
+  },
+  driver_score: 64,
+  driver_label: "Neutral (high end)",
+  overall_confidence: 55,
+  fair_value_est_low: 18.00,
+  fair_value_est_high: 21.00,
+  stop_loss: 14.50,
+  target_price_median: 25.50,
+  gates_triggered: ["Dilution Watch (monitoring, not triggered)"],
+  do_not_buy_triggers: [],
+  next_earnings: "2026-04-29",
+  next_check_date: "2026-05-05"
+};
+
+document.getElementById('calibrationJson').textContent = JSON.stringify(calibration, null, 2);
+</script>
+
+</body>
+</html>
