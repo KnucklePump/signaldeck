@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignalDeck — Stock Watchlist & Trigger Monitor</title>
+<meta name="description" content="AI-powered stock signal analysis with entry/exit trigger monitoring. Three-pillar scoring: Business Quality, Valuation Attractiveness, Entry/Exit Timing.">
+<style>
+:root {
+  --bg: #0a0c10; --surface: #12151c; --surface2: #1a1e28;
+  --border: #252a3a; --text: #e1e4ed; --text2: #7a8099;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.10);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.10);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.10);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.10);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.10);
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; }
+
+.site-header { background:var(--surface); border-bottom:1px solid var(--border); padding:16px 0; }
+.container { max-width:1400px; margin:0 auto; padding:0 24px; }
+.header-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+.site-title { font-size:22px; font-weight:700; letter-spacing:-0.5px; }
+.site-title span { color:var(--blue); }
+.site-subtitle { color:var(--text2); font-size:13px; }
+.header-meta { text-align:right; font-size:13px; color:var(--text2); }
+
+.stats-bar { display:flex; gap:16px; margin:20px 0; flex-wrap:wrap; }
+.stat-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 20px; flex:1; min-width:120px; }
+.stat-value { font-size:26px; font-weight:700; }
+.stat-label { font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
+
+.section { margin:28px 0; }
+.section h2 { font-size:20px; margin-bottom:14px; }
+
+/* ── Main table ── */
+.wl-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
+table.wl { width:100%; border-collapse:collapse; font-size:14px; min-width:1020px; }
+table.wl thead { background:var(--surface2); }
+table.wl th { padding:11px 12px; text-align:left; font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; font-weight:600; white-space:nowrap; border-bottom:1px solid var(--border); }
+table.wl th.c, table.wl td.c { text-align:center; }
+table.wl td { padding:11px 12px; vertical-align:middle; }
+
+/* Data rows */
+tr.data-row td { border-bottom:1px solid rgba(37,42,58,0.5); }
+tr.data-row:hover td { background:var(--surface2); }
+.ticker-cell { font-weight:800; font-size:16px; }
+.company-cell { font-size:12px; color:var(--text2); }
+.tag { display:inline-block; padding:1px 7px; border-radius:10px; font-size:10px; font-weight:600; }
+.tag-sector { background:var(--blue-bg); color:var(--blue); }
+.tag-warn { background:var(--yellow-bg); color:var(--yellow); }
+.price-up { color:var(--green); font-weight:700; }
+.price-down { color:var(--red); font-weight:700; }
+.change-up { color:var(--green); font-size:12px; }
+.change-down { color:var(--red); font-size:12px; }
+
+.score-pill { display:inline-block; min-width:36px; padding:2px 0; text-align:center; border-radius:6px; font-weight:700; font-size:14px; }
+.pill-green { background:var(--green-bg); color:var(--green); }
+.pill-yellow { background:var(--yellow-bg); color:var(--yellow); }
+.pill-red { background:var(--red-bg); color:var(--red); }
+.signal-chip { display:inline-block; padding:2px 10px; border-radius:14px; font-size:12px; font-weight:600; }
+.chip-buy { background:var(--green-bg); color:var(--green); }
+.chip-hold { background:var(--yellow-bg); color:var(--yellow); }
+.chip-sell { background:var(--red-bg); color:var(--red); }
+.report-link { color:var(--blue); font-weight:600; text-decoration:none; font-size:13px; }
+.report-link:hover { text-decoration:underline; }
+.ticker-link { text-decoration:none; color:inherit; display:block; }
+.ticker-link:hover .ticker-cell { color:var(--blue); }
+.ticker-link:hover .company-cell { color:var(--blue); }
+
+/* ── Trigger sub-row ── */
+tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
+.trigger-inner { display:grid; grid-template-columns:1fr 1fr; }
+.trigger-col { padding:0; }
+.trigger-col-header { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; padding:8px 16px; }
+.trigger-col.entry .trigger-col-header { color:var(--green); background:var(--green-bg); }
+.trigger-col.exit .trigger-col-header { color:var(--red); background:var(--red-bg); }
+
+.trig-item { display:flex; justify-content:space-between; align-items:flex-start; padding:9px 16px; border-bottom:1px solid var(--border); font-size:13px; gap:10px; }
+.trig-item:last-child { border-bottom:none; }
+.trig-detail { flex:1; }
+.trig-type { font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:0.3px; color:var(--text2); margin-bottom:1px; }
+.trig-desc { color:var(--text); line-height:1.45; }
+.trig-status-val { font-size:12px; margin-top:3px; }
+.entry-val { color:var(--green); }
+.exit-val { color:var(--red); }
+.trig-badge { flex-shrink:0; padding:3px 10px; border-radius:10px; font-size:11px; font-weight:700; white-space:nowrap; align-self:center; }
+.badge-met { background:var(--green-bg); color:var(--green); }
+.badge-notmet { background:var(--surface2); color:var(--text2); }
+.badge-pending { background:var(--yellow-bg); color:var(--yellow); }
+.badge-clear { background:var(--surface2); color:var(--text2); }
+.badge-close { background:var(--orange-bg); color:var(--orange); }
+
+/* Key levels strip */
+.levels-strip { display:flex; gap:14px; flex-wrap:wrap; padding:8px 16px; background:var(--surface2); font-size:12px; color:var(--text2); border-top:1px solid var(--border); }
+.lv { display:flex; align-items:center; gap:4px; }
+.lv-dot { width:7px; height:7px; border-radius:50%; }
+.dot-red { background:var(--red); }
+.dot-blue { background:var(--blue); }
+.dot-green { background:var(--green); }
+.dot-yellow { background:var(--yellow); }
+.dot-purple { background:var(--purple); }
+
+/* Tooltips */
+.th-tip { position:relative; cursor:help; border-bottom:1px dotted var(--text2); }
+.th-tip .tip { visibility:hidden; opacity:0; position:absolute; z-index:100; left:50%; transform:translateX(-50%); top:calc(100% + 8px); width:240px; background:#1e2233; color:var(--text); border:1px solid var(--border); border-radius:8px; padding:10px 12px; font-size:12px; font-weight:400; text-transform:none; letter-spacing:0; line-height:1.5; white-space:normal; text-align:left; box-shadow:0 8px 24px rgba(0,0,0,0.4); pointer-events:none; transition:opacity 0.15s, visibility 0.15s; }
+.th-tip .tip::before { content:''; position:absolute; bottom:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-bottom-color:#1e2233; }
+.th-tip:hover .tip { visibility:visible; opacity:1; }
+/* Right-align tooltips on right-side columns so they don't overflow */
+.th-tip.tip-right .tip { left:auto; right:0; transform:none; }
+.th-tip.tip-right .tip::before { left:auto; right:16px; transform:none; }
+.th-tip.tip-left .tip { left:0; right:auto; transform:none; }
+.th-tip.tip-left .tip::before { left:16px; right:auto; transform:none; }
+
+/* Framework */
+.framework { padding:28px 0 40px; }
+.pillar-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.pillar-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; }
+.pillar-card h3 { font-size:15px; margin-bottom:6px; }
+.pillar-card p { font-size:13px; color:var(--text2); }
+
+.site-footer { background:var(--surface); border-top:1px solid var(--border); padding:20px 0; text-align:center; font-size:12px; color:var(--text2); }
+.disclaimer { background:var(--yellow-bg); border:1px solid rgba(234,179,8,0.25); border-radius:8px; padding:12px 16px; font-size:12px; color:var(--yellow); margin:16px 0; }
+
+@media(max-width:1000px) {
+  .trigger-inner { grid-template-columns:1fr; }
+  .pillar-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-row">
+      <div>
+        <div class="site-title"><span>Signal</span>Deck</div>
+        <div class="site-subtitle">AI-Powered Stock Analysis &middot; v4 Framework</div>
+      </div>
+      <div class="header-meta">
+        <div>Last updated: <strong>April 5, 2026</strong></div>
+        <div>Monitored 2x daily (12:30 PM &amp; 5:00 PM ET)</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="disclaimer">
+    <strong>DISCLAIMER:</strong> This is a quantitative framework for educational and informational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Tickers Tracked</div></div>
+    <div class="stat-item"><div class="stat-value" style="color:var(--green)">4</div><div class="stat-label">Buy Signals</div></div>
+    <div class="stat-item"><div class="stat-value" style="color:var(--yellow)">2</div><div class="stat-label">Hold Signals</div></div>
+    <div class="stat-item"><div class="stat-value" style="color:var(--red)">0</div><div class="stat-label">Active Triggers</div></div>
+    <div class="stat-item"><div class="stat-value" style="color:var(--orange)">0</div><div class="stat-label">Approaching</div></div>
+  </div>
+
+  <!-- ======= UNIFIED TABLE ======= -->
+  <div class="section">
+    <h2>Watchlist</h2>
+    <div class="wl-wrap">
+      <table class="wl">
+        <thead>
+          <tr>
+            <th>
+              <span class="th-tip tip-left">Ticker<span class="tip">The stock's exchange ticker symbol, company name, and sector classification.</span></span>
+            </th>
+            <th>
+              <span class="th-tip tip-left">Price<span class="tip">Latest closing price in the stock's local currency (USD or CAD). Updated at each scheduled check.</span></span>
+            </th>
+            <th>
+              <span class="th-tip tip-left">Change<span class="tip">Year-to-date percentage change from the Jan 1 opening price. Green = gain, red = loss.</span></span>
+            </th>
+            <th class="c">
+              <span class="th-tip">Qual<span class="tip"><strong>Business Quality (0-100)</strong><br>Scores the underlying business: competitive moat (5 dimensions), ROIC, capital allocation, revenue growth, profitability, and balance sheet. Sector-specific metrics apply &mdash; e.g. resource quality for miners, member growth for fintech. Higher = stronger business.</span></span>
+            </th>
+            <th class="c">
+              <span class="th-tip">Val<span class="tip"><strong>Valuation Attractiveness (0-100)</strong><br>Is the price right? Uses reverse-DCF implied growth, FCF yield, analyst target consensus, historical valuation decile, and sector-appropriate multiples (P/NAV for miners, PEG for growth). Higher = more attractive price.</span></span>
+            </th>
+            <th class="c">
+              <span class="th-tip">Time<span class="tip"><strong>Entry/Exit Timing (0-100)</strong><br>Multi-timeframe technical analysis across monthly, weekly, and daily charts. Includes risk-reward ratio, relative strength vs sector ETFs, and momentum indicators (RSI, MACD, Bollinger). Higher = better entry timing.</span></span>
+            </th>
+            <th class="c">
+              <span class="th-tip">Drv<span class="tip"><strong>Underlying Driver (0-100)</strong><br>Scores the dominant macro force affecting this stock &mdash; e.g. commodity prices for miners, interest rates for banks, AI capex for tech. Captures tailwinds and headwinds that the three pillars don't directly measure. Higher = stronger tailwind.</span></span>
+            </th>
+            <th class="c">
+              <span class="th-tip">Short<span class="tip"><strong>Short-term Signal (1-3 months)</strong><br>BUY / HOLD / SELL recommendation for the next 1-3 months. Weights Timing and Driver most heavily, with less emphasis on Quality. Best for swing trades and tactical entries.</span></span>
+            </th>
+            <th class="c">
+              <span class="th-tip">Med<span class="tip"><strong>Medium-term Signal (6-12 months)</strong><br>BUY / HOLD / SELL recommendation for a 6-12 month horizon. Balanced weighting across all three pillars. Best for position trades and catalyst-driven plays.</span></span>
+            </th>
+            <th class="c">
+              <span class="th-tip tip-right">Long<span class="tip"><strong>Long-term Signal (3-5 years)</strong><br>BUY / HOLD / SELL recommendation for a multi-year hold. Weights Business Quality and Valuation most heavily, with minimal Timing weight. Best for core portfolio positions.</span></span>
+            </th>
+            <th class="c">
+              <span class="th-tip tip-right">Catalyst<span class="tip"><strong>Next Catalyst</strong><br>The nearest upcoming event that could materially move the stock &mdash; earnings releases, feasibility studies, regulatory decisions, product launches, etc.</span></span>
+            </th>
+            <th class="c">
+              <span class="th-tip tip-right">Report<span class="tip">Click to open the full interactive v4 signal report with detailed scoring, charts, scenario analysis, and calibration data.</span></span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ━━━━━━━━ SOFI ━━━━━━━━ -->
+          <tr class="data-row">
+            <td>
+              <a href="reports/SOFI_Signal_v4_April2026.html" class="ticker-link">
+                <div class="ticker-cell">SOFI</div>
+                <div class="company-cell">SoFi Technologies</div>
+              </a>
+              <div><span class="tag tag-sector">Fintech</span></div>
+            </td>
+            <td class="price-down">$15.85</td>
+            <td><span class="change-down">-42.3% YTD</span></td>
+            <td class="c"><span class="score-pill pill-green">69</span></td>
+            <td class="c"><span class="score-pill pill-green">67</span></td>
+            <td class="c"><span class="score-pill pill-yellow">47</span></td>
+            <td class="c"><span class="score-pill pill-green">64</span></td>
+            <td class="c"><span class="signal-chip chip-hold">HOLD</span></td>
+            <td class="c"><span class="signal-chip chip-buy">BUY</span></td>
+            <td class="c"><span class="signal-chip chip-buy">BUY</span></td>
+            <td class="c" style="font-size:13px;">Earnings<br><strong>Apr 29</strong></td>
+            <td class="c"><a href="reports/SOFI_Signal_v4_April2026.html" class="report-link">View&rarr;</a></td>
+          </tr>
+
+          <!-- SOFI triggers -->
+          <tr class="trigger-row">
+            <td colspan="12">
+              <div class="trigger-inner">
+                <!-- Entry -->
+                <div class="trigger-col entry">
+                  <div class="trigger-col-header">Entry Rules</div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Fundamental</div>
+                      <div class="trig-desc">Price &lt; $18 &bull; RSI &gt; 30 &bull; No earnings within 7 days</div>
+                      <div class="trig-status-val entry-val">$15.85 &lt; $18 &#10003; &nbsp; RSI 33.6 &gt; 30 &#10003; &nbsp; Earnings 24d away &#10003;</div>
+                    </div>
+                    <span class="trig-badge badge-met">MET</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Technical</div>
+                      <div class="trig-desc">Close above SMA20 on 1.5x volume &bull; MACD hist positive 3+ days</div>
+                      <div class="trig-status-val" style="color:var(--text2)">Price $15.85 &lt; SMA20 $17.01 &#10007; &mdash; waiting for reclaim</div>
+                    </div>
+                    <span class="trig-badge badge-notmet">NOT MET</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Catalyst</div>
+                      <div class="trig-desc">Post-earnings move &gt; +5% on 2x volume &bull; Guidance raised</div>
+                      <div class="trig-status-val" style="color:var(--yellow)">Earnings Apr 29 &mdash; pending</div>
+                    </div>
+                    <span class="trig-badge badge-pending">PENDING</span>
+                  </div>
+                </div>
+                <!-- Exit -->
+                <div class="trigger-col exit">
+                  <div class="trigger-col-header">Exit Rules</div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Stop-Loss</div>
+                      <div class="trig-desc">Close below $14.50 for 2 consecutive days</div>
+                      <div class="trig-status-val exit-val">$15.85 &mdash; $1.35 buffer (8.5%)</div>
+                    </div>
+                    <span class="trig-badge badge-clear">CLEAR</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Thesis Break</div>
+                      <div class="trig-desc">Q1 revenue &lt; $1.0B OR FY guidance &lt; $4.4B</div>
+                      <div class="trig-status-val exit-val">Earnings Apr 29 &mdash; monitoring</div>
+                    </div>
+                    <span class="trig-badge badge-clear">CLEAR</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Profit Target</div>
+                      <div class="trig-desc">Price &ge; $21 AND RSI &gt; 70</div>
+                      <div class="trig-status-val exit-val">$15.85 &mdash; needs +32.5%</div>
+                    </div>
+                    <span class="trig-badge badge-clear">CLEAR</span>
+                  </div>
+                </div>
+              </div>
+              <div class="levels-strip">
+                <strong>Key Levels:</strong>
+                <span class="lv"><span class="lv-dot dot-red"></span>Stop $14.50</span>
+                <span class="lv"><span class="lv-dot dot-blue"></span>Support $14.93</span>
+                <span class="lv"><span class="lv-dot dot-blue"></span>Support $16.48</span>
+                <span class="lv"><span class="lv-dot dot-yellow"></span>SMA20 $17.01</span>
+                <span class="lv"><span class="lv-dot dot-green"></span>Fair Value $18&ndash;21</span>
+                <span class="lv"><span class="lv-dot dot-purple"></span>Analyst $25.50</span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ━━━━━━━━ MNO ━━━━━━━━ -->
+          <tr class="data-row">
+            <td>
+              <a href="reports/MNO_Signal_v4_April2026.html" class="ticker-link">
+                <div class="ticker-cell">MNO.TO</div>
+                <div class="company-cell">Meridian Mining</div>
+              </a>
+              <div><span class="tag tag-sector">Cu-Au Dev</span> <span class="tag tag-warn">Pre-Rev</span></div>
+            </td>
+            <td class="price-up">C$1.94</td>
+            <td><span class="change-up">+23% YTD</span><br><span class="change-up">+313% 1Y</span></td>
+            <td class="c"><span class="score-pill pill-green">65</span></td>
+            <td class="c"><span class="score-pill pill-green">64</span></td>
+            <td class="c"><span class="score-pill pill-green">67</span></td>
+            <td class="c"><span class="score-pill pill-green">72</span></td>
+            <td class="c"><span class="signal-chip chip-hold">HOLD</span></td>
+            <td class="c"><span class="signal-chip chip-buy">BUY</span></td>
+            <td class="c"><span class="signal-chip chip-buy">BUY</span></td>
+            <td class="c" style="font-size:13px;">DFS<br><strong>Q4 2026</strong></td>
+            <td class="c"><a href="reports/MNO_Signal_v4_April2026.html" class="report-link">View&rarr;</a></td>
+          </tr>
+
+          <!-- MNO triggers -->
+          <tr class="trigger-row">
+            <td colspan="12">
+              <div class="trigger-inner">
+                <!-- Entry -->
+                <div class="trigger-col entry">
+                  <div class="trigger-col-header">Entry Rules</div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Fundamental</div>
+                      <div class="trig-desc">Price &lt; C$1.70 &bull; Copper &gt; US$4.50/lb &bull; Gold &gt; US$4,000/oz</div>
+                      <div class="trig-status-val" style="color:var(--text2)">C$1.94 &gt; C$1.70 &#10007; &mdash; needs 12.4% pullback</div>
+                    </div>
+                    <span class="trig-badge badge-notmet">NOT MET</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Technical</div>
+                      <div class="trig-desc">Pullback to C$1.50 &bull; RSI near 40 &bull; Green candle on 1.5x volume</div>
+                      <div class="trig-status-val" style="color:var(--text2)">C$1.94 &mdash; 22.7% above entry zone</div>
+                    </div>
+                    <span class="trig-badge badge-notmet">NOT MET</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Catalyst</div>
+                      <div class="trig-desc">DFS: NPV &ge; US$984M &bull; IRR &ge; 55% &bull; Day-1 move &gt; +10%</div>
+                      <div class="trig-status-val" style="color:var(--yellow)">DFS expected Q4 2026 &mdash; 6+ months</div>
+                    </div>
+                    <span class="trig-badge badge-pending">PENDING</span>
+                  </div>
+                </div>
+                <!-- Exit -->
+                <div class="trigger-col exit">
+                  <div class="trigger-col-header">Exit Rules</div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Stop-Loss</div>
+                      <div class="trig-desc">Close below C$1.25 for 2 consecutive days</div>
+                      <div class="trig-status-val exit-val">C$1.94 &mdash; C$0.69 buffer (35.6%)</div>
+                    </div>
+                    <span class="trig-badge badge-clear">CLEAR</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Thesis Break</div>
+                      <div class="trig-desc">DFS IRR &lt; 40% &bull; Capex &gt; US$400M &bull; Permit denied &bull; Cu &lt; $3.50/lb 30d</div>
+                      <div class="trig-status-val exit-val">No triggers &mdash; Cu ~$5.90 well above floor</div>
+                    </div>
+                    <span class="trig-badge badge-clear">CLEAR</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Profit Target</div>
+                      <div class="trig-desc">C$3.50+ &bull; RS vs COPX declining &bull; Partial at C$2.97</div>
+                      <div class="trig-status-val exit-val">C$1.94 &mdash; +53% to partial, +80% to full</div>
+                    </div>
+                    <span class="trig-badge badge-clear">CLEAR</span>
+                  </div>
+                </div>
+              </div>
+              <div class="levels-strip">
+                <strong>Key Levels:</strong>
+                <span class="lv"><span class="lv-dot dot-red"></span>Stop C$1.25</span>
+                <span class="lv"><span class="lv-dot dot-blue"></span>Support C$1.30</span>
+                <span class="lv"><span class="lv-dot dot-blue"></span>Support C$1.50</span>
+                <span class="lv"><span class="lv-dot dot-green"></span>Entry C$1.40&ndash;1.70</span>
+                <span class="lv"><span class="lv-dot dot-purple"></span>Analyst C$2.50&ndash;3.50</span>
+                <span class="lv"><span class="lv-dot dot-green"></span>Partial C$2.97</span>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ======= FRAMEWORK ======= -->
+  <div class="framework">
+    <h2>How the v4 Framework Works</h2>
+    <div class="pillar-grid">
+      <div class="pillar-card">
+        <h3 style="color:var(--blue)">Business Quality (0-100)</h3>
+        <p>Competitive moat (5 dimensions), ROIC &amp; capital allocation, revenue, profitability, balance sheet. Sector-specific: resource quality for miners, member growth for fintech.</p>
+      </div>
+      <div class="pillar-card">
+        <h3 style="color:var(--green)">Valuation Attractiveness (0-100)</h3>
+        <p>Reverse-DCF implied growth, FCF yield, analyst consensus, historical decile, sector multiples (P/NAV, PEG, EV/EBITDA).</p>
+      </div>
+      <div class="pillar-card">
+        <h3 style="color:var(--orange)">Entry/Exit Timing (0-100)</h3>
+        <p>Multi-timeframe technicals, risk-reward, relative strength, dynamic macro weighting, sentiment/catalyst layers. Hard gates &amp; Do-Not-Buy triggers.</p>
+      </div>
+    </div>
+    <p style="margin-top:14px; font-size:13px; color:var(--text2);">Short-term weights Timing. Long-term weights Quality. Underlying Driver captures the dominant macro force. Triggers monitored 2x daily at 12:30 PM and 5:00 PM ET.</p>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>SignalDeck &middot; Stock Signal v4 &middot; Not financial advice</p>
+    <p style="margin-top:4px;">Data: Polygon.io, FRED, NewsAPI, Tavily, web research &middot; Monitored 2x daily</p>
+  </div>
+</footer>
+
+</body>
+</html>
