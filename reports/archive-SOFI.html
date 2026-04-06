@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOFI Report Archive — SignalDeck</title>
+<style>
+:root {
+  --bg: #0a0c10; --surface: #12151c; --surface2: #1a1e28;
+  --border: #252a3a; --text: #e1e4ed; --text2: #7a8099;
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.10);
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; }
+.container { max-width:900px; margin:0 auto; padding:24px; }
+.nav-bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+.nav-bar a { color:var(--blue); text-decoration:none; font-size:14px; }
+.nav-bar a:hover { text-decoration:underline; }
+h1 { font-size:24px; margin-bottom:4px; }
+h1 span { color:var(--text2); font-weight:400; font-size:16px; }
+.subtitle { color:var(--text2); font-size:14px; margin-bottom:28px; }
+.report-list { list-style:none; }
+.report-list li { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; transition:border-color 0.2s; }
+.report-list li:hover { border-color:var(--blue); }
+.report-info { flex:1; }
+.report-date { font-size:16px; font-weight:600; }
+.report-meta { font-size:13px; color:var(--text2); margin-top:2px; }
+.report-link { color:var(--blue); font-weight:600; text-decoration:none; font-size:14px; padding:6px 14px; border:1px solid var(--blue); border-radius:6px; }
+.report-link:hover { background:var(--blue-bg); }
+.badge-latest { background:var(--green-bg); color:var(--green); font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; margin-left:10px; text-transform:uppercase; }
+footer { margin-top:48px; padding-top:16px; border-top:1px solid var(--border); font-size:12px; color:var(--text2); text-align:center; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="nav-bar">
+  <a href="https://donatien.ca/">&larr; Back to SignalDeck</a>
+</div>
+
+<h1>SOFI <span>SoFi Technologies, Inc.</span></h1>
+<p class="subtitle">All signal reports for this ticker, newest first.</p>
+
+<ul class="report-list">
+  <!-- LATEST REPORT -->
+  <li>
+    <div class="report-info">
+      <div class="report-date">April 5, 2026<span class="badge-latest">Latest</span></div>
+      <div class="report-meta">SOFI_Signal_v4_April2026.html</div>
+    </div>
+    <a href="SOFI_Signal_v4_April2026.html" class="report-link">View Report &rarr;</a>
+  </li>
+  <!-- NEW REPORTS WILL BE ADDED ABOVE THIS LINE -->
+</ul>
+
+<footer>
+  SignalDeck &middot; Stock Signal v4 &middot; Not financial advice
+</footer>
+
+</div>
+</body>
+</html>
