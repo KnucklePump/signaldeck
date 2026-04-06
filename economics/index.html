@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignalDeck — World Economist Dashboard</title>
+<meta name="description" content="AI-powered macro-economic analysis using the 'From Structure to Strategy' 6-layer framework. G20 cycle mapping, scenario forecasting, and tactical asset allocation.">
+<style>
+:root {
+  --bg: #0a0c10; --surface: #12151c; --surface2: #1a1e28;
+  --border: #252a3a; --text: #e1e4ed; --text2: #7a8099;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.10);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.10);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.10);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.10);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.10);
+  --purple: #a855f7; --purple-bg: rgba(168,85,247,0.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; }
+
+.site-header { background:var(--surface); border-bottom:1px solid var(--border); padding:16px 0; }
+.container { max-width:1400px; margin:0 auto; padding:0 24px; }
+.header-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+.site-title { font-size:22px; font-weight:700; letter-spacing:-0.5px; }
+.site-title span { color:var(--blue); }
+.site-subtitle { color:var(--text2); font-size:13px; }
+.header-meta { text-align:right; font-size:13px; color:var(--text2); }
+.nav-links { display:flex; gap:18px; margin-top:10px; }
+.nav-links a { color:var(--text2); text-decoration:none; font-size:13px; font-weight:600; padding:4px 0; border-bottom:2px solid transparent; transition:all 0.15s; }
+.nav-links a:hover { color:var(--text); }
+.nav-links a.active { color:var(--blue); border-bottom-color:var(--blue); }
+
+.disclaimer { background:var(--yellow-bg); border:1px solid rgba(234,179,8,0.25); border-radius:8px; padding:12px 16px; font-size:12px; color:var(--yellow); margin:16px 0; }
+
+/* Scenario bar */
+.scenario-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:20px 0; }
+.scenario-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; position:relative; overflow:hidden; }
+.scenario-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.sc-soft::before { background:var(--green); }
+.sc-stag::before { background:var(--orange); }
+.sc-defl::before { background:var(--red); }
+.sc-reacc::before { background:var(--blue); }
+.scenario-name { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); }
+.scenario-prob { font-size:32px; font-weight:800; margin:4px 0; }
+.scenario-delta { font-size:12px; font-weight:600; }
+.delta-up { color:var(--green); }
+.delta-down { color:var(--red); }
+.delta-flat { color:var(--text2); }
+.scenario-bar-vis { height:6px; background:var(--surface2); border-radius:3px; margin-top:8px; overflow:hidden; }
+.scenario-bar-fill { height:100%; border-radius:3px; transition:width 0.3s; }
+
+/* Stats row */
+.stats-bar { display:flex; gap:12px; margin:20px 0; flex-wrap:wrap; }
+.stat-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 18px; flex:1; min-width:130px; }
+.stat-value { font-size:22px; font-weight:700; }
+.stat-label { font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
+.stat-sub { font-size:11px; color:var(--text2); margin-top:2px; }
+
+/* Section */
+.section { margin:28px 0; }
+.section h2 { font-size:18px; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.section-badge { font-size:11px; font-weight:600; padding:2px 8px; border-radius:10px; }
+
+/* G20 Cycle Map */
+.cycle-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:8px; }
+.cycle-cell { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 12px; text-align:center; position:relative; }
+.cycle-country { font-size:13px; font-weight:700; }
+.cycle-phase { font-size:11px; font-weight:600; margin-top:2px; }
+.phase-expansion { color:var(--green); }
+.phase-peak { color:var(--yellow); }
+.phase-contraction { color:var(--red); }
+.phase-trough { color:var(--orange); }
+.phase-recovery { color:var(--blue); }
+.cycle-momentum { font-size:10px; color:var(--text2); margin-top:2px; }
+.cycle-flag { font-size:16px; margin-bottom:2px; }
+
+/* Asset Allocation table */
+.aa-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
+table.aa { width:100%; border-collapse:collapse; font-size:13px; }
+table.aa thead { background:var(--surface2); }
+table.aa th { padding:10px 12px; text-align:left; font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; font-weight:600; border-bottom:1px solid var(--border); }
+table.aa th.c { text-align:center; }
+table.aa td { padding:10px 12px; border-bottom:1px solid rgba(37,42,58,0.5); }
+table.aa td.c { text-align:center; }
+table.aa tr:hover td { background:var(--surface2); }
+.direction-pill { display:inline-block; min-width:80px; padding:2px 8px; text-align:center; border-radius:6px; font-weight:700; font-size:12px; }
+.dir-overweight { background:var(--green-bg); color:var(--green); }
+.dir-underweight { background:var(--red-bg); color:var(--red); }
+.dir-neutral { background:var(--surface2); color:var(--text2); }
+.conviction-dot { display:inline-block; width:8px; height:8px; border-radius:50%; }
+.conv-high { background:var(--green); }
+.conv-med { background:var(--yellow); }
+.conv-low { background:var(--text2); }
+.score-num { font-weight:700; font-size:14px; }
+.score-pos { color:var(--green); }
+.score-neg { color:var(--red); }
+.score-zero { color:var(--text2); }
+
+/* Thresholds */
+.threshold-list { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:10px; }
+.threshold-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 14px; display:flex; align-items:center; gap:12px; }
+.threshold-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.th-warn { background:var(--orange-bg); }
+.th-alert { background:var(--red-bg); }
+.th-ok { background:var(--green-bg); }
+.threshold-info { flex:1; }
+.threshold-name { font-size:13px; font-weight:600; }
+.threshold-detail { font-size:11px; color:var(--text2); margin-top:2px; }
+.threshold-proximity { font-size:11px; font-weight:700; }
+.prox-close { color:var(--orange); }
+.prox-far { color:var(--green); }
+.prox-breached { color:var(--red); }
+
+/* Calendar */
+.cal-list { display:flex; flex-direction:column; gap:6px; }
+.cal-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:14px; }
+.cal-date { min-width:70px; text-align:center; }
+.cal-day { font-size:18px; font-weight:800; }
+.cal-month { font-size:10px; color:var(--text2); text-transform:uppercase; }
+.cal-info { flex:1; }
+.cal-event { font-size:13px; font-weight:600; }
+.cal-detail { font-size:11px; color:var(--text2); }
+.cal-impact { font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; }
+.impact-critical { background:var(--red-bg); color:var(--red); }
+.impact-high { background:var(--orange-bg); color:var(--orange); }
+.impact-medium { background:var(--yellow-bg); color:var(--yellow); }
+.impact-low { background:var(--surface2); color:var(--text2); }
+
+/* Divergence alerts */
+.alert-list { display:flex; flex-direction:column; gap:8px; }
+.alert-item { background:var(--surface); border-left:3px solid var(--orange); border-radius:0 8px 8px 0; padding:10px 14px; }
+.alert-title { font-size:13px; font-weight:700; color:var(--orange); }
+.alert-detail { font-size:12px; color:var(--text2); margin-top:2px; }
+
+/* Report link */
+.report-cta { display:inline-flex; align-items:center; gap:8px; background:var(--blue-bg); color:var(--blue); border:1px solid rgba(59,130,246,0.3); border-radius:10px; padding:12px 20px; font-size:14px; font-weight:700; text-decoration:none; transition:all 0.15s; }
+.report-cta:hover { background:rgba(59,130,246,0.2); }
+
+.site-footer { background:var(--surface); border-top:1px solid var(--border); padding:20px 0; text-align:center; font-size:12px; color:var(--text2); }
+
+@media(max-width:900px) {
+  .scenario-bar { grid-template-columns:repeat(2,1fr); }
+  .cycle-grid { grid-template-columns:repeat(3,1fr); }
+  .threshold-list { grid-template-columns:1fr; }
+}
+@media(max-width:600px) {
+  .scenario-bar { grid-template-columns:1fr; }
+  .stats-bar { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-row">
+      <div>
+        <div class="site-title"><span>Signal</span>Deck</div>
+        <div class="site-subtitle">World Economist &middot; From Structure to Strategy</div>
+      </div>
+      <div class="header-meta">
+        <div>Last updated: <strong id="last-updated">April 6, 2026</strong></div>
+        <div>Weekly macro briefing &middot; Sunday evenings</div>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="../index.html">Watchlist</a>
+      <a href="index.html" class="active">Economics</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="disclaimer">
+    <strong>DISCLAIMER:</strong> This is a quantitative framework for educational and informational purposes only. It is not financial advice. Economic forecasting involves inherent uncertainty. Always do your own research and consult qualified professionals.
+  </div>
+
+  <!-- ══════════ SCENARIO DASHBOARD ══════════ -->
+  <div class="section">
+    <h2>Scenario Dashboard</h2>
+    <div class="scenario-bar">
+      <div class="scenario-card sc-soft">
+        <div class="scenario-name">Soft Landing</div>
+        <div class="scenario-prob" style="color:var(--green);" id="sc-soft-prob">42%</div>
+        <div class="scenario-delta delta-down" id="sc-soft-delta">&darr; 8pp</div>
+        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:42%; background:var(--green);"></div></div>
+      </div>
+      <div class="scenario-card sc-stag">
+        <div class="scenario-name">Stagflation</div>
+        <div class="scenario-prob" style="color:var(--orange);" id="sc-stag-prob">25%</div>
+        <div class="scenario-delta delta-up" id="sc-stag-delta">&uarr; 5pp</div>
+        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:25%; background:var(--orange);"></div></div>
+      </div>
+      <div class="scenario-card sc-reacc">
+        <div class="scenario-name">Reacceleration</div>
+        <div class="scenario-prob" style="color:var(--blue);" id="sc-reacc-prob">22%</div>
+        <div class="scenario-delta delta-up" id="sc-reacc-delta">&uarr; 7pp</div>
+        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:22%; background:var(--blue);"></div></div>
+      </div>
+      <div class="scenario-card sc-defl">
+        <div class="scenario-name">Deflationary Bust</div>
+        <div class="scenario-prob" style="color:var(--red);" id="sc-defl-prob">11%</div>
+        <div class="scenario-delta delta-down" id="sc-defl-delta">&darr; 4pp</div>
+        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:11%; background:var(--red);"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ DIVERGENCE ALERTS ══════════ -->
+  <div class="section">
+    <h2>Divergence Alerts <span class="section-badge" style="background:var(--orange-bg); color:var(--orange);">3 Active</span></h2>
+    <div class="alert-list" id="divergence-alerts">
+      <div class="alert-item">
+        <div class="alert-title">&darr; Soft Landing probability fell 8pp</div>
+        <div class="alert-detail">Inflation surprise: Core PCE sticky at 3.3%, Fed forecast just 2.7%. Duration risk rising as 10Y yield climbs.</div>
+      </div>
+      <div class="alert-item">
+        <div class="alert-title">&uarr; Stagflation probability rose 5pp</div>
+        <div class="alert-detail">Geopolitical oil shock (Brent $94, +50% YTD) cascading through commodities complex. Supply-side cost pressures accelerating.</div>
+      </div>
+      <div class="alert-item">
+        <div class="alert-title">&uarr; Reacceleration probability rose 7pp</div>
+        <div class="alert-detail">China Q1 GDP beat at 5.4%. PBOC easing cycle supporting EM rotation. Manufacturing PMI 52.7 fastest since Aug 2022.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ KEY INDICATORS ══════════ -->
+  <div class="section">
+    <h2>Key Indicators</h2>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value" id="fed-rate">3.64%</div>
+        <div class="stat-label">Fed Funds</div>
+        <div class="stat-sub">Taylor implied: 2.75%</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="cpi">2.62%</div>
+        <div class="stat-label">CPI YoY</div>
+        <div class="stat-sub">Core PCE: 3.3%</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="unemp">4.3%</div>
+        <div class="stat-label">Unemployment</div>
+        <div class="stat-sub">Down from 4.4%</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="ten-y">4.31%</div>
+        <div class="stat-label">10Y Yield</div>
+        <div class="stat-sub">2Y: 3.79% &middot; Curve: 51bp</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="vix">23.87</div>
+        <div class="stat-label">VIX</div>
+        <div class="stat-sub">Elevated</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="oil-price">$94</div>
+        <div class="stat-label">Brent Crude</div>
+        <div class="stat-sub">+50% YTD</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ G20 CYCLE MAP ══════════ -->
+  <div class="section">
+    <h2>G20 Cycle Map</h2>
+    <div class="cycle-grid" id="cycle-map">
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1FA;&#x1F1F8;</div>
+        <div class="cycle-country">United States</div>
+        <div class="cycle-phase phase-expansion">Expansion</div>
+        <div class="cycle-momentum">Momentum: +0.6</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1EA;&#x1F1FA;</div>
+        <div class="cycle-country">Euro Area</div>
+        <div class="cycle-phase phase-recovery">Recovery</div>
+        <div class="cycle-momentum">Momentum: +0.3</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1E8;&#x1F1F3;</div>
+        <div class="cycle-country">China</div>
+        <div class="cycle-phase phase-expansion">Reacceleration</div>
+        <div class="cycle-momentum">Momentum: +0.8</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1EF;&#x1F1F5;</div>
+        <div class="cycle-country">Japan</div>
+        <div class="cycle-phase phase-peak">Late Expansion</div>
+        <div class="cycle-momentum">Momentum: +0.2</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1EC;&#x1F1E7;</div>
+        <div class="cycle-country">United Kingdom</div>
+        <div class="cycle-phase phase-recovery">Recovery</div>
+        <div class="cycle-momentum">Momentum: +0.2</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1E8;&#x1F1E6;</div>
+        <div class="cycle-country">Canada</div>
+        <div class="cycle-phase phase-expansion">Expansion</div>
+        <div class="cycle-momentum">Momentum: +0.4</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1E9;&#x1F1EA;</div>
+        <div class="cycle-country">Germany</div>
+        <div class="cycle-phase phase-trough">Trough</div>
+        <div class="cycle-momentum">Momentum: -0.1</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1EB;&#x1F1F7;</div>
+        <div class="cycle-country">France</div>
+        <div class="cycle-phase phase-recovery">Recovery</div>
+        <div class="cycle-momentum">Momentum: +0.1</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1EE;&#x1F1F3;</div>
+        <div class="cycle-country">India</div>
+        <div class="cycle-phase phase-expansion">Expansion</div>
+        <div class="cycle-momentum">Momentum: +0.7</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1E7;&#x1F1F7;</div>
+        <div class="cycle-country">Brazil</div>
+        <div class="cycle-phase phase-peak">Peak</div>
+        <div class="cycle-momentum">Momentum: 0.0</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1F0;&#x1F1F7;</div>
+        <div class="cycle-country">South Korea</div>
+        <div class="cycle-phase phase-recovery">Recovery</div>
+        <div class="cycle-momentum">Momentum: +0.3</div>
+      </div>
+      <div class="cycle-cell">
+        <div class="cycle-flag">&#x1F1E6;&#x1F1FA;</div>
+        <div class="cycle-country">Australia</div>
+        <div class="cycle-phase phase-expansion">Expansion</div>
+        <div class="cycle-momentum">Momentum: +0.4</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ ASSET ALLOCATION COMPASS ══════════ -->
+  <div class="section">
+    <h2>Tactical Asset Allocation Compass</h2>
+    <div class="aa-wrap">
+      <table class="aa">
+        <thead>
+          <tr>
+            <th>Asset Class</th>
+            <th class="c">Direction</th>
+            <th class="c">Net Score</th>
+            <th class="c">Conviction</th>
+            <th class="c">3-6M View</th>
+          </tr>
+        </thead>
+        <tbody id="aa-table">
+          <tr>
+            <td style="font-weight:600;">EM Equities</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.65</span></td>
+            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
+            <td>China reaccel + PBOC easing + carry rotation</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Commodities Broad</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.50</span></td>
+            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
+            <td>Energy deficit + metals supercycle thesis</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Gold</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.68</span></td>
+            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
+            <td>Real yields at inflection + central bank demand + stagflation hedge</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">EM Bonds (USD)</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.45</span></td>
+            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
+            <td>Carry attractive as Fed approaching cut cycle</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">US Large-Cap Equities</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.40</span></td>
+            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
+            <td>Earnings resilient but valuation stretched</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Silver</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.78</span></td>
+            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
+            <td>Industrial + monetary demand dual tailwind</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">US Short Bonds</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.25</span></td>
+            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
+            <td>Yield attractive with limited duration risk</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">European Equities</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.20</span></td>
+            <td class="c"><span class="conviction-dot conv-low"></span> Low</td>
+            <td>ECB easing + valuation discount, but growth fragile</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Real Estate</td>
+            <td class="c"><span class="direction-pill dir-neutral">Neutral</span></td>
+            <td class="c"><span class="score-num score-neg">-0.20</span></td>
+            <td class="c"><span class="conviction-dot conv-low"></span> Low</td>
+            <td>Rate-sensitive; wait for clearer cut signal</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">USD</td>
+            <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
+            <td class="c"><span class="score-num score-neg">-0.25</span></td>
+            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
+            <td>Fed behind curve + fiscal deficit widening</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">US Long Bonds (TLT)</td>
+            <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
+            <td class="c"><span class="score-num score-neg">-0.35</span></td>
+            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
+            <td>Duration risk elevated; term premium repricing</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">High Yield Credit</td>
+            <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
+            <td class="c"><span class="score-num score-neg">-0.18</span></td>
+            <td class="c"><span class="conviction-dot conv-low"></span> Low</td>
+            <td>Spreads tightening but default risk underpriced</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════ THRESHOLD PROXIMITY ══════════ -->
+  <div class="section">
+    <h2>Key Threshold Proximity</h2>
+    <div class="threshold-list" id="thresholds">
+      <div class="threshold-item">
+        <div class="threshold-icon th-warn">&#9888;</div>
+        <div class="threshold-info">
+          <div class="threshold-name">Core CPI &gt; 3.0%</div>
+          <div class="threshold-detail">Triggers: Stagflation +10pp. Current: 2.62% &rarr; approaching if March print surprises</div>
+          <div class="threshold-proximity prox-close">WATCHING</div>
+        </div>
+      </div>
+      <div class="threshold-item">
+        <div class="threshold-icon th-warn">&#9888;</div>
+        <div class="threshold-info">
+          <div class="threshold-name">10Y Yield &gt; 4.70%</div>
+          <div class="threshold-detail">Triggers: Duration stress, equity rotation. Current: 4.31%</div>
+          <div class="threshold-proximity prox-far">39bp away</div>
+        </div>
+      </div>
+      <div class="threshold-item">
+        <div class="threshold-icon th-warn">&#9888;</div>
+        <div class="threshold-info">
+          <div class="threshold-name">Oil (Brent) &gt; $100</div>
+          <div class="threshold-detail">Triggers: Stagflation confirmed. Current: $94</div>
+          <div class="threshold-proximity prox-close">$6 away</div>
+        </div>
+      </div>
+      <div class="threshold-item">
+        <div class="threshold-icon th-ok">&#10003;</div>
+        <div class="threshold-info">
+          <div class="threshold-name">HY Spreads &gt; 600bp</div>
+          <div class="threshold-detail">Triggers: Credit stress onset. Currently below threshold</div>
+          <div class="threshold-proximity prox-far">CLEAR</div>
+        </div>
+      </div>
+      <div class="threshold-item">
+        <div class="threshold-icon th-warn">&#9888;</div>
+        <div class="threshold-info">
+          <div class="threshold-name">VIX &gt; 30</div>
+          <div class="threshold-detail">Triggers: Risk-off regime. Current: 23.87</div>
+          <div class="threshold-proximity prox-far">6.13 away</div>
+        </div>
+      </div>
+      <div class="threshold-item">
+        <div class="threshold-icon th-ok">&#10003;</div>
+        <div class="threshold-info">
+          <div class="threshold-name">Unemployment &gt; 5.0%</div>
+          <div class="threshold-detail">Triggers: Recession concern. Current: 4.3%</div>
+          <div class="threshold-proximity prox-far">70bp away</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ WEEK AHEAD ══════════ -->
+  <div class="section">
+    <h2>Week Ahead</h2>
+    <div class="cal-list" id="week-ahead">
+      <div class="cal-item">
+        <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
+        <div class="cal-info">
+          <div class="cal-event">US Initial Jobless Claims</div>
+          <div class="cal-detail">Alert if &gt; 230k — labour market softening signal</div>
+        </div>
+        <span class="cal-impact impact-high">HIGH</span>
+      </div>
+      <div class="cal-item">
+        <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
+        <div class="cal-info">
+          <div class="cal-event">Fed Chair Powell Testimony</div>
+          <div class="cal-detail">Watch for rate cut timeline guidance and inflation assessment</div>
+        </div>
+        <span class="cal-impact impact-high">HIGH</span>
+      </div>
+      <div class="cal-item">
+        <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
+        <div class="cal-info">
+          <div class="cal-event">US CPI (March)</div>
+          <div class="cal-detail">THE WEEK'S KEY DATA POINT — If Core &gt; 3.5%, Stagflation jumps to ~35%</div>
+        </div>
+        <span class="cal-impact impact-critical">CRITICAL</span>
+      </div>
+      <div class="cal-item">
+        <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
+        <div class="cal-info">
+          <div class="cal-event">US Retail Sales (March)</div>
+          <div class="cal-detail">Consumer spending resilience check</div>
+        </div>
+        <span class="cal-impact impact-medium">MEDIUM</span>
+      </div>
+      <div class="cal-item">
+        <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
+        <div class="cal-info">
+          <div class="cal-event">Eurozone CPI Flash</div>
+          <div class="cal-detail">ECB cut path confirmation if trend continues down</div>
+        </div>
+        <span class="cal-impact impact-medium">MEDIUM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FULL REPORT LINK ══════════ -->
+  <div class="section" style="text-align:center; padding:20px 0;">
+    <a href="../reports/WorldEcon_Weekly_latest.html" class="report-cta" id="report-link">View Full Weekly Report &rarr;</a>
+    <p style="font-size:12px; color:var(--text2); margin-top:8px;">Detailed 6-layer analysis with state tracking and feedback loops</p>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>SignalDeck World Economist &middot; Powered by Boris AI Agent &middot; &copy; 2026</p>
+    <p style="margin-top:4px;">Framework: "From Structure to Strategy" &middot; 6 causal layers &middot; G20 coverage</p>
+  </div>
+</footer>
+
+</body>
+</html>
