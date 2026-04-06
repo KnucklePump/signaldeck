@@ -160,7 +160,7 @@ table.aa tr:hover td { background:var(--surface2); }
         <div class="site-subtitle">World Economist &middot; From Structure to Strategy</div>
       </div>
       <div class="header-meta">
-        <div>Last updated: <strong id="last-updated">April 6, 2026</strong></div>
+        <div>Last updated: <strong id="last-updated">6 April 2026 — Boris Weekly Run</strong></div>
         <div>Weekly macro briefing &middot; Sunday evenings</div>
       </div>
     </div>
@@ -181,48 +181,52 @@ table.aa tr:hover td { background:var(--surface2); }
   <div class="section">
     <h2>Scenario Dashboard</h2>
     <div class="scenario-bar">
-      <div class="scenario-card sc-soft">
-        <div class="scenario-name">Soft Landing</div>
-        <div class="scenario-prob" style="color:var(--green);" id="sc-soft-prob">42%</div>
-        <div class="scenario-delta delta-down" id="sc-soft-delta">&darr; 8pp</div>
-        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:42%; background:var(--green);"></div></div>
-      </div>
       <div class="scenario-card sc-stag">
         <div class="scenario-name">Stagflation</div>
-        <div class="scenario-prob" style="color:var(--orange);" id="sc-stag-prob">25%</div>
-        <div class="scenario-delta delta-up" id="sc-stag-delta">&uarr; 5pp</div>
-        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:25%; background:var(--orange);"></div></div>
-      </div>
-      <div class="scenario-card sc-reacc">
-        <div class="scenario-name">Reacceleration</div>
-        <div class="scenario-prob" style="color:var(--blue);" id="sc-reacc-prob">22%</div>
-        <div class="scenario-delta delta-up" id="sc-reacc-delta">&uarr; 7pp</div>
-        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:22%; background:var(--blue);"></div></div>
+        <div class="scenario-prob" style="color:var(--orange);" id="sc-stag-prob">48%</div>
+        <div class="scenario-delta delta-up" id="sc-stag-delta">&uarr; 23pp &#9888;</div>
+        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:48%; background:var(--orange);"></div></div>
       </div>
       <div class="scenario-card sc-defl">
         <div class="scenario-name">Deflationary Bust</div>
-        <div class="scenario-prob" style="color:var(--red);" id="sc-defl-prob">11%</div>
-        <div class="scenario-delta delta-down" id="sc-defl-delta">&darr; 4pp</div>
-        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:11%; background:var(--red);"></div></div>
+        <div class="scenario-prob" style="color:var(--red);" id="sc-defl-prob">20%</div>
+        <div class="scenario-delta delta-up" id="sc-defl-delta">&uarr; 9pp</div>
+        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:20%; background:var(--red);"></div></div>
+      </div>
+      <div class="scenario-card sc-soft">
+        <div class="scenario-name">Soft Landing</div>
+        <div class="scenario-prob" style="color:var(--green);" id="sc-soft-prob">18%</div>
+        <div class="scenario-delta delta-down" id="sc-soft-delta">&darr; 24pp &#9888;</div>
+        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:18%; background:var(--green);"></div></div>
+      </div>
+      <div class="scenario-card sc-reacc">
+        <div class="scenario-name">Reacceleration</div>
+        <div class="scenario-prob" style="color:var(--blue);" id="sc-reacc-prob">14%</div>
+        <div class="scenario-delta delta-down" id="sc-reacc-delta">&darr; 8pp</div>
+        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:14%; background:var(--blue);"></div></div>
       </div>
     </div>
   </div>
 
   <!-- ══════════ DIVERGENCE ALERTS ══════════ -->
   <div class="section">
-    <h2>Divergence Alerts <span class="section-badge" style="background:var(--orange-bg); color:var(--orange);">3 Active</span></h2>
+    <h2>Divergence Alerts <span class="section-badge" style="background:var(--red-bg); color:var(--red);">4 Active — Major Regime Shift</span></h2>
     <div class="alert-list" id="divergence-alerts">
-      <div class="alert-item">
-        <div class="alert-title">&darr; Soft Landing probability fell 8pp</div>
-        <div class="alert-detail">Inflation surprise: Core PCE sticky at 3.3%, Fed forecast just 2.7%. Duration risk rising as 10Y yield climbs.</div>
+      <div class="alert-item" style="border-left-color:var(--red);">
+        <div class="alert-title" style="color:var(--red);">&#9650; STAGFLATION: +23pp (25% &rarr; 48%) — DOMINANT REGIME SHIFT</div>
+        <div class="alert-detail">Strait of Hormuz closed since March 4. WTI oil $111.81/bbl (+73.5% vs Feb avg $64.44). 100% pharma tariffs finalized. Classic stagflation trigger: supply-side inflation + growth headwinds. Fed dual mandate in formal conflict.</div>
+      </div>
+      <div class="alert-item" style="border-left-color:var(--red);">
+        <div class="alert-title" style="color:var(--red);">&#9660; SOFT LANDING: &minus;24pp (42% &rarr; 18%) — MAJOR DOWNGRADE</div>
+        <div class="alert-detail">Hormuz closure + pharma tariffs make soft-landing path implausible unless conflict resolves within days. Trump deadline expires Tuesday April 7 — binary event. Market likely still underweighting this scenario collapse.</div>
       </div>
       <div class="alert-item">
-        <div class="alert-title">&uarr; Stagflation probability rose 5pp</div>
-        <div class="alert-detail">Geopolitical oil shock (Brent $94, +50% YTD) cascading through commodities complex. Supply-side cost pressures accelerating.</div>
+        <div class="alert-title">&#9650; DEFLATIONARY BUST: +9pp (11% &rarr; 20%)</div>
+        <div class="alert-detail">Tail risk rising. If US strikes Iran and oil reaches $130-140, demand destruction triggers recession cascade. NFCI tightening trend (-0.434 from -0.553) early warning. Watch April 11 CPI and jobless claims.</div>
       </div>
       <div class="alert-item">
-        <div class="alert-title">&uarr; Reacceleration probability rose 7pp</div>
-        <div class="alert-detail">China Q1 GDP beat at 5.4%. PBOC easing cycle supporting EM rotation. Manufacturing PMI 52.7 fastest since Aug 2022.</div>
+        <div class="alert-title">&#9660; REACCELERATION: &minus;8pp (22% &rarr; 14%)</div>
+        <div class="alert-detail">Supply-side constraints overwhelming pre-war reacceleration narrative. PMI resilience (Mfg 52.7, Services 54.0) intact but energy cost surge will dampen growth. Ceasefire resolution is the only path to probability recovery.</div>
       </div>
     </div>
   </div>
@@ -234,32 +238,32 @@ table.aa tr:hover td { background:var(--surface2); }
       <div class="stat-item">
         <div class="stat-value" id="fed-rate">3.64%</div>
         <div class="stat-label">Fed Funds</div>
-        <div class="stat-sub">Taylor implied: 2.75%</div>
+        <div class="stat-sub">Taylor implied: 4.375% &mdash; behind curve</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value" id="cpi">2.62%</div>
-        <div class="stat-label">CPI YoY</div>
-        <div class="stat-sub">Core PCE: 3.3%</div>
+        <div class="stat-value" id="cpi">2.4%</div>
+        <div class="stat-label">CPI YoY (Feb)</div>
+        <div class="stat-sub">Core: 2.5% &mdash; pre-crisis; surge incoming</div>
       </div>
       <div class="stat-item">
         <div class="stat-value" id="unemp">4.3%</div>
         <div class="stat-label">Unemployment</div>
-        <div class="stat-sub">Down from 4.4%</div>
+        <div class="stat-sub">Down from 4.4% &mdash; tariffs add +0.6pp risk</div>
       </div>
       <div class="stat-item">
         <div class="stat-value" id="ten-y">4.31%</div>
         <div class="stat-label">10Y Yield</div>
-        <div class="stat-sub">2Y: 3.79% &middot; Curve: 51bp</div>
+        <div class="stat-sub">2Y: 3.79% &middot; Curve: +51bp</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value" id="vix">23.87</div>
+        <div class="stat-value" id="vix" style="color:var(--yellow);">23.87</div>
         <div class="stat-label">VIX</div>
-        <div class="stat-sub">Elevated</div>
+        <div class="stat-sub">Down from 31.05 peak (Mar 27); still elevated</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value" id="oil-price">$94</div>
-        <div class="stat-label">Brent Crude</div>
-        <div class="stat-sub">+50% YTD</div>
+        <div class="stat-value" id="oil-price" style="color:var(--red);">$111.81</div>
+        <div class="stat-label">WTI Crude (SPOT)</div>
+        <div class="stat-sub">&#9888; BREACHED $100 trigger &mdash; Hormuz crisis</div>
       </div>
     </div>
   </div>
@@ -271,74 +275,74 @@ table.aa tr:hover td { background:var(--surface2); }
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1FA;&#x1F1F8;</div>
         <div class="cycle-country">United States</div>
-        <div class="cycle-phase phase-expansion">Expansion</div>
-        <div class="cycle-momentum">Momentum: +0.6</div>
+        <div class="cycle-phase phase-peak">Late Expansion&rarr;Peak</div>
+        <div class="cycle-momentum">Momentum: &minus;0.3 &darr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EA;&#x1F1FA;</div>
         <div class="cycle-country">Euro Area</div>
-        <div class="cycle-phase phase-recovery">Recovery</div>
-        <div class="cycle-momentum">Momentum: +0.3</div>
+        <div class="cycle-phase phase-contraction">Contraction Risk</div>
+        <div class="cycle-momentum">Momentum: &minus;0.5 &darr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E8;&#x1F1F3;</div>
         <div class="cycle-country">China</div>
-        <div class="cycle-phase phase-expansion">Reacceleration</div>
-        <div class="cycle-momentum">Momentum: +0.8</div>
+        <div class="cycle-phase phase-trough">Trough / Stabilising</div>
+        <div class="cycle-momentum">Momentum: +0.2 &rarr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EF;&#x1F1F5;</div>
         <div class="cycle-country">Japan</div>
         <div class="cycle-phase phase-peak">Late Expansion</div>
-        <div class="cycle-momentum">Momentum: +0.2</div>
+        <div class="cycle-momentum">Momentum: +0.1 &rarr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EC;&#x1F1E7;</div>
         <div class="cycle-country">United Kingdom</div>
         <div class="cycle-phase phase-recovery">Recovery</div>
-        <div class="cycle-momentum">Momentum: +0.2</div>
+        <div class="cycle-momentum">Momentum: +0.1 &rarr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E8;&#x1F1E6;</div>
         <div class="cycle-country">Canada</div>
-        <div class="cycle-phase phase-expansion">Expansion</div>
-        <div class="cycle-momentum">Momentum: +0.4</div>
+        <div class="cycle-phase phase-expansion">Late Expansion</div>
+        <div class="cycle-momentum">Momentum: +0.3 &uarr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E9;&#x1F1EA;</div>
         <div class="cycle-country">Germany</div>
         <div class="cycle-phase phase-trough">Trough</div>
-        <div class="cycle-momentum">Momentum: -0.1</div>
+        <div class="cycle-momentum">Momentum: &minus;0.3 &darr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EB;&#x1F1F7;</div>
         <div class="cycle-country">France</div>
-        <div class="cycle-phase phase-recovery">Recovery</div>
-        <div class="cycle-momentum">Momentum: +0.1</div>
+        <div class="cycle-phase phase-contraction">Contraction</div>
+        <div class="cycle-momentum">Momentum: &minus;0.2 &darr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EE;&#x1F1F3;</div>
         <div class="cycle-country">India</div>
         <div class="cycle-phase phase-expansion">Expansion</div>
-        <div class="cycle-momentum">Momentum: +0.7</div>
+        <div class="cycle-momentum">Momentum: +0.6 &uarr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E7;&#x1F1F7;</div>
         <div class="cycle-country">Brazil</div>
-        <div class="cycle-phase phase-peak">Peak</div>
-        <div class="cycle-momentum">Momentum: 0.0</div>
+        <div class="cycle-phase phase-expansion">Expansion</div>
+        <div class="cycle-momentum">Momentum: +0.4 &uarr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1F0;&#x1F1F7;</div>
         <div class="cycle-country">South Korea</div>
-        <div class="cycle-phase phase-recovery">Recovery</div>
-        <div class="cycle-momentum">Momentum: +0.3</div>
+        <div class="cycle-phase phase-contraction">Contraction</div>
+        <div class="cycle-momentum">Momentum: &minus;0.2 &darr;</div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E6;&#x1F1FA;</div>
         <div class="cycle-country">Australia</div>
         <div class="cycle-phase phase-expansion">Expansion</div>
-        <div class="cycle-momentum">Momentum: +0.4</div>
+        <div class="cycle-momentum">Momentum: +0.5 &uarr;</div>
       </div>
     </div>
   </div>
@@ -359,88 +363,88 @@ table.aa tr:hover td { background:var(--surface2); }
         </thead>
         <tbody id="aa-table">
           <tr>
-            <td style="font-weight:600;">EM Equities</td>
-            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
-            <td class="c"><span class="score-num score-pos">+0.65</span></td>
-            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
-            <td>China reaccel + PBOC easing + carry rotation</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">Commodities Broad</td>
-            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
-            <td class="c"><span class="score-num score-pos">+0.50</span></td>
-            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
-            <td>Energy deficit + metals supercycle thesis</td>
-          </tr>
-          <tr>
             <td style="font-weight:600;">Gold</td>
             <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
-            <td class="c"><span class="score-num score-pos">+0.68</span></td>
+            <td class="c"><span class="score-num score-pos">+1.10</span></td>
             <td class="c"><span class="conviction-dot conv-high"></span> High</td>
-            <td>Real yields at inflection + central bank demand + stagflation hedge</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">EM Bonds (USD)</td>
-            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
-            <td class="c"><span class="score-num score-pos">+0.45</span></td>
-            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
-            <td>Carry attractive as Fed approaching cut cycle</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">US Large-Cap Equities</td>
-            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
-            <td class="c"><span class="score-num score-pos">+0.40</span></td>
-            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
-            <td>Earnings resilient but valuation stretched</td>
+            <td>Oil shock &rarr; inflation &rarr; real rate suppression + war premium + CB buying. $4,665/oz.</td>
           </tr>
           <tr>
             <td style="font-weight:600;">Silver</td>
             <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
-            <td class="c"><span class="score-num score-pos">+0.78</span></td>
+            <td class="c"><span class="score-num score-pos">+0.81</span></td>
             <td class="c"><span class="conviction-dot conv-high"></span> High</td>
-            <td>Industrial + monetary demand dual tailwind</td>
+            <td>Monetary + industrial dual tailwind. Solar demand structural. $73.03/oz.</td>
           </tr>
           <tr>
-            <td style="font-weight:600;">US Short Bonds</td>
+            <td style="font-weight:600;">Oil / Energy Equities</td>
             <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
-            <td class="c"><span class="score-num score-pos">+0.25</span></td>
-            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
-            <td>Yield attractive with limited duration risk</td>
+            <td class="c"><span class="score-num score-pos">+0.62</span></td>
+            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
+            <td>Hormuz closure structural supply shock. WTI $111.81. Energy equities at discount to spot.</td>
           </tr>
           <tr>
-            <td style="font-weight:600;">European Equities</td>
+            <td style="font-weight:600;">Agricultural Commodities</td>
             <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
-            <td class="c"><span class="score-num score-pos">+0.20</span></td>
-            <td class="c"><span class="conviction-dot conv-low"></span> Low</td>
-            <td>ECB easing + valuation discount, but growth fragile</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">Real Estate</td>
-            <td class="c"><span class="direction-pill dir-neutral">Neutral</span></td>
-            <td class="c"><span class="score-num score-neg">-0.20</span></td>
-            <td class="c"><span class="conviction-dot conv-low"></span> Low</td>
-            <td>Rate-sensitive; wait for clearer cut signal</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">USD</td>
-            <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
-            <td class="c"><span class="score-num score-neg">-0.25</span></td>
+            <td class="c"><span class="score-num score-pos">+0.59</span></td>
             <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
-            <td>Fed behind curve + fiscal deficit widening</td>
+            <td>Energy&rarr;fertilizer&rarr;food contagion chain activating. IMF Food Index +7.9% in 3 months.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">JPY</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.55</span></td>
+            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
+            <td>Safe haven in stagflation + bust scenarios. BOJ normalising. War premium bid.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">US Short Bonds (SHY)</td>
+            <td class="c"><span class="direction-pill dir-overweight">Overweight</span></td>
+            <td class="c"><span class="score-num score-pos">+0.22</span></td>
+            <td class="c"><span class="conviction-dot conv-low"></span> Low</td>
+            <td>2Y: 3.79% — attractive yield, limited duration risk vs TLT.</td>
           </tr>
           <tr>
             <td style="font-weight:600;">US Long Bonds (TLT)</td>
-            <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
-            <td class="c"><span class="score-num score-neg">-0.35</span></td>
-            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
-            <td>Duration risk elevated; term premium repricing</td>
+            <td class="c"><span class="direction-pill dir-neutral">Neutral</span></td>
+            <td class="c"><span class="score-num score-zero">+0.04</span></td>
+            <td class="c"><span class="conviction-dot conv-low"></span> Low</td>
+            <td>Stagflation bearish vs Defl. Bust bullish. Net near zero. Watch $85 support (TLT $86.68).</td>
           </tr>
           <tr>
-            <td style="font-weight:600;">High Yield Credit</td>
+            <td style="font-weight:600;">European Equities</td>
             <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
-            <td class="c"><span class="score-num score-neg">-0.18</span></td>
-            <td class="c"><span class="conviction-dot conv-low"></span> Low</td>
-            <td>Spreads tightening but default risk underpriced</td>
+            <td class="c"><span class="score-num score-neg">&minus;0.39</span></td>
+            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
+            <td>Most exposed to Hormuz closure. Germany trough. France contracting. ECB constrained.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">EM Equities (EEM)</td>
+            <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
+            <td class="c"><span class="score-num score-neg">&minus;0.51</span></td>
+            <td class="c"><span class="conviction-dot conv-med"></span> Med</td>
+            <td>Heterogeneous: OW India/Brazil/Australia within EM. UW oil-importing EM broadly.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Real Estate (REITs)</td>
+            <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
+            <td class="c"><span class="score-num score-neg">&minus;0.71</span></td>
+            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
+            <td>Rate-sensitive; stagflation worst case. No catalyst until clear rate cut cycle begins.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">US Large-Cap Equities</td>
+            <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
+            <td class="c"><span class="score-num score-neg">&minus;0.71</span></td>
+            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
+            <td>Stagflation crushes growth/tech. Tariffs squeeze margins. Migrate to energy sector within.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">High Yield Credit (HYG)</td>
+            <td class="c"><span class="direction-pill dir-underweight">Underweight</span></td>
+            <td class="c"><span class="score-num score-neg">&minus;1.04</span></td>
+            <td class="c"><span class="conviction-dot conv-high"></span> High</td>
+            <td>Worst score. Stagflation = margin compression + rising defaults. Avoid. $79.65.</td>
           </tr>
         </tbody>
       </table>
@@ -452,51 +456,51 @@ table.aa tr:hover td { background:var(--surface2); }
     <h2>Key Threshold Proximity</h2>
     <div class="threshold-list" id="thresholds">
       <div class="threshold-item">
+        <div class="threshold-icon th-alert">&#9888;</div>
+        <div class="threshold-info">
+          <div class="threshold-name">WTI Oil &gt; $100/bbl</div>
+          <div class="threshold-detail">Triggers: Stagflation confirmed. Current: $111.81 (Hormuz crisis)</div>
+          <div class="threshold-proximity prox-breached">&#9888; BREACHED &mdash; $11.81 above trigger</div>
+        </div>
+      </div>
+      <div class="threshold-item">
         <div class="threshold-icon th-warn">&#9888;</div>
         <div class="threshold-info">
           <div class="threshold-name">Core CPI &gt; 3.0%</div>
-          <div class="threshold-detail">Triggers: Stagflation +10pp. Current: 2.62% &rarr; approaching if March print surprises</div>
-          <div class="threshold-proximity prox-close">WATCHING</div>
+          <div class="threshold-detail">Triggers: Stagflation +10pp. Current: 2.5% (Feb, pre-crisis). March print April 11.</div>
+          <div class="threshold-proximity prox-close">WATCHING &mdash; surge expected in March data</div>
+        </div>
+      </div>
+      <div class="threshold-item">
+        <div class="threshold-icon th-warn">&#9888;</div>
+        <div class="threshold-info">
+          <div class="threshold-name">CPI YoY &gt; 3.5%</div>
+          <div class="threshold-detail">Triggers: Deflationary Bust risk rises. Current: 2.4% (Feb). Forward: 3.5-4.5% by May.</div>
+          <div class="threshold-proximity prox-close">WATCHING &mdash; within 10% of trigger</div>
         </div>
       </div>
       <div class="threshold-item">
         <div class="threshold-icon th-warn">&#9888;</div>
         <div class="threshold-info">
           <div class="threshold-name">10Y Yield &gt; 4.70%</div>
-          <div class="threshold-detail">Triggers: Duration stress, equity rotation. Current: 4.31%</div>
-          <div class="threshold-proximity prox-far">39bp away</div>
-        </div>
-      </div>
-      <div class="threshold-item">
-        <div class="threshold-icon th-warn">&#9888;</div>
-        <div class="threshold-info">
-          <div class="threshold-name">Oil (Brent) &gt; $100</div>
-          <div class="threshold-detail">Triggers: Stagflation confirmed. Current: $94</div>
-          <div class="threshold-proximity prox-close">$6 away</div>
-        </div>
-      </div>
-      <div class="threshold-item">
-        <div class="threshold-icon th-ok">&#10003;</div>
-        <div class="threshold-info">
-          <div class="threshold-name">HY Spreads &gt; 600bp</div>
-          <div class="threshold-detail">Triggers: Credit stress onset. Currently below threshold</div>
-          <div class="threshold-proximity prox-far">CLEAR</div>
+          <div class="threshold-detail">Triggers: Duration stress, equity rotation, Fed may intervene. Current: 4.31%</div>
+          <div class="threshold-proximity prox-far">WATCHING &mdash; 39bp away</div>
         </div>
       </div>
       <div class="threshold-item">
         <div class="threshold-icon th-warn">&#9888;</div>
         <div class="threshold-info">
           <div class="threshold-name">VIX &gt; 30</div>
-          <div class="threshold-detail">Triggers: Risk-off regime. Current: 23.87</div>
-          <div class="threshold-proximity prox-far">6.13 away</div>
+          <div class="threshold-detail">Triggers: Risk-off regime. Current: 23.87 (was 31.05 on March 27 &mdash; briefly breached)</div>
+          <div class="threshold-proximity prox-close">WATCHING &mdash; 6.13 below trigger; recently breached</div>
         </div>
       </div>
       <div class="threshold-item">
-        <div class="threshold-icon th-ok">&#10003;</div>
+        <div class="threshold-icon th-warn">&#9888;</div>
         <div class="threshold-info">
           <div class="threshold-name">Unemployment &gt; 5.0%</div>
-          <div class="threshold-detail">Triggers: Recession concern. Current: 4.3%</div>
-          <div class="threshold-proximity prox-far">70bp away</div>
+          <div class="threshold-detail">Triggers: Recession declared. Current: 4.3%. Tariffs add est. +0.6pp risk.</div>
+          <div class="threshold-proximity prox-close">WATCHING &mdash; 70bp away; tariff headwind building</div>
         </div>
       </div>
     </div>
@@ -506,45 +510,53 @@ table.aa tr:hover td { background:var(--surface2); }
   <div class="section">
     <h2>Week Ahead</h2>
     <div class="cal-list" id="week-ahead">
+      <div class="cal-item" style="border-left:3px solid var(--red);">
+        <div class="cal-date"><div class="cal-day">7</div><div class="cal-month">Apr</div></div>
+        <div class="cal-info">
+          <div class="cal-event">Trump Iran Deadline — Hormuz Reopening</div>
+          <div class="cal-detail">Binary: Ceasefire &rarr; oil drops, Stagflation &minus;10pp. Military strike &rarr; oil $130-140, VIX &gt;35, Bust +15pp.</div>
+        </div>
+        <span class="cal-impact impact-critical">CRITICAL</span>
+      </div>
       <div class="cal-item">
         <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
         <div class="cal-info">
           <div class="cal-event">US Initial Jobless Claims</div>
-          <div class="cal-detail">Alert if &gt; 230k — labour market softening signal</div>
+          <div class="cal-detail">Alert if &gt;230K. Tariff impact (+0.6pp unemployment est.) beginning to show in coming weeks.</div>
         </div>
         <span class="cal-impact impact-high">HIGH</span>
       </div>
       <div class="cal-item">
         <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
         <div class="cal-info">
-          <div class="cal-event">Fed Chair Powell Testimony</div>
-          <div class="cal-detail">Watch for rate cut timeline guidance and inflation assessment</div>
+          <div class="cal-event">Fed Chair Powell — Congressional Testimony</div>
+          <div class="cal-detail">Key framing of stagflation dilemma. Any Sept cut signal or inflation tolerance language moves markets.</div>
         </div>
         <span class="cal-impact impact-high">HIGH</span>
       </div>
-      <div class="cal-item">
+      <div class="cal-item" style="border-left:3px solid var(--red);">
         <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
         <div class="cal-info">
-          <div class="cal-event">US CPI (March)</div>
-          <div class="cal-detail">THE WEEK'S KEY DATA POINT — If Core &gt; 3.5%, Stagflation jumps to ~35%</div>
+          <div class="cal-event">US CPI — March 2026 (PIVOTAL REPORT)</div>
+          <div class="cal-detail">First CPI with oil spike. Forecast: Headline 3.0-3.5%, Core 2.8-3.2%. Core &gt;3.0% &rarr; Stagflation 55%+.</div>
         </div>
         <span class="cal-impact impact-critical">CRITICAL</span>
       </div>
       <div class="cal-item">
         <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
         <div class="cal-info">
-          <div class="cal-event">US Retail Sales (March)</div>
-          <div class="cal-detail">Consumer spending resilience check</div>
+          <div class="cal-event">US Retail Sales — March</div>
+          <div class="cal-detail">Consumer spending resilience. Decline &gt;0.5% MoM signals demand destruction beginning.</div>
         </div>
-        <span class="cal-impact impact-medium">MEDIUM</span>
+        <span class="cal-impact impact-high">HIGH</span>
       </div>
       <div class="cal-item">
-        <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
+        <div class="cal-date"><div class="cal-day">13</div><div class="cal-month">Apr</div></div>
         <div class="cal-info">
-          <div class="cal-event">Eurozone CPI Flash</div>
-          <div class="cal-detail">ECB cut path confirmation if trend continues down</div>
+          <div class="cal-event">Eurozone CPI Flash — March</div>
+          <div class="cal-detail">Energy shock impact on Europe. &gt;3% &rarr; ECB pause extended; EUR/USD directional.</div>
         </div>
-        <span class="cal-impact impact-medium">MEDIUM</span>
+        <span class="cal-impact impact-high">HIGH</span>
       </div>
     </div>
   </div>

@@ -1,0 +1,178 @@
+{
+  "report_date": "2026-04-06",
+  "report_type": "weekly_tactical",
+  "agent": "Boris / SignalDeck World Economist",
+  "inaugural_run": true,
+
+  "scenario_probabilities": {
+    "stagflation": 0.48,
+    "deflationary_bust": 0.20,
+    "soft_landing": 0.18,
+    "reacceleration": 0.14
+  },
+
+  "prior_scenario_probabilities": {
+    "soft_landing": 0.42,
+    "stagflation": 0.25,
+    "reacceleration": 0.22,
+    "deflationary_bust": 0.11,
+    "source": "economics_dashboard_html_prior"
+  },
+
+  "divergence_alerts": [
+    { "scenario": "stagflation", "shift_pp": 23, "direction": "up" },
+    { "scenario": "soft_landing", "shift_pp": -24, "direction": "down" },
+    { "scenario": "deflationary_bust", "shift_pp": 9, "direction": "up" },
+    { "scenario": "reacceleration", "shift_pp": -8, "direction": "down" }
+  ],
+
+  "key_indicators": {
+    "fed_funds_rate": 3.64,
+    "taylor_implied_rate": 4.375,
+    "behind_curve_gap_pp": 0.735,
+    "cpi_yoy_feb2026": 2.4,
+    "core_cpi_yoy_feb2026": 2.5,
+    "cpi_index_feb2026": 327.460,
+    "core_cpi_index_feb2026": 333.512,
+    "unemployment_mar2026": 4.3,
+    "unemployment_prior": 4.4,
+    "treasury_10y_apr2026": 4.31,
+    "treasury_2y_apr2026": 3.79,
+    "yield_curve_10y2y": 0.51,
+    "vix_apr2_2026": 23.87,
+    "vix_peak_mar27_2026": 31.05,
+    "m2_supply_feb2026_bn": 22667.3,
+    "m2_supply_sep2025_bn": 22169.8,
+    "nfci_mar27_2026": -0.43366,
+    "nfci_feb06_2026": -0.55317,
+    "michigan_sentiment_feb2026": 56.6,
+    "industrial_production_feb2026": 102.551,
+    "us_mfg_pmi_march2026": 52.7,
+    "us_services_pmi_march2026": 54.0
+  },
+
+  "commodity_levels": {
+    "wti_spot_usd_bbl": 111.81,
+    "wti_feb2026_avg_usd_bbl": 64.4355,
+    "wti_sep2025_avg_usd_bbl": 63.97727,
+    "oil_spot_change_pct_vs_feb_avg": 73.5,
+    "gold_spot_usd_oz": 4665.09,
+    "silver_spot_usd_oz": 73.03,
+    "gold_silver_ratio": 63.9,
+    "copper_lme_apr2_usd_mt": 12138.0,
+    "copper_lme_apr2_usd_lb": 5.51,
+    "copper_lme_feb2026_avg_usd_mt": 12951.345,
+    "copper_lme_sep2025_avg_usd_mt": 9994.773,
+    "imf_all_commodities_index_feb2026": 184.3532354,
+    "imf_all_commodities_index_sep2025": 167.4644910,
+    "imf_metals_index_feb2026": 220.0053072,
+    "imf_metals_index_sep2025": 192.5754242,
+    "imf_food_index_feb2026": 132.0631333,
+    "imf_food_index_sep2025": 126.6572420,
+    "cftc_gold_net_long_k_apr3": 163.2,
+    "cftc_gold_net_long_k_prior": 168.3,
+    "dxy_apr6": 99.8133,
+    "natural_gas_henry_hub_indicator": "not_retrieved"
+  },
+
+  "etf_proxies_apr6": {
+    "SPY": { "close": 658.075, "prev_close": 655.83, "change_pct": 0.34155 },
+    "TLT": { "close": 86.675, "prev_close": 86.79, "change_pct": -0.14403 },
+    "GLD": { "close": 427.2401, "prev_close": 429.41, "change_pct": -0.51424 },
+    "EEM": { "close": 57.065, "prev_close": 56.59, "change_pct": 0.83054 },
+    "UUP": { "close": 27.845, "prev_close": 27.86, "change_pct": -0.05384 },
+    "HYG": { "close": 79.645, "prev_close": 79.56, "change_pct": 0.10684 },
+    "LQD": { "close": 108.965, "prev_close": 109.12, "change_pct": -0.15121 },
+    "DJP": { "close": 49.08, "prev_close": 48.90, "change_pct": 0.36810 }
+  },
+
+  "g20_cycles": {
+    "US": { "phase": "late_expansion_to_peak", "momentum": -0.3, "transition_risk": "stagflation" },
+    "Euro_Area": { "phase": "contraction_risk", "momentum": -0.5, "transition_risk": "stagflation_recession" },
+    "China": { "phase": "trough_stabilising", "momentum": 0.2, "transition_risk": "deflation_trap" },
+    "Japan": { "phase": "late_expansion", "momentum": 0.1, "transition_risk": "oil_shock_drag" },
+    "UK": { "phase": "recovery", "momentum": 0.1, "transition_risk": "energy_inflation" },
+    "Canada": { "phase": "late_expansion", "momentum": 0.3, "transition_risk": "tariff_drag" },
+    "Germany": { "phase": "trough", "momentum": -0.3, "transition_risk": "prolonged_trough" },
+    "France": { "phase": "contraction", "momentum": -0.2, "transition_risk": "fiscal_stress" },
+    "India": { "phase": "expansion", "momentum": 0.6, "transition_risk": "low" },
+    "Brazil": { "phase": "expansion", "momentum": 0.4, "transition_risk": "commodity_price_reversal" },
+    "South_Korea": { "phase": "contraction", "momentum": -0.2, "transition_risk": "trade_war_deepening" },
+    "Australia": { "phase": "expansion", "momentum": 0.5, "transition_risk": "china_slowdown" }
+  },
+
+  "policy_rates": {
+    "Fed": 3.64,
+    "ECB_deposit": 3.15,
+    "BOJ": 0.75,
+    "BOE": 4.50,
+    "PBOC_MLF": 3.10,
+    "BOC": 2.75
+  },
+
+  "policy_asymmetry_scores": {
+    "Fed": 1,
+    "ECB": 0,
+    "BOJ": -1,
+    "BOE": -1,
+    "PBOC": -2,
+    "BOC": 0
+  },
+
+  "thresholds": {
+    "breached": ["WTI_100_per_bbl"],
+    "watching": [
+      "Core_CPI_3pct",
+      "CPI_YoY_3.5pct",
+      "Treasury_10Y_470bp",
+      "VIX_30",
+      "Unemployment_5pct",
+      "USD_CNY_7.50"
+    ],
+    "clear": [
+      "Italy_Germany_Spread_250bp",
+      "Fed_Funds_450bp"
+    ]
+  },
+
+  "net_asset_scores": {
+    "Gold": 1.10,
+    "Silver": 0.81,
+    "Oil_Energy_Equities": 0.62,
+    "Agricultural_Commodities": 0.59,
+    "JPY": 0.55,
+    "USD": 0.49,
+    "US_Short_Bonds_SHY": 0.22,
+    "US_Long_Bonds_TLT": 0.04,
+    "Copper": -0.18,
+    "EUR": -0.22,
+    "Crypto_BTC": -0.29,
+    "IG_Credit_LQD": -0.33,
+    "EM_Bonds": -0.37,
+    "European_Equities": -0.39,
+    "EM_Equities": -0.51,
+    "REITs_VNQ": -0.71,
+    "US_LC_Equities_SPY": -0.71,
+    "High_Yield_Credit_HYG": -1.04
+  },
+
+  "feedback_loops": {
+    "yield_fiscal_policy": { "status": "monitoring", "leg": "rising_yields_stable_policy" },
+    "dollar_em_commodities": { "status": "accelerating", "leg": "weak_dollar_supporting_commodities" },
+    "asset_prices_growth": { "status": "dampening", "leg": "policy_hold_wealth_effect_fading" },
+    "credit_growth_default": { "status": "early_stage", "leg": "loose_credit_tightening_trend" }
+  },
+
+  "key_events_upcoming": {
+    "trump_iran_deadline": "2026-04-07",
+    "us_jobless_claims": "2026-04-09",
+    "us_cpi_march": "2026-04-11",
+    "us_retail_sales_march": "2026-04-11",
+    "michigan_sentiment_prelim": "2026-04-12",
+    "eurozone_cpi_flash": "2026-04-13"
+  },
+
+  "dominant_narrative": "2026 Strait of Hormuz Crisis + US Trade War = Stagflation Regime",
+  "key_uncertainty": "Iran ceasefire binary (April 7 deadline) — resolution shifts scenarios by ~10-15pp",
+  "next_run_date": "2026-04-13"
+}

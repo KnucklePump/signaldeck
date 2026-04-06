@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorldEcon Weekly — 6 April 2026 | SignalDeck</title>
+<style>
+:root {
+  --bg: #0a0c10; --surface: #12151c; --surface2: #1a1e28;
+  --border: #252a3a; --text: #e1e4ed; --text2: #7a8099;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.10);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.10);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.10);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.10);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.10);
+  --purple: #a855f7; --purple-bg: rgba(168,85,247,0.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; font-size:14px; }
+.container { max-width:1200px; margin:0 auto; padding:0 24px; }
+a { color:var(--blue); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+/* Header */
+.report-header { background:var(--surface); border-bottom:1px solid var(--border); padding:20px 0; margin-bottom:24px; }
+.nav-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; font-size:13px; }
+.report-title { font-size:28px; font-weight:800; letter-spacing:-0.5px; }
+.report-title span { color:var(--blue); }
+.report-meta { font-size:12px; color:var(--text2); margin-top:4px; }
+.report-type-badge { display:inline-block; background:var(--orange-bg); color:var(--orange); border:1px solid rgba(249,115,22,0.3); border-radius:6px; padding:2px 10px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-right:8px; }
+
+/* Disclaimer */
+.disclaimer { background:var(--yellow-bg); border:1px solid rgba(234,179,8,0.3); border-radius:8px; padding:12px 16px; font-size:12px; color:var(--yellow); margin-bottom:24px; }
+
+/* Sections */
+.section { margin:32px 0; }
+.section h2 { font-size:18px; font-weight:700; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+.section-num { color:var(--text2); font-size:13px; font-weight:600; }
+.badge { font-size:11px; font-weight:700; padding:2px 10px; border-radius:10px; }
+.badge-red { background:var(--red-bg); color:var(--red); }
+.badge-orange { background:var(--orange-bg); color:var(--orange); }
+.badge-green { background:var(--green-bg); color:var(--green); }
+.badge-blue { background:var(--blue-bg); color:var(--blue); }
+
+/* What Changed */
+.change-list { display:flex; flex-direction:column; gap:10px; }
+.change-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 16px; border-left:4px solid; }
+.change-major { border-left-color:var(--red); }
+.change-notable { border-left-color:var(--orange); }
+.change-confirm { border-left-color:var(--green); }
+.change-title { font-size:14px; font-weight:700; margin-bottom:4px; }
+.change-chain { font-size:12px; color:var(--text2); line-height:1.5; }
+.chain-arrow { color:var(--blue); font-weight:700; }
+
+/* Scenario */
+.scenario-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.sc-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; position:relative; overflow:hidden; }
+.sc-card::after { content:''; position:absolute; top:0; left:0; right:0; height:4px; border-radius:4px 4px 0 0; }
+.sc-soft::after { background:var(--green); }
+.sc-stag::after { background:var(--orange); }
+.sc-defl::after { background:var(--red); }
+.sc-reacc::after { background:var(--blue); }
+.sc-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); }
+.sc-prob { font-size:38px; font-weight:800; margin:6px 0 2px; }
+.sc-delta { font-size:13px; font-weight:700; }
+.delta-up { color:var(--green); }
+.delta-down { color:var(--red); }
+.sc-bar { height:6px; background:var(--surface2); border-radius:3px; margin:10px 0 6px; overflow:hidden; }
+.sc-fill { height:100%; border-radius:3px; }
+.sc-desc { font-size:11px; color:var(--text2); line-height:1.4; }
+
+.divergence-alert { background:var(--red-bg); border:1px solid rgba(239,68,68,0.3); border-left:4px solid var(--red); border-radius:0 8px 8px 0; padding:12px 16px; margin-top:10px; }
+.div-alert-title { font-weight:700; color:var(--red); font-size:13px; }
+.div-alert-detail { font-size:12px; color:var(--text2); margin-top:3px; }
+
+/* Transition matrix */
+.matrix-wrap { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; }
+th, td { padding:9px 12px; text-align:center; border:1px solid var(--border); font-size:12px; }
+th { background:var(--surface2); color:var(--text2); font-weight:700; text-transform:uppercase; font-size:11px; letter-spacing:0.3px; }
+td.row-label { text-align:left; font-weight:600; background:var(--surface2); }
+td.diag { background:rgba(59,130,246,0.08); font-weight:700; }
+td.high { background:rgba(239,68,68,0.10); color:var(--red); font-weight:700; }
+
+/* Cycle map */
+.cycle-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
+.cycle-cell { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center; }
+.cycle-flag { font-size:18px; }
+.cycle-name { font-size:11px; font-weight:700; margin-top:2px; }
+.cycle-phase { font-size:11px; font-weight:700; margin-top:2px; }
+.phase-expansion { color:var(--green); }
+.phase-peak { color:var(--yellow); }
+.phase-contraction { color:var(--red); }
+.phase-trough { color:var(--orange); }
+.phase-recovery { color:var(--blue); }
+.cycle-mom { font-size:10px; color:var(--text2); margin-top:1px; }
+
+/* Stats */
+.stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.stat-box { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.stat-val { font-size:22px; font-weight:800; }
+.stat-lbl { font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:0.4px; margin-top:2px; }
+.stat-sub { font-size:11px; color:var(--text2); margin-top:3px; }
+.stat-val.danger { color:var(--red); }
+.stat-val.warn { color:var(--orange); }
+.stat-val.ok { color:var(--green); }
+
+/* Policy map */
+.policy-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.policy-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.policy-name { font-size:13px; font-weight:700; }
+.policy-rate { font-size:20px; font-weight:800; margin:4px 0; }
+.policy-implied { font-size:12px; color:var(--text2); }
+.policy-gap { font-size:12px; font-weight:700; padding:2px 8px; border-radius:6px; display:inline-block; margin-top:4px; }
+.gap-behind { background:var(--red-bg); color:var(--red); }
+.gap-ahead { background:var(--green-bg); color:var(--green); }
+.gap-ok { background:var(--surface2); color:var(--text2); }
+.policy-bias { font-size:11px; color:var(--text2); margin-top:6px; }
+
+/* Commodity */
+.commodity-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.commodity-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.commodity-name { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; color:var(--text2); }
+.commodity-price { font-size:22px; font-weight:800; margin:4px 0; }
+.commodity-status { font-size:11px; font-weight:700; padding:2px 8px; border-radius:6px; display:inline-block; }
+.status-deficit { background:var(--red-bg); color:var(--red); }
+.status-surplus { background:var(--green-bg); color:var(--green); }
+.status-tight { background:var(--orange-bg); color:var(--orange); }
+.commodity-detail { font-size:11px; color:var(--text2); margin-top:6px; line-height:1.4; }
+
+/* Flow */
+.flow-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+.flow-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.flow-title { font-size:13px; font-weight:700; margin-bottom:8px; }
+.flow-item { display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:12px; }
+.flow-arrow { font-size:16px; font-weight:700; width:20px; }
+.flow-in { color:var(--green); }
+.flow-out { color:var(--red); }
+
+/* Asset allocation */
+.aa-wrap { overflow-x:auto; background:var(--surface); border:1px solid var(--border); border-radius:12px; }
+table.aa th { border:none; border-bottom:1px solid var(--border); }
+table.aa td { border:none; border-bottom:1px solid rgba(37,42,58,0.5); }
+table.aa tr:last-child td { border-bottom:none; }
+table.aa tr:hover td { background:var(--surface2); }
+.pill { display:inline-block; padding:2px 10px; border-radius:6px; font-size:12px; font-weight:700; min-width:90px; text-align:center; }
+.pill-ow { background:var(--green-bg); color:var(--green); }
+.pill-uw { background:var(--red-bg); color:var(--red); }
+.pill-n { background:var(--surface2); color:var(--text2); }
+.pill-sow { background:rgba(34,197,94,0.05); color:rgba(34,197,94,0.8); border:1px solid rgba(34,197,94,0.2); }
+.pill-suw { background:rgba(239,68,68,0.05); color:rgba(239,68,68,0.8); border:1px solid rgba(239,68,68,0.2); }
+.score-pos { color:var(--green); font-weight:700; }
+.score-neg { color:var(--red); font-weight:700; }
+.score-zero { color:var(--text2); font-weight:600; }
+.conv-h { color:var(--green); font-weight:700; font-size:11px; }
+.conv-m { color:var(--yellow); font-weight:700; font-size:11px; }
+.conv-l { color:var(--text2); font-weight:600; font-size:11px; }
+
+/* Signals-to-action */
+.signal-block { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:12px; }
+.signal-condition { font-size:12px; color:var(--text2); font-family:monospace; background:var(--surface2); padding:8px 12px; border-radius:6px; margin-bottom:10px; }
+.signal-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.signal-ow, .signal-uw { font-size:12px; padding:8px 12px; border-radius:6px; }
+.signal-ow { background:var(--green-bg); color:var(--green); }
+.signal-uw { background:var(--red-bg); color:var(--red); }
+.signal-label { font-size:10px; text-transform:uppercase; font-weight:700; letter-spacing:0.5px; margin-bottom:3px; }
+.signal-rationale { font-size:12px; color:var(--text2); margin-top:8px; font-style:italic; }
+
+/* Structural heatmap */
+.heat-wrap { overflow-x:auto; }
+table.heat { font-size:11px; }
+table.heat th { font-size:10px; }
+.heat-bull { background:rgba(34,197,94,0.15); color:var(--green); font-weight:700; }
+.heat-bear { background:rgba(239,68,68,0.12); color:var(--red); font-weight:700; }
+.heat-neut { background:var(--surface2); color:var(--text2); }
+
+/* Thresholds */
+.thresh-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.thresh-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; gap:10px; }
+.thresh-icon { width:32px; height:32px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.th-breach { background:var(--red-bg); }
+.th-watch { background:var(--orange-bg); }
+.th-clear { background:var(--green-bg); }
+.thresh-name { font-size:12px; font-weight:700; }
+.thresh-detail { font-size:11px; color:var(--text2); margin-top:2px; }
+.thresh-prox { font-size:11px; font-weight:700; margin-top:3px; }
+.prox-breach { color:var(--red); }
+.prox-watch { color:var(--orange); }
+.prox-clear { color:var(--green); }
+
+/* Feedback loops */
+.loop-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.loop-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.loop-title { font-size:12px; font-weight:700; margin-bottom:6px; }
+.loop-position { font-size:12px; font-weight:700; padding:2px 8px; border-radius:6px; display:inline-block; margin-bottom:6px; }
+.loop-accel { background:var(--red-bg); color:var(--red); }
+.loop-damp { background:var(--green-bg); color:var(--green); }
+.loop-neutral { background:var(--surface2); color:var(--text2); }
+.loop-desc { font-size:11px; color:var(--text2); line-height:1.4; }
+
+/* Calendar */
+.cal-list { display:flex; flex-direction:column; gap:8px; }
+.cal-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:11px 14px; display:flex; align-items:center; gap:14px; }
+.cal-date { min-width:52px; text-align:center; }
+.cal-day { font-size:20px; font-weight:800; line-height:1; }
+.cal-month { font-size:10px; color:var(--text2); text-transform:uppercase; }
+.cal-info { flex:1; }
+.cal-event { font-size:13px; font-weight:600; }
+.cal-detail { font-size:11px; color:var(--text2); }
+.cal-impact { padding:2px 10px; border-radius:10px; font-size:11px; font-weight:700; }
+.impact-critical { background:var(--red-bg); color:var(--red); }
+.impact-high { background:var(--orange-bg); color:var(--orange); }
+.impact-medium { background:var(--yellow-bg); color:var(--yellow); }
+
+/* State snapshot */
+.state-box { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:16px; font-family:monospace; font-size:11px; color:var(--text2); line-height:1.6; overflow-x:auto; white-space:pre-wrap; }
+
+.site-footer { background:var(--surface); border-top:1px solid var(--border); padding:20px 0; margin-top:40px; text-align:center; font-size:12px; color:var(--text2); }
+
+@media(max-width:900px) {
+  .scenario-grid { grid-template-columns:repeat(2,1fr); }
+  .cycle-grid { grid-template-columns:repeat(3,1fr); }
+  .policy-grid { grid-template-columns:1fr 1fr; }
+  .commodity-grid { grid-template-columns:1fr 1fr; }
+  .thresh-grid { grid-template-columns:1fr 1fr; }
+  .stats-row { grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:600px) {
+  .scenario-grid, .flow-grid, .signal-actions, .loop-grid { grid-template-columns:1fr; }
+  .stats-row { grid-template-columns:1fr; }
+  .thresh-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  <div class="container">
+    <div class="nav-row">
+      <a href="https://donatien.ca/" style="color:var(--blue);">← Back to SignalDeck</a>
+      <a href="https://donatien.ca/economics/" style="color:var(--text2);">Economics Dashboard →</a>
+    </div>
+    <span class="report-type-badge">Weekly Tactical</span>
+    <div class="report-title"><span>World</span>Econ — Weekly Briefing</div>
+    <div class="report-meta">Boris AI Agent &middot; 6 April 2026 &middot; Inaugural run — no prior state for delta comparison</div>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="disclaimer">
+  <strong>DISCLAIMER:</strong> This is a quantitative macro-economic framework for educational purposes only. It is not financial advice. Economic forecasting involves inherent uncertainty — all scenario probabilities are model outputs, not predictions. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- ══════════ SECTION 2: WHAT CHANGED ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§2</span> What Changed This Week</h2>
+  <div class="change-list">
+
+    <div class="change-item change-major">
+      <div class="change-title" style="color:var(--red);">🔴 MAJOR — Strait of Hormuz Crisis Intensifies: WTI $111.81/bbl</div>
+      <div class="change-chain">
+        Iran declared Strait closed (~March 4) → WTI surged from $64.44 avg (Feb) to $111.81 (+73.5%) → Largest oil supply disruption since 1970s
+        <span class="chain-arrow"> → </span> Energy inflation to cascade into March/April CPI prints
+        <span class="chain-arrow"> → </span> Feb CPI (2.4% YoY, pre-crisis) will be revised sharply higher as energy feeds through
+        <span class="chain-arrow"> → </span> Fed constrained: cannot cut with inflation re-accelerating, cannot hike with growth slowing
+        <span class="chain-arrow"> → </span> Classic Stagflation setup. Trump deadline for Strait reopening expires Tuesday April 7 — escalation/resolution binary.
+      </div>
+    </div>
+
+    <div class="change-item change-major">
+      <div class="change-title" style="color:var(--red);">🔴 MAJOR — 100% Pharma Tariffs Finalized; Trade War Deepens</div>
+      <div class="change-chain">
+        US finalised 100% tariffs on branded pharmaceutical imports (effective July 31, 2026)
+        <span class="chain-arrow"> → </span> Estimated average household tax burden: $1,500/year
+        <span class="chain-arrow"> → </span> Yale Budget Lab: -0.4pp real GDP impact in 2026, +0.6pp unemployment
+        <span class="chain-arrow"> → </span> Supply chain reshoring cost pressures add to structural inflation
+        <span class="chain-arrow"> → </span> Liberation Day anniversary (April 2025): investors reassessing "American exceptionalism" narrative; US assets facing capital flow headwinds.
+      </div>
+    </div>
+
+    <div class="change-item change-notable">
+      <div class="change-title" style="color:var(--orange);">🟠 NOTABLE — PMI Expansion Continues But Services Slowing</div>
+      <div class="change-chain">
+        ISM Manufacturing PMI: 52.7 (March, fastest expansion since Aug 2022) — tariff front-running & defence sector
+        <span class="chain-arrow"> → </span> ISM Services PMI: 54.0 (March, vs 56.1 Feb) — slowing as energy costs squeeze margins
+        <span class="chain-arrow"> → </span> Input costs surging at fastest rate since Aug 2022 (energy + supply chain)
+        <span class="chain-arrow"> → </span> Demand still present but cost pressures accelerating. Growth top is likely near.
+      </div>
+    </div>
+
+    <div class="change-item change-notable">
+      <div class="change-title" style="color:var(--orange);">🟠 NOTABLE — Gold at $4,665/oz; Silver $73.03/oz — Safe Haven Surge</div>
+      <div class="change-chain">
+        Gold spot: $4,665.09/oz (up ~$1,640/yr = +54% YoY) — driven by Iran war safe-haven bid + reserve diversification + real yield dynamics
+        <span class="chain-arrow"> → </span> Silver: $73.03/oz (gold/silver ratio: 63.9 — within 60-80 normal range)
+        <span class="chain-arrow"> → </span> Central bank gold demand remains structurally elevated (post-2022 sanctions diversification)
+        <span class="chain-arrow"> → </span> CFTC speculative positioning reduced 5.1K contracts (163.2K vs 168.3K prior week) — still very long but slight de-risking.
+      </div>
+    </div>
+
+    <div class="change-item change-notable">
+      <div class="change-title" style="color:var(--orange);">🟠 NOTABLE — VIX Declining from 31 Peak; Markets Pricing Ceasefire Optionality</div>
+      <div class="change-chain">
+        VIX: 31.05 (March 27) → 25.25 (March 31) → 23.87 (April 2) — declining as ceasefire proposals emerge
+        <span class="chain-arrow"> → </span> SPY +0.34% today; EEM +0.83% (EM catching a bid on USD weakness)
+        <span class="chain-arrow"> → </span> DXY: 99.81 — dollar softening despite war uncertainty (tariff-driven "Sell America" trade persistent)
+        <span class="chain-arrow"> → </span> Binary risk: If Strait reopens → stagflation probability drops; if Trump strikes Iran → oil spikes to $130-140, Deflationary Bust risk jumps.
+      </div>
+    </div>
+
+    <div class="change-item change-confirm">
+      <div class="change-title" style="color:var(--green);">🟢 CONFIRMING — China Holds Steady; Commodity Complex Continues Broader Uptrend</div>
+      <div class="change-chain">
+        China GDP target set at 4.5-5% (first below-5% target since 1990s) — signals policy space preservation for 2027-30
+        <span class="chain-arrow"> → </span> Copper: ~$5.51/lb (LME $12,138/MT) — tariff front-running + electrification demand; up from $4.54/lb in Sep 2025
+        <span class="chain-arrow"> → </span> All-commodities IMF index: 184.35 (Feb 2026) vs 167.46 (Sep 2025) = +10.1% in 6 months
+        <span class="chain-arrow"> → </span> Metals index up 14.2% (Sep→Feb). Broad commodity supercycle thesis intact despite geopolitical noise.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════ SECTION 3: SCENARIO DASHBOARD ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§3</span> Scenario Dashboard</h2>
+
+  <div class="scenario-grid">
+    <div class="sc-card sc-stag">
+      <div class="sc-label">Stagflation / Supply Shock</div>
+      <div class="sc-prob" style="color:var(--orange);">48%</div>
+      <div class="sc-delta delta-up">↑ +23pp vs prior</div>
+      <div class="sc-bar"><div class="sc-fill" style="width:48%; background:var(--orange);"></div></div>
+      <div class="sc-desc">Oil shock + trade war creates classic stagflation. Fed trapped between inflation and growth. Energy → food → core CPI cascade. Dominant 3-6 month scenario.</div>
+    </div>
+    <div class="sc-card sc-defl">
+      <div class="sc-label">Deflationary Bust</div>
+      <div class="sc-prob" style="color:var(--red);">20%</div>
+      <div class="sc-delta delta-up">↑ +9pp vs prior</div>
+      <div class="sc-bar"><div class="sc-fill" style="width:20%; background:var(--red);"></div></div>
+      <div class="sc-desc">Hormuz escalation + tariff shock triggers demand collapse. Growth goes negative. Fed forced into emergency cuts. Credit cycle turns. Tail risk if conflict escalates.</div>
+    </div>
+    <div class="sc-card sc-soft">
+      <div class="sc-label">Soft Landing</div>
+      <div class="sc-prob" style="color:var(--green);">18%</div>
+      <div class="sc-delta delta-down">↓ −24pp vs prior</div>
+      <div class="sc-bar"><div class="sc-fill" style="width:18%; background:var(--green);"></div></div>
+      <div class="sc-desc">Requires: Strait reopens quickly, tariff rollbacks, inflation stays contained. PMI and labour market resilience point to this if geopolitical risk resolves. Bull case only.</div>
+    </div>
+    <div class="sc-card sc-reacc">
+      <div class="sc-label">Reacceleration</div>
+      <div class="sc-prob" style="color:var(--blue);">14%</div>
+      <div class="sc-delta delta-down">↓ −8pp vs prior</div>
+      <div class="sc-bar"><div class="sc-fill" style="width:14%; background:var(--blue);"></div></div>
+      <div class="sc-desc">Requires oil shock resolution AND AI productivity surge absorbs cost pressures. China reaccelerates on stimulus. Manufacturing PMI strength points this way if supply clears.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <h3 style="font-size:14px; font-weight:700; color:var(--red); margin-bottom:10px;">⚠️ Divergence Alerts — 4 Active (All &gt;3pp shifts)</h3>
+    <div class="divergence-alert" style="margin-bottom:8px;">
+      <div class="div-alert-title">↓ SOFT LANDING: −24pp (42% → 18%) — MAJOR SHIFT</div>
+      <div class="div-alert-detail">Strait of Hormuz closure + 100% pharma tariffs make soft-landing path implausible unless conflict resolves within weeks. Market is likely still underweighting this shift.</div>
+    </div>
+    <div class="divergence-alert" style="margin-bottom:8px;">
+      <div class="div-alert-title">↑ STAGFLATION: +23pp (25% → 48%) — DOMINANT REGIME SHIFT</div>
+      <div class="div-alert-detail">Oil supply shock ($64.44 → $111.81/bbl, +73.5%) + escalating tariff cascade = textbook stagflation trigger. Fed dual mandate now formally in conflict.</div>
+    </div>
+    <div class="divergence-alert" style="margin-bottom:8px;">
+      <div class="div-alert-title">↑ DEFLATIONARY BUST: +9pp (11% → 20%)</div>
+      <div class="div-alert-detail">Hard landing tail risk rises as energy shock + tariffs compound. If US strikes Iran and oil goes to $140+, demand destruction triggers recession cascade.</div>
+    </div>
+    <div class="divergence-alert">
+      <div class="div-alert-title">↓ REACCELERATION: −8pp (22% → 14%)</div>
+      <div class="div-alert-detail">Supply-side constraints now dominate. Pre-war reacceleration narrative (China PMI, AI capex) intact but overwhelmed by Hormuz premium.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;">
+    <h3 style="font-size:14px; font-weight:700; margin-bottom:10px;">Transition Probability Matrix (3-6 Month Horizon)</h3>
+    <div class="matrix-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left;">From → To</th>
+            <th>Soft Landing</th>
+            <th>Stagflation</th>
+            <th>Deflationary</th>
+            <th>Reacceleration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-label">Stagflation (current)</td>
+            <td>20%</td>
+            <td class="diag">40%</td>
+            <td class="high">30%</td>
+            <td>10%</td>
+          </tr>
+          <tr>
+            <td class="row-label">Soft Landing</td>
+            <td class="diag">50%</td>
+            <td class="high">25%</td>
+            <td>15%</td>
+            <td>10%</td>
+          </tr>
+          <tr>
+            <td class="row-label">Deflationary Bust</td>
+            <td>10%</td>
+            <td>15%</td>
+            <td class="diag">55%</td>
+            <td>20%</td>
+          </tr>
+          <tr>
+            <td class="row-label">Reacceleration</td>
+            <td>25%</td>
+            <td class="high">30%</td>
+            <td>10%</td>
+            <td class="diag">35%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:11px; color:var(--text2); margin-top:6px;">Key insight: From Stagflation, the dominant non-persistence path (30%) is Deflationary Bust — if the oil shock destroys demand faster than inflation stays sticky. Watch the April 11 CPI print and jobless claims as leading indicators of which path dominates.</p>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 4: MACRO CYCLE MAP ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§4</span> G20 Macro Cycle Map</h2>
+  <div class="cycle-grid">
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇺🇸</div>
+      <div class="cycle-name">United States</div>
+      <div class="cycle-phase phase-peak">Late Expansion→Peak</div>
+      <div class="cycle-mom">Momentum: −0.3 ↓</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇪🇺</div>
+      <div class="cycle-name">Euro Area</div>
+      <div class="cycle-phase phase-contraction">Contraction Risk</div>
+      <div class="cycle-mom">Momentum: −0.5 ↓</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇨🇳</div>
+      <div class="cycle-name">China</div>
+      <div class="cycle-phase phase-trough">Trough / Stabilising</div>
+      <div class="cycle-mom">Momentum: +0.2 →</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇯🇵</div>
+      <div class="cycle-name">Japan</div>
+      <div class="cycle-phase phase-peak">Late Expansion</div>
+      <div class="cycle-mom">Momentum: +0.1 →</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇬🇧</div>
+      <div class="cycle-name">United Kingdom</div>
+      <div class="cycle-phase phase-recovery">Recovery</div>
+      <div class="cycle-mom">Momentum: +0.1 →</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇨🇦</div>
+      <div class="cycle-name">Canada</div>
+      <div class="cycle-phase phase-expansion">Late Expansion</div>
+      <div class="cycle-mom">Momentum: +0.3 ↑</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇩🇪</div>
+      <div class="cycle-name">Germany</div>
+      <div class="cycle-phase phase-trough">Trough</div>
+      <div class="cycle-mom">Momentum: −0.3 ↓</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇫🇷</div>
+      <div class="cycle-name">France</div>
+      <div class="cycle-phase phase-contraction">Contraction</div>
+      <div class="cycle-mom">Momentum: −0.2 ↓</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇮🇳</div>
+      <div class="cycle-name">India</div>
+      <div class="cycle-phase phase-expansion">Expansion</div>
+      <div class="cycle-mom">Momentum: +0.6 ↑</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇧🇷</div>
+      <div class="cycle-name">Brazil</div>
+      <div class="cycle-phase phase-expansion">Expansion</div>
+      <div class="cycle-mom">Momentum: +0.4 ↑</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇰🇷</div>
+      <div class="cycle-name">South Korea</div>
+      <div class="cycle-phase phase-contraction">Contraction</div>
+      <div class="cycle-mom">Momentum: −0.2 ↓</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇦🇺</div>
+      <div class="cycle-name">Australia</div>
+      <div class="cycle-phase phase-expansion">Expansion</div>
+      <div class="cycle-mom">Momentum: +0.5 ↑</div>
+    </div>
+  </div>
+  <div style="margin-top:12px; font-size:12px; color:var(--text2); background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+    <strong style="color:var(--text);">Synchronisation Score: Low (Desynchronised)</strong> — G20 economies are in divergent phases. DM commodity importers (Europe, Korea) face contraction risk from the oil shock while commodity exporters (Canada, Australia, Brazil) benefit. India stands out as structural winner — domestic demand-driven, partial insulation from Hormuz disruption.
+  </div>
+</div>
+
+<!-- ══════════ SECTION 5: POLICY PRESSURE MAP ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§5</span> Policy Pressure Map</h2>
+
+  <div class="stats-row" style="margin-bottom:20px;">
+    <div class="stat-box">
+      <div class="stat-val warn">3.64%</div>
+      <div class="stat-lbl">Fed Funds Rate</div>
+      <div class="stat-sub">As of March 2026. Held steady.</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val warn">4.375%</div>
+      <div class="stat-lbl">Taylor Implied Rate</div>
+      <div class="stat-sub">Using fwd inflation 3.2%, output gap −0.6%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val danger">+0.74pp</div>
+      <div class="stat-lbl">Behind-Curve Gap</div>
+      <div class="stat-sub">Gap will widen as energy feeds CPI</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">Oct 2026</div>
+      <div class="stat-lbl">First Cut Priced</div>
+      <div class="stat-sub">Market odds: Sept–Oct; 1 cut total 2026</div>
+    </div>
+  </div>
+
+  <div class="policy-grid">
+    <div class="policy-card">
+      <div class="policy-name">🇺🇸 Federal Reserve</div>
+      <div class="policy-rate">3.64%</div>
+      <div class="policy-implied">Taylor implied: 4.375%</div>
+      <div class="policy-gap gap-behind">BEHIND CURVE (+0.74pp)</div>
+      <div class="policy-bias">Mandate conflict: inflation rising from oil shock, growth slowing from tariffs + energy. Dual mandate formally in tension. No cut path until CPI trajectory confirmed lower. Asymmetry score: +1 (slightly hawkish forced by inflation).</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-name">🇪🇺 European Central Bank</div>
+      <div class="policy-rate">3.15%*</div>
+      <div class="policy-implied">*Deposit rate; paused all 2026</div>
+      <div class="policy-gap gap-ahead">ON HOLD (pause year)</div>
+      <div class="policy-bias">Germany 10Y: 2.81% (Jan 2026). Oil shock hits Europe hardest (energy importer). Peripheral spread risk (Italy-Germany) to monitor. ECB faces stagflation dilemma similar to Fed but with less policy space. No hikes; no cuts. TPI available if fragmentation emerges.</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-name">🇯🇵 Bank of Japan</div>
+      <div class="policy-rate">0.75%</div>
+      <div class="policy-implied">30-year high; normalisation continues</div>
+      <div class="policy-gap gap-ok">GRADUALLY HIKING</div>
+      <div class="policy-bias">BOJ signalling further hikes if growth/inflation unfold as projected. Oil shock cuts both ways: imported inflation (bullish for rates) but growth drag. JPY: if USD/JPY &gt; 160 → FX intervention risk. Currently monitoring carefully.</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-name">🇬🇧 Bank of England</div>
+      <div class="policy-rate">4.50%*</div>
+      <div class="policy-implied">*Estimated; 1-2 cuts priced 2026</div>
+      <div class="policy-gap gap-ahead">EASING CYCLE</div>
+      <div class="policy-bias">Oil shock complicates cut path (imported inflation via GBP weakness). 1-2 cuts still priced but later than initially thought. UK especially vulnerable to energy costs given reliance on gas heating. Fiscal room limited.</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-name">🇨🇳 PBOC</div>
+      <div class="policy-rate">~3.1%*</div>
+      <div class="policy-implied">*MLF rate; easing bias maintained</div>
+      <div class="policy-gap gap-ahead">ACCOMMODATIVE</div>
+      <div class="policy-bias">GDP target 4.5-5% (lowest since 1990s). Stimulus: 1.3T yuan ultra-long bonds + 4.4T yuan local gov bonds. MLF/RRR cuts on table. Deflation remains primary domestic risk — energy shock reduces PPI deflation but demand still weak.</div>
+    </div>
+    <div class="policy-card">
+      <div class="policy-name">🇨🇦 Bank of Canada</div>
+      <div class="policy-rate">~2.75%*</div>
+      <div class="policy-implied">*Estimated, closely tracks Fed</div>
+      <div class="policy-gap gap-ok">HOLDING</div>
+      <div class="policy-bias">Canada benefits from oil exporter status (WTI at $111 is fiscal windfall). But heavily exposed to US tariffs. BOC typically stays within 100bp of Fed — current spread manageable. Housing market sensitive to rate levels.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+    <strong style="font-size:13px;">Political Risk Radar — Week of April 6</strong>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:10px; font-size:12px;">
+      <div style="background:var(--red-bg); border-radius:8px; padding:10px;">
+        <div style="font-weight:700; color:var(--red);">🔴 HIGH RISK</div>
+        <div style="margin-top:4px; color:var(--text2);">US-Iran: Trump deadline expires Tuesday April 7. Binary escalation/resolution event. Ceasefire proposal from Egypt/Pakistan/Turkey on table.</div>
+      </div>
+      <div style="background:var(--orange-bg); border-radius:8px; padding:10px;">
+        <div style="font-weight:700; color:var(--orange);">🟠 MEDIUM RISK</div>
+        <div style="margin-top:4px; color:var(--text2);">Trade war: 100% pharma tariffs finalized; markets watching for retaliatory EU/China response. "Liberation Day" anniversary investor sentiment fragile.</div>
+      </div>
+      <div style="background:var(--yellow-bg); border-radius:8px; padding:10px;">
+        <div style="font-weight:700; color:var(--yellow);">🟡 WATCHING</div>
+        <div style="margin-top:4px; color:var(--text2);">China: PBOC next policy signal. India elections ongoing (domestic expansion intact). Germany: no government majority risk (fiscal paralysis).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 6: COMMODITY BALANCE ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§6</span> Commodity Balance Dashboard</h2>
+  <div class="commodity-grid">
+    <div class="commodity-card">
+      <div class="commodity-name">Energy — Crude Oil (WTI)</div>
+      <div class="commodity-price warn">$111.81/bbl</div>
+      <div><span class="commodity-status status-deficit">ACUTE DEFICIT</span></div>
+      <div class="commodity-detail">Up from Feb avg $64.4355. Strait of Hormuz closure (~20% of global seaborne oil). US shale breakeven: $45-55 (suppliers still profitable at $111). OPEC+ spare capacity deployed. Key risk: sustained closure → demand destruction at $130+. Marginal cost: $45-55. Current price: 2x above breakeven → attracting new supply but 6-12 month lag.</div>
+    </div>
+    <div class="commodity-card">
+      <div class="commodity-name">Precious — Gold</div>
+      <div class="commodity-price ok">$4,665.09/oz</div>
+      <div><span class="commodity-status status-deficit">STRONGLY BID</span></div>
+      <div class="commodity-detail">All-in sustaining cost: ~$1,200-1,400/oz. Trading at 3.3x above AISC. CFTC net long: 163.2K contracts (reduced from 168.3K — slight de-risking). Real 10Y yield ~0.41% (4.31% nominal − 3.9% est. inflation) — still low enough to support gold. Central bank structural buying persists. War premium elevated.</div>
+    </div>
+    <div class="commodity-card">
+      <div class="commodity-name">Precious — Silver</div>
+      <div class="commodity-price ok">$73.03/oz</div>
+      <div><span class="commodity-status status-tight">DUAL BID</span></div>
+      <div class="commodity-detail">Gold/silver ratio: 63.9 (within 60-80 normal range). Industrial demand (solar panels ~55% of demand) reinforced by energy transition. Safe-haven bid from gold correlation. AISC: ~$15-20/oz — trading at 3.7x cost. Electrification supercycle thesis intact.</div>
+    </div>
+    <div class="commodity-card">
+      <div class="commodity-name">Industrial — Copper (LME)</div>
+      <div class="commodity-price">~$5.51/lb</div>
+      <div><span class="commodity-status status-tight">TIGHT</span></div>
+      <div class="commodity-detail">LME: $12,138/MT (Apr 2). Recent range $12,900-13,200. Feb FRED avg: $12,951.35/MT = $5.88/lb. Up 29.6% from Sep 2025 ($4.54/lb). Tariff front-running, electrification demand, AI data center buildout all supporting. Marginal cost: $2.50-3.50/lb — trading at 1.7-2.2x. Structural deficit thesis intact.</div>
+    </div>
+    <div class="commodity-card">
+      <div class="commodity-name">Agriculture — Food Index (IMF)</div>
+      <div class="commodity-price">132.06</div>
+      <div><span class="commodity-status status-tight">RISING</span></div>
+      <div class="commodity-detail">IMF Food Index Feb 2026: 132.0631. Up from 122.38 (Nov 2025) = +7.9% in 3 months. Energy→fertilizer→food contagion chain activating: oil spike will flow through to agricultural input costs with 3-6 month lag. March-June CPI food component to accelerate. Climate: La Niña monitoring ongoing for Brazil (soybeans) and India (monsoon Jun-Sep).</div>
+    </div>
+    <div class="commodity-card">
+      <div class="commodity-name">Metals Index (IMF)</div>
+      <div class="commodity-price">220.01</div>
+      <div><span class="commodity-status status-deficit">ELEVATED</span></div>
+      <div class="commodity-detail">IMF Metals Index Feb 2026: 220.005. Up from 192.58 (Sep 2025) = +14.2% in 5 months. Driven by copper surge + tariff front-running in aluminium, nickel. DM supply tightness structural (10+ year mine development cycle). Risk: China slowdown could pressure demand side. All-commodities index: 184.35 (Feb 2026) vs 167.46 (Sep 2025) = +10.1%.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; font-size:12px; color:var(--text2);">
+    <strong style="color:var(--red);">⚠️ Contagion Chain Alert — Energy→Agriculture→Inflation→Policy:</strong>
+    Oil spike ($111.81/bbl) → Higher diesel/transport costs → Higher fertilizer costs (natgas is ammonia input) → Farm gate cost inflation → Consumer food CPI to lag 3-6 months → March CPI (due April 11) will show energy, but food acceleration begins Q2 2026. This chain forces headline CPI above 4% by May-June 2026 even if oil stabilizes here.
+  </div>
+</div>
+
+<!-- ══════════ SECTION 7: FLOW MOMENTUM ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§7</span> Capital Flow Momentum</h2>
+  <div class="flow-grid">
+    <div class="flow-card">
+      <div class="flow-title">🏦 Real Money Flows (Slow, Structural)</div>
+      <div class="flow-item"><span class="flow-arrow flow-out">→</span> <span>Gold: Strong structural inflows — central bank buying + reserve diversification. Pension reallocation to real assets accelerating.</span></div>
+      <div class="flow-item"><span class="flow-arrow flow-out">→</span> <span>Commodities: Energy equities and resource sector seeing institutional re-rating. Long-underweight sector now receiving rebalancing flows.</span></div>
+      <div class="flow-item"><span class="flow-arrow flow-out">←</span> <span style="color:var(--red);">US Equities: "Sell America" trade structural — investors reassessing US exceptionalism narrative. Liberation Day 1-year anniversary accelerates reassessment. Dollar assets losing safe-haven premium.</span></div>
+      <div class="flow-item"><span class="flow-arrow flow-out">←</span> <span style="color:var(--red);">US Long Bonds (TLT): Foreign reserve managers reducing USD duration. Fiscal deficit + debt service rising. Term premium repricing structural.</span></div>
+    </div>
+    <div class="flow-card">
+      <div class="flow-title">⚡ Fast Money Flows (Speculative, Volatile)</div>
+      <div class="flow-item"><span class="flow-arrow flow-in">→</span> <span>Safe havens: Gold, JPY, short-dated UST receiving flight-to-quality bid. VIX declining from 31 peak suggests risk appetite returning cautiously.</span></div>
+      <div class="flow-item"><span class="flow-arrow flow-in">→</span> <span>EM: EEM +0.83% today as DXY softens (99.81). CFTC speculative gold longs reducing (163.2K→ from 168.3K) — tactical de-risking at elevated levels.</span></div>
+      <div class="flow-item"><span class="flow-arrow flow-out">←</span> <span style="color:var(--red);">USD carry unwind: Dollar softening (DXY 99.81) despite war risk — unusual. Reflects tariff-driven "Sell America" dominating geopolitical safe-haven bid. Credit: HYG volume 53.8M (prev day) vs 27.8M today — massive prior-day liquidation suggests institutional repositioning.</span></div>
+      <div class="flow-item"><span class="flow-arrow flow-out">←</span> <span style="color:var(--red);">High yield: Elevated HYG volumes signal credit spread re-pricing in progress. Stagflation historically widens IG and HY spreads as default probabilities rise.</span></div>
+    </div>
+  </div>
+  <div style="margin-top:12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; font-size:12px; color:var(--text2);">
+    <strong style="color:var(--text);">Rate Differential Flows:</strong> US-EU rate differential (Fed 3.64% vs ECB ~3.15%) still favors USD-denominated assets, but narrowing. US-Japan spread (3.64% vs 0.75%) normally would crush JPY carry — but ceasefire optionality and stagflation safe-haven demand are supporting JPY. M2 expanding at ~4.5% annualized ($22,169.8B Sep → $22,667.3B Feb = +$497.5B in 5 months) — liquidity conditions still supportive despite tightening NFCI trend (-0.434 from -0.553 in Feb 2026).
+  </div>
+</div>
+
+<!-- ══════════ SECTION 8: ASSET ALLOCATION COMPASS ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§8</span> Tactical Asset Allocation Compass</h2>
+  <p style="font-size:12px; color:var(--text2); margin-bottom:14px;">Probability-weighted scores: SL 18% × SL-score + Stag 48% × Stag-score + Defl 20% × Defl-score + Reacc 14% × Reacc-score. Scale: −2 (strongly bearish) to +2 (strongly bullish).</p>
+
+  <div class="aa-wrap">
+    <table class="aa">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Asset Class</th>
+          <th class="c">Direction</th>
+          <th class="c">Net Score</th>
+          <th class="c">Conviction</th>
+          <th style="text-align:left;">3-6M View & Logic Chain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700;">Gold</td>
+          <td style="text-align:center;"><span class="pill pill-ow">Overweight</span></td>
+          <td style="text-align:center;"><span class="score-pos">+1.10</span></td>
+          <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
+          <td style="font-size:12px;">Oil shock → inflation → real rate suppression → gold bid. Central bank buying structural. War premium. Stagflation archetype = gold's best environment.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">Silver</td>
+          <td style="text-align:center;"><span class="pill pill-ow">Overweight</span></td>
+          <td style="text-align:center;"><span class="score-pos">+0.81</span></td>
+          <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
+          <td style="font-size:12px;">Industrial + monetary dual tailwind. Solar demand structural. Tracks gold on safe-haven days, copper on industrial days. $73.03/oz — strong absolute level.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">Oil / Energy Equities</td>
+          <td style="text-align:center;"><span class="pill pill-ow">Overweight</span></td>
+          <td style="text-align:center;"><span class="score-pos">+0.62</span></td>
+          <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
+          <td style="font-size:12px;">$111.81/bbl WTI. Supply shock structural until Strait reopens. Energy equities (XLE, CVX, XOM) trading at discount to spot. Stagflation + deflationary bust both have energy complex bid via supply disruption.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">Agricultural Commodities</td>
+          <td style="text-align:center;"><span class="pill pill-ow">Overweight</span></td>
+          <td style="text-align:center;"><span class="score-pos">+0.59</span></td>
+          <td style="text-align:center;"><span class="conv-m">MEDIUM</span></td>
+          <td style="font-size:12px;">Energy→fertilizer→food contagion chain activating. IMF Food Index +7.9% in 3 months. La Niña climate risk to Brazil soy, India rice. Agricultural ETFs (DBA, WEAT) as inflation hedge.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">JPY</td>
+          <td style="text-align:center;"><span class="pill pill-sow">Slight OW</span></td>
+          <td style="text-align:center;"><span class="score-pos">+0.55</span></td>
+          <td style="text-align:center;"><span class="conv-m">MEDIUM</span></td>
+          <td style="font-size:12px;">Safe haven in stagflation + deflationary bust. BOJ normalizing (0.75%) supports carry reduction. War premium. Monitor: if JPY &gt; 160/USD → intervention risk amplifies. EWJ hedge currency exposure.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">USD</td>
+          <td style="text-align:center;"><span class="pill pill-sow">Slight OW</span></td>
+          <td style="text-align:center;"><span class="score-pos">+0.49</span></td>
+          <td style="text-align:center;"><span class="conv-l">LOW</span></td>
+          <td style="font-size:12px;">Mixed signals: Stagflation + deflationary bust structurally bullish for USD, but "Sell America" trade and DXY already at 99.81 (weak). Conviction low — watch DXY 100 as key pivot. Long-term USD bearish on fiscal trajectory.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">US Short Bonds (SHY)</td>
+          <td style="text-align:center;"><span class="pill pill-sow">Slight OW</span></td>
+          <td style="text-align:center;"><span class="score-pos">+0.22</span></td>
+          <td style="text-align:center;"><span class="conv-l">LOW</span></td>
+          <td style="font-size:12px;">2Y yield: 3.79% — attractive yield with limited duration risk. Stagflation holds rates elevated near-term, deflationary bust would see cuts. Net slightly positive across scenarios. Better risk-adjusted than long bonds.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">US Long Bonds (TLT)</td>
+          <td style="text-align:center;"><span class="pill pill-n">Neutral</span></td>
+          <td style="text-align:center;"><span class="score-zero">+0.04</span></td>
+          <td style="text-align:center;"><span class="conv-l">LOW</span></td>
+          <td style="font-size:12px;">10Y: 4.31%. Stagflation bearish (inflation erodes real return), deflationary bust bullish (flight to quality). Net near zero. Watch: if TLT breaks below $85 → yields approach 4.70% threshold. Currently $86.68.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">Copper</td>
+          <td style="text-align:center;"><span class="pill pill-n">Neutral</span></td>
+          <td style="text-align:center;"><span class="score-neg">−0.18</span></td>
+          <td style="text-align:center;"><span class="conv-l">LOW</span></td>
+          <td style="font-size:12px;">$5.51/lb — elevated from electrification + tariff front-running. Structurally bullish (deficit). But stagflation reduces China demand growth, deflationary bust crushes industrials. Net slightly negative. Hold existing positions, don't add here.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">EUR</td>
+          <td style="text-align:center;"><span class="pill pill-suw">Slight UW</span></td>
+          <td style="text-align:center;"><span class="score-neg">−0.22</span></td>
+          <td style="text-align:center;"><span class="conv-l">LOW</span></td>
+          <td style="font-size:12px;">Euro Area faces stagflation headwinds as energy importer. ECB on hold. EUR/USD below 1.10 reflects growth concerns. Watch Italy-Germany spread for fragmentation risk trigger (&gt;250bp → TPI).</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">Crypto (BTC)</td>
+          <td style="text-align:center;"><span class="pill pill-suw">Slight UW</span></td>
+          <td style="text-align:center;"><span class="score-neg">−0.29</span></td>
+          <td style="text-align:center;"><span class="conv-l">LOW</span></td>
+          <td style="font-size:12px;">Risk asset behavior dominates in stagflation/deflationary scenarios. Reacceleration scenario (14%) is bullish but insufficient to offset. Not a reliable stagflation hedge unlike gold. IBIT ETF flows to watch.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">IG Credit (LQD)</td>
+          <td style="text-align:center;"><span class="pill pill-suw">Slight UW</span></td>
+          <td style="text-align:center;"><span class="score-neg">−0.33</span></td>
+          <td style="text-align:center;"><span class="conv-l">LOW</span></td>
+          <td style="font-size:12px;">Spreads still tight but stagflation risk means duration pain + default risk rising. LQD: $108.97. Prefer short-dated IG over investment-grade duration. Stagflation erodes corporate margins and increases default probability.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">EM Gov Bonds</td>
+          <td style="text-align:center;"><span class="pill pill-suw">Slight UW</span></td>
+          <td style="text-align:center;"><span class="score-neg">−0.37</span></td>
+          <td style="text-align:center;"><span class="conv-l">LOW</span></td>
+          <td style="font-size:12px;">Oil-importing EMs (Turkey, India, SE Asia) face stagflation squeeze from energy costs. USD strength pressure on EM debt service. Only commodity-exporting EM bonds (Brazil, Indonesia) defensible.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">European Equities</td>
+          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="score-neg">−0.39</span></td>
+          <td style="text-align:center;"><span class="conv-m">MEDIUM</span></td>
+          <td style="font-size:12px;">Most exposed to Hormuz closure (heavy energy importer). Germany in trough. France contracting. ECB can't ease given inflation risk. Valuation discount exists but not sufficient to offset energy headwinds. Avoid EFA/VGK.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">EM Equities (EEM)</td>
+          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="score-neg">−0.51</span></td>
+          <td style="text-align:center;"><span class="conv-m">MEDIUM</span></td>
+          <td style="font-size:12px;">Heterogeneous: India (expansion, overweight within EM), Brazil/Australia (commodity exporters). But EM FX basket (−0.82) and broad EM equities face headwinds from stagflation. Bifurcate: OW commodity exporters, UW oil importers.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">Real Estate (REITs/VNQ)</td>
+          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="score-neg">−0.71</span></td>
+          <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
+          <td style="font-size:12px;">Rate-sensitive; inflation erodes real returns; stagflation worst case for REITs (high financing costs + weak demand). 10Y at 4.31% keeps cap rates elevated. No catalyst until clear rate cut cycle begins.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">US Large-Cap Equities (SPY)</td>
+          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="score-neg">−0.71</span></td>
+          <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
+          <td style="font-size:12px;">SPY $658.08. Stagflation crushes growth/tech valuations; tariffs squeeze margins; energy costs reduce consumer spending. Valuation stretched. Migrate within equities: energy sector OW, defensive sectors neutral, growth/consumer UW.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">High Yield Credit (HYG)</td>
+          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="score-neg">−1.04</span></td>
+          <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
+          <td style="font-size:12px;">Worst score. Stagflation historically most damaging to HY (margin compression + rising defaults). Deflationary bust = credit crisis. HYG at $79.65 — spread tightening of recent months does not price the current macro regime. Avoid. Watch for spread widening as leading indicator of stress.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Signals to Action -->
+  <div style="margin-top:20px;">
+    <h3 style="font-size:14px; font-weight:700; margin-bottom:12px;">Signals-to-Action Mappings</h3>
+
+    <div class="signal-block">
+      <div class="signal-condition">IF: Oil &gt; $100 AND Core CPI trending above 3% AND PMI still expanding AND yield curve positive → [ACTIVE — all conditions met except Core CPI (watch April 11)]</div>
+      <div class="signal-actions">
+        <div class="signal-ow"><div class="signal-label">Overweight</div>Energy equities, gold, agricultural commodities, silver, TIPS, commodity-exporting EM (Brazil, Australia, Canada)</div>
+        <div class="signal-uw"><div class="signal-label">Underweight</div>US large-cap growth, long-duration bonds (TLT), high yield credit, European equities, consumer discretionary, REITs</div>
+      </div>
+      <div class="signal-rationale">Rationale: Classic stagflation trade — supply-side inflation with growth headwinds. Real assets outperform. Interest-rate-sensitive assets suffer. Consumer spending squeezed by energy cost inflation.</div>
+    </div>
+
+    <div class="signal-block">
+      <div class="signal-condition">IF: Trump strikes Iran OR Strait remains closed &gt;60 days → Oil spikes to $130-140 AND VIX breaks above 35 → Deflationary Bust risk jumps to ~35%</div>
+      <div class="signal-actions">
+        <div class="signal-ow"><div class="signal-label">Add</div>US long bonds (TLT — flight to quality), gold (crisis safe haven), JPY, CHF, cash/T-bills, defensive equities (utilities, healthcare, consumer staples)</div>
+        <div class="signal-uw"><div class="signal-label">Reduce</div>All equities (broad), high yield immediately, EM equities, commodities except gold, copper</div>
+      </div>
+      <div class="signal-rationale">Rationale: Escalation scenario triggers recession cascade. Capital preservation mode. Long bonds benefit from emergency rate cuts despite prior inflation.</div>
+    </div>
+
+    <div class="signal-block">
+      <div class="signal-condition">IF: Ceasefire signed AND Strait reopens → Oil drops to $75-80 AND VIX &lt; 18 AND yield curve steepens further → Soft Landing probability recovers to 35%+</div>
+      <div class="signal-actions">
+        <div class="signal-ow"><div class="signal-label">Rotate to</div>US equities broadly (especially growth), EM equities (EEM), long bonds (TLT), EM currencies, investment grade credit</div>
+        <div class="signal-uw"><div class="signal-label">Reduce</div>Gold (safe-haven premium deflates), oil/energy equities, cash, defensive overweights</div>
+      </div>
+      <div class="signal-rationale">Rationale: Resolution removes supply shock; inflation rapidly corrects; Fed has path to 2-3 cuts in 2026; risk assets rally sharply. Fast rotation required — market will front-run ceasefire announcement.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════ SECTION 9: STRUCTURAL HEATMAP ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§9</span> Structural Heatmap (Abbreviated Weekly)</h2>
+  <div class="heat-wrap">
+    <table class="heat">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Structural Driver</th>
+          <th>US Equities</th>
+          <th>EM Equities</th>
+          <th>Gov Bonds</th>
+          <th>Gold</th>
+          <th>Commodities</th>
+          <th>USD</th>
+          <th>EM FX</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:600; text-align:left;">Demographics (aging DM)</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bear">Bear</td>
+          <td class="heat-bull">Bull</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; text-align:left;">Climate Volatility</td>
+          <td class="heat-bear">Bear</td>
+          <td class="heat-bear">Bear</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bear">Bear</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; text-align:left;">AI / Productivity</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bear">Bear</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-neut">Neutral</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; text-align:left;">Deglobalisation / Tariffs</td>
+          <td class="heat-bear">Bear</td>
+          <td class="heat-bear">Bear</td>
+          <td class="heat-bear">Bear</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-bear">Bear</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; text-align:left;">Reserve Diversification</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bear">Bear</td>
+          <td class="heat-bull">Bull</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; text-align:left;">Electrification Cycle</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bull">Bull</td>
+          <td class="heat-neut">Neutral</td>
+          <td class="heat-bull">Bull</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:11px; color:var(--text2); margin-top:8px;">Structural heatmap shows 10-year directional bias. Key signal: Gold has 4 structural tailwinds (Climate, Deglobalisation, Reserve Diversification, AI deflation hedge against inflation). Commodities broad have 3 bullish structural drivers. USD has 2 bullish (AI, Deglobalisation) vs 2 bearish (Demographics, Reserve Diversification). Full quarterly structural analysis due June 2026.</p>
+</div>
+
+<!-- ══════════ SECTION 10: THRESHOLDS ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§10</span> Key Levels &amp; Threshold Proximity</h2>
+  <div class="thresh-grid">
+    <div class="thresh-item">
+      <div class="threshold-icon th-breach" style="width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">🔴</div>
+      <div>
+        <div class="thresh-name">WTI Oil &gt; $100/bbl</div>
+        <div class="thresh-detail">Triggers: Stagflation confirmed. Current: $111.81</div>
+        <div class="thresh-prox prox-breach">BREACHED — $11.81 above trigger</div>
+      </div>
+    </div>
+    <div class="thresh-item">
+      <div class="threshold-icon th-watch" style="width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">⚠️</div>
+      <div>
+        <div class="thresh-name">Core CPI &gt; 3.0%</div>
+        <div class="thresh-detail">Triggers: Stagflation probability +10pp. Current: 2.5% (Feb, pre-crisis)</div>
+        <div class="thresh-prox prox-watch">WATCHING — March print April 11 critical</div>
+      </div>
+    </div>
+    <div class="thresh-item">
+      <div class="threshold-icon th-watch" style="width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">⚠️</div>
+      <div>
+        <div class="thresh-name">US CPI YoY &gt; 3.5%</div>
+        <div class="thresh-detail">Triggers: Deflationary Bust risk rises (demand destruction concern). Current: 2.4% (Feb)</div>
+        <div class="thresh-prox prox-watch">WATCHING — Forward projection: 3.5-4.5% by May</div>
+      </div>
+    </div>
+    <div class="thresh-item">
+      <div class="threshold-icon th-watch" style="width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">⚠️</div>
+      <div>
+        <div class="thresh-name">10Y Treasury &gt; 4.70%</div>
+        <div class="thresh-detail">Triggers: Duration stress, equity rotation. Current: 4.31%</div>
+        <div class="thresh-prox prox-watch">WATCHING — 39bp away</div>
+      </div>
+    </div>
+    <div class="thresh-item">
+      <div class="threshold-icon th-watch" style="width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">⚠️</div>
+      <div>
+        <div class="thresh-name">VIX &gt; 30</div>
+        <div class="thresh-detail">Triggers: Risk-off regime declared. Current: 23.87 (declined from 31.05 peak March 27)</div>
+        <div class="thresh-prox prox-watch">WATCHING — Recently breached; 6.13 below trigger now</div>
+      </div>
+    </div>
+    <div class="thresh-item">
+      <div class="threshold-icon th-watch" style="width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">⚠️</div>
+      <div>
+        <div class="thresh-name">US Unemployment &gt; 5.0%</div>
+        <div class="thresh-detail">Triggers: Recession declared, Fed cuts aggressively. Current: 4.3%</div>
+        <div class="thresh-prox prox-watch">WATCHING — 70bp away; tariff impact = +0.6pp per Yale Budget Lab</div>
+      </div>
+    </div>
+    <div class="thresh-item">
+      <div class="threshold-icon th-clear" style="width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">✓</div>
+      <div>
+        <div class="thresh-name">Italy-Germany 10Y Spread &gt; 250bp</div>
+        <div class="thresh-detail">Triggers: ECB TPI activation, euro fragmentation. Current: ~200bp est.</div>
+        <div class="thresh-prox prox-clear">CLEAR — ~50bp below threshold</div>
+      </div>
+    </div>
+    <div class="thresh-item">
+      <div class="threshold-icon th-watch" style="width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">⚠️</div>
+      <div>
+        <div class="thresh-name">USD/CNY &gt; 7.50</div>
+        <div class="thresh-detail">Triggers: PBOC intervention, capital outflow risk. Current: ~7.25 est.</div>
+        <div class="thresh-prox prox-watch">WATCHING — ~0.25 away; watch if USD strengthens</div>
+      </div>
+    </div>
+    <div class="thresh-item">
+      <div class="threshold-icon th-clear" style="width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">✓</div>
+      <div>
+        <div class="thresh-name">Fed Funds &gt; 4.50%</div>
+        <div class="thresh-detail">Triggers: Over-tightening risk materialises. Current: 3.64%</div>
+        <div class="thresh-prox prox-clear">CLEAR — 86bp below; not likely unless shock forces hike</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 11: CALENDAR ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§11</span> Week Ahead — April 7–13, 2026</h2>
+  <div class="cal-list">
+    <div class="cal-item" style="border-left:3px solid var(--red);">
+      <div class="cal-date"><div class="cal-day">7</div><div class="cal-month">Apr</div></div>
+      <div class="cal-info">
+        <div class="cal-event">Trump Iran Deadline Expires (Hormuz Reopening)</div>
+        <div class="cal-detail">Binary event: Ceasefire signed → oil drops $20-30, Stagflation probability falls ~10pp. Military strike → oil spikes to $130-140, VIX breaks 35, Deflationary Bust risk jumps to 35%+</div>
+      </div>
+      <span class="cal-impact impact-critical">CRITICAL</span>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
+      <div class="cal-info">
+        <div class="cal-event">US Initial Jobless Claims (weekly)</div>
+        <div class="cal-detail">Alert threshold: &gt;230K signals labour softening. Current regime: tariffs projected to add +0.6pp to unemployment. Watch for trend change.</div>
+      </div>
+      <span class="cal-impact impact-high">HIGH</span>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
+      <div class="cal-info">
+        <div class="cal-event">Fed Chair Powell — Congressional Testimony (est.)</div>
+        <div class="cal-detail">Key: How does the Fed frame stagflation dilemma? Any signal on September cut path or willingness to tolerate higher inflation from supply shock will move markets significantly.</div>
+      </div>
+      <span class="cal-impact impact-high">HIGH</span>
+    </div>
+    <div class="cal-item" style="border-left:3px solid var(--red);">
+      <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
+      <div class="cal-info">
+        <div class="cal-event">US CPI — March 2026 (CRITICAL REPORT)</div>
+        <div class="cal-detail">First CPI incorporating oil price surge. Headline: forecast 3.0-3.5% YoY (from 2.4% Feb). Core: 2.8-3.2%. If Core &gt; 3.0% → Stagflation probability jumps to 55%+. If Core &lt; 2.7% → brief Soft Landing relief rally.</div>
+      </div>
+      <span class="cal-impact impact-critical">CRITICAL</span>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
+      <div class="cal-info">
+        <div class="cal-event">US Retail Sales — March</div>
+        <div class="cal-detail">Consumer spending resilience check. If retail sales decline &gt;0.5% MoM → demand destruction beginning. Energy cost squeeze on discretionary spending is the key signal.</div>
+      </div>
+      <span class="cal-impact impact-high">HIGH</span>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">12</div><div class="cal-month">Apr</div></div>
+      <div class="cal-info">
+        <div class="cal-event">University of Michigan Consumer Sentiment (prelim)</div>
+        <div class="cal-detail">Current: 56.6 (Feb 2026). Oil shock and war uncertainty likely to push lower. Watch 5-year inflation expectations component — if &gt;3.5% → Fed forced to take notice.</div>
+      </div>
+      <span class="cal-impact impact-medium">MEDIUM</span>
+    </div>
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">13</div><div class="cal-month">Apr</div></div>
+      <div class="cal-info">
+        <div class="cal-event">Eurozone CPI Flash (March)</div>
+        <div class="cal-detail">Energy shock hits Europe hard. If Euro CPI accelerates &gt;3% → ECB pause extended further; stagflation risk in Europe amplified. EUR/USD directional.</div>
+      </div>
+      <span class="cal-impact impact-high">HIGH</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FEEDBACK LOOPS ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§F</span> Feedback Loop Tracker</h2>
+  <div class="loop-grid">
+    <div class="loop-card">
+      <div class="loop-title">Loop 1: Yield → Fiscal → Policy → Yield</div>
+      <span class="loop-position loop-neutral">Neutral / Monitoring</span>
+      <div class="loop-desc">10Y at 4.31% (below 5.5% intervention threshold). Debt service rising but not yet forcing action. If oil shock pushes inflation expectations up and yields approach 4.70-5.0%, Fed may face market-driven policy constraint. Currently in "rising yields, stable policy" leg. Not yet accelerating.</div>
+    </div>
+    <div class="loop-card">
+      <div class="loop-title">Loop 2: Dollar → EM → Commodities → Inflation → Dollar</div>
+      <span class="loop-position loop-accel">ACCELERATING</span>
+      <div class="loop-desc">DXY at 99.81 (weakening despite war). Weak dollar → commodity prices (already elevated) stay bid → energy/food inflation → potential Fed tightening → eventually strengthens dollar again. Currently in "weak dollar supporting commodities" leg. Loop likely to accelerate if Fed signals prolonged hold.</div>
+    </div>
+    <div class="loop-card">
+      <div class="loop-title">Loop 3: Asset Prices → Wealth Effect → Growth → Policy</div>
+      <span class="loop-position loop-damp">DAMPENING</span>
+      <div class="loop-desc">SPY at $658 (still elevated but oil/tariff headwinds). Consumer wealth effect still positive but fading as energy costs squeeze discretionary spend. Fed held steady → policy impact muted. Michigan Sentiment at 56.6 (historically low). Loop self-correcting as wealth effect weakens.</div>
+    </div>
+    <div class="loop-card">
+      <div class="loop-title">Loop 4: Credit → Growth → Default → Credit</div>
+      <span class="loop-position loop-neutral">Early Stage</span>
+      <div class="loop-desc">NFCI: -0.434 (Mar 27, loosening trend reversing — was -0.553 in Feb). Financial conditions tightening gradually. HYG volumes 2x normal on April 2 (liquidation pressure). Not yet in credit stress, but stagflation scenario leads here within 6-12 months if growth deteriorates. Watch HY spreads as leading signal.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 12: STATE SNAPSHOT ══════════ -->
+<div class="section">
+  <h2><span class="section-num">§12</span> State Snapshot (JSON)</h2>
+  <div class="state-box">
+{
+  "report_date": "2026-04-06",
+  "report_type": "weekly_tactical",
+  "agent": "Boris / SignalDeck World Economist",
+  "inaugural_run": true,
+
+  "scenario_probabilities": {
+    "stagflation": 0.48,
+    "deflationary_bust": 0.20,
+    "soft_landing": 0.18,
+    "reacceleration": 0.14
+  },
+
+  "prior_scenario_probabilities": {
+    "soft_landing": 0.42,
+    "stagflation": 0.25,
+    "reacceleration": 0.22,
+    "deflationary_bust": 0.11,
+    "source": "economics_dashboard_html_prior"
+  },
+
+  "divergence_alerts": [
+    { "scenario": "stagflation", "shift_pp": 23, "direction": "up" },
+    { "scenario": "soft_landing", "shift_pp": -24, "direction": "down" },
+    { "scenario": "deflationary_bust", "shift_pp": 9, "direction": "up" },
+    { "scenario": "reacceleration", "shift_pp": -8, "direction": "down" }
+  ],
+
+  "key_indicators": {
+    "fed_funds_rate": 3.64,
+    "taylor_implied_rate": 4.375,
+    "behind_curve_gap_pp": 0.735,
+    "cpi_yoy_feb2026": 2.4,
+    "core_cpi_yoy_feb2026": 2.5,
+    "unemployment_mar2026": 4.3,
+    "treasury_10y_apr2026": 4.31,
+    "treasury_2y_apr2026": 3.79,
+    "yield_curve_10y2y": 0.51,
+    "vix_apr2026": 23.87,
+    "vix_peak_mar27": 31.05,
+    "m2_supply_feb2026_bn": 22667.3,
+    "nfci_mar27": -0.43366,
+    "michigan_sentiment_feb2026": 56.6
+  },
+
+  "commodity_levels": {
+    "wti_spot_usd_bbl": 111.81,
+    "wti_feb2026_avg_usd_bbl": 64.4355,
+    "oil_change_pct": 73.5,
+    "gold_spot_usd_oz": 4665.09,
+    "silver_spot_usd_oz": 73.03,
+    "gold_silver_ratio": 63.9,
+    "copper_lme_usd_mt": 12138.0,
+    "copper_lme_usd_lb": 5.51,
+    "imf_all_commodities_index_feb2026": 184.3532,
+    "imf_metals_index_feb2026": 220.0053,
+    "imf_food_index_feb2026": 132.0631,
+    "cftc_gold_net_long_k": 163.2
+  },
+
+  "etf_proxies": {
+    "SPY": { "close": 658.075, "change_pct": 0.34155 },
+    "TLT": { "close": 86.675, "change_pct": -0.14403 },
+    "GLD": { "close": 427.2401, "change_pct": -0.51424 },
+    "EEM": { "close": 57.065, "change_pct": 0.83054 },
+    "UUP": { "close": 27.845, "change_pct": -0.05384 },
+    "HYG": { "close": 79.645, "change_pct": 0.10684 },
+    "LQD": { "close": 108.965, "change_pct": -0.15121 },
+    "DJP": { "close": 49.08, "change_pct": 0.36810 }
+  },
+
+  "g20_cycles": {
+    "US": { "phase": "late_expansion_to_peak", "momentum": -0.3 },
+    "Euro_Area": { "phase": "contraction_risk", "momentum": -0.5 },
+    "China": { "phase": "trough_stabilising", "momentum": 0.2 },
+    "Japan": { "phase": "late_expansion", "momentum": 0.1 },
+    "UK": { "phase": "recovery", "momentum": 0.1 },
+    "Canada": { "phase": "late_expansion", "momentum": 0.3 },
+    "Germany": { "phase": "trough", "momentum": -0.3 },
+    "France": { "phase": "contraction", "momentum": -0.2 },
+    "India": { "phase": "expansion", "momentum": 0.6 },
+    "Brazil": { "phase": "expansion", "momentum": 0.4 },
+    "South_Korea": { "phase": "contraction", "momentum": -0.2 },
+    "Australia": { "phase": "expansion", "momentum": 0.5 }
+  },
+
+  "policy_rates": {
+    "Fed": 3.64,
+    "ECB_deposit": 3.15,
+    "BOJ": 0.75,
+    "BOE": 4.50,
+    "PBOC_MLF": 3.10,
+    "BOC": 2.75
+  },
+
+  "thresholds_breached": ["WTI_100"],
+  "thresholds_watching": ["Core_CPI_3pct", "CPI_YoY_3.5pct", "10Y_470bp", "VIX_30", "Unemployment_5pct", "USD_CNY_750"],
+  "thresholds_clear": ["Italy_Germany_250bp", "Fed_Funds_450"],
+
+  "net_asset_scores": {
+    "Gold": 1.10,
+    "Silver": 0.81,
+    "Oil_Energy": 0.62,
+    "Agri_Commodities": 0.59,
+    "JPY": 0.55,
+    "USD": 0.49,
+    "US_Short_Bonds": 0.22,
+    "US_Long_Bonds": 0.04,
+    "Copper": -0.18,
+    "EUR": -0.22,
+    "Crypto": -0.29,
+    "IG_Credit": -0.33,
+    "EM_Bonds": -0.37,
+    "European_Equities": -0.39,
+    "EM_Equities": -0.51,
+    "REITs": -0.71,
+    "US_LC_Equities": -0.71,
+    "HY_Credit": -1.04
+  },
+
+  "key_event_next_week": {
+    "trump_iran_deadline": "2026-04-07",
+    "us_cpi_march": "2026-04-11",
+    "us_retail_sales": "2026-04-11"
+  },
+
+  "feedback_loops": {
+    "yield_fiscal_policy": "monitoring",
+    "dollar_em_commodities": "accelerating",
+    "asset_prices_growth": "dampening",
+    "credit_growth_default": "early_stage"
+  }
+}
+  </div>
+</div>
+
+</div><!-- /.container -->
+
+<div class="disclaimer" style="margin:0; border-radius:0; border-left:none; border-right:none; border-bottom:none;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 24px;">
+    <strong>DISCLAIMER:</strong> This report is produced by Boris, the SignalDeck AI Agent, using the "From Structure to Strategy" World Economist Framework. It is for educational and informational purposes only. It is not financial advice, investment advice, or a recommendation to buy or sell any security. All scenario probabilities are model outputs with inherent uncertainty. Economic conditions can change rapidly. Past performance of frameworks is not indicative of future accuracy. Always conduct your own due diligence and consult a licensed financial advisor before making investment decisions. SignalDeck and its agents accept no liability for decisions made based on this analysis.
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>SignalDeck World Economist &middot; Boris AI Agent &middot; &copy; 2026</p>
+    <p style="margin-top:4px;">"From Structure to Strategy" Framework &middot; 6 Causal Layers &middot; G20 Coverage</p>
+    <p style="margin-top:4px;">Data sources: FRED (Federal Reserve), Polygon.io, BLS, IMF, S&amp;P Global PMI, CFTC, web search (April 6, 2026)</p>
+  </div>
+</footer>
+
+</body>
+</html>
