@@ -60,7 +60,9 @@ a:hover { text-decoration:underline; }
 .sc-stag::after { background:var(--orange); }
 .sc-defl::after { background:var(--red); }
 .sc-reacc::after { background:var(--blue); }
-.sc-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); }
+.sc-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); cursor:help; position:relative; display:inline-block; }
+.sc-label::after { content:attr(data-tooltip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:#1e2330; color:var(--text); font-size:11px; font-weight:400; text-transform:none; letter-spacing:0; line-height:1.5; padding:10px 13px; border-radius:8px; border:1px solid var(--border); width:230px; white-space:normal; pointer-events:none; opacity:0; transition:opacity 0.15s; z-index:99; box-shadow:0 4px 16px rgba(0,0,0,0.4); }
+.sc-label:hover::after { opacity:1; }
 .sc-prob { font-size:38px; font-weight:800; margin:6px 0 2px; }
 .sc-delta { font-size:13px; font-weight:700; }
 .delta-up { color:var(--green); }
@@ -68,6 +70,14 @@ a:hover { text-decoration:underline; }
 .sc-bar { height:6px; background:var(--surface2); border-radius:3px; margin:10px 0 6px; overflow:hidden; }
 .sc-fill { height:100%; border-radius:3px; }
 .sc-desc { font-size:11px; color:var(--text2); line-height:1.4; }
+.sc-assets { margin-top:10px; padding-top:9px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:5px; }
+.sc-assets-row { display:flex; flex-wrap:wrap; gap:3px; align-items:flex-start; }
+.sc-assets-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; width:100%; margin-bottom:1px; }
+.sc-assets-lbl.lbl-bull { color:var(--green); }
+.sc-assets-lbl.lbl-bear { color:var(--red); }
+.sc-achip { font-size:9px; font-weight:600; padding:1px 6px; border-radius:6px; }
+.sc-achip-bull { background:rgba(34,197,94,0.10); color:var(--green); border:1px solid rgba(34,197,94,0.18); }
+.sc-achip-bear { background:rgba(239,68,68,0.10); color:var(--red); border:1px solid rgba(239,68,68,0.18); }
 
 .divergence-alert { background:var(--red-bg); border:1px solid rgba(239,68,68,0.3); border-left:4px solid var(--red); border-radius:0 8px 8px 0; padding:12px 16px; margin-top:10px; }
 .div-alert-title { font-weight:700; color:var(--red); font-size:13px; }
@@ -143,10 +153,14 @@ table.aa th { border:none; border-bottom:1px solid var(--border); }
 table.aa td { border:none; border-bottom:1px solid rgba(37,42,58,0.5); }
 table.aa tr:last-child td { border-bottom:none; }
 table.aa tr:hover td { background:var(--surface2); }
-.pill { display:inline-block; padding:2px 10px; border-radius:6px; font-size:12px; font-weight:700; min-width:90px; text-align:center; }
+.pill { display:inline-block; padding:2px 10px; border-radius:6px; font-size:12px; font-weight:700; min-width:80px; text-align:center; }
 .pill-ow { background:var(--green-bg); color:var(--green); }
 .pill-uw { background:var(--red-bg); color:var(--red); }
 .pill-n { background:var(--surface2); color:var(--text2); }
+/* Table header tooltips */
+th[data-tooltip] { cursor:help; position:relative; }
+th[data-tooltip]::after { content:attr(data-tooltip); position:absolute; top:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#1e2330; color:var(--text); font-size:11px; font-weight:400; text-transform:none; letter-spacing:0; line-height:1.5; padding:10px 13px; border-radius:8px; border:1px solid var(--border); width:220px; white-space:normal; pointer-events:none; opacity:0; transition:opacity 0.15s; z-index:99; box-shadow:0 4px 16px rgba(0,0,0,0.4); }
+th[data-tooltip]:hover::after { opacity:1; }
 .pill-sow { background:rgba(34,197,94,0.05); color:rgba(34,197,94,0.8); border:1px solid rgba(34,197,94,0.2); }
 .pill-suw { background:rgba(239,68,68,0.05); color:rgba(239,68,68,0.8); border:1px solid rgba(239,68,68,0.2); }
 .score-pos { color:var(--green); font-weight:700; }
@@ -350,32 +364,48 @@ table.heat th { font-size:10px; }
 
   <div class="scenario-grid">
     <div class="sc-card sc-stag">
-      <div class="sc-label">Stagflation / Supply Shock</div>
+      <div class="sc-label" data-tooltip="Growth slowing while inflation stays elevated. Central banks can't cut without stoking inflation, can't hike without crushing growth. Historically driven by supply shocks (energy, food). Worst for bonds and growth equities. Gold and commodities outperform.">Stagflation / Supply Shock</div>
       <div class="sc-prob" style="color:var(--orange);">48%</div>
       <div class="sc-delta delta-up">↑ +23pp vs prior</div>
       <div class="sc-bar"><div class="sc-fill" style="width:48%; background:var(--orange);"></div></div>
       <div class="sc-desc">Oil shock + trade war creates classic stagflation. Fed trapped between inflation and growth. Energy → food → core CPI cascade. Dominant 3-6 month scenario.</div>
+      <div class="sc-assets">
+        <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">▲ Outperform</span><span class="sc-achip sc-achip-bull">Gold</span><span class="sc-achip sc-achip-bull">Energy equities</span><span class="sc-achip sc-achip-bull">Commodities (DJP)</span><span class="sc-achip sc-achip-bull">TIPS / inflation-linked</span><span class="sc-achip sc-achip-bull">Real assets</span><span class="sc-achip sc-achip-bull">Short-duration bonds</span></div>
+        <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">▼ Underperform</span><span class="sc-achip sc-achip-bear">Long bonds (TLT)</span><span class="sc-achip sc-achip-bear">Growth equities (QQQ)</span><span class="sc-achip sc-achip-bear">Consumer discretionary</span><span class="sc-achip sc-achip-bear">EM equities (EEM)</span><span class="sc-achip sc-achip-bear">High-yield credit (HYG)</span><span class="sc-achip sc-achip-bear">Crypto</span></div>
+      </div>
     </div>
     <div class="sc-card sc-defl">
-      <div class="sc-label">Deflationary Bust</div>
+      <div class="sc-label" data-tooltip="Demand collapses faster than supply can adjust. Growth falls sharply, inflation drops below target, unemployment rises. Central banks cut aggressively. Long-duration bonds and cash outperform. Equities, credit, and commodities all fall hard.">Deflationary Bust</div>
       <div class="sc-prob" style="color:var(--red);">20%</div>
       <div class="sc-delta delta-up">↑ +9pp vs prior</div>
       <div class="sc-bar"><div class="sc-fill" style="width:20%; background:var(--red);"></div></div>
       <div class="sc-desc">Hormuz escalation + tariff shock triggers demand collapse. Growth goes negative. Fed forced into emergency cuts. Credit cycle turns. Tail risk if conflict escalates.</div>
+      <div class="sc-assets">
+        <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">▲ Outperform</span><span class="sc-achip sc-achip-bull">Long bonds (TLT)</span><span class="sc-achip sc-achip-bull">Cash / T-bills (SHY)</span><span class="sc-achip sc-achip-bull">USD (UUP)</span><span class="sc-achip sc-achip-bull">Govt bonds</span><span class="sc-achip sc-achip-bull">Defensives (utilities)</span></div>
+        <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">▼ Underperform</span><span class="sc-achip sc-achip-bear">Equities — all (SPY)</span><span class="sc-achip sc-achip-bear">High-yield credit (HYG)</span><span class="sc-achip sc-achip-bear">Commodities</span><span class="sc-achip sc-achip-bear">EM equities (EEM)</span><span class="sc-achip sc-achip-bear">Crypto</span><span class="sc-achip sc-achip-bear">Real estate (VNQ)</span></div>
+      </div>
     </div>
     <div class="sc-card sc-soft">
-      <div class="sc-label">Soft Landing</div>
+      <div class="sc-label" data-tooltip="Inflation returns to target without triggering a recession. Central banks cut gradually. Growth slows but stays positive. Equities and credit perform well. The 'Goldilocks' outcome — historically rare but achievable when supply shocks resolve quickly.">Soft Landing</div>
       <div class="sc-prob" style="color:var(--green);">18%</div>
       <div class="sc-delta delta-down">↓ −24pp vs prior</div>
       <div class="sc-bar"><div class="sc-fill" style="width:18%; background:var(--green);"></div></div>
       <div class="sc-desc">Requires: Strait reopens quickly, tariff rollbacks, inflation stays contained. PMI and labour market resilience point to this if geopolitical risk resolves. Bull case only.</div>
+      <div class="sc-assets">
+        <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">▲ Outperform</span><span class="sc-achip sc-achip-bull">Equities — broad (SPY)</span><span class="sc-achip sc-achip-bull">Corp. credit (LQD/HYG)</span><span class="sc-achip sc-achip-bull">EM equities (EEM)</span><span class="sc-achip sc-achip-bull">Real estate (VNQ)</span><span class="sc-achip sc-achip-bull">Growth stocks</span></div>
+        <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">▼ Underperform</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Short-term bonds</span><span class="sc-achip sc-achip-bear">Commodities</span><span class="sc-achip sc-achip-bear">Defensives</span><span class="sc-achip sc-achip-bear">USD (safe haven unwind)</span></div>
+      </div>
     </div>
     <div class="sc-card sc-reacc">
-      <div class="sc-label">Reacceleration</div>
+      <div class="sc-label" data-tooltip="Growth re-ignites above trend, forcing central banks to pause cuts or even hike again. Inflation risks rebound. Strong for cyclical equities, industrial commodities, and EM. Bad for bonds. Typically triggered by fiscal stimulus, AI productivity surge, or sharp commodity price drop.">Reacceleration</div>
       <div class="sc-prob" style="color:var(--blue);">14%</div>
       <div class="sc-delta delta-down">↓ −8pp vs prior</div>
       <div class="sc-bar"><div class="sc-fill" style="width:14%; background:var(--blue);"></div></div>
       <div class="sc-desc">Requires oil shock resolution AND AI productivity surge absorbs cost pressures. China reaccelerates on stimulus. Manufacturing PMI strength points this way if supply clears.</div>
+      <div class="sc-assets">
+        <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">▲ Outperform</span><span class="sc-achip sc-achip-bull">Cyclical equities</span><span class="sc-achip sc-achip-bull">EM equities (EEM)</span><span class="sc-achip sc-achip-bull">Copper / industrials</span><span class="sc-achip sc-achip-bull">Small caps (IWM)</span><span class="sc-achip sc-achip-bull">Energy</span></div>
+        <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">▼ Underperform</span><span class="sc-achip sc-achip-bear">Long bonds (TLT)</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Defensives (XLU/XLP)</span><span class="sc-achip sc-achip-bear">Cash</span><span class="sc-achip sc-achip-bear">USD</span></div>
+      </div>
     </div>
   </div>
 
@@ -451,6 +481,35 @@ table.heat th { font-size:10px; }
 <!-- ══════════ SECTION 4: MACRO CYCLE MAP ══════════ -->
 <div class="section">
   <h2><span class="section-num">§4</span> G20 Macro Cycle Map</h2>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(175px,1fr)); gap:8px; margin-bottom:14px;">
+    <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--blue); border-radius:8px; padding:9px 11px;">
+      <div style="font-size:10px; font-weight:700; color:var(--blue); margin-bottom:2px;">🌱 EXPANSION</div>
+      <div style="font-size:11px; color:var(--text2); line-height:1.4;">GDP rising, unemployment falling, confidence high. Policy tightening begins. Credit easy, corporates investing.</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--orange); border-radius:8px; padding:9px 11px;">
+      <div style="font-size:10px; font-weight:700; color:var(--orange); margin-bottom:2px;">🔺 PEAK</div>
+      <div style="font-size:11px; color:var(--text2); line-height:1.4;">Growth decelerating, inflation elevated, policy tightening. Sentiment turning. Leading indicators rolling over. Cycle near its top.</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--red); border-radius:8px; padding:9px 11px;">
+      <div style="font-size:10px; font-weight:700; color:var(--red); margin-bottom:2px;">📉 CONTRACTION</div>
+      <div style="font-size:11px; color:var(--text2); line-height:1.4;">GDP falling or stalling, unemployment rising, confidence dropping. Easing begins. Credit tightening. Recession risk elevated.</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--green); border-radius:8px; padding:9px 11px;">
+      <div style="font-size:10px; font-weight:700; color:var(--green); margin-bottom:2px;">🌀 TROUGH</div>
+      <div style="font-size:11px; color:var(--text2); line-height:1.4;">Growth bottoming, unemployment peaking, aggressive easing underway. Sentiment at lows. Early stabilisation. Setup for next expansion.</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--green); border-radius:8px; padding:9px 11px;">
+      <div style="font-size:10px; font-weight:700; color:var(--green); margin-bottom:2px;">🔄 RECOVERY</div>
+      <div style="font-size:11px; color:var(--text2); line-height:1.4;">Growth turning positive from a trough. Unemployment stabilising. Policy still accommodative. Early cycle — risk assets typically outperform.</div>
+    </div>
+    <div style="background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--red); border-radius:8px; padding:9px 11px;">
+      <div style="font-size:10px; font-weight:700; color:var(--red); margin-bottom:2px;">🔥 OVERHEATING</div>
+      <div style="font-size:11px; color:var(--text2); line-height:1.4;">Growth above potential, inflation well above target, structural distortions building. Unsustainable — correction typically follows.</div>
+    </div>
+  </div>
+  <p style="font-size:11px; color:var(--text2); margin:-4px 0 12px;"><strong style="color:var(--text);">Momentum</strong> scores: −1.0 (rapid deterioration) → 0 (stable) → +1.0 (rapid improvement). Reflects rate of change within a phase, not the phase itself.</p>
+
   <div class="cycle-grid">
     <div class="cycle-cell">
       <div class="cycle-flag">🇺🇸</div>
@@ -524,9 +583,57 @@ table.heat th { font-size:10px; }
       <div class="cycle-phase phase-expansion">Expansion</div>
       <div class="cycle-mom">Momentum: +0.5 ↑</div>
     </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇮🇩</div>
+      <div class="cycle-name">Indonesia</div>
+      <div class="cycle-phase phase-expansion">Expansion</div>
+      <div class="cycle-mom">Momentum: +0.4 ↑</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇸🇦</div>
+      <div class="cycle-name">Saudi Arabia</div>
+      <div class="cycle-phase phase-expansion">Expansion</div>
+      <div class="cycle-mom">Momentum: +0.6 ↑</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇮🇹</div>
+      <div class="cycle-name">Italy</div>
+      <div class="cycle-phase phase-contraction">Contraction</div>
+      <div class="cycle-mom">Momentum: −0.3 ↓</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇹🇷</div>
+      <div class="cycle-name">Turkey</div>
+      <div class="cycle-phase phase-contraction">Contraction</div>
+      <div class="cycle-mom">Momentum: −0.3 ↓</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇲🇽</div>
+      <div class="cycle-name">Mexico</div>
+      <div class="cycle-phase phase-contraction">Contraction</div>
+      <div class="cycle-mom">Momentum: −0.4 ↓</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇷🇺</div>
+      <div class="cycle-name">Russia</div>
+      <div class="cycle-phase phase-peak">Overheating</div>
+      <div class="cycle-mom">Momentum: +0.1 →</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇦🇷</div>
+      <div class="cycle-name">Argentina</div>
+      <div class="cycle-phase phase-trough">Trough / Early Recovery</div>
+      <div class="cycle-mom">Momentum: +0.3 ↑</div>
+    </div>
+    <div class="cycle-cell">
+      <div class="cycle-flag">🇿🇦</div>
+      <div class="cycle-name">South Africa</div>
+      <div class="cycle-phase phase-trough">Trough / Early Recovery</div>
+      <div class="cycle-mom">Momentum: +0.2 ↑</div>
+    </div>
   </div>
   <div style="margin-top:12px; font-size:12px; color:var(--text2); background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
-    <strong style="color:var(--text);">Synchronisation Score: Low (Desynchronised)</strong> — G20 economies are in divergent phases. DM commodity importers (Europe, Korea) face contraction risk from the oil shock while commodity exporters (Canada, Australia, Brazil) benefit. India stands out as structural winner — domestic demand-driven, partial insulation from Hormuz disruption.
+    <strong style="color:var(--text);">Synchronisation Score: Low (Desynchronised)</strong> — Full G20 coverage (19 economies + EU). Deep divergence: commodity exporters (Saudi Arabia, Indonesia, Brazil, Canada, Australia) expanding on Hormuz windfall while energy importers (Europe, Korea, Turkey, Mexico) contract. India and Indonesia are structural standouts — domestic demand-driven, partially insulated. Russia overheating on war-economy spending. Argentina/South Africa at trough with early recovery signals. Mexico faces the sharpest tariff shock of any G20 member.
   </div>
 </div>
 
@@ -1064,38 +1171,38 @@ table.heat th { font-size:10px; }
     <table class="aa">
       <thead>
         <tr>
-          <th style="text-align:left;">Asset Class</th>
-          <th class="c">Direction</th>
-          <th class="c">Net Score</th>
-          <th class="c">Conviction</th>
-          <th style="text-align:left;">3-6M View & Logic Chain</th>
+          <th style="text-align:left;" data-tooltip="The investment category being assessed — from traditional assets like equities and bonds, to commodities, real estate, and crypto. Each row reflects Boris's current stance given the dominant macro regime.">Asset Class</th>
+          <th class="c" data-tooltip="What to do with your position relative to a typical diversified portfolio. Increase = this regime favours this asset, add exposure. Hold = no strong regime reason to change. Reduce = this regime works against this asset, trim exposure.">Direction</th>
+          <th class="c" data-tooltip="Probability-weighted return expectation from −2.0 to +2.0. Calculated as the sum of (scenario probability × expected performance) across all 4 scenarios. Above zero = net tailwind. Below zero = net headwind.">Net Score</th>
+          <th class="c" data-tooltip="How strongly the 4 scenarios agree on the direction. High = most scenarios point the same way. Medium = majority aligned but one scenario dissents. Low = scenarios conflict — direction could reverse quickly if macro probabilities shift.">Conviction</th>
+          <th style="text-align:left;" data-tooltip="The logic chain connecting today's macro conditions to this asset's expected performance over the next 3–6 months. Traces from structural driver → policy response → capital flows → price implication.">3-6M View & Logic Chain</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td style="font-weight:700;">Gold</td>
-          <td style="text-align:center;"><span class="pill pill-ow">Overweight</span></td>
+          <td style="text-align:center;"><span class="pill pill-ow">Increase</span></td>
           <td style="text-align:center;"><span class="score-pos">+1.10</span></td>
           <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
           <td style="font-size:12px;">Oil shock → inflation → real rate suppression → gold bid. Central bank buying structural. War premium. Stagflation archetype = gold's best environment.</td>
         </tr>
         <tr>
           <td style="font-weight:700;">Silver</td>
-          <td style="text-align:center;"><span class="pill pill-ow">Overweight</span></td>
+          <td style="text-align:center;"><span class="pill pill-ow">Increase</span></td>
           <td style="text-align:center;"><span class="score-pos">+0.81</span></td>
           <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
           <td style="font-size:12px;">Industrial + monetary dual tailwind. Solar demand structural. Tracks gold on safe-haven days, copper on industrial days. $73.03/oz — strong absolute level.</td>
         </tr>
         <tr>
           <td style="font-weight:700;">Oil / Energy Equities</td>
-          <td style="text-align:center;"><span class="pill pill-ow">Overweight</span></td>
+          <td style="text-align:center;"><span class="pill pill-ow">Increase</span></td>
           <td style="text-align:center;"><span class="score-pos">+0.62</span></td>
           <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
           <td style="font-size:12px;">$111.81/bbl WTI. Supply shock structural until Strait reopens. Energy equities (XLE, CVX, XOM) trading at discount to spot. Stagflation + deflationary bust both have energy complex bid via supply disruption.</td>
         </tr>
         <tr>
           <td style="font-weight:700;">Agricultural Commodities</td>
-          <td style="text-align:center;"><span class="pill pill-ow">Overweight</span></td>
+          <td style="text-align:center;"><span class="pill pill-ow">Increase</span></td>
           <td style="text-align:center;"><span class="score-pos">+0.59</span></td>
           <td style="text-align:center;"><span class="conv-m">MEDIUM</span></td>
           <td style="font-size:12px;">Energy→fertilizer→food contagion chain activating. IMF Food Index +7.9% in 3 months. La Niña climate risk to Brazil soy, India rice. Agricultural ETFs (DBA, WEAT) as inflation hedge.</td>
@@ -1123,14 +1230,14 @@ table.heat th { font-size:10px; }
         </tr>
         <tr>
           <td style="font-weight:700;">US Long Bonds (TLT)</td>
-          <td style="text-align:center;"><span class="pill pill-n">Neutral</span></td>
+          <td style="text-align:center;"><span class="pill pill-n">Hold</span></td>
           <td style="text-align:center;"><span class="score-zero">+0.04</span></td>
           <td style="text-align:center;"><span class="conv-l">LOW</span></td>
           <td style="font-size:12px;">10Y: 4.31%. Stagflation bearish (inflation erodes real return), deflationary bust bullish (flight to quality). Net near zero. Watch: if TLT breaks below $85 → yields approach 4.70% threshold. Currently $86.68.</td>
         </tr>
         <tr>
           <td style="font-weight:700;">Copper</td>
-          <td style="text-align:center;"><span class="pill pill-n">Neutral</span></td>
+          <td style="text-align:center;"><span class="pill pill-n">Hold</span></td>
           <td style="text-align:center;"><span class="score-neg">−0.18</span></td>
           <td style="text-align:center;"><span class="conv-l">LOW</span></td>
           <td style="font-size:12px;">$5.51/lb — elevated from electrification + tariff front-running. Structurally bullish (deficit). But stagflation reduces China demand growth, deflationary bust crushes industrials. Net slightly negative. Hold existing positions, don't add here.</td>
@@ -1165,35 +1272,35 @@ table.heat th { font-size:10px; }
         </tr>
         <tr>
           <td style="font-weight:700;">European Equities</td>
-          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="pill pill-uw">Reduce</span></td>
           <td style="text-align:center;"><span class="score-neg">−0.39</span></td>
           <td style="text-align:center;"><span class="conv-m">MEDIUM</span></td>
           <td style="font-size:12px;">Most exposed to Hormuz closure (heavy energy importer). Germany in trough. France contracting. ECB can't ease given inflation risk. Valuation discount exists but not sufficient to offset energy headwinds. Avoid EFA/VGK.</td>
         </tr>
         <tr>
           <td style="font-weight:700;">EM Equities (EEM)</td>
-          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="pill pill-uw">Reduce</span></td>
           <td style="text-align:center;"><span class="score-neg">−0.51</span></td>
           <td style="text-align:center;"><span class="conv-m">MEDIUM</span></td>
           <td style="font-size:12px;">Heterogeneous: India (expansion, overweight within EM), Brazil/Australia (commodity exporters). But EM FX basket (−0.82) and broad EM equities face headwinds from stagflation. Bifurcate: OW commodity exporters, UW oil importers.</td>
         </tr>
         <tr>
           <td style="font-weight:700;">Real Estate (REITs/VNQ)</td>
-          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="pill pill-uw">Reduce</span></td>
           <td style="text-align:center;"><span class="score-neg">−0.71</span></td>
           <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
           <td style="font-size:12px;">Rate-sensitive; inflation erodes real returns; stagflation worst case for REITs (high financing costs + weak demand). 10Y at 4.31% keeps cap rates elevated. No catalyst until clear rate cut cycle begins.</td>
         </tr>
         <tr>
           <td style="font-weight:700;">US Large-Cap Equities (SPY)</td>
-          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="pill pill-uw">Reduce</span></td>
           <td style="text-align:center;"><span class="score-neg">−0.71</span></td>
           <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
           <td style="font-size:12px;">SPY $658.08. Stagflation crushes growth/tech valuations; tariffs squeeze margins; energy costs reduce consumer spending. Valuation stretched. Migrate within equities: energy sector OW, defensive sectors neutral, growth/consumer UW.</td>
         </tr>
         <tr>
           <td style="font-weight:700;">High Yield Credit (HYG)</td>
-          <td style="text-align:center;"><span class="pill pill-uw">Underweight</span></td>
+          <td style="text-align:center;"><span class="pill pill-uw">Reduce</span></td>
           <td style="text-align:center;"><span class="score-neg">−1.04</span></td>
           <td style="text-align:center;"><span class="conv-h">HIGH</span></td>
           <td style="font-size:12px;">Worst score. Stagflation historically most damaging to HY (margin compression + rising defaults). Deflationary bust = credit crisis. HYG at $79.65 — spread tightening of recent months does not price the current macro regime. Avoid. Watch for spread widening as leading indicator of stress.</td>
@@ -1209,8 +1316,8 @@ table.heat th { font-size:10px; }
     <div class="signal-block">
       <div class="signal-condition">IF: Oil &gt; $100 AND Core CPI trending above 3% AND PMI still expanding AND yield curve positive → [ACTIVE — all conditions met except Core CPI (watch April 11)]</div>
       <div class="signal-actions">
-        <div class="signal-ow"><div class="signal-label">Overweight</div>Energy equities, gold, agricultural commodities, silver, TIPS, commodity-exporting EM (Brazil, Australia, Canada)</div>
-        <div class="signal-uw"><div class="signal-label">Underweight</div>US large-cap growth, long-duration bonds (TLT), high yield credit, European equities, consumer discretionary, REITs</div>
+        <div class="signal-ow"><div class="signal-label">Increase</div>Energy equities, gold, agricultural commodities, silver, TIPS, commodity-exporting EM (Brazil, Australia, Canada)</div>
+        <div class="signal-uw"><div class="signal-label">Reduce</div>US large-cap growth, long-duration bonds (TLT), high yield credit, European equities, consumer discretionary, REITs</div>
       </div>
       <div class="signal-rationale">Rationale: Classic stagflation trade — supply-side inflation with growth headwinds. Real assets outperform. Interest-rate-sensitive assets suffer. Consumer spending squeezed by energy cost inflation.</div>
     </div>

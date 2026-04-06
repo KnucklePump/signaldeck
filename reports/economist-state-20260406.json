@@ -98,7 +98,15 @@
     "India": { "phase": "expansion", "momentum": 0.6, "transition_risk": "low" },
     "Brazil": { "phase": "expansion", "momentum": 0.4, "transition_risk": "commodity_price_reversal" },
     "South_Korea": { "phase": "contraction", "momentum": -0.2, "transition_risk": "trade_war_deepening" },
-    "Australia": { "phase": "expansion", "momentum": 0.5, "transition_risk": "china_slowdown" }
+    "Australia": { "phase": "expansion", "momentum": 0.5, "transition_risk": "china_slowdown" },
+    "Indonesia": { "phase": "expansion", "momentum": 0.4, "transition_risk": "commodity_price_reversal_china_slowdown" },
+    "Saudi_Arabia": { "phase": "expansion", "momentum": 0.6, "transition_risk": "oil_price_reversal_regional_conflict" },
+    "Italy": { "phase": "contraction", "momentum": -0.3, "transition_risk": "fiscal_stress_spread_widening" },
+    "Turkey": { "phase": "contraction", "momentum": -0.3, "transition_risk": "currency_crisis_orthodox_policy_pain" },
+    "Mexico": { "phase": "contraction", "momentum": -0.4, "transition_risk": "tariff_disruption_severe_usmca_shock" },
+    "Russia": { "phase": "overheating", "momentum": 0.1, "transition_risk": "sanctions_escalation_energy_price_collapse" },
+    "Argentina": { "phase": "trough_early_recovery", "momentum": 0.3, "transition_risk": "fiscal_relapse_social_unrest" },
+    "South_Africa": { "phase": "trough_early_recovery", "momentum": 0.2, "transition_risk": "political_fragility_commodity_dependence" }
   },
 
   "policy_rates": {
