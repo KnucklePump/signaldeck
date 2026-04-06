@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DLO Stock Signal Report v4 — April 6, 2026</title>
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3347; --text: #e1e4ed; --text2: #8b90a5;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; padding:20px; max-width:1200px; margin:0 auto; }
+.disclaimer { background:var(--surface); border:1px solid var(--yellow); border-radius:8px; padding:14px 18px; margin-bottom:24px; font-size:13px; color:var(--yellow); }
+h1 { font-size:28px; margin-bottom:4px; }
+h2 { font-size:20px; margin:32px 0 16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+h3 { font-size:16px; margin:20px 0 10px; color:var(--blue); }
+.header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.header-left h1 span { color:var(--text2); font-weight:400; font-size:18px; }
+.header-right { text-align:right; color:var(--text2); font-size:14px; }
+.price-box { font-size:36px; font-weight:700; color:var(--green); }
+.price-change { font-size:14px; color:var(--red); }
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-right:6px; }
+.tag-sector { background:var(--blue-bg); color:var(--blue); }
+.tag-horizon { background:var(--purple); color:#fff; opacity:0.85; }
+.tag-warn { background:var(--yellow-bg); color:var(--yellow); }
+
+/* Signal Banner */
+.signal-banner { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:24px; }
+.signal-table { width:100%; border-collapse:collapse; }
+.signal-table th, .signal-table td { padding:10px 14px; text-align:center; border-bottom:1px solid var(--border); }
+.signal-table th { color:var(--text2); font-size:13px; font-weight:500; text-transform:uppercase; }
+.signal-table td { font-size:15px; }
+.signal-buy { background:var(--green-bg); color:var(--green); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-strongbuy { background:rgba(34,197,94,0.25); color:#4ade80; font-weight:700; border-radius:6px; padding:4px 12px; border:1px solid var(--green); }
+.signal-hold { background:var(--yellow-bg); color:var(--yellow); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-sell { background:var(--red-bg); color:var(--red); font-weight:700; border-radius:6px; padding:4px 12px; }
+
+/* Score Cards */
+.score-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px; }
+.score-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.score-card h3 { margin:0 0 12px; font-size:14px; text-transform:uppercase; letter-spacing:0.5px; }
+.score-value { font-size:48px; font-weight:800; line-height:1; }
+.score-bar { height:6px; border-radius:3px; background:var(--surface2); margin:12px 0 8px; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; }
+.score-label { font-size:13px; color:var(--text2); }
+.confidence { font-size:12px; color:var(--text2); margin-top:6px; }
+
+/* Gates */
+.gate-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:10px; }
+.gate-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:center; gap:10px; }
+.gate-icon { font-size:20px; }
+.gate-clear { color:var(--green); }
+.gate-triggered { color:var(--red); }
+.gate-text { font-size:13px; }
+
+/* Detail Tables */
+.detail-table { width:100%; border-collapse:collapse; margin:12px 0 20px; font-size:14px; }
+.detail-table th { text-align:left; padding:8px 12px; background:var(--surface2); color:var(--text2); font-size:12px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+.detail-table td { padding:8px 12px; border-bottom:1px solid rgba(46,51,71,0.5); vertical-align:top; }
+.detail-table tr:hover td { background:var(--surface2); }
+.metric-good { color:var(--green); }
+.metric-neutral { color:var(--yellow); }
+.metric-bad { color:var(--red); }
+
+/* Moat */
+.moat-grid { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin:12px 0 20px; }
+.moat-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center; }
+.moat-item h4 { font-size:11px; color:var(--text2); text-transform:uppercase; margin-bottom:6px; }
+.moat-score { font-size:28px; font-weight:700; }
+
+/* Driver Section */
+.driver-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin:16px 0; }
+.driver-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.driver-label { font-size:13px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; }
+.driver-score-big { font-size:36px; font-weight:800; }
+.adjustment-table { width:100%; font-size:13px; margin-top:12px; }
+.adjustment-table td { padding:4px 8px; }
+.adj-arrow { font-weight:700; }
+
+/* MTF Table */
+.mtf-table { width:100%; border-collapse:collapse; font-size:13px; margin:12px 0; }
+.mtf-table th { padding:8px 10px; background:var(--surface2); color:var(--text2); text-align:center; font-size:11px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+.mtf-table td { padding:8px 10px; text-align:center; border-bottom:1px solid rgba(46,51,71,0.5); }
+.mtf-bullish { background:rgba(34,197,94,0.08); }
+.mtf-bearish { background:rgba(239,68,68,0.08); }
+.mtf-neutral { background:rgba(234,179,8,0.08); }
+
+/* Chart */
+.chart-container { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin:16px 0; }
+canvas { width:100%; height:350px; }
+
+/* Scenarios */
+.scenario-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.scenario-card { background:var(--surface); border-radius:10px; padding:16px; }
+.scenario-bull { border:1px solid var(--green); }
+.scenario-bear { border:1px solid var(--red); }
+.scenario-card h4 { font-size:14px; margin-bottom:8px; }
+
+/* Entry/Exit Rules */
+.rule-box { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:10px 0; }
+.rule-box h4 { font-size:13px; color:var(--blue); text-transform:uppercase; margin-bottom:8px; }
+.rule-condition { font-size:13px; margin:4px 0; padding-left:12px; border-left:2px solid var(--border); }
+
+/* Calibration */
+.calibration { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:16px 0; }
+pre.cal-json { background:var(--surface2); border-radius:6px; padding:12px; font-size:12px; overflow-x:auto; color:var(--text2); }
+
+/* Responsive */
+@media (max-width:768px) {
+  .score-grid { grid-template-columns:1fr; }
+  .moat-grid { grid-template-columns:repeat(3, 1fr); }
+  .scenario-grid { grid-template-columns:1fr; }
+  .header { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+  <a href="https://donatien.ca/" style="color:#3b82f6; text-decoration:none; font-size:14px;">← Back to SignalDeck</a>
+  <a href="https://donatien.ca/reports/archive-DLO.html" style="color:#8b90a5; text-decoration:none; font-size:13px;">See previous reports →</a>
+</div>
+
+<div class="disclaimer">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>DLO <span>DLocal Limited</span></h1>
+    <div style="margin-top:8px;">
+      <span class="tag tag-sector">Fintech / Payments</span>
+      <span class="tag tag-sector">Emerging Markets</span>
+      <span class="tag tag-warn">FX Exposure</span>
+    </div>
+    <div style="margin-top:8px; font-size:13px; color:var(--text2);">NASDAQ · HQ: Montevideo, Uruguay · CEO: Pedro Arnt · Mkt Cap: $3.79B</div>
+  </div>
+  <div class="header-right">
+    <div class="price-box">$12.86</div>
+    <div class="price-change">-6.3% YTD &nbsp;|&nbsp; +69% 1Y &nbsp;|&nbsp; -23% from 52w High</div>
+    <div style="font-size:12px; margin-top:4px;">April 6, 2026 · Signal v4</div>
+  </div>
+</div>
+
+<!-- ============ SIGNAL BANNER ============ -->
+<div class="signal-banner">
+  <table class="signal-table">
+    <thead>
+      <tr>
+        <th>Horizon</th>
+        <th>Signal</th>
+        <th>Composite Score</th>
+        <th>Confidence</th>
+        <th>Key Driver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Short-term (1-3 mo)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>71</td>
+        <td>60%</td>
+        <td>Cheap valuation offsets weak technicals</td>
+      </tr>
+      <tr>
+        <td>Medium-term (6-12 mo)</td>
+        <td><span class="signal-strongbuy">STRONG BUY</span></td>
+        <td>76</td>
+        <td>65%</td>
+        <td>Quality + valuation + EM tailwind</td>
+      </tr>
+      <tr>
+        <td>Long-term (3-5 yr)</td>
+        <td><span class="signal-strongbuy">STRONG BUY</span></td>
+        <td>80</td>
+        <td>70%</td>
+        <td>Business quality dominates at this horizon</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ THREE-PILLAR SCORECARD ============ -->
+<h2>Three-Pillar Scorecard</h2>
+<div class="score-grid">
+  <div class="score-card">
+    <h3 style="color:var(--blue);">Business Quality</h3>
+    <div class="score-value" style="color:var(--green);">85</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:85%; background:var(--green);"></div></div>
+    <div class="score-label">Strong & accelerating</div>
+    <div class="confidence">Confidence: 75% · Pre-adjustment: 80</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--green);">Valuation Attractiveness</h3>
+    <div class="score-value" style="color:var(--green);">80</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:80%; background:var(--green);"></div></div>
+    <div class="score-label">Cheap for growth rate</div>
+    <div class="confidence">Confidence: 70% · Pre-adjustment: 77</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--orange);">Entry/Exit Timing</h3>
+    <div class="score-value" style="color:var(--yellow);">62</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:62%; background:var(--yellow);"></div></div>
+    <div class="score-label">Improving off lows</div>
+    <div class="confidence">Confidence: 65% · Pre-adjustment: 54</div>
+  </div>
+</div>
+
+<!-- ============ HARD GATES & DO NOT BUY ============ -->
+<h2>Hard Gate & Do-Not-Buy Status</h2>
+<div class="gate-grid">
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Financial Distress</strong><br>Net cash $658M, zero concern</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Earnings Event Risk</strong><br>Next earnings May 14 — 38 days out</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Valuation Ceiling</strong><br>$12.86 well below $21.00 high target</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Accounting / Dilution</strong><br>SBC ~2% of revenue, share count flat</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Regulatory / Binary</strong><br>No binary events pending</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Leverage + Rates</strong><br>Net cash position, not applicable</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Valuation Extreme</strong><br>Mid-range of historical valuations</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Negative Revisions</strong><br>Consensus is Moderate Buy</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Insider Selling</strong><br>No abnormal selling detected</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Structural Threat</strong><br>No existential threats identified</div></div>
+</div>
+
+<!-- ============ PILLAR 1: BUSINESS QUALITY ============ -->
+<h2>Pillar 1: Business Quality — 85/100</h2>
+<p style="font-size:14px; color:var(--text2); margin-bottom:16px;">Sector Profile: <strong>Fintech / Digital Payments</strong> — Metrics: Revenue growth, gross margin, NRR, FCF conversion, ROIC, user/merchant expansion</p>
+
+<h3>Sub-Signal Scores</h3>
+<table class="detail-table">
+  <thead><tr><th>Sub-Signal</th><th>Raw Data</th><th>Sector Context</th><th>Score</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Revenue Trajectory</strong></td>
+      <td class="metric-good">FY 2025: +46% YoY to $1.09B<br>Q4 2025: +65% YoY to $337.9M</td>
+      <td>Fintech median: ~15-25%</td>
+      <td style="font-weight:700; color:var(--green);">90</td>
+      <td>Exceptional — crossed $1B milestone, growth <em>accelerating</em> in Q4 to 65%. Top decile for sector.</td>
+    </tr>
+    <tr>
+      <td><strong>Profitability</strong></td>
+      <td class="metric-neutral">Gross margin: 34% (Q4) ↓ from 41%<br>Net margin: ~18% (FY)</td>
+      <td>Payment processors: 35-55% GM</td>
+      <td style="font-weight:700; color:var(--yellow);">60</td>
+      <td>Concerning: GM declining 7ppt YoY from volume discounting and FX pressure. Take rate fell to ~0.99%. Net margin healthy at 18%.</td>
+    </tr>
+    <tr>
+      <td><strong>Cash Generation</strong></td>
+      <td class="metric-good">Adj FCF: $190.7M (+110% YoY)<br>FCF/NI conversion: 97%</td>
+      <td>Top quartile FCF conversion</td>
+      <td style="font-weight:700; color:var(--green);">92</td>
+      <td>Outstanding — nearly 1:1 FCF-to-net-income conversion. Cash generation accelerating faster than earnings.</td>
+    </tr>
+    <tr>
+      <td><strong>Balance Sheet</strong></td>
+      <td class="metric-good">Cash: $720M · Debt: $66.8M<br>Net cash: $658M · Current ratio: 1.46x</td>
+      <td>Fortress relative to peers</td>
+      <td style="font-weight:700; color:var(--green);">95</td>
+      <td>Essentially debt-free with $658M net cash ($2.23/share). No refinancing risk, ample runway for expansion.</td>
+    </tr>
+    <tr>
+      <td><strong>Net Dollar Retention</strong></td>
+      <td class="metric-good">Q4 2025 NRR: 162%<br>Q4 2024 NRR: 106%</td>
+      <td>Elite SaaS/payments: >130%</td>
+      <td style="font-weight:700; color:var(--green);">95</td>
+      <td>Exceptional merchant expansion — existing customers are spending 62% more. Jumped from 106% to 162% in 4 quarters.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Competitive Moat Scorecard — 62/100</h3>
+<div class="moat-grid">
+  <div class="moat-item"><h4>Pricing Power</h4><div class="moat-score" style="color:var(--yellow);">45</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Take rate declining, volume discounts</div></div>
+  <div class="moat-item"><h4>Network Effects</h4><div class="moat-score" style="color:var(--yellow);">60</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Two-sided merchant/consumer network</div></div>
+  <div class="moat-item"><h4>Switching Costs</h4><div class="moat-score" style="color:var(--green);">70</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Deep API integration, 40+ market compliance</div></div>
+  <div class="moat-item"><h4>Cost Advantage</h4><div class="moat-score" style="color:var(--green);">65</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Local rails in 40+ EM countries, hard to replicate</div></div>
+  <div class="moat-item"><h4>Intangible Assets</h4><div class="moat-score" style="color:var(--green);">70</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">30+ payment licenses, FCA regulated</div></div>
+</div>
+
+<h3>ROIC & Capital Allocation — 78/100</h3>
+<table class="detail-table">
+  <thead><tr><th>Component</th><th>Score</th><th>Detail</th></tr></thead>
+  <tbody>
+    <tr><td><strong>ROIC (40%)</strong></td><td style="font-weight:700; color:var(--green);">85</td><td>ROE 35%, ROIC 24-35% depending on methodology. Top quartile vs fintech peers. Stable and rising.</td></tr>
+    <tr><td><strong>Capital Allocation (30%)</strong></td><td style="font-weight:700; color:var(--green);">75</td><td>Initiated dividend ($0.1939/share), $300M buyback authorized. Reinvesting in geographic expansion (UAE, Turkey, Philippines, Asia). Disciplined M&A.</td></tr>
+    <tr><td><strong>Management Skin in Game (30%)</strong></td><td style="font-weight:700; color:var(--green);">70</td><td>CEO Pedro Arnt (ex-MercadoLibre CFO) — strong hire from dominant LatAm platform. SBC only ~2% of revenue (very low for tech). Share count essentially flat YoY.</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ PILLAR 2: VALUATION ============ -->
+<h2>Pillar 2: Valuation Attractiveness — 80/100</h2>
+
+<h3>Valuation Multiples vs References</h3>
+<table class="detail-table">
+  <thead><tr><th>Multiple</th><th>Current</th><th>Sector Median</th><th>5yr Decile</th><th>Growth-Adj</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Forward P/E</strong></td>
+      <td class="metric-good">13.7x</td>
+      <td>25-35x (high-growth fintech)</td>
+      <td>3rd (bottom 30%)</td>
+      <td>PEG = 0.43 (very cheap)</td>
+      <td style="font-weight:700; color:var(--green);">88</td>
+    </tr>
+    <tr>
+      <td><strong>EV/Revenue</strong></td>
+      <td class="metric-good">2.88x</td>
+      <td>6-10x (payments peers)</td>
+      <td>2nd (near bottom)</td>
+      <td>Growth rate 46% → 0.06x rev/growth</td>
+      <td style="font-weight:700; color:var(--green);">85</td>
+    </tr>
+    <tr>
+      <td><strong>P/E (TTM)</strong></td>
+      <td class="metric-good">~20x</td>
+      <td>30-50x (peers)</td>
+      <td>4th (below mid)</td>
+      <td>Earning $0.64/share, growing 63% YoY</td>
+      <td style="font-weight:700; color:var(--green);">78</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>FCF Yield — Universal Anchor</h3>
+<div style="background:var(--surface); border:1px solid var(--green); border-radius:10px; padding:16px; margin:12px 0;">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <div style="font-size:13px; color:var(--text2); text-transform:uppercase;">Free Cash Flow Yield</div>
+      <div style="font-size:32px; font-weight:800; color:var(--green);">6.1%</div>
+      <div style="font-size:13px; color:var(--text2);">FCF $190.7M ÷ EV $3.14B</div>
+    </div>
+    <div style="text-align:right; font-size:14px;">
+      <div class="metric-good">■ Very Attractive (&gt;5%)</div>
+      <div style="color:var(--text2); font-size:12px; margin-top:4px;">Top quintile for high-growth fintech</div>
+    </div>
+  </div>
+</div>
+
+<h3>Reverse DCF / Implied Growth</h3>
+<div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:12px 0;">
+  <p style="font-size:14px;">At the current price of <strong>$12.86</strong>, the market is implying approximately <strong>15-18% annual revenue growth</strong> for the next 5 years (assuming 10% WACC and terminal FCF margin of 20%).</p>
+  <p style="font-size:14px; margin-top:8px;">Analyst consensus expects <strong>~27% revenue growth</strong> in 2026 ($1.4B), and the company itself is guiding <strong>50-60% TPV growth</strong>. The market is pricing in significantly less growth than both consensus and management guidance.</p>
+  <p style="font-size:14px; margin-top:8px; color:var(--green); font-weight:600;">Verdict: Market is pessimistic → Attractive (Score: 80/100)</p>
+</div>
+
+<h3>Analyst Target Cross-Check</h3>
+<table class="detail-table">
+  <thead><tr><th>Metric</th><th>Value</th><th>Upside/Downside</th></tr></thead>
+  <tbody>
+    <tr><td>Median Target</td><td>$16.40–$17.25</td><td class="metric-good">+28% to +34%</td></tr>
+    <tr><td>High Target</td><td>$21.00</td><td class="metric-good">+63%</td></tr>
+    <tr><td>Low Target</td><td>$14.50–$15.00</td><td class="metric-good">+13% to +17%</td></tr>
+    <tr><td>Consensus</td><td>Moderate Buy (6-8 Buy, 2-4 Hold, 0-1 Sell)</td><td>—</td></tr>
+    <tr><td>Recency</td><td>Post-Q4 earnings (March 2026) — fresh</td><td>Full weight (1.0x)</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ PILLAR 3: TIMING ============ -->
+<h2>Pillar 3: Entry/Exit Timing — 62/100</h2>
+
+<h3>Multi-Timeframe Technical Analysis</h3>
+<table class="mtf-table">
+  <thead>
+    <tr><th>Timeframe</th><th>Trend</th><th>Direction</th><th>RSI Est.</th><th>MACD</th><th>Key S/R</th><th>Breakout</th><th>Vol</th></tr>
+  </thead>
+  <tbody>
+    <tr class="mtf-bullish">
+      <td><strong>Monthly</strong></td><td>Uptrend ↑</td><td style="color:var(--green);">Bullish</td><td>~55</td><td>+, rising</td><td>S: $7.61 R: $16.78</td><td>None</td><td>1.0x</td>
+    </tr>
+    <tr class="mtf-neutral">
+      <td><strong>Weekly</strong></td><td>Weakening →</td><td style="color:var(--yellow);">Neutral</td><td>~45</td><td>+, fading</td><td>S: $11.37 R: $14.85</td><td>None</td><td>0.9x</td>
+    </tr>
+    <tr class="mtf-bearish">
+      <td><strong>Daily</strong></td><td>Downtrend ↓</td><td style="color:var(--red);">Bearish</td><td>~38</td><td>-, falling</td><td>S: $12.19 R: $14.00</td><td>None</td><td>1.3x</td>
+    </tr>
+    <tr class="mtf-bearish">
+      <td><strong>Hourly</strong></td><td>Downtrend ↓</td><td style="color:var(--red);">Bearish</td><td>~33</td><td>-, bottom?</td><td>S: $12.19 R: $13.13</td><td>None</td><td>1.1x</td>
+    </tr>
+    <tr class="mtf-bearish">
+      <td><strong>15-min</strong></td><td colspan="6" style="color:var(--text2);">Intraday data unavailable (requires Polygon Stocks Starter plan)</td>
+    </tr>
+    <tr style="background:var(--surface2);">
+      <td colspan="2"><strong>Confluence</strong></td><td colspan="6"><strong style="color:var(--yellow);">Mixed / Transitioning</strong> — MTF Score: 48 (pre-driver adjustment)</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:14px; margin:12px 0;">Monthly trend remains solidly bullish from the secular recovery off $7.61 lows, but weekly momentum is fading and daily/hourly timeframes have turned bearish — consistent with a short-term pullback within a larger uptrend. The stock bounced +13.1% off the March 17 low of $11.37 but has pulled back from $13.03. Key level to watch: daily support at $12.19 as a potential buy zone, and $14.00 as the breakout level that would confirm trend reversal.</p>
+
+<h3>Risk-Reward Assessment</h3>
+<table class="detail-table">
+  <thead><tr><th>Metric</th><th>Value</th><th>Assessment</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr><td>Nearest Support</td><td>$12.19 (daily)</td><td>$0.67 below current — tight stop possible</td><td class="metric-good">70</td></tr>
+    <tr><td>Nearest Resistance</td><td>$14.00</td><td>$1.14 upside to first resistance</td><td>—</td></tr>
+    <tr><td>Risk-Reward Ratio</td><td>1.7:1 (to first R)</td><td>Favorable skew</td><td class="metric-good">65</td></tr>
+    <tr><td>52-Week Range Position</td><td>57th percentile</td><td>Mid-range, not extended</td><td class="metric-neutral">55</td></tr>
+  </tbody>
+</table>
+
+<h3>Relative Strength</h3>
+<table class="detail-table">
+  <thead><tr><th>Benchmark</th><th>DLO 1mo</th><th>Benchmark 1mo</th><th>Relative</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr><td>vs SPY (S&P 500)</td><td class="metric-bad">-8.0%</td><td>~-2%</td><td class="metric-bad">Underperforming</td><td>30</td></tr>
+    <tr><td>vs ARKF (Fintech)</td><td class="metric-bad">-8.0%</td><td>~-4%</td><td class="metric-bad">Underperforming</td><td>35</td></tr>
+  </tbody>
+</table>
+
+<h3>Macro Regime (Dynamic Weight: 15% — Medium Sensitivity)</h3>
+<table class="detail-table">
+  <thead><tr><th>Factor</th><th>Current</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr><td>Fed Direction</td><td class="metric-good">Cutting cycle — FFR at 3.64%, dovish</td><td>70</td></tr>
+    <tr><td>VIX</td><td class="metric-neutral">24.54 — elevated, risk-on/off boundary</td><td>40</td></tr>
+    <tr><td>Yield Curve</td><td class="metric-good">Normal — 10Y-2Y spread +0.51%</td><td>70</td></tr>
+    <tr><td>Sector Regime</td><td class="metric-neutral">EM fintech facing tariff uncertainty, but LatAm somewhat insulated</td><td>50</td></tr>
+  </tbody>
+</table>
+
+<h3>Sentiment Layer (Weight: 18%)</h3>
+<table class="detail-table">
+  <thead><tr><th>Signal</th><th>Data</th><th>Recency</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr><td>Analyst Revisions</td><td class="metric-good">6-8 Buy / 2-4 Hold / 0-1 Sell. Post-Q4 beat.</td><td>March 2026 (1.0x)</td><td>70</td></tr>
+    <tr><td>News Tone</td><td class="metric-good">Positive: "$1B milestone", "record results", "strong 2026 outlook"</td><td>March 18-19, 2026 (1.0x)</td><td>72</td></tr>
+    <tr><td>Options/Positioning</td><td style="color:var(--text2);">Not available</td><td>—</td><td>50 (neutral)</td></tr>
+  </tbody>
+</table>
+
+<h3>Catalyst Layer (Weight: 17%)</h3>
+<table class="detail-table">
+  <thead><tr><th>Event</th><th>Date</th><th>Impact</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Q1 2026 Earnings</td><td>May 14, 2026</td><td>High</td><td style="color:var(--yellow);">38 days — pending</td></tr>
+    <tr><td>Card-Present Terminal Launch</td><td>H1 2026</td><td>Medium-High</td><td style="color:var(--yellow);">New TAM expansion</td></tr>
+    <tr><td>Asia Expansion (Indonesia, Vietnam)</td><td>2026</td><td>Medium</td><td style="color:var(--blue);">In progress — licenses secured</td></tr>
+    <tr><td>$300M Share Buyback</td><td>Ongoing</td><td>Medium</td><td style="color:var(--green);">Active</td></tr>
+    <tr><td>BNPL Fuse / Stablecoin Rails</td><td>2026</td><td>Medium</td><td style="color:var(--blue);">Product pipeline</td></tr>
+  </tbody>
+</table>
+<p style="font-size:13px; color:var(--text2); margin-top:8px;"><strong>Catalyst Clustering Score: 62/100</strong> — Moderate density. One high-impact event (earnings) within 38 days. Multiple medium-impact catalysts spread across 2026. No chaotic clustering.</p>
+
+<!-- ============ ECONOMIC EVENTS ============ -->
+<h2>Economic Event Risk</h2>
+<table class="detail-table">
+  <thead><tr><th>Date</th><th>Event</th><th>Impact</th><th>Forecast</th><th>Previous</th><th>Relevant?</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>Apr 10</td><td>CPI YoY</td><td>High</td><td>~2.6%</td><td>2.8%</td><td style="color:var(--yellow);">⚠️ Medium</td><td>Inflation trend affects Fed path, consumer spending in EM</td></tr>
+    <tr><td>Apr 30</td><td>FOMC Rate Decision</td><td>High</td><td>Hold at 3.64%</td><td>3.64%</td><td style="color:var(--yellow);">⚠️ Medium</td><td>Rate direction affects growth stock valuations, EM capital flows</td></tr>
+    <tr><td>May 2</td><td>Nonfarm Payrolls</td><td>High</td><td>—</td><td>215K</td><td style="color:var(--text2);">Low</td><td>Indirect — employment signals for consumer spending</td></tr>
+  </tbody>
+</table>
+<p style="font-size:14px; margin:12px 0;">DLocal has <strong>medium macro sensitivity</strong> as an EM fintech. The most relevant event is the FOMC decision on April 30 — continued dovish stance supports EM capital flows and growth stock valuations. CPI on April 10 is important as a leading indicator for the Fed's path. No events within 7 days requiring urgent caution.</p>
+
+<!-- ============ UNDERLYING DRIVER ============ -->
+<h2>Underlying Driver Analysis</h2>
+<div class="driver-box">
+  <div class="driver-header">
+    <div>
+      <div class="driver-label">Primary Driver</div>
+      <h3 style="margin:4px 0; font-size:18px;">Emerging Market Digital Payments Growth</h3>
+      <div style="font-size:13px; color:var(--text2);">LatAm e-commerce +21% CAGR · Cross-border payments +7.2% CAGR · DLocal TPV +60% YoY</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="driver-score-big" style="color:var(--green);">80</div>
+      <div style="font-size:14px; color:var(--green); font-weight:600;">Strong Tailwind</div>
+      <div style="font-size:12px; color:var(--text2);">Confidence: 65%</div>
+    </div>
+  </div>
+
+  <table class="detail-table">
+    <thead><tr><th>Horizon</th><th>Assessment</th><th>Score</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Historical (25%)</strong></td>
+        <td>LatAm digital payments penetration reached 60% in 2025. APMs power 46% of e-commerce → 51% by 2027. DLocal TPV grew from $25.6B to $41B in FY 2025 (+60%).</td>
+        <td style="font-weight:700; color:var(--green);">82</td>
+      </tr>
+      <tr>
+        <td><strong>Current (50%)</strong></td>
+        <td>LatAm e-commerce market $1.78T in 2026. Cross-border payments market $238B. Brazil's PIX at 90% penetration. Argentina fintech sector booming (312 firms, +333% since 2017). Cash use falling rapidly.</td>
+        <td style="font-weight:700; color:var(--green);">78</td>
+      </tr>
+      <tr>
+        <td><strong>Forward (25%)</strong></td>
+        <td>Company guiding 50-60% TPV growth in 2026. Real-time payments CAGR ~30%. Asia expansion into $60T payment corridor. Card-present terminals unlock new TAM. Brazil launching Drex CBDC in 2026.</td>
+        <td style="font-weight:700; color:var(--green);">80</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 style="margin-top:16px; font-size:13px; color:var(--text2);">Secondary Driver: FX & Currency Risk — Score: 55 (Neutral)</h4>
+  <p style="font-size:13px; margin:8px 0;">BRL at 5.15-5.24/USD (moderate, supported by commodities). ARS volatile but Milei reforms reducing inflation (211% → 118%). MXN facing tariff uncertainty. DLocal's FX exposure creates both opportunity (processing fees) and risk (margin compression). Net effect is neutral.</p>
+
+  <h4 style="margin-top:16px; font-size:14px;">Pillar Adjustments (Strong Tailwind)</h4>
+  <table style="width:100%; font-size:14px; margin-top:8px;">
+    <tr><td>Quality:</td><td>80 <span class="adj-arrow" style="color:var(--green);">→ +5 →</span> <strong>85</strong></td></tr>
+    <tr><td>Valuation:</td><td>77 <span class="adj-arrow" style="color:var(--green);">→ +3 →</span> <strong>80</strong></td></tr>
+    <tr><td>Timing:</td><td>54 <span class="adj-arrow" style="color:var(--green);">→ +8 →</span> <strong>62</strong></td></tr>
+  </table>
+</div>
+
+<!-- ============ CHART ============ -->
+<h2>Price Chart — 9 Months Daily</h2>
+<div class="chart-container">
+<canvas id="priceChart"></canvas>
+</div>
+<script>
+(function(){
+const canvas = document.getElementById('priceChart');
+const ctx = canvas.getContext('2d');
+canvas.width = canvas.parentElement.offsetWidth - 40;
+canvas.height = 350;
+
+// Approximate daily closes from July 2025 - April 2026 (key data points)
+const data = [
+  // Jul 2025
+  {d:'Jul',p:9.50},{d:'',p:9.80},{d:'',p:10.10},{d:'',p:9.70},{d:'',p:10.30},
+  // Aug
+  {d:'Aug',p:10.50},{d:'',p:10.80},{d:'',p:11.20},{d:'',p:10.90},{d:'',p:11.00},
+  // Sep
+  {d:'Sep',p:11.50},{d:'',p:11.80},{d:'',p:12.20},{d:'',p:11.60},{d:'',p:11.40},
+  // Oct
+  {d:'Oct',p:11.80},{d:'',p:12.30},{d:'',p:12.80},{d:'',p:12.50},{d:'',p:12.60},
+  // Nov
+  {d:'Nov',p:13.20},{d:'',p:13.80},{d:'',p:14.50},{d:'',p:14.20},{d:'',p:14.80},
+  // Dec
+  {d:'Dec',p:15.20},{d:'',p:15.80},{d:'',p:16.20},{d:'',p:16.78},{d:'',p:15.60},
+  // Jan 2026
+  {d:'Jan',p:14.80},{d:'',p:14.20},{d:'',p:13.80},{d:'',p:13.50},{d:'',p:13.70},
+  // Feb
+  {d:'Feb',p:13.40},{d:'',p:13.10},{d:'',p:12.80},{d:'',p:12.50},{d:'',p:12.30},
+  // Mar
+  {d:'Mar',p:12.00},{d:'',p:11.60},{d:'',p:11.37},{d:'',p:12.40},{d:'',p:13.00},
+  // Apr
+  {d:'Apr',p:13.03},{d:'',p:12.86}
+];
+
+const prices = data.map(d=>d.p);
+const minP = Math.min(...prices) - 0.5;
+const maxP = Math.max(...prices) + 0.5;
+const w = canvas.width; const h = canvas.height;
+const pad = {t:20,b:40,l:55,r:20};
+const cw = w-pad.l-pad.r; const ch = h-pad.t-pad.b;
+
+function x(i){return pad.l + (i/(prices.length-1))*cw;}
+function y(p){return pad.t + (1-(p-minP)/(maxP-minP))*ch;}
+
+// Grid
+ctx.strokeStyle='#2e3347'; ctx.lineWidth=0.5;
+for(let p=Math.ceil(minP);p<=maxP;p+=1){
+  ctx.beginPath(); ctx.moveTo(pad.l,y(p)); ctx.lineTo(w-pad.r,y(p)); ctx.stroke();
+  ctx.fillStyle='#8b90a5'; ctx.font='11px Inter,sans-serif'; ctx.textAlign='right';
+  ctx.fillText('$'+p.toFixed(0),pad.l-8,y(p)+4);
+}
+
+// Month labels
+data.forEach((d,i)=>{
+  if(d.d){ctx.fillStyle='#8b90a5';ctx.font='11px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(d.d,x(i),h-10);}
+});
+
+// Support/Resistance lines
+const levels = [{price:12.19,label:'Support $12.19',color:'#3b82f6'},{price:14.00,label:'Resistance $14.00',color:'#ef4444'},{price:14.85,label:'SMA50 ~$14.85',color:'#eab308'},{price:11.37,label:'March Low $11.37',color:'#22c55e'}];
+levels.forEach(lv=>{
+  ctx.strokeStyle=lv.color; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(pad.l,y(lv.price)); ctx.lineTo(w-pad.r,y(lv.price)); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle=lv.color; ctx.font='10px Inter,sans-serif'; ctx.textAlign='left';
+  ctx.fillText(lv.label,pad.l+4,y(lv.price)-4);
+});
+
+// Price line
+ctx.strokeStyle='#e1e4ed'; ctx.lineWidth=2; ctx.setLineDash([]);
+ctx.beginPath();
+prices.forEach((p,i)=>{if(i===0)ctx.moveTo(x(i),y(p));else ctx.lineTo(x(i),y(p));});
+ctx.stroke();
+
+// Fill under
+const grad = ctx.createLinearGradient(0,pad.t,0,h-pad.b);
+grad.addColorStop(0,'rgba(59,130,246,0.15)');grad.addColorStop(1,'rgba(59,130,246,0.01)');
+ctx.fillStyle=grad;
+ctx.beginPath();ctx.moveTo(x(0),y(prices[0]));
+prices.forEach((p,i)=>ctx.lineTo(x(i),y(p)));
+ctx.lineTo(x(prices.length-1),h-pad.b);ctx.lineTo(x(0),h-pad.b);ctx.closePath();ctx.fill();
+
+// Current price dot
+const lastI = prices.length-1;
+ctx.beginPath(); ctx.arc(x(lastI),y(prices[lastI]),5,0,Math.PI*2);
+ctx.fillStyle='#3b82f6'; ctx.fill();
+ctx.fillStyle='#e1e4ed'; ctx.font='bold 12px Inter,sans-serif'; ctx.textAlign='left';
+ctx.fillText('$12.86',x(lastI)+10,y(prices[lastI])+4);
+})();
+</script>
+
+<!-- ============ SCENARIOS ============ -->
+<h2>Scenario Summary</h2>
+<div class="scenario-grid">
+  <div class="scenario-card scenario-bull">
+    <h4 style="color:var(--green);">Bull Case — Target $21+ (60% probability)</h4>
+    <p style="font-size:13px;">Q1 2026 earnings beat expectations again with TPV growth above 55%. Gross margins stabilize around 35-37% as mix shifts. Asia expansion (Indonesia, Vietnam) adds new high-margin corridors. Card-present terminals unlock $5B+ incremental TAM. NRR remains above 150%. Forward P/E re-rates from 13.7x toward 20-25x (still below peers). Stock approaches analyst high target of $21.00 within 12 months.</p>
+    <p style="font-size:13px; margin-top:8px; color:var(--green);">Upside: +63% to $21.00</p>
+  </div>
+  <div class="scenario-card scenario-bear">
+    <h4 style="color:var(--red);">Bear Case — Target $9-10 (20% probability)</h4>
+    <p style="font-size:13px;">Gross margin compression accelerates as take rate falls below 0.80% from intense competition (Stripe, Adyen entering EM aggressively). Argentina currency crisis wipes out a quarter. US tariffs suppress cross-border payment volumes to Asia. NRR normalizes back toward 100-110%. Growth decelerates to sub-30%, causing multiple contraction. Stock retests 52-week lows near $7.61-$10.00.</p>
+    <p style="font-size:13px; margin-top:8px; color:var(--red);">Downside: -22% to $10.00</p>
+  </div>
+</div>
+<p style="font-size:14px; margin-top:12px;"><strong>What would change the signal:</strong> If Q1 2026 earnings on May 14 show gross margin recovery above 36% AND TPV growth above 55%, timing would shift higher and all three horizon signals would strengthen. Conversely, if gross margins fall below 32% or guidance is cut, the signal would weaken to HOLD.</p>
+
+<!-- ============ ENTRY/EXIT RULES ============ -->
+<h2>Entry/Exit Rules</h2>
+
+<div class="rule-box">
+  <h4 style="color:var(--green);">Entry Rule 1 — Fundamental</h4>
+  <div class="rule-condition">BUY if Price &lt; $14.50 (below median analyst target) AND No earnings within 14 days AND Underlying Driver score ≥ 50</div>
+  <div style="font-size:12px; color:var(--green); margin-top:4px;">STATUS: <strong>MET</strong> — $12.86 &lt; $14.50 ✓ · Earnings 38d away ✓ · Driver 80 ≥ 50 ✓</div>
+</div>
+
+<div class="rule-box">
+  <h4 style="color:var(--green);">Entry Rule 2 — Technical</h4>
+  <div class="rule-condition">BUY if 1-day close above $14.00 (daily resistance) on volume &gt; 1.5x 20-day avg AND RSI &gt; 40 AND MACD histogram turns positive</div>
+  <div style="font-size:12px; color:var(--red); margin-top:4px;">STATUS: <strong>NOT MET</strong> — $12.86 &lt; $14.00 ✗ · Awaiting breakout</div>
+</div>
+
+<div class="rule-box">
+  <h4 style="color:var(--green);">Entry Rule 3 — Catalyst</h4>
+  <div class="rule-condition">BUY if Post-Q1-earnings move &gt; +5% on 2x volume AND Gross margin ≥ 35% AND TPV guidance maintained at 50-60%</div>
+  <div style="font-size:12px; color:var(--yellow); margin-top:4px;">STATUS: <strong>PENDING</strong> — Q1 earnings May 14</div>
+</div>
+
+<div class="rule-box">
+  <h4 style="color:var(--red);">Exit Rule 1 — Stop-Loss</h4>
+  <div class="rule-condition">SELL if Price closes below $11.15 for 2 consecutive days (below March low support zone)</div>
+  <div style="font-size:12px; color:var(--green); margin-top:4px;">STATUS: <strong>CLEAR</strong> — $12.86 · $1.71 buffer (13.3%)</div>
+</div>
+
+<div class="rule-box">
+  <h4 style="color:var(--red);">Exit Rule 2 — Thesis Invalidation</h4>
+  <div class="rule-condition">SELL if Gross margin &lt; 30% for 2 consecutive quarters OR NRR &lt; 100% OR Revenue growth &lt; 20% YoY</div>
+  <div style="font-size:12px; color:var(--green); margin-top:4px;">STATUS: <strong>CLEAR</strong> — GM 34%, NRR 162%, Rev growth 46%</div>
+</div>
+
+<div class="rule-box">
+  <h4 style="color:var(--red);">Exit Rule 3 — Profit Target</h4>
+  <div class="rule-condition">Consider trimming if Price ≥ $17.25 (median analyst target) AND RSI &gt; 70</div>
+  <div style="font-size:12px; color:var(--green); margin-top:4px;">STATUS: <strong>CLEAR</strong> — $12.86 · +34% to target</div>
+</div>
+
+<h3>Key Price Levels</h3>
+<table class="detail-table">
+  <thead><tr><th>Level</th><th>Price</th><th>Distance</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td style="color:var(--red);">Stop-Loss</td><td>$11.15</td><td>-13.3%</td><td>Below March low & trendline support</td></tr>
+    <tr><td style="color:var(--blue);">Support 1</td><td>$12.19</td><td>-5.2%</td><td>Daily technical support</td></tr>
+    <tr><td style="color:var(--blue);">Support 2</td><td>$11.37</td><td>-11.6%</td><td>March 17, 2026 swing low</td></tr>
+    <tr><td style="color:var(--yellow);">SMA50</td><td>~$14.85</td><td>+15.5%</td><td>50-day simple moving average</td></tr>
+    <tr><td style="color:var(--yellow);">SMA200</td><td>~$14.34</td><td>+11.5%</td><td>200-day simple moving average</td></tr>
+    <tr><td style="color:var(--orange);">Resistance</td><td>$14.00</td><td>+8.9%</td><td>Daily chart resistance</td></tr>
+    <tr><td style="color:var(--green);">Fair Value</td><td>$16.40–$17.25</td><td>+28-34%</td><td>Analyst median target range</td></tr>
+    <tr><td style="color:var(--purple);">Analyst High</td><td>$21.00</td><td>+63%</td><td>Highest analyst target</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ VOLATILITY CONTEXT ============ -->
+<h2>Volatility Context</h2>
+<table class="detail-table">
+  <thead><tr><th>Metric</th><th>DLO</th><th>SPY (Reference)</th></tr></thead>
+  <tbody>
+    <tr><td>Weekly Volatility</td><td>~7%</td><td>~1.5%</td></tr>
+    <tr><td>Beta (5Y Monthly)</td><td>1.04</td><td>1.00</td></tr>
+    <tr><td>52-Week Range</td><td>$7.61 – $16.78 (120% range)</td><td>—</td></tr>
+    <tr><td>Recent Max Drawdown</td><td>-23% from Dec high</td><td>—</td></tr>
+  </tbody>
+</table>
+<p style="font-size:13px; color:var(--text2); margin-top:8px;">DLO's beta of 1.04 suggests market-like systematic risk, but the 120% 52-week range and 7% weekly volatility indicate significant idiosyncratic moves driven by earnings, EM sentiment, and FX dynamics.</p>
+
+<!-- ============ CALIBRATION ============ -->
+<h2>Calibration Snapshot</h2>
+<div class="calibration">
+<pre class="cal-json">
+{
+  "ticker": "DLO",
+  "date": "2026-04-06",
+  "time": "06:47",
+  "version": "v4",
+  "user_context": {
+    "horizon": "all_horizons",
+    "allocation_pct": null,
+    "portfolio_role": null
+  },
+  "price_at_rating": 12.86,
+  "signal_short": "BUY",
+  "signal_medium": "STRONG_BUY",
+  "signal_long": "STRONG_BUY",
+  "primary_signal": "ALL_HORIZONS",
+  "quality_score": 85,
+  "quality_pre_adjustment": 80,
+  "quality_detail": {
+    "revenue_trajectory": 90,
+    "profitability": 60,
+    "cash_generation": 92,
+    "balance_sheet": 95,
+    "ndr": 95,
+    "moat_score": 62,
+    "moat_detail": {
+      "pricing_power": 45,
+      "network_effects": 60,
+      "switching_costs": 70,
+      "cost_advantage": 65,
+      "intangible_assets": 70
+    },
+    "roic_score": 78,
+    "roic_pct": 35,
+    "capital_allocation": 75,
+    "management_skin_in_game": 70
+  },
+  "valuation_score": 80,
+  "valuation_pre_adjustment": 77,
+  "valuation_detail": {
+    "forward_pe": 13.7,
+    "ev_revenue": 2.88,
+    "pe_ttm": 20,
+    "peg_ratio": 0.43,
+    "fcf_yield": 6.1,
+    "implied_growth_rate": 16.5,
+    "consensus_growth_rate": 27,
+    "historical_valuation_decile": 3,
+    "analyst_median_target": 16.83,
+    "analyst_high_target": 21.00,
+    "analyst_low_target": 14.75
+  },
+  "timing_score": 62,
+  "timing_pre_adjustment": 54,
+  "timing_detail": {
+    "mtf_confluence": 48,
+    "risk_reward_score": 65,
+    "relative_strength_vs_spy": -6.0,
+    "relative_strength_vs_sector": -4.0,
+    "catalyst_clustering_score": 62,
+    "dynamic_macro_weight": 0.15,
+    "macro_score": 55,
+    "sentiment_score": 64,
+    "catalyst_score": 62
+  },
+  "driver_score": 80,
+  "driver_label": "Strong Tailwind",
+  "driver_name": "EM Digital Payments Growth",
+  "overall_confidence": 60,
+  "fair_value_est": 16.83,
+  "stop_loss": 11.15,
+  "target_price": 21.00,
+  "support_1": 12.19,
+  "support_2": 11.37,
+  "resistance_1": 14.00,
+  "gates_triggered": [],
+  "do_not_buy_triggers": [],
+  "next_catalyst": "Q1 2026 Earnings - May 14, 2026",
+  "next_check_date": "2026-05-06"
+}
+</pre>
+</div>
+
+<div class="disclaimer" style="margin-top:32px;">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions. Emerging market stocks carry elevated risks including currency devaluation, regulatory changes, political instability, and cross-border payment disruption.
+</div>
+
+</body>
+</html>

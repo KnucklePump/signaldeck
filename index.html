@@ -140,7 +140,7 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
         <div class="site-subtitle">AI-Powered Stock Analysis &middot; v4 Framework</div>
       </div>
       <div class="header-meta">
-        <div>Last updated: <strong>April 5, 2026</strong></div>
+        <div>Last updated: <strong>April 6, 2026</strong></div>
         <div>Monitored 2x daily (12:30 PM &amp; 5:00 PM ET)</div>
       </div>
     </div>
@@ -154,8 +154,8 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
   </div>
 
   <div class="stats-bar">
-    <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Tickers Tracked</div></div>
-    <div class="stat-item"><div class="stat-value" style="color:var(--green)">4</div><div class="stat-label">Buy Signals</div></div>
+    <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Tickers Tracked</div></div>
+    <div class="stat-item"><div class="stat-value" style="color:var(--green)">7</div><div class="stat-label">Buy Signals</div></div>
     <div class="stat-item"><div class="stat-value" style="color:var(--yellow)">2</div><div class="stat-label">Hold Signals</div></div>
     <div class="stat-item"><div class="stat-value" style="color:var(--red)">0</div><div class="stat-label">Active Triggers</div></div>
     <div class="stat-item"><div class="stat-value" style="color:var(--orange)">0</div><div class="stat-label">Approaching</div></div>
@@ -394,6 +394,101 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                 <span class="lv"><span class="lv-dot dot-green"></span>Entry C$1.40&ndash;1.70</span>
                 <span class="lv"><span class="lv-dot dot-purple"></span>Analyst C$2.50&ndash;3.50</span>
                 <span class="lv"><span class="lv-dot dot-green"></span>Partial C$2.97</span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ━━━━━━━━ DLO ━━━━━━━━ -->
+          <tr class="data-row">
+            <td>
+              <a href="reports/DLO_Signal_v4_20260406_0647.html" class="ticker-link">
+                <div class="ticker-cell">DLO</div>
+                <div class="company-cell">DLocal Limited</div>
+              </a>
+              <div><span class="tag tag-sector">EM Payments</span></div>
+            </td>
+            <td class="price-down">$12.86</td>
+            <td><span class="change-down">-24% YTD</span></td>
+            <td class="c"><span class="score-pill pill-green">85</span></td>
+            <td class="c"><span class="score-pill pill-green">80</span></td>
+            <td class="c"><span class="score-pill pill-yellow">62</span></td>
+            <td class="c"><span class="score-pill pill-green">80</span></td>
+            <td class="c"><span class="signal-chip chip-buy">BUY</span></td>
+            <td class="c"><span class="signal-chip chip-buy">STR BUY</span></td>
+            <td class="c"><span class="signal-chip chip-buy">STR BUY</span></td>
+            <td class="c" style="font-size:13px;">Earnings<br><strong>May 14</strong></td>
+            <td class="c"><a href="reports/DLO_Signal_v4_20260406_0647.html" class="report-link">View&rarr;</a><br><a href="reports/archive-DLO.html" style="color:var(--text2); font-size:11px; text-decoration:none;">Archive</a></td>
+          </tr>
+
+          <!-- DLO triggers -->
+          <tr class="trigger-row">
+            <td colspan="12">
+              <div class="trigger-inner">
+                <!-- Entry -->
+                <div class="trigger-col entry">
+                  <div class="trigger-col-header">Entry Rules</div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Fundamental</div>
+                      <div class="trig-desc">Price &lt; $14 &bull; Forward P/E &lt; 15x &bull; NRR &gt; 140%</div>
+                      <div class="trig-status-val entry-val">$12.86 &lt; $14 &#10003; &nbsp; Fwd P/E 13.7x &#10003; &nbsp; NRR 162% &#10003;</div>
+                    </div>
+                    <span class="trig-badge badge-met">MET</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Technical</div>
+                      <div class="trig-desc">Hold $12.19 support &bull; RSI &lt; 40 &bull; Green candle on 1.5x volume</div>
+                      <div class="trig-status-val" style="color:var(--yellow)">$12.86 above $12.19 &#10003; &nbsp; RSI ~38 &#10003; &nbsp; Volume signal pending</div>
+                    </div>
+                    <span class="trig-badge badge-pending">PENDING</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Catalyst</div>
+                      <div class="trig-desc">Q1 2026 earnings beat &bull; TPV growth &gt; 55% &bull; NRR &gt; 150%</div>
+                      <div class="trig-status-val" style="color:var(--yellow)">Earnings May 14 &mdash; pending</div>
+                    </div>
+                    <span class="trig-badge badge-pending">PENDING</span>
+                  </div>
+                </div>
+                <!-- Exit -->
+                <div class="trigger-col exit">
+                  <div class="trigger-col-header">Exit Rules</div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Stop-Loss</div>
+                      <div class="trig-desc">Close below $11.15 for 2 consecutive days</div>
+                      <div class="trig-status-val exit-val">$12.86 &mdash; $1.71 buffer (13.3%)</div>
+                    </div>
+                    <span class="trig-badge badge-clear">CLEAR</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Thesis Break</div>
+                      <div class="trig-desc">NRR &lt; 120% &bull; GM &lt; 30% &bull; EM regulatory crackdown</div>
+                      <div class="trig-status-val exit-val">NRR 162%, GM 34% &mdash; clear</div>
+                    </div>
+                    <span class="trig-badge badge-clear">CLEAR</span>
+                  </div>
+                  <div class="trig-item">
+                    <div class="trig-detail">
+                      <div class="trig-type">Profit Target</div>
+                      <div class="trig-desc">Price &ge; $21 AND RSI &gt; 70</div>
+                      <div class="trig-status-val exit-val">$12.86 &mdash; needs +63%</div>
+                    </div>
+                    <span class="trig-badge badge-clear">CLEAR</span>
+                  </div>
+                </div>
+              </div>
+              <div class="levels-strip">
+                <strong>Key Levels:</strong>
+                <span class="lv"><span class="lv-dot dot-red"></span>Stop $11.15</span>
+                <span class="lv"><span class="lv-dot dot-blue"></span>Support $12.19</span>
+                <span class="lv"><span class="lv-dot dot-blue"></span>Support $11.37</span>
+                <span class="lv"><span class="lv-dot dot-green"></span>Fair Value $16.83</span>
+                <span class="lv"><span class="lv-dot dot-purple"></span>Analyst $17.25</span>
+                <span class="lv"><span class="lv-dot dot-green"></span>Target $21.00</span>
               </div>
             </td>
           </tr>
