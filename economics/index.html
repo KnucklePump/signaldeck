@@ -218,6 +218,38 @@ th[data-tooltip]:hover::after { opacity:1; }
 .it-impact { font-size:10px; color:var(--blue); line-height:1.4; margin-top:4px; }
 @media(max-width:900px) { .indicators-grid-v2 { grid-template-columns:repeat(2,1fr); } }
 @media(max-width:600px) { .indicators-grid-v2 { grid-template-columns:1fr; } }
+
+/* ── Full-Report Scenario Dashboard ── */
+.scenario-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.sc-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; position:relative; overflow:hidden; }
+.sc-card::after { content:''; position:absolute; top:0; left:0; right:0; height:4px; border-radius:4px 4px 0 0; }
+.sc-soft::after { background:var(--green); }
+.sc-stag::after { background:var(--orange); }
+.sc-defl::after { background:var(--red); }
+.sc-reacc::after { background:var(--blue); }
+.sc-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); cursor:help; position:relative; display:inline-block; }
+.sc-label::after { content:attr(data-tooltip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:#1e2330; color:var(--text); font-size:11px; font-weight:400; text-transform:none; letter-spacing:0; line-height:1.5; padding:10px 13px; border-radius:8px; border:1px solid var(--border); width:230px; white-space:normal; pointer-events:none; opacity:0; transition:opacity 0.15s; z-index:99; box-shadow:0 4px 16px rgba(0,0,0,0.4); }
+.sc-label:hover::after { opacity:1; }
+.sc-prob { font-size:38px; font-weight:800; margin:6px 0 2px; }
+.sc-delta { font-size:13px; font-weight:700; }
+.sc-bar { height:6px; background:var(--surface2); border-radius:3px; margin:10px 0 6px; overflow:hidden; }
+.sc-fill { height:100%; border-radius:3px; }
+.sc-desc { font-size:11px; color:var(--text2); line-height:1.4; margin-bottom:4px; }
+.sc-achip { font-size:9px; font-weight:600; padding:1px 6px; border-radius:6px; }
+.sc-achip-bull { background:rgba(34,197,94,0.10); color:var(--green); border:1px solid rgba(34,197,94,0.18); }
+.sc-achip-bear { background:rgba(239,68,68,0.10); color:var(--red); border:1px solid rgba(239,68,68,0.18); }
+.divergence-alert { background:var(--red-bg); border:1px solid rgba(239,68,68,0.3); border-left:4px solid var(--red); border-radius:0 8px 8px 0; padding:12px 16px; margin-top:10px; }
+.div-alert-title { font-weight:700; color:var(--red); font-size:13px; }
+.div-alert-detail { font-size:12px; color:var(--text2); margin-top:3px; }
+.matrix-wrap { overflow-x:auto; }
+.matrix-wrap table { border-collapse:collapse; width:100%; }
+.matrix-wrap th, .matrix-wrap td { padding:9px 12px; text-align:center; border:1px solid var(--border); font-size:12px; }
+.matrix-wrap th { background:var(--surface2); color:var(--text2); font-weight:700; text-transform:uppercase; font-size:11px; letter-spacing:0.3px; }
+.matrix-wrap td.row-label { text-align:left; font-weight:600; background:var(--surface2); }
+.matrix-wrap td.diag { background:rgba(59,130,246,0.08); font-weight:700; }
+.matrix-wrap td.high { background:rgba(239,68,68,0.10); color:var(--red); font-weight:700; }
+@media(max-width:900px) { .scenario-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:600px) { .scenario-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -250,70 +282,125 @@ th[data-tooltip]:hover::after { opacity:1; }
   <!-- ══════════ SCENARIO DASHBOARD ══════════ -->
   <div class="section">
     <h2>Scenario Dashboard</h2>
-    <div class="scenario-bar">
-      <div class="scenario-card sc-stag">
-        <div class="scenario-name" data-tooltip="Growth slowing while inflation stays elevated. Central banks can't cut without stoking inflation, can't hike without crushing growth. Historically driven by supply shocks (energy, food). Worst for bonds and growth equities. Gold and commodities outperform.">Stagflation</div>
-        <div class="scenario-prob" style="color:var(--orange);" id="sc-stag-prob">48%</div>
-        <div class="scenario-delta delta-up" id="sc-stag-delta">&uarr; 23pp &#9888;</div>
-        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:48%; background:var(--orange);"></div></div>
+
+    <div class="scenario-grid">
+      <div class="sc-card sc-stag">
+        <div class="sc-label" data-tooltip="Growth slowing while inflation stays elevated. Central banks can't cut without stoking inflation, can't hike without crushing growth. Historically driven by supply shocks (energy, food). Worst for bonds and growth equities. Gold and commodities outperform.">Stagflation / Supply Shock</div>
+        <div class="sc-prob" style="color:var(--orange);">48%</div>
+        <div class="sc-delta delta-up">&uarr; +23pp vs prior</div>
+        <div class="sc-bar"><div class="sc-fill" style="width:48%; background:var(--orange);"></div></div>
+        <div class="sc-desc">Oil shock + trade war creates classic stagflation. Fed trapped between inflation and growth. Energy &rarr; food &rarr; core CPI cascade. Dominant 3-6 month scenario.</div>
         <div class="sc-assets">
-          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">▲ Outperform</span><span class="sc-chip sc-chip-bull">Gold</span><span class="sc-chip sc-chip-bull">Energy equities</span><span class="sc-chip sc-chip-bull">Commodities</span><span class="sc-chip sc-chip-bull">TIPS</span><span class="sc-chip sc-chip-bull">Real assets</span></div>
-          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">▼ Underperform</span><span class="sc-chip sc-chip-bear">Long bonds</span><span class="sc-chip sc-chip-bear">Growth equities</span><span class="sc-chip sc-chip-bear">Consumer discr.</span><span class="sc-chip sc-chip-bear">EM equities</span><span class="sc-chip sc-chip-bear">High-yield credit</span></div>
+          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">&#9650; Outperform</span><span class="sc-achip sc-achip-bull">Gold</span><span class="sc-achip sc-achip-bull">Energy equities</span><span class="sc-achip sc-achip-bull">Commodities (DJP)</span><span class="sc-achip sc-achip-bull">TIPS / inflation-linked</span><span class="sc-achip sc-achip-bull">Real assets</span><span class="sc-achip sc-achip-bull">Short-duration bonds</span></div>
+          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">&#9660; Underperform</span><span class="sc-achip sc-achip-bear">Long bonds (TLT)</span><span class="sc-achip sc-achip-bear">Growth equities (QQQ)</span><span class="sc-achip sc-achip-bear">Consumer discretionary</span><span class="sc-achip sc-achip-bear">EM equities (EEM)</span><span class="sc-achip sc-achip-bear">High-yield credit (HYG)</span><span class="sc-achip sc-achip-bear">Crypto</span></div>
         </div>
       </div>
-      <div class="scenario-card sc-defl">
-        <div class="scenario-name" data-tooltip="Demand collapses faster than supply can adjust. Growth falls sharply, inflation drops below target, unemployment rises. Central banks cut aggressively. Long-duration bonds and cash outperform. Equities, credit, and commodities all fall hard.">Deflationary Bust</div>
-        <div class="scenario-prob" style="color:var(--red);" id="sc-defl-prob">20%</div>
-        <div class="scenario-delta delta-up" id="sc-defl-delta">&uarr; 9pp</div>
-        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:20%; background:var(--red);"></div></div>
+      <div class="sc-card sc-defl">
+        <div class="sc-label" data-tooltip="Demand collapses faster than supply can adjust. Growth falls sharply, inflation drops below target, unemployment rises. Central banks cut aggressively. Long-duration bonds and cash outperform. Equities, credit, and commodities all fall hard.">Deflationary Bust</div>
+        <div class="sc-prob" style="color:var(--red);">20%</div>
+        <div class="sc-delta delta-up">&uarr; +9pp vs prior</div>
+        <div class="sc-bar"><div class="sc-fill" style="width:20%; background:var(--red);"></div></div>
+        <div class="sc-desc">Hormuz escalation + tariff shock triggers demand collapse. Growth goes negative. Fed forced into emergency cuts. Credit cycle turns. Tail risk if conflict escalates.</div>
         <div class="sc-assets">
-          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">▲ Outperform</span><span class="sc-chip sc-chip-bull">Long bonds</span><span class="sc-chip sc-chip-bull">Cash / T-bills</span><span class="sc-chip sc-chip-bull">USD</span><span class="sc-chip sc-chip-bull">Gov't bonds</span></div>
-          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">▼ Underperform</span><span class="sc-chip sc-chip-bear">Equities (all)</span><span class="sc-chip sc-chip-bear">High-yield credit</span><span class="sc-chip sc-chip-bear">Commodities</span><span class="sc-chip sc-chip-bear">EM</span><span class="sc-chip sc-chip-bear">Crypto</span></div>
+          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">&#9650; Outperform</span><span class="sc-achip sc-achip-bull">Long bonds (TLT)</span><span class="sc-achip sc-achip-bull">Cash / T-bills (SHY)</span><span class="sc-achip sc-achip-bull">USD (UUP)</span><span class="sc-achip sc-achip-bull">Govt bonds</span><span class="sc-achip sc-achip-bull">Defensives (utilities)</span></div>
+          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">&#9660; Underperform</span><span class="sc-achip sc-achip-bear">Equities &mdash; all (SPY)</span><span class="sc-achip sc-achip-bear">High-yield credit (HYG)</span><span class="sc-achip sc-achip-bear">Commodities</span><span class="sc-achip sc-achip-bear">EM equities (EEM)</span><span class="sc-achip sc-achip-bear">Crypto</span><span class="sc-achip sc-achip-bear">Real estate (VNQ)</span></div>
         </div>
       </div>
-      <div class="scenario-card sc-soft">
-        <div class="scenario-name" data-tooltip="Inflation returns to target without triggering a recession. Central banks cut gradually. Growth slows but stays positive. Equities and credit perform well. The 'Goldilocks' outcome — historically rare but achievable when supply shocks resolve quickly.">Soft Landing</div>
-        <div class="scenario-prob" style="color:var(--green);" id="sc-soft-prob">18%</div>
-        <div class="scenario-delta delta-down" id="sc-soft-delta">&darr; 24pp &#9888;</div>
-        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:18%; background:var(--green);"></div></div>
+      <div class="sc-card sc-soft">
+        <div class="sc-label" data-tooltip="Inflation returns to target without triggering a recession. Central banks cut gradually. Growth slows but stays positive. Equities and credit perform well. The Goldilocks outcome — historically rare but achievable when supply shocks resolve quickly.">Soft Landing</div>
+        <div class="sc-prob" style="color:var(--green);">18%</div>
+        <div class="sc-delta delta-down">&darr; &minus;24pp vs prior</div>
+        <div class="sc-bar"><div class="sc-fill" style="width:18%; background:var(--green);"></div></div>
+        <div class="sc-desc">Requires: Strait reopens quickly, tariff rollbacks, inflation stays contained. PMI and labour market resilience point to this if geopolitical risk resolves. Bull case only.</div>
         <div class="sc-assets">
-          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">▲ Outperform</span><span class="sc-chip sc-chip-bull">Equities (broad)</span><span class="sc-chip sc-chip-bull">Corp. credit</span><span class="sc-chip sc-chip-bull">EM equities</span><span class="sc-chip sc-chip-bull">Real estate</span></div>
-          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">▼ Underperform</span><span class="sc-chip sc-chip-bear">Gold</span><span class="sc-chip sc-chip-bear">Short-term bonds</span><span class="sc-chip sc-chip-bear">Commodities</span><span class="sc-chip sc-chip-bear">Defensives</span></div>
+          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">&#9650; Outperform</span><span class="sc-achip sc-achip-bull">Equities &mdash; broad (SPY)</span><span class="sc-achip sc-achip-bull">Corp. credit (LQD/HYG)</span><span class="sc-achip sc-achip-bull">EM equities (EEM)</span><span class="sc-achip sc-achip-bull">Real estate (VNQ)</span><span class="sc-achip sc-achip-bull">Growth stocks</span></div>
+          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">&#9660; Underperform</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Short-term bonds</span><span class="sc-achip sc-achip-bear">Commodities</span><span class="sc-achip sc-achip-bear">Defensives</span><span class="sc-achip sc-achip-bear">USD (safe haven unwind)</span></div>
         </div>
       </div>
-      <div class="scenario-card sc-reacc">
-        <div class="scenario-name" data-tooltip="Growth re-ignites above trend, forcing central banks to pause cuts or even hike again. Inflation risks rebound. Strong for cyclical equities, industrial commodities, and EM. Bad for bonds. Typically triggered by fiscal stimulus, AI productivity surge, or sharp commodity price drop.">Reacceleration</div>
-        <div class="scenario-prob" style="color:var(--blue);" id="sc-reacc-prob">14%</div>
-        <div class="scenario-delta delta-down" id="sc-reacc-delta">&darr; 8pp</div>
-        <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:14%; background:var(--blue);"></div></div>
+      <div class="sc-card sc-reacc">
+        <div class="sc-label" data-tooltip="Growth re-ignites above trend, forcing central banks to pause cuts or even hike again. Inflation risks rebound. Strong for cyclical equities, industrial commodities, and EM. Bad for bonds. Typically triggered by fiscal stimulus, AI productivity surge, or sharp commodity price drop.">Reacceleration</div>
+        <div class="sc-prob" style="color:var(--blue);">14%</div>
+        <div class="sc-delta delta-down">&darr; &minus;8pp vs prior</div>
+        <div class="sc-bar"><div class="sc-fill" style="width:14%; background:var(--blue);"></div></div>
+        <div class="sc-desc">Requires oil shock resolution AND AI productivity surge absorbs cost pressures. China reaccelerates on stimulus. Manufacturing PMI strength points this way if supply clears.</div>
         <div class="sc-assets">
-          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">▲ Outperform</span><span class="sc-chip sc-chip-bull">Cyclical equities</span><span class="sc-chip sc-chip-bull">EM equities</span><span class="sc-chip sc-chip-bull">Copper</span><span class="sc-chip sc-chip-bull">Small caps</span></div>
-          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">▼ Underperform</span><span class="sc-chip sc-chip-bear">Long bonds</span><span class="sc-chip sc-chip-bear">Gold</span><span class="sc-chip sc-chip-bear">Defensives</span><span class="sc-chip sc-chip-bear">Cash</span></div>
+          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bull">&#9650; Outperform</span><span class="sc-achip sc-achip-bull">Cyclical equities</span><span class="sc-achip sc-achip-bull">EM equities (EEM)</span><span class="sc-achip sc-achip-bull">Copper / industrials</span><span class="sc-achip sc-achip-bull">Small caps (IWM)</span><span class="sc-achip sc-achip-bull">Energy</span></div>
+          <div class="sc-assets-row"><span class="sc-assets-lbl lbl-bear">&#9660; Underperform</span><span class="sc-achip sc-achip-bear">Long bonds (TLT)</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Defensives (XLU/XLP)</span><span class="sc-achip sc-achip-bear">Cash</span><span class="sc-achip sc-achip-bear">USD</span></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ══════════ DIVERGENCE ALERTS ══════════ -->
-  <div class="section">
-    <h2>Divergence Alerts <span class="section-badge" style="background:var(--red-bg); color:var(--red);">4 Active — Major Regime Shift</span></h2>
-    <div class="alert-list" id="divergence-alerts">
-      <div class="alert-item" style="border-left-color:var(--red);">
-        <div class="alert-title" style="color:var(--red);">&#9650; STAGFLATION: +23pp (25% &rarr; 48%) — DOMINANT REGIME SHIFT</div>
-        <div class="alert-detail">Strait of Hormuz closed since March 4. WTI oil $111.81/bbl (+73.5% vs Feb avg $64.44). 100% pharma tariffs finalized. Classic stagflation trigger: supply-side inflation + growth headwinds. Fed dual mandate in formal conflict.</div>
+    <div style="margin-top:16px;">
+      <h3 style="font-size:14px; font-weight:700; color:var(--red); margin-bottom:10px;">&#9888; Divergence Alerts &mdash; 4 Active (All &gt;3pp shifts)</h3>
+      <div class="divergence-alert" style="margin-bottom:8px;">
+        <div class="div-alert-title">&darr; SOFT LANDING: &minus;24pp (42% &rarr; 18%) &mdash; MAJOR SHIFT</div>
+        <div class="div-alert-detail">Strait of Hormuz closure + 100% pharma tariffs make soft-landing path implausible unless conflict resolves within weeks. Market is likely still underweighting this shift.</div>
       </div>
-      <div class="alert-item" style="border-left-color:var(--red);">
-        <div class="alert-title" style="color:var(--red);">&#9660; SOFT LANDING: &minus;24pp (42% &rarr; 18%) — MAJOR DOWNGRADE</div>
-        <div class="alert-detail">Hormuz closure + pharma tariffs make soft-landing path implausible unless conflict resolves within days. Trump deadline expires Tuesday April 7 — binary event. Market likely still underweighting this scenario collapse.</div>
+      <div class="divergence-alert" style="margin-bottom:8px;">
+        <div class="div-alert-title">&uarr; STAGFLATION: +23pp (25% &rarr; 48%) &mdash; DOMINANT REGIME SHIFT</div>
+        <div class="div-alert-detail">Oil supply shock ($64.44 &rarr; $111.81/bbl, +73.5%) + escalating tariff cascade = textbook stagflation trigger. Fed dual mandate now formally in conflict.</div>
       </div>
-      <div class="alert-item">
-        <div class="alert-title">&#9650; DEFLATIONARY BUST: +9pp (11% &rarr; 20%)</div>
-        <div class="alert-detail">Tail risk rising. If US strikes Iran and oil reaches $130-140, demand destruction triggers recession cascade. NFCI tightening trend (-0.434 from -0.553) early warning. Watch April 11 CPI and jobless claims.</div>
+      <div class="divergence-alert" style="margin-bottom:8px;">
+        <div class="div-alert-title">&uarr; DEFLATIONARY BUST: +9pp (11% &rarr; 20%)</div>
+        <div class="div-alert-detail">Hard landing tail risk rises as energy shock + tariffs compound. If US strikes Iran and oil goes to $140+, demand destruction triggers recession cascade.</div>
       </div>
-      <div class="alert-item">
-        <div class="alert-title">&#9660; REACCELERATION: &minus;8pp (22% &rarr; 14%)</div>
-        <div class="alert-detail">Supply-side constraints overwhelming pre-war reacceleration narrative. PMI resilience (Mfg 52.7, Services 54.0) intact but energy cost surge will dampen growth. Ceasefire resolution is the only path to probability recovery.</div>
+      <div class="divergence-alert">
+        <div class="div-alert-title">&darr; REACCELERATION: &minus;8pp (22% &rarr; 14%)</div>
+        <div class="div-alert-detail">Supply-side constraints now dominate. Pre-war reacceleration narrative (China PMI, AI capex) intact but overwhelmed by Hormuz premium.</div>
       </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <h3 style="font-size:14px; font-weight:700; margin-bottom:8px;">Transition Probability Matrix (3-6 Month Horizon)</h3>
+      <p style="font-size:12px; color:var(--text2); line-height:1.6; margin-bottom:10px;">Each <strong style="color:var(--text);">row</strong> is a scenario we could currently be in. Each <strong style="color:var(--text);">column</strong> is where we transition to over the next 3–6 months. Read left-to-right: given we are in row X today, what is the probability of ending up in column Y? Row labels show the current scenario probability in brackets — the row marked <em style="color:var(--text);">&larr; current</em> is today&rsquo;s dominant regime. Each row sums to 100%.</p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:10px; font-size:11px;">
+        <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:12px; border-radius:2px; background:rgba(59,130,246,0.08); border:1px solid var(--border);"></span> <span style="color:var(--text2);">Diagonal — probability of staying in the same scenario</span></span>
+        <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:12px; border-radius:2px; background:rgba(239,68,68,0.10); border:1px solid rgba(239,68,68,0.3);"></span> <span style="color:var(--red); font-weight:600;">High transition risk</span><span style="color:var(--text2);"> — elevated probability of shifting to this scenario</span></span>
+      </div>
+      <div class="matrix-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left;">From &rarr; To</th>
+              <th>Soft Landing</th>
+              <th>Stagflation</th>
+              <th>Deflationary</th>
+              <th>Reacceleration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">Stagflation <span style="color:var(--orange); font-weight:800;">48%</span> &larr; current</td>
+              <td>20%</td>
+              <td class="diag">40%</td>
+              <td class="high">30%</td>
+              <td>10%</td>
+            </tr>
+            <tr>
+              <td class="row-label">Soft Landing <span style="color:var(--green); font-weight:800;">18%</span></td>
+              <td class="diag">50%</td>
+              <td class="high">25%</td>
+              <td>15%</td>
+              <td>10%</td>
+            </tr>
+            <tr>
+              <td class="row-label">Deflationary Bust <span style="color:var(--red); font-weight:800;">20%</span></td>
+              <td>10%</td>
+              <td>15%</td>
+              <td class="diag">55%</td>
+              <td>20%</td>
+            </tr>
+            <tr>
+              <td class="row-label">Reacceleration <span style="color:var(--blue); font-weight:800;">14%</span></td>
+              <td>25%</td>
+              <td class="high">30%</td>
+              <td>10%</td>
+              <td class="diag">35%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:11px; color:var(--text2); margin-top:6px;">Key insight: From Stagflation, the dominant non-persistence path (30%) is Deflationary Bust &mdash; if the oil shock destroys demand faster than inflation stays sticky. Watch the April 11 CPI print and jobless claims as leading indicators of which path dominates.</p>
     </div>
   </div>
 
