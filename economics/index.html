@@ -265,6 +265,28 @@ th[data-tooltip]:hover::after { opacity:1; }
 .cycle-assets { margin-top:7px; padding-top:7px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:4px; text-align:left; }
 .cycle-assets-row { display:flex; flex-wrap:wrap; gap:3px; align-items:flex-start; }
 .cycle-assets-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; width:100%; margin-bottom:1px; }
+    /* ── Forecast Calendar ─────────────────────────────────────────────── */
+    .cal-week-header { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text2); padding:10px 4px 4px; margin-top:4px; border-top:1px solid var(--border); }
+    .cal-week-header:first-child { border-top:none; margin-top:0; }
+    .fcal-body { flex:1; min-width:0; }
+    .fcal-top { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px; }
+    .fcal-context { font-size:11px; color:var(--text2); margin-bottom:8px; line-height:1.45; }
+    .fcal-forecast-row { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:8px 10px; margin-bottom:7px; display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:start; }
+    .fcal-col-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--text2); margin-bottom:2px; }
+    .fcal-col-value { font-size:12px; font-weight:600; color:var(--text); line-height:1.3; }
+    .fcal-col-value.boris { color:var(--blue); }
+    .conf-badge { display:inline-block; padding:3px 9px; border-radius:8px; font-size:10px; font-weight:800; letter-spacing:0.3px; white-space:nowrap; }
+    .conf-high { background:rgba(34,197,94,0.12); color:var(--green); border:1px solid rgba(34,197,94,0.25); }
+    .conf-medium { background:rgba(59,130,246,0.12); color:var(--blue); border:1px solid rgba(59,130,246,0.25); }
+    .conf-low { background:rgba(234,179,8,0.12); color:var(--yellow); border:1px solid rgba(234,179,8,0.25); }
+    .conf-vlow { background:rgba(239,68,68,0.10); color:var(--red); border:1px solid rgba(239,68,68,0.20); }
+    .fcal-assets { display:flex; flex-wrap:wrap; gap:5px; align-items:center; }
+    .fcal-assets-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--text2); margin-right:2px; }
+    .asset-chip { display:inline-flex; align-items:center; gap:3px; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:600; }
+    .chip-bull { background:rgba(34,197,94,0.10); color:var(--green); border:1px solid rgba(34,197,94,0.20); }
+    .chip-bear { background:rgba(239,68,68,0.10); color:var(--red); border:1px solid rgba(239,68,68,0.20); }
+    .chip-neut { background:rgba(122,128,153,0.12); color:var(--text2); border:1px solid var(--border); }
+
 </style>
 </head>
 <body>
@@ -1379,217 +1401,357 @@ th[data-tooltip]:hover::after { opacity:1; }
   </div>
 </div>
 
+
   <!-- ══════════ 2-WEEK FORECAST CALENDAR ══════════ -->
-  <div class="section">
-    <h2>2-Week Forecast Calendar — Apr 7–20</h2>
-    <p style="font-size:11px; color:var(--text2); margin:-8px 0 12px;">Boris Forecast with confidence level and asset impact. <a href="../reports/WorldEcon_Weekly_latest.html#section11" style="color:var(--blue);">Full forecast detail in weekly report →</a></p>
-    <div class="cal-list" id="week-ahead">
+<div class="section">
+  <h2>2-Week Ahead Forecast Calendar — April 7–20, 2026</h2>
+  <p style="font-size:11px;color:var(--text2);margin:-8px 0 14px;">Each event carries a Boris Forecast with confidence level and projected asset class impact if the forecast is correct. Accuracy is tracked in <code>forecast-history.json</code> to calibrate future confidence. Scenario weights: Stagflation 48% · Deflationary Bust 20% · Soft Landing 18% · Reacceleration 14%.</p>
 
-      <!-- WEEK 1 -->
-      <div class="cal-week-hdr">📅 Week 1 — April 7–13</div>
+  <div class="cal-list">
 
-      <div class="cal-item" style="border-left:3px solid var(--red);">
-        <div class="cal-date"><div class="cal-day">7</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">🚨 Trump Iran Deadline — Hormuz Decision</div>
-          <div class="cal-detail">Binary geopolitical trigger. Ceasefire → oil −$20-30, Stagflation −10pp. Strike → oil $130-140, VIX &gt;35, Bust +15pp.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">Deadline extended 72hrs. No strike, no ceasefire.</span>
-            <span class="cf-badge cf-med">MEDIUM 52%</span>
-            <span class="cf-chip cf-neut">↔ Oil $108-115</span>
-            <span class="cf-chip cf-bull">▲ Gold</span>
+    <!-- ── WEEK 1 ─────────────────────────────── -->
+    <div class="cal-week-header">📅 Week 1 — April 7–13</div>
+
+    <!-- Apr 7: Hormuz Deadline -->
+    <div class="cal-item" style="border-left:3px solid var(--red);">
+      <div class="cal-date"><div class="cal-day">7</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">🚨 Trump Iran Deadline Expires — Hormuz Decision Point</span>
+          <span class="cal-impact impact-critical">CRITICAL</span>
+        </div>
+        <div class="fcal-context">Binary geopolitical event. Ceasefire → oil -$20-30, Stagflation −10pp. US/Israeli strike → oil $130-140, VIX &gt;35, Deflationary Bust jumps to 35%+. No consensus — market pricing ~45% partial resolution.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Market Expectation</div><div class="fcal-col-value">Deadline passes; ambiguous outcome</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">Deadline extended 72hrs. No strike; no ceasefire. Diplomatic pressure via Oman back-channel.</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-neut">↔ Oil $108-115</span>
+          <span class="asset-chip chip-neut">↔ SPY holds</span>
+          <span class="asset-chip chip-bull">▲ Gold</span>
+          <span class="asset-chip chip-neut">↔ Stagflation 48% unchanged</span>
           </div>
         </div>
-        <span class="cal-impact impact-critical">CRITICAL</span>
-      </div>
-
-      <div class="cal-item">
-        <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">Fed Chair Powell — Congressional Testimony</div>
-          <div class="cal-detail">Stagflation dilemma on display. Any Sept cut signal = major dovish surprise. Key: how does Fed frame inflation from supply shock?</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">Two-sided risk framing. No cut guidance. Hawkish hold.</span>
-            <span class="cf-badge cf-high">HIGH 74%</span>
-            <span class="cf-chip cf-bear">▼ TLT</span>
-            <span class="cf-chip cf-bull">▲ USD</span>
-            <span class="cf-chip cf-bear">▼ SPY −0.5%</span>
-          </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 52%</span></div>
         </div>
-        <span class="cal-impact impact-high">HIGH</span>
       </div>
-
-      <div class="cal-item">
-        <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">US Initial Jobless Claims</div>
-          <div class="cal-detail">Alert threshold &gt;230K. Tariff disruption to manufacturing beginning to reach payrolls.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">218K (consensus 211K)</span>
-            <span class="cf-badge cf-med">MEDIUM 58%</span>
-            <span class="cf-chip cf-bear">▼ SPY −0.3%</span>
-            <span class="cf-chip cf-bull">▲ TLT bid</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-high">HIGH</span>
-      </div>
-
-      <div class="cal-item" style="border-left:3px solid var(--red);">
-        <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">🔥 US CPI — March 2026 (CRITICAL)</div>
-          <div class="cal-detail">First CPI fully incorporating Hormuz oil shock. Core &gt;3.0% → Stagflation probability jumps to 55%+. Previous: 2.4% Feb.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">Headline 3.2% · Core 2.9% (consensus 2.9-3.1% / 2.7-2.9%)</span>
-            <span class="cf-badge cf-med">MEDIUM 60%</span>
-            <span class="cf-chip cf-bear">▼ TLT −1.5%</span>
-            <span class="cf-chip cf-bull">▲ Gold +1%</span>
-            <span class="cf-chip cf-bear">▼ SPY −1%</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-critical">CRITICAL</span>
-      </div>
-
-      <div class="cal-item">
-        <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">US Retail Sales — March</div>
-          <div class="cal-detail">Consumer spending test. Post-pull-forward hangover + energy squeeze. &lt;−0.5% = demand destruction confirmed.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">+0.1% MoM (consensus +0.3%)</span>
-            <span class="cf-badge cf-med">MEDIUM 54%</span>
-            <span class="cf-chip cf-bear">▼ Discretionary</span>
-            <span class="cf-chip cf-bull">▲ TLT</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-high">HIGH</span>
-      </div>
-
-      <div class="cal-item">
-        <div class="cal-date"><div class="cal-day">12</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">UMich Consumer Sentiment (prelim)</div>
-          <div class="cal-detail">Prior 56.6 (multi-year lows). 5-year inflation expectations component: if &gt;3.5% → Fed forced to respond.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">50.2 · 5yr inflation exp 3.8% (consensus 52-54 · 3.4%)</span>
-            <span class="cf-badge cf-high">HIGH 71%</span>
-            <span class="cf-chip cf-bull">▲ Gold</span>
-            <span class="cf-chip cf-bear">▼ USD</span>
-            <span class="cf-chip cf-bear">▼ Consumer sectors</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-medium">MEDIUM</span>
-      </div>
-
-      <div class="cal-item">
-        <div class="cal-date"><div class="cal-day">13</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">Eurozone CPI Flash — March</div>
-          <div class="cal-detail">Europe more exposed to oil shock. Confirms or denies ECB pause. EUR/USD directional signal.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">2.9% YoY (consensus 2.5-2.7%). ECB cut pushed to Sept.</span>
-            <span class="cf-badge cf-med">MEDIUM 62%</span>
-            <span class="cf-chip cf-bull">▲ EUR/USD</span>
-            <span class="cf-chip cf-bear">▼ Euro equities</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-high">HIGH</span>
-      </div>
-
-      <!-- WEEK 2 -->
-      <div class="cal-week-hdr">📅 Week 2 — April 14–20</div>
-
-      <div class="cal-item" style="border-left:3px solid var(--orange);">
-        <div class="cal-date"><div class="cal-day">14</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">China Q1 2026 GDP + Retail + IP</div>
-          <div class="cal-detail">First quarterly GDP of 2026. Tariff drag on exports accelerating. Property sector still fragile.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">GDP 4.5% YoY (consensus 4.8%) · Retail +3.8% · IP +4.6%</span>
-            <span class="cf-badge cf-med">MEDIUM 57%</span>
-            <span class="cf-chip cf-bear">▼ EEM</span>
-            <span class="cf-chip cf-bear">▼ Copper</span>
-            <span class="cf-chip cf-bull">▲ USD</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-high">HIGH</span>
-      </div>
-
-      <div class="cal-item">
-        <div class="cal-date"><div class="cal-day">15</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">US Empire State Manufacturing (April)</div>
-          <div class="cal-detail">Regional leading indicator for ISM. Tariff uncertainty paralysing new orders; supply chain reconfiguration costs rising.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">−15.0 (consensus −8.0)</span>
-            <span class="cf-badge cf-med">MEDIUM 60%</span>
-            <span class="cf-chip cf-bear">▼ Industrials</span>
-            <span class="cf-chip cf-bull">▲ TLT</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-medium">MEDIUM</span>
-      </div>
-
-      <div class="cal-item" style="border-left:3px solid var(--orange);">
-        <div class="cal-date"><div class="cal-day">17</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">ECB Rate Decision — April 2026</div>
-          <div class="cal-detail">Market pricing ~65% hold at 2.25%. Energy shock + sticky inflation makes cut very unlikely. Lagarde guidance on June meeting is key.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">HOLD 2.25%. Sept cut guidance. No June signal.</span>
-            <span class="cf-badge cf-high">HIGH 78%</span>
-            <span class="cf-chip cf-bull">▲ EUR/USD</span>
-            <span class="cf-chip cf-neut">↔ Euro equities</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-high">HIGH</span>
-      </div>
-
-      <div class="cal-item">
-        <div class="cal-date"><div class="cal-day">17</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">US Jobless Claims + Philly Fed Manufacturing</div>
-          <div class="cal-detail">Second week of tariff-disruption window. Two consecutive &gt;220K claims = formal labour watch flag.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">Claims 224K · Philly Fed −12.0 (consensus 214K / −5.0)</span>
-            <span class="cf-badge cf-med">MEDIUM 55%</span>
-            <span class="cf-chip cf-bear">▼ USD</span>
-            <span class="cf-chip cf-bull">▲ Bonds</span>
-            <span class="cf-chip cf-bear">▼ Industrials</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-medium">MEDIUM</span>
-      </div>
-
-      <div class="cal-item" style="border-left:3px solid var(--yellow);">
-        <div class="cal-date"><div class="cal-day">20</div><div class="cal-month">Apr</div></div>
-        <div class="cal-info">
-          <div class="cal-event">Hormuz Crisis — Rolling Diplomatic Update</div>
-          <div class="cal-detail">Two weeks into extended deadline. Oman mediation + China leverage creating partial resolution incentives. Still highly uncertain.</div>
-          <div class="cal-forecast">
-            <span class="cf-label">Boris:</span>
-            <span class="cf-val">Partial lane reopening via military escort. Oil $103-108.</span>
-            <span class="cf-badge cf-low">LOW 34%</span>
-            <span class="cf-chip cf-bear">▼ Oil −3-5%</span>
-            <span class="cf-chip cf-bull">▲ SPY relief</span>
-          </div>
-        </div>
-        <span class="cal-impact impact-high">HIGH</span>
-      </div>
-
     </div>
-  </div>
+
+    <!-- Apr 9: Jobless Claims -->
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">US Initial Jobless Claims (weekly)</span>
+          <span class="cal-impact impact-high">HIGH</span>
+        </div>
+        <div class="fcal-context">Alert threshold: &gt;230K signals labour softening. Tariffs projected to add +0.6pp to unemployment over 6 months. Early signal of whether trade disruption is hitting payrolls.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">~211K</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">218K — slight uptick from manufacturing sector tariff disruption</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ SPY -0.3%</span>
+          <span class="asset-chip chip-bull">▲ TLT small bid</span>
+          <span class="asset-chip chip-neut">↔ USD neutral</span>
+          <span class="asset-chip chip-neut">↔ Fed watches; no pivot</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 58%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 9: Powell Testimony -->
+    <div class="cal-item" style="border-left:3px solid var(--orange);">
+      <div class="cal-date"><div class="cal-day">9</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">Fed Chair Powell — Congressional Testimony</span>
+          <span class="cal-impact impact-high">HIGH</span>
+        </div>
+        <div class="fcal-context">Stagflation dilemma on full display. Will Powell signal tolerance for above-target inflation from supply shocks, or maintain "price stability first" framing? Any Sept cut signal would be highly dovish surprise.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Market Expectation</div><div class="fcal-col-value">Cautious; data-dependent language</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">Two-sided risk framing; rejects cut timeline; no policy guidance. Markets read as hawkish hold.</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ TLT -1%</span>
+          <span class="asset-chip chip-bull">▲ USD firms</span>
+          <span class="asset-chip chip-bear">▼ SPY -0.5%</span>
+          <span class="asset-chip chip-bull">▲ Gold holds</span>
+          <span class="asset-chip chip-bear">▼ EM equities</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-high">HIGH · 74%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 11: US CPI -->
+    <div class="cal-item" style="border-left:3px solid var(--red);">
+      <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">🔥 US CPI — March 2026 (CRITICAL)</span>
+          <span class="cal-impact impact-critical">CRITICAL</span>
+        </div>
+        <div class="fcal-context">First CPI print fully incorporating the Hormuz oil shock. Previous: 2.4% YoY Feb. Energy component alone adds ~0.5-0.7pp. Tariff pass-through beginning. Core &gt;3.0% → Stagflation probability to 55%+.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">Headline 2.9-3.1% · Core 2.7-2.9%</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">Headline 3.2% · Core 2.9% — energy fully embedded, tariff goods pass-through beginning</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ TLT -1.5%</span>
+          <span class="asset-chip chip-bull">▲ Gold +1%</span>
+          <span class="asset-chip chip-bear">▼ SPY -1%</span>
+          <span class="asset-chip chip-bull">▲ DJP (commodities)</span>
+          <span class="asset-chip chip-neut">↔ Stagflation +3-4pp → ~52%</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 60%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 11: Retail Sales -->
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">11</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">US Retail Sales — March 2026</span>
+          <span class="cal-impact impact-high">HIGH</span>
+        </div>
+        <div class="fcal-context">Consumer spending resilience test. Energy cost squeeze on discretionary spend. Possible pre-tariff pull-forward in Feb-March distorting picture. &lt;-0.5% MoM = demand destruction confirmed.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">+0.3% MoM</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">+0.1% MoM — post-pull-forward hangover; energy squeeze begins to bite discretionary</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ Consumer discretionary -0.5%</span>
+          <span class="asset-chip chip-bull">▲ TLT slight bid</span>
+          <span class="asset-chip chip-neut">↔ Deflationary Bust risk +1pp</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 54%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 12: UMich -->
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">12</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">University of Michigan Consumer Sentiment (prelim)</span>
+          <span class="cal-impact impact-medium">MEDIUM</span>
+        </div>
+        <div class="fcal-context">Prior: 56.6 (Feb 2026 — already at multi-year lows). War uncertainty + oil shock + tariff anxiety = triple negative squeeze. 5-year inflation expectations component is the key number for Fed watch.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">52-54; 5yr inflation exp. 3.4%</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">50.2; 5yr inflation exp. 3.8% — war + oil + tariff triple-squeeze, approaching 2022 lows</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ SPY consumer sectors</span>
+          <span class="asset-chip chip-bull">▲ Gold +0.5%</span>
+          <span class="asset-chip chip-bear">▼ USD (inflation expectations force Fed watch)</span>
+          <span class="asset-chip chip-neut">↔ Stagflation confirmed; no new repricing</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-high">HIGH · 71%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 13: Eurozone CPI -->
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">13</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">Eurozone CPI Flash — March 2026</span>
+          <span class="cal-impact impact-high">HIGH</span>
+        </div>
+        <div class="fcal-context">Europe more exposed to Hormuz oil shock (higher import dependence). Previous: 2.2% YoY. Energy component likely to add 0.6-0.8pp. Confirms or denies ECB cut pause. EUR/USD directional signal.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">2.5-2.7% YoY</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">2.9% YoY — energy shock fully embedded; ECB cut path delayed to Q4 2026</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bull">▲ EUR/USD (ECB hold = rate support)</span>
+          <span class="asset-chip chip-bear">▼ European equities (cost squeeze)</span>
+          <span class="asset-chip chip-neut">↔ Bund yields stable</span>
+          <span class="asset-chip chip-bull">▲ EUR-hedged bonds</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 62%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── WEEK 2 ─────────────────────────────── -->
+    <div class="cal-week-header">📅 Week 2 — April 14–20</div>
+
+    <!-- Apr 14: China GDP -->
+    <div class="cal-item" style="border-left:3px solid var(--orange);">
+      <div class="cal-date"><div class="cal-day">14</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">China Q1 2026 GDP + Retail Sales + Industrial Production</span>
+          <span class="cal-impact impact-high">HIGH</span>
+        </div>
+        <div class="fcal-context">First quarterly GDP read of 2026. Trump tariff impact beginning to bite export sector. Property sector still fragile. Stimulus measures partially offsetting but export slowdown accelerating.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">GDP 4.8% YoY · Retail +4.5% · IP +5.2%</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">GDP 4.5% YoY · Retail +3.8% · IP +4.6% — tariff drag accelerating from March</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ EEM (EM equities)</span>
+          <span class="asset-chip chip-bear">▼ Copper -1%</span>
+          <span class="asset-chip chip-bear">▼ AUD/USD</span>
+          <span class="asset-chip chip-neut">↔ Deflationary Bust +2pp</span>
+          <span class="asset-chip chip-bull">▲ USD (safety bid)</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 57%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 15: Empire State -->
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">15</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">US Empire State Manufacturing Index</span>
+          <span class="cal-impact impact-medium">MEDIUM</span>
+        </div>
+        <div class="fcal-context">New York Fed regional survey. Manufacturing already in contraction territory. Tariff uncertainty paralysing new orders; supply chain reconfiguration costs rising. Corroborates or denies national ISM trajectory.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">−8.0</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">−15.0 — tariff-driven order paralysis deeper than consensus expects</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ Industrials (XLI)</span>
+          <span class="asset-chip chip-bear">▼ Small-cap (IWM)</span>
+          <span class="asset-chip chip-bull">▲ TLT bid</span>
+          <span class="asset-chip chip-neut">↔ Deflationary Bust risk accumulating</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 60%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 16: UK CPI -->
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">16</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">UK CPI — March 2026</span>
+          <span class="cal-impact impact-medium">MEDIUM</span>
+        </div>
+        <div class="fcal-context">GBP weakness amplifies import inflation on top of energy shock. BOE already holding; another upside miss extends the pause. Confirms global sticky-inflation narrative.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">3.1% YoY</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">3.4% YoY — weak GBP + energy import shock compounds; BOE cut pushed to Q3 2026 earliest</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-neut">↔ GBP volatile (inflation vs growth concern)</span>
+          <span class="asset-chip chip-bear">▼ UK gilts</span>
+          <span class="asset-chip chip-bear">▼ FTSE 100 (consumer sectors)</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 60%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 17: ECB Decision -->
+    <div class="cal-item" style="border-left:3px solid var(--orange);">
+      <div class="cal-date"><div class="cal-day">17</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">ECB Rate Decision — April 2026</span>
+          <span class="cal-impact impact-high">HIGH</span>
+        </div>
+        <div class="fcal-context">Markets pricing ~65% hold at 2.25%. Lagarde faces same stagflation dilemma as Fed. Energy shock dominates. Any cut would be a major dovish surprise. Guidance on June meeting is the key signal.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">HOLD at 2.25% (65% market probability)</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">HOLD at 2.25%. Lagarde signals next cut pushed to Sept at earliest pending energy shock resolution.</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bull">▲ EUR/USD (rate support)</span>
+          <span class="asset-chip chip-neut">↔ European equities (relief hold)</span>
+          <span class="asset-chip chip-neut">↔ Bunds steady</span>
+          <span class="asset-chip chip-bear">▼ Rate-sensitive European sectors</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-high">HIGH · 78%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 17: US Jobless Claims -->
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">17</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">US Initial Jobless Claims (weekly)</span>
+          <span class="cal-impact impact-medium">MEDIUM</span>
+        </div>
+        <div class="fcal-context">Second consecutive reading in tariff-disruption window. If trend from Apr 9 is upward, confirms manufacturing sector labour adjustment. Two consecutive above-220K = formal labour watch flag.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">~214K</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">224K — continued tariff-driven manufacturing layoffs; trend established</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ USD</span>
+          <span class="asset-chip chip-bull">▲ Bonds (growth fear)</span>
+          <span class="asset-chip chip-neut">↔ Deflationary Bust risk accumulates</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 53%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 17: Philly Fed -->
+    <div class="cal-item">
+      <div class="cal-date"><div class="cal-day">17</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">Philadelphia Fed Manufacturing Survey</span>
+          <span class="cal-impact impact-medium">MEDIUM</span>
+        </div>
+        <div class="fcal-context">Second major regional survey after Empire State. If both Empire and Philly print well below consensus, national ISM likely to confirm manufacturing contraction in May print.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Consensus</div><div class="fcal-col-value">−5.0</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">−12.0 — consistent with Empire State signal; tariff disruption broadening</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ Industrials and materials</span>
+          <span class="asset-chip chip-bull">▲ Defensive sectors (utilities, staples)</span>
+          <span class="asset-chip chip-neut">↔ Growth narrative weakening</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-medium">MEDIUM · 58%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apr 20: Hormuz rolling update -->
+    <div class="cal-item" style="border-left:3px solid var(--yellow);">
+      <div class="cal-date"><div class="cal-day">20</div><div class="cal-month">Apr</div></div>
+      <div class="fcal-body">
+        <div class="fcal-top">
+          <span class="cal-event">Hormuz Crisis — Rolling Diplomatic Update (Est.)</span>
+          <span class="cal-impact impact-high">HIGH</span>
+        </div>
+        <div class="fcal-context">Two weeks into the extended deadline window. Oman mediation ongoing. Iranian domestic pressure + Chinese economic leverage creating incentives for partial resolution. Still highly uncertain.</div>
+        <div class="fcal-forecast-row">
+          <div><div class="fcal-col-label">Market Expectation</div><div class="fcal-col-value">Ongoing stalemate; oil $108-115</div></div>
+          <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">Partial shipping lane reopening announced — military escort protocol. Oil moves to $103-108. No full resolution.</div>
+          <div class="fcal-assets" style="margin-top:6px;"><span class="fcal-assets-lbl">If correct →</span>
+          <span class="asset-chip chip-bear">▼ Oil −3-5%</span>
+          <span class="asset-chip chip-neut">↔ Stagflation −2-3pp → ~45-46%</span>
+          <span class="asset-chip chip-bull">▲ SPY small relief</span>
+          <span class="asset-chip chip-bear">▼ Gold -0.5% (risk-off unwind)</span>
+          </div>
+        </div>
+          <div><span class="conf-badge conf-low">LOW · 34%</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end cal-list -->
+</div>
 
   <!-- ══════════ WHAT'S NEW IN THE FULL REPORT ══════════ -->
   <div class="section">
