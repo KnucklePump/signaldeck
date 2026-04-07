@@ -8,9 +8,9 @@
   "analysis_date": "2026-04-07",
   "analysis_version": "v4",
   "first_analysis": true,
-  "price": 1.94,
+  "price": 1.72,
   "currency": "CAD",
-  "market_cap_cad_m": 820.52,
+  "market_cap_cad_m": 721.47,
   "shares_outstanding_m": 419.46,
   "pillar_scores": {
     "business_quality": { "pre_driver": 78, "post_driver": 88, "confidence": "high" },
@@ -30,16 +30,16 @@
   },
   "composite_score": 88.05,
   "signals": {
-    "short_term": "HOLD_WAIT",
+    "short_term": "BUY",
     "medium_term": "STRONG_BUY",
     "long_term": "STRONG_BUY"
   },
   "nav_analysis": {
     "pfs_npv5_usd_m": 984,
     "pfs_nav_cad_per_share": 3.26,
-    "pfs_p_nav": 0.60,
+    "pfs_p_nav": 0.527,
     "spot_nav_cad_per_share_est": 8.76,
-    "spot_p_nav_est": 0.22,
+    "spot_p_nav_est": 0.198,
     "implied_gold_price_usd": 2300
   },
   "technical": {
@@ -51,7 +51,7 @@
     "data_quality": "estimated_web_search"
   },
   "key_levels": {
-    "current_price": 1.94,
+    "current_price": 1.72,
     "resistance_52w_high": 2.00,
     "sma20_est": 1.68,
     "bought_deal_support": 1.58,
