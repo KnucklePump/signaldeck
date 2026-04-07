@@ -146,7 +146,7 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
         <div class="site-subtitle">AI-Powered Stock Analysis &middot; v4 Framework</div>
       </div>
       <div class="header-meta">
-        <div>Last updated: <strong>April 6, 2026</strong></div>
+        <div>Last updated: <strong>April 6, 2026 — After-Market</strong></div>
         <div>Monitored 2x daily (12:30 PM &amp; 5:00 PM ET)</div>
       </div>
     </div>
@@ -168,7 +168,7 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
     <div class="stat-item"><div class="stat-value" style="color:var(--green)">7</div><div class="stat-label">Buy Signals</div></div>
     <div class="stat-item"><div class="stat-value" style="color:var(--yellow)">2</div><div class="stat-label">Hold Signals</div></div>
     <div class="stat-item"><div class="stat-value" style="color:var(--red)">0</div><div class="stat-label">Active Triggers</div></div>
-    <div class="stat-item"><div class="stat-value" style="color:var(--orange)">0</div><div class="stat-label">Approaching</div></div>
+    <div class="stat-item"><div class="stat-value" style="color:var(--orange)">1</div><div class="stat-label">Approaching</div></div>
   </div>
 
   <!-- ======= UNIFIED TABLE ======= -->
@@ -227,8 +227,8 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
               </a>
               <div><span class="tag tag-sector">Fintech</span></div>
             </td>
-            <td class="price-down">$15.85</td>
-            <td><span class="change-down">-42.3% YTD</span></td>
+            <td class="price-up">$16.27</td>
+            <td><span class="change-down">-39.0% YTD</span><br><span class="change-up">+2.34% today</span></td>
             <td class="c"><span class="score-pill pill-green">69</span></td>
             <td class="c"><span class="score-pill pill-green">67</span></td>
             <td class="c"><span class="score-pill pill-yellow">47</span></td>
@@ -251,8 +251,8 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                     <div class="trig-detail">
                       <div class="trig-type">Fundamental</div>
                       <div class="trig-desc">Price &lt; $18 &bull; RSI &gt; 30 &bull; No earnings within 7 days</div>
-                      <div class="trig-status-val entry-val">$15.85 &lt; $18 &#10003; &nbsp; RSI 33.6 &gt; 30 &#10003; &nbsp; Earnings 24d away &#10003;</div>
-                      <div class="trig-forecast forecast-high"><strong>Currently met</strong> &mdash; conditions satisfied now</div>
+                      <div class="trig-status-val entry-val">$16.27 &lt; $18 &#10003; &nbsp; RSI ~37 &gt; 30 &#10003; &nbsp; Earnings 23d away &#10003;</div>
+                      <div class="trig-forecast forecast-high"><strong>Currently met</strong> &mdash; price recovered +2.34% today (first day post-Good Friday)</div>
                     </div>
                     <span class="trig-badge badge-met">MET</span>
                   </div>
@@ -260,17 +260,17 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                     <div class="trig-detail">
                       <div class="trig-type">Technical</div>
                       <div class="trig-desc">Close above SMA20 on 1.5x volume &bull; MACD hist positive 3+ days</div>
-                      <div class="trig-status-val" style="color:var(--text2)">Price $15.85 &lt; SMA20 $17.01 &#10007; &mdash; waiting for reclaim</div>
-                      <div class="trig-forecast forecast-moderate"><strong>~2-3 weeks</strong> &mdash; price trending up ~$0.10/day; SMA convergence est. 14-21 days</div>
+                      <div class="trig-status-val" style="color:var(--orange)">Price $16.27 &lt; SMA20 ~$16.77 &#10007; &mdash; gap 3.1%; MACD histogram day 2/3 positive; RSI 37 &gt; 35 &#10003;</div>
+                      <div class="trig-forecast forecast-moderate"><strong>~1-2 weeks</strong> &mdash; SMA20 gap narrowed to 3.1% (was 7%); MACD on day 2 of 3 needed; one more up day + volume spike completes trigger</div>
                     </div>
-                    <span class="trig-badge badge-notmet">NOT MET</span>
+                    <span class="trig-badge badge-close">APPROACHING</span>
                   </div>
                   <div class="trig-item">
                     <div class="trig-detail">
                       <div class="trig-type">Catalyst</div>
                       <div class="trig-desc">Post-earnings move &gt; +5% on 2x volume &bull; Guidance raised</div>
-                      <div class="trig-status-val" style="color:var(--yellow)">Earnings Apr 29 &mdash; pending</div>
-                      <div class="trig-forecast forecast-moderate"><strong>Earnings Apr 29</strong> &mdash; 75% beat probability (6/8 recent beats); guidance raise 65% likely</div>
+                      <div class="trig-status-val" style="color:var(--yellow)">Earnings Apr 29 &mdash; 23 days away</div>
+                      <div class="trig-forecast forecast-moderate"><strong>Earnings Apr 29</strong> &mdash; tariff environment adds uncertainty; consensus expects Q1 rev ~$1.04B; guidance raise 60% likely if macro stabilizes</div>
                     </div>
                     <span class="trig-badge badge-pending">PENDING</span>
                   </div>
@@ -282,8 +282,8 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                     <div class="trig-detail">
                       <div class="trig-type">Stop-Loss</div>
                       <div class="trig-desc">Close below $14.50 for 2 consecutive days</div>
-                      <div class="trig-status-val exit-val">$15.85 &mdash; $1.35 buffer (8.5%)</div>
-                      <div class="trig-forecast forecast-unlikely"><strong>Unlikely next 4-6 weeks</strong> &mdash; uptrend intact; would require earnings miss or sector selloff</div>
+                      <div class="trig-status-val exit-val">$16.27 &mdash; $1.77 buffer (10.9%)</div>
+                      <div class="trig-forecast forecast-moderate"><strong>Moderate concern</strong> &mdash; Apr 2 intraday low $14.93 was only $0.43 above stop; tariff volatility elevated (VIX 23.87); watch closely on any renewed selloff</div>
                     </div>
                     <span class="trig-badge badge-clear">CLEAR</span>
                   </div>
@@ -300,8 +300,8 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                     <div class="trig-detail">
                       <div class="trig-type">Profit Target</div>
                       <div class="trig-desc">Price &ge; $21 AND RSI &gt; 70</div>
-                      <div class="trig-status-val exit-val">$15.85 &mdash; needs +32.5%</div>
-                      <div class="trig-forecast forecast-low"><strong>6-12 months</strong> &mdash; requires 2-3 quarterly beats; path: $18 post-Q1 &rarr; $21-22 post-Q3</div>
+                      <div class="trig-status-val exit-val">$16.27 &mdash; needs +29.1%</div>
+                      <div class="trig-forecast forecast-low"><strong>6-12 months</strong> &mdash; requires 2-3 quarterly beats; path: $18 post-Q1 (Apr 29) &rarr; $21-22 post-Q3</div>
                     </div>
                     <span class="trig-badge badge-clear">CLEAR</span>
                   </div>
@@ -312,7 +312,7 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                 <span class="lv"><span class="lv-dot dot-red"></span>Stop $14.50</span>
                 <span class="lv"><span class="lv-dot dot-blue"></span>Support $14.93</span>
                 <span class="lv"><span class="lv-dot dot-blue"></span>Support $16.48</span>
-                <span class="lv"><span class="lv-dot dot-yellow"></span>SMA20 $17.01</span>
+                <span class="lv"><span class="lv-dot dot-yellow"></span>SMA20 ~$16.77</span>
                 <span class="lv"><span class="lv-dot dot-green"></span>Fair Value $18&ndash;21</span>
                 <span class="lv"><span class="lv-dot dot-purple"></span>Analyst $25.50</span>
               </div>
@@ -353,7 +353,7 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                       <div class="trig-type">Fundamental</div>
                       <div class="trig-desc">Price &lt; C$1.70 &bull; Copper &gt; US$4.50/lb &bull; Gold &gt; US$4,000/oz</div>
                       <div class="trig-status-val" style="color:var(--text2)">C$1.94 &gt; C$1.70 &#10007; &mdash; needs 12.4% pullback</div>
-                      <div class="trig-forecast forecast-low"><strong>Possible on sector pullback</strong> &mdash; commodity conditions met (Cu $5.90, Au $5,020); needs price dip to C$1.70</div>
+                      <div class="trig-forecast forecast-low"><strong>Possible on sector pullback</strong> &mdash; commodity conditions met (Cu ~$5.90/lb, Au ~$4,672/oz); needs price dip to C$1.70 (~12% pullback from C$1.94)</div>
                     </div>
                     <span class="trig-badge badge-notmet">NOT MET</span>
                   </div>
@@ -429,8 +429,8 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
               </a>
               <div><span class="tag tag-sector">EM Payments</span></div>
             </td>
-            <td class="price-down">$12.86</td>
-            <td><span class="change-down">-24% YTD</span></td>
+            <td class="price-down">$12.75</td>
+            <td><span class="change-down">-10.6% YTD</span><br><span class="change-down">-0.86% today</span></td>
             <td class="c"><span class="score-pill pill-green">85</span></td>
             <td class="c"><span class="score-pill pill-green">80</span></td>
             <td class="c"><span class="score-pill pill-yellow">62</span></td>
@@ -453,7 +453,7 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                     <div class="trig-detail">
                       <div class="trig-type">Fundamental</div>
                       <div class="trig-desc">Price &lt; $14 &bull; Forward P/E &lt; 15x &bull; NRR &gt; 140%</div>
-                      <div class="trig-status-val entry-val">$12.86 &lt; $14 &#10003; &nbsp; Fwd P/E 13.7x &#10003; &nbsp; NRR 162% &#10003;</div>
+                      <div class="trig-status-val entry-val">$12.75 &lt; $14 &#10003; &nbsp; Fwd P/E 13.7x &#10003; &nbsp; NRR ~150% &#10003;</div>
                       <div class="trig-forecast forecast-high"><strong>Currently met</strong> &mdash; all three conditions satisfied; window may close if price rallies post-earnings May 14</div>
                     </div>
                     <span class="trig-badge badge-met">MET</span>
@@ -462,10 +462,10 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                     <div class="trig-detail">
                       <div class="trig-type">Technical</div>
                       <div class="trig-desc">Hold $12.19 support &bull; RSI &lt; 40 &bull; Green candle on 1.5x volume</div>
-                      <div class="trig-status-val" style="color:var(--yellow)">$12.86 above $12.19 &#10003; &nbsp; RSI ~38 &#10003; &nbsp; Volume signal pending</div>
-                      <div class="trig-forecast forecast-moderate"><strong>~1-2 weeks</strong> &mdash; 2 of 3 conditions met; volume spike likely around earnings May 14 approach</div>
+                      <div class="trig-status-val" style="color:var(--text2)">$12.75 above $12.19 &#10003; &nbsp; RSI ~52 &gt; 40 &#10007; &nbsp; No volume spike (below avg)</div>
+                      <div class="trig-forecast forecast-low"><strong>4-6 weeks</strong> &mdash; RSI needs to pull back from ~52 to below 40 for a clean setup; await a genuine pullback to $12.19 support with RSI confirmation, then volume catalyst</div>
                     </div>
-                    <span class="trig-badge badge-pending">PENDING</span>
+                    <span class="trig-badge badge-notmet">NOT MET</span>
                   </div>
                   <div class="trig-item">
                     <div class="trig-detail">
@@ -484,8 +484,8 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                     <div class="trig-detail">
                       <div class="trig-type">Stop-Loss</div>
                       <div class="trig-desc">Close below $11.15 for 2 consecutive days</div>
-                      <div class="trig-status-val exit-val">$12.86 &mdash; $1.71 buffer (13.3%)</div>
-                      <div class="trig-forecast forecast-unlikely"><strong>Unlikely next 4-6 weeks</strong> &mdash; 13.3% buffer; $12.19 support holding; would require EM crisis or earnings disaster</div>
+                      <div class="trig-status-val exit-val">$12.75 &mdash; $1.60 buffer (12.6%)</div>
+                      <div class="trig-forecast forecast-low"><strong>Low probability next 4-6 weeks</strong> &mdash; Apr 2 intraday low $11.99 came within $0.84 of stop; close held above $12.19; watch for tariff-driven EM risk-off retest</div>
                     </div>
                     <span class="trig-badge badge-clear">CLEAR</span>
                   </div>
@@ -502,7 +502,7 @@ tr.trigger-row td { padding:0; border-bottom:2px solid var(--border); }
                     <div class="trig-detail">
                       <div class="trig-type">Profit Target</div>
                       <div class="trig-desc">Price &ge; $21 AND RSI &gt; 70</div>
-                      <div class="trig-status-val exit-val">$12.86 &mdash; needs +63%</div>
+                      <div class="trig-status-val exit-val">$12.75 &mdash; needs +64.7%</div>
                       <div class="trig-forecast forecast-moderate"><strong>6-9 months</strong> &mdash; fair value $16.83; post-earnings re-rate to $16-17 likely; $21 requires 2-3 quarterly beats</div>
                     </div>
                     <span class="trig-badge badge-clear">CLEAR</span>
