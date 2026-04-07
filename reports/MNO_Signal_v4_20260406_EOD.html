@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNO.TO Stock Signal Report v4 — April 6, 2026 (After-Market)</title>
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3347; --text: #e1e4ed; --text2: #8b90a5;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; padding:20px; max-width:1200px; margin:0 auto; }
+.disclaimer { background:var(--surface); border:1px solid var(--yellow); border-radius:8px; padding:14px 18px; margin-bottom:24px; font-size:13px; color:var(--yellow); }
+h1 { font-size:28px; margin-bottom:4px; }
+h2 { font-size:20px; margin:32px 0 16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+h3 { font-size:16px; margin:20px 0 10px; color:var(--blue); }
+.header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.header-left h1 span { color:var(--text2); font-weight:400; font-size:18px; }
+.header-right { text-align:right; color:var(--text2); font-size:14px; }
+.price-box { font-size:36px; font-weight:700; color:var(--text); }
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-right:6px; }
+.tag-sector { background:var(--blue-bg); color:var(--blue); }
+.tag-warn { background:var(--yellow-bg); color:var(--yellow); }
+.tag-gold { background:rgba(234,179,8,0.2); color:#fbbf24; }
+.signal-banner { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:24px; }
+.signal-table { width:100%; border-collapse:collapse; }
+.signal-table th, .signal-table td { padding:10px 14px; text-align:center; border-bottom:1px solid var(--border); }
+.signal-table th { color:var(--text2); font-size:13px; font-weight:500; text-transform:uppercase; }
+.signal-table td { font-size:15px; }
+.signal-buy { background:var(--green-bg); color:var(--green); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-strongbuy { background:rgba(34,197,94,0.25); color:#4ade80; font-weight:700; border-radius:6px; padding:4px 12px; border:1px solid var(--green); }
+.signal-hold { background:var(--yellow-bg); color:var(--yellow); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-sell { background:var(--red-bg); color:var(--red); font-weight:700; border-radius:6px; padding:4px 12px; }
+.score-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px; }
+.score-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.score-card h3 { margin:0 0 12px; font-size:14px; text-transform:uppercase; letter-spacing:0.5px; }
+.score-value { font-size:48px; font-weight:800; line-height:1; }
+.score-bar { height:6px; border-radius:3px; background:var(--surface2); margin:12px 0 8px; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; }
+.score-label { font-size:13px; color:var(--text2); }
+.confidence { font-size:12px; color:var(--text2); margin-top:6px; }
+.gate-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:10px; }
+.gate-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:center; gap:10px; }
+.gate-icon { font-size:20px; }
+.gate-clear { color:var(--green); }
+.gate-triggered { color:var(--red); }
+.gate-warn { color:var(--yellow); }
+.gate-text { font-size:13px; }
+.detail-table { width:100%; border-collapse:collapse; margin:12px 0 20px; font-size:14px; }
+.detail-table th { text-align:left; padding:8px 12px; background:var(--surface2); color:var(--text2); font-size:12px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+.detail-table td { padding:8px 12px; border-bottom:1px solid rgba(46,51,71,0.5); vertical-align:top; }
+.detail-table tr:hover td { background:var(--surface2); }
+.metric-good { color:var(--green); }
+.metric-neutral { color:var(--yellow); }
+.metric-bad { color:var(--red); }
+.moat-grid { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin:12px 0 20px; }
+.moat-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center; }
+.moat-item h4 { font-size:11px; color:var(--text2); text-transform:uppercase; margin-bottom:6px; }
+.moat-score { font-size:28px; font-weight:700; }
+.driver-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin:16px 0; }
+.driver-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.driver-label { font-size:13px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; }
+.driver-score-big { font-size:36px; font-weight:800; }
+.adjustment-table { width:100%; font-size:13px; margin-top:12px; }
+.adjustment-table td { padding:4px 8px; }
+.adj-arrow { font-weight:700; }
+.scenario-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.scenario-card { background:var(--surface); border-radius:10px; padding:16px; }
+.scenario-bull { border:1px solid var(--green); }
+.scenario-bear { border:1px solid var(--red); }
+.scenario-card h4 { font-size:14px; margin-bottom:8px; }
+.rule-box { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:10px 0; }
+.rule-box h4 { font-size:13px; color:var(--blue); text-transform:uppercase; margin-bottom:8px; }
+.rule-condition { font-size:13px; margin:4px 0; padding-left:12px; border-left:2px solid var(--border); }
+.calibration { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:16px 0; }
+pre.cal-json { background:var(--surface2); border-radius:6px; padding:12px; font-size:12px; overflow-x:auto; color:var(--text2); }
+.changes-box { background:var(--surface); border:1px solid var(--blue); border-radius:10px; padding:16px; margin:16px 0; }
+.commodity-bar { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:12px 0; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.commodity-item { text-align:center; }
+.commodity-value { font-size:28px; font-weight:800; }
+.commodity-label { font-size:12px; color:var(--text2); }
+@media (max-width:768px) {
+  .score-grid { grid-template-columns:1fr; }
+  .moat-grid { grid-template-columns:repeat(3, 1fr); }
+  .scenario-grid { grid-template-columns:1fr; }
+  .header { flex-direction:column; }
+  .commodity-bar { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+  <a href="https://donatien.ca/" style="color:#3b82f6; text-decoration:none; font-size:14px;">← Back to SignalDeck</a>
+  <a href="https://donatien.ca/reports/archive-MNO.html" style="color:#8b90a5; text-decoration:none; font-size:13px;">See previous reports →</a>
+</div>
+
+<div class="disclaimer">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- MARKET CLOSURE NOTE -->
+<div style="background:var(--surface); border:1px solid var(--yellow); border-radius:8px; padding:12px 16px; margin-bottom:20px; font-size:13px; color:var(--yellow);">
+  <strong>📅 TSX Closed — Easter Monday, April 6, 2026.</strong> No new MNO.TO price data today. Analysis uses last confirmed price C$1.94 (April 2, 2026 close). All commodity data and macro indicators are current as of April 6.
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>MNO.TO <span>Moneta Gold Inc.</span></h1>
+    <div style="margin-top:8px;">
+      <span class="tag tag-sector">Mining — Development Stage</span>
+      <span class="tag tag-gold">Gold / Copper</span>
+      <span class="tag tag-warn">Pre-Production</span>
+    </div>
+    <div style="margin-top:8px; font-size:13px; color:var(--text2);">TSX · HQ: Toronto, ON · Project: Tower Gold, 98km E. of Timmins, ON · Pre-revenue</div>
+  </div>
+  <div class="header-right">
+    <div class="price-box">C$1.94</div>
+    <div style="font-size:14px; color:var(--text2);">TSX closed Apr 6 — Apr 2 last close</div>
+    <div style="font-size:13px; color:var(--text2); margin-top:4px;">Stop: C$1.25 · Entry zone: C$1.58-1.70 · <strong style="color:var(--yellow);">Price above entry zone</strong></div>
+    <div style="font-size:12px; margin-top:4px;">April 6, 2026 · After-Market · Signal v4</div>
+  </div>
+</div>
+
+<!-- COMMODITY STATUS BAR -->
+<div class="commodity-bar">
+  <div class="commodity-item">
+    <div class="commodity-label">Gold Spot Price (USD/oz)</div>
+    <div class="commodity-value" style="color:var(--green);">$4,672</div>
+    <div style="font-size:12px; color:var(--green);">✅ Above $4,000/oz threshold (+16.8%)</div>
+    <div style="font-size:11px; color:var(--text2);">Near all-time highs · Risk-off + inflation hedge</div>
+  </div>
+  <div class="commodity-item">
+    <div class="commodity-label">Copper Spot Price (USD/lb)</div>
+    <div class="commodity-value" style="color:var(--green);">$5.875</div>
+    <div style="font-size:12px; color:var(--green);">✅ Above $4.50/lb threshold (+30.6%)</div>
+    <div style="font-size:11px; color:var(--text2);">Feb 2026 data · ~$12,951/MT · Supply constrained</div>
+  </div>
+</div>
+
+<!-- CHANGES SINCE LAST REPORT -->
+<div class="changes-box">
+  <h3 style="color:var(--blue); margin:0 0 10px;">📊 Changes Since Last Report (17:00 same-day calibration)</h3>
+  <table class="detail-table" style="margin:0;">
+    <thead><tr><th>Pillar</th><th>Previous</th><th>Current</th><th>Delta</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Business Quality</strong></td><td>65</td><td style="color:var(--yellow);">65</td><td class="metric-neutral">=</td><td>No change. Pre-production stage fundamentals unchanged. Project milestones on track. DFS still targeted Q4 2026.</td></tr>
+      <tr><td><strong>Valuation</strong></td><td>64</td><td style="color:var(--green);">66</td><td class="metric-good">+2</td><td>Gold confirmed at $4,672/oz (up from prior calibration estimate). Project NPV materially higher at current gold prices. P/NAV discount now even more extreme.</td></tr>
+      <tr><td><strong>Entry/Exit Timing</strong></td><td>67</td><td style="color:var(--yellow);">65</td><td class="metric-bad">-2</td><td>No new TSX data (Easter Monday). Risk-off macro environment from tariff escalation weighs on junior miner sentiment. Price C$1.94 remains above optimal entry zone C$1.58-1.70.</td></tr>
+      <tr><td><strong>Underlying Driver</strong></td><td>72</td><td style="color:var(--green);">74</td><td class="metric-good">+2</td><td>Gold hitting new records at $4,672/oz — near ATH. Both gold and copper confirm well above watchlist thresholds. Tariff uncertainty = flight to gold = positive for MNO.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ SIGNAL BANNER ============ -->
+<div class="signal-banner">
+  <table class="signal-table">
+    <thead>
+      <tr>
+        <th>Horizon</th>
+        <th>Signal</th>
+        <th>Composite Score</th>
+        <th>Confidence</th>
+        <th>Key Driver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Short-term (1-3 mo)</td>
+        <td><span class="signal-hold">HOLD</span></td>
+        <td>65</td>
+        <td>52%</td>
+        <td>Price above entry zone; risk-off environment; no TSX data today</td>
+      </tr>
+      <tr>
+        <td>Medium-term (6-12 mo)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>66</td>
+        <td>60%</td>
+        <td>DFS catalyst Q4 2026 + gold/copper commodity tailwinds exceptional</td>
+      </tr>
+      <tr>
+        <td>Long-term (3-5 yr)</td>
+        <td><span class="signal-strongbuy">STRONG BUY</span></td>
+        <td>68</td>
+        <td>65%</td>
+        <td>Among largest undeveloped gold deposits in Canada — resource + commodity = dominant</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ THREE-PILLAR SCORECARD ============ -->
+<h2>Three-Pillar Scorecard</h2>
+<div class="score-grid">
+  <div class="score-card">
+    <h3 style="color:var(--blue);">Business Quality</h3>
+    <div class="score-value" style="color:var(--yellow);">65</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:65%; background:var(--yellow);"></div></div>
+    <div class="score-label">Large resource; pre-revenue; DFS pending</div>
+    <div class="confidence">Confidence: 55% · Pre-adjustment: 62</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--green);">Valuation Attractiveness</h3>
+    <div class="score-value" style="color:var(--green);">66</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:66%; background:var(--green);"></div></div>
+    <div class="score-label">Extreme NAV discount at $4,672/oz gold</div>
+    <div class="confidence">Confidence: 55% · Pre-adjustment: 64</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--orange);">Entry/Exit Timing</h3>
+    <div class="score-value" style="color:var(--yellow);">65</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:65%; background:var(--yellow);"></div></div>
+    <div class="score-label">Above entry zone; commodity trend positive</div>
+    <div class="confidence">Confidence: 50% · Pre-adjustment: 62</div>
+  </div>
+</div>
+
+<!-- ============ HARD GATES & DO NOT BUY ============ -->
+<h2>Hard Gate & Do-Not-Buy Status</h2>
+<p style="font-size:13px; color:var(--text2); margin-bottom:12px;"><em>Note: Standard financial metrics (P/E, EBITDA, FCF) are not applicable for a pre-production development-stage miner. Gates are adapted to lifecycle Stage 1 criteria.</em></p>
+<div class="gate-grid">
+  <div class="gate-item"><span class="gate-icon gate-warn">⚠️</span><div class="gate-text"><strong>Cash Runway</strong><br>Pre-revenue — cash runway must be verified in next quarterly filing. DFS capex will require financing.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Project Binary Risk</strong><br>DFS Q4 2026 is a positive catalyst, not a binary go/no-go. Resource already demonstrated.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Commodity Price Floors</strong><br>Au $4,672 &gt; $4,000 threshold ✓ · Cu $5.875/lb &gt; $4.50 threshold ✓</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Permitting Status</strong><br>Tower Gold Project appears permitted — key differentiator vs Canadian mining peers</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Resource Viability</strong><br>4.5M oz indicated + 8.3M oz inferred. One of Canada's largest undeveloped gold deposits.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Commodity Below Threshold</strong><br>Both gold and copper well above thresholds. No trigger.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-warn">⚠️</span><div class="gate-text"><strong>DNB: Dilution Risk</strong><br>Capital raise for DFS completion and eventual construction financing likely. Monitor share count.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Structural Threat</strong><br>Gold project at current prices is highly economic. No existential threat to project viability.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-warn">⚠️</span><div class="gate-text"><strong>Liquidity</strong><br>Junior miner — TSX liquidity can be thin. Size position appropriately for volatility.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Stop-Loss Active</strong><br>C$1.25 stop = C$0.69 buffer (35.6%) from C$1.94. Wide buffer appropriate for junior miner.</div></div>
+</div>
+
+<!-- ============ PILLAR 1: BUSINESS QUALITY ============ -->
+<h2>Pillar 1: Business Quality — 65/100</h2>
+<p style="font-size:14px; color:var(--text2); margin-bottom:16px;">Lifecycle Stage: <strong>Pre-Production / Development (Stage 1)</strong> — Traditional financial metrics (P/E, FCF, margins, EBITDA) are <em>not applicable</em>. Quality is assessed via resource, permitting, DFS progress, cash runway, and management credibility per industry-benchmark framework.</p>
+
+<h3>Sub-Signal Scores (Development-Stage Adapted)</h3>
+<table class="detail-table">
+  <thead><tr><th>Sub-Signal</th><th>Data</th><th>Benchmark</th><th>Score</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Resource Scale &amp; Quality</strong></td>
+      <td class="metric-good">4.5M oz indicated + 8.3M oz inferred<br>Total: 12.8M oz in the ground<br>Location: 98km east of Timmins, ON</td>
+      <td>Large deposit: &gt;5M oz indicated</td>
+      <td style="font-weight:700; color:var(--green);">85</td>
+      <td>Among the largest undeveloped gold deposits in Canada. Scale creates the potential for a low-AISC, long-life mine. Proximity to Timmins (infrastructure, skilled labour) is a material advantage over remote projects.</td>
+    </tr>
+    <tr>
+      <td><strong>Permitting Status</strong></td>
+      <td class="metric-good">Project appears permitted<br>Ontario jurisdiction</td>
+      <td>Permitted = top 20% of peers</td>
+      <td style="font-weight:700; color:var(--green);">80</td>
+      <td>Permitting in Canada is typically 5-10 years and hundreds of millions in compliance. Having permits in place is a major differentiator. This is the single most underappreciated quality factor for MNO. It dramatically de-risks the development path.</td>
+    </tr>
+    <tr>
+      <td><strong>DFS Progress / Timeline</strong></td>
+      <td class="metric-neutral">DFS expected Q4 2026<br>~6 months away<br>Pre-feasibility stage completed</td>
+      <td>DFS approaching = quality milestone</td>
+      <td style="font-weight:700; color:var(--yellow);">60</td>
+      <td>Q4 2026 DFS is a binary value-creating catalyst. DFS will define: mine plan, AISC estimate, NPV/IRR at various gold prices, and capital requirements. At $4,672/oz gold, the DFS economics will be exceptional. 6 months to major de-risking event.</td>
+    </tr>
+    <tr>
+      <td><strong>Cash Runway / Financial Position</strong></td>
+      <td class="metric-neutral">Pre-revenue — exact cash unknown<br>Likely C$20-50M from recent filings<br>Annual burn: C$10-20M est.</td>
+      <td>&gt;18 months runway = adequate</td>
+      <td style="font-weight:700; color:var(--yellow);">55</td>
+      <td>Typical junior miner risk. DFS completion requires ongoing spend. Construction financing (C$500M-1B) will require equity and debt capital raise — dilution risk ahead. At current gold prices, financing should be available on reasonable terms.</td>
+    </tr>
+    <tr>
+      <td><strong>Management Track Record</strong></td>
+      <td class="metric-neutral">Public information limited<br>Project advanced to DFS stage</td>
+      <td>Development milestone progress</td>
+      <td style="font-weight:700; color:var(--yellow);">55</td>
+      <td>Management has successfully advanced the resource through resource estimate, PEA, and pre-feasibility stages. Advancing to DFS in Q4 2026 is evidence of execution competency. Insufficient public data for deeper management assessment.</td>
+    </tr>
+    <tr>
+      <td><strong>Project Economics at Current Prices</strong></td>
+      <td class="metric-good">Au $4,672/oz · Cu $5.875/lb<br>Both significantly above thresholds<br>Project NPV at these prices: exceptional</td>
+      <td>Au &gt;$4,000 = excellent economics</td>
+      <td style="font-weight:700; color:var(--green);">90</td>
+      <td>At $4,672/oz, the Tower Gold Project's economics are outstanding. Even with typical development-stage costs ($800-1,200/oz AISC estimate), the margin per ounce is $3,472-3,872 — among the highest potential margins in the sector. Gold price alone transforms project economics.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Competitive Moat Scorecard — 57/100</h3>
+<p style="font-size:13px; color:var(--text2); margin-bottom:10px;"><em>Note: Network effects, pricing power, and switching costs are not applicable for a commodities developer. Neutral score (50) assigned to non-applicable dimensions.</em></p>
+<div class="moat-grid">
+  <div class="moat-item"><h4>Pricing Power</h4><div class="moat-score" style="color:var(--text2);">50</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">N/A — commodity price taker</div></div>
+  <div class="moat-item"><h4>Network Effects</h4><div class="moat-score" style="color:var(--text2);">50</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">N/A — mining project</div></div>
+  <div class="moat-item"><h4>Switching Costs</h4><div class="moat-score" style="color:var(--text2);">50</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">N/A — no product/customer relationship</div></div>
+  <div class="moat-item"><h4>Cost Advantage</h4><div class="moat-score" style="color:var(--green);">65</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Scale + infrastructure proximity = low potential AISC</div></div>
+  <div class="moat-item"><h4>Intangible Assets</h4><div class="moat-score" style="color:var(--green);">72</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Permits in place = 5-10 year regulatory moat</div></div>
+</div>
+
+<!-- ============ PILLAR 2: VALUATION ============ -->
+<h2>Pillar 2: Valuation Attractiveness — 66/100</h2>
+<p style="font-size:14px; color:var(--text2); margin-bottom:16px;">Primary valuation method: <strong>P/NAV (Price-to-Net Asset Value)</strong>. Traditional P/E and EV/EBITDA are meaningless for pre-revenue miners. Market cap vs estimated in-ground resource value at current commodity prices.</p>
+
+<h3>NAV-Based Valuation</h3>
+<div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:12px 0;">
+  <p style="font-size:13px; color:var(--text2); margin-bottom:12px;">Rough NAV estimate at gold $4,672/oz (illustrative — DFS not yet published):</p>
+  <table class="detail-table" style="margin:0;">
+    <thead><tr><th>Component</th><th>Estimate</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Indicated resource (4.5M oz)</strong></td><td>4,500,000 oz × $4,672/oz</td><td class="metric-good">= $21.0B gross in-ground value</td></tr>
+      <tr><td><strong>Recovery rate (~85%)</strong></td><td>4.5M × 85% × $4,672</td><td>= $17.9B recoverable revenue</td></tr>
+      <tr><td><strong>AISC estimate (development stage)</strong></td><td>~$900-1,200/oz (est.)</td><td class="metric-neutral">= $4.1-5.4B production cost</td></tr>
+      <tr><td><strong>Gross margin in-ground (indicated only)</strong></td><td>($4,672 - $1,050) × 4.5M × 85%</td><td class="metric-good">= ~$13.8B pre-capex</td></tr>
+      <tr><td><strong>Capex estimate (development)</strong></td><td>~C$1.5-2.5B (est.)</td><td>~US$1.1-1.9B</td></tr>
+      <tr><td><strong>Rough project NPV (10% discount)</strong></td><td>~US$2-5B range</td><td class="metric-good">Subject to DFS confirmation</td></tr>
+      <tr><td><strong>Market cap (at C$1.94)</strong></td><td>~C$350M ≈ US$260M est.</td><td class="metric-good">P/NAV ≈ 0.05-0.13x</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; margin-top:12px; color:var(--yellow);">At P/NAV of 0.05-0.13x, MNO trades at extreme discount even for development-stage miners (typical 0.1-0.5x for late-stage development). The discount narrows significantly post-DFS. Gold at $4,672/oz makes this one of the most economically compelling undeveloped deposits in Canada.</p>
+</div>
+
+<h3>Commodity Price Scenario Sensitivity</h3>
+<table class="detail-table">
+  <thead><tr><th>Gold Price</th><th>Project Economics</th><th>Implied Fair Value Range</th><th>Upside from C$1.94</th></tr></thead>
+  <tbody>
+    <tr><td>$3,500/oz</td><td class="metric-neutral">Good — $2,500/oz margin</td><td class="metric-neutral">C$2.50-4.00</td><td class="metric-neutral">+29% to +106%</td></tr>
+    <tr><td>$4,000/oz (threshold)</td><td class="metric-good">Excellent — $3,000/oz margin</td><td class="metric-good">C$3.00-5.00</td><td class="metric-good">+55% to +158%</td></tr>
+    <tr><td><strong>$4,672/oz (current)</strong></td><td class="metric-good"><strong>Exceptional — $3,672/oz margin</strong></td><td class="metric-good"><strong>C$4.00-8.00</strong></td><td class="metric-good"><strong>+106% to +312%</strong></td></tr>
+    <tr><td>$5,500/oz (bull case)</td><td class="metric-good">Extraordinary — $4,500/oz margin</td><td class="metric-good">C$6.00-12.00</td><td class="metric-good">+209% to +519%</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ PILLAR 3: TIMING ============ -->
+<h2>Pillar 3: Entry/Exit Timing — 65/100</h2>
+<p style="font-size:13px; color:var(--text2); margin-bottom:12px;"><em>Note: TSX was closed Easter Monday April 6, 2026. No new price data. Technical analysis based on last available data (Apr 2). Commodity and macro signals current.</em></p>
+
+<h3>Timing Signals</h3>
+<table class="detail-table">
+  <thead><tr><th>Signal</th><th>Reading</th><th>Status</th><th>Score</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Price vs Entry Zone</strong></td>
+      <td class="metric-neutral">C$1.94 vs entry zone C$1.58-1.70</td>
+      <td class="metric-neutral">ABOVE ZONE</td>
+      <td style="font-weight:700; color:var(--yellow);">48</td>
+      <td>Price 14-23% above the optimal entry zone defined in watchlist. Paying above entry zone = reduced risk/reward. Could wait for pullback to C$1.65-1.70 for better entry; risk is missing the DFS rally.</td>
+    </tr>
+    <tr>
+      <td><strong>Gold Price Trend</strong></td>
+      <td class="metric-good">$4,672/oz — near ATH<br>Up ~$500 in last 60 days</td>
+      <td class="metric-good">STRONGLY BULLISH</td>
+      <td style="font-weight:700; color:var(--green);">90</td>
+      <td>Gold's relentless move higher is the dominant macro force for MNO. Each $100/oz move in gold adds ~$450M to gross project value (indicated resource). Risk-off from tariffs = gold buying. Fed cutting = real yields falling = gold positive.</td>
+    </tr>
+    <tr>
+      <td><strong>Copper Price Trend</strong></td>
+      <td class="metric-good">$5.875/lb (Feb 2026)<br>Well above $4.50 threshold</td>
+      <td class="metric-good">STRONGLY BULLISH</td>
+      <td style="font-weight:700; color:var(--green);">82</td>
+      <td>Copper supply remains constrained globally. Energy transition demand (EVs, grid infrastructure) provides structural floor. MNO's copper content provides additional project economics support beyond gold alone.</td>
+    </tr>
+    <tr>
+      <td><strong>DFS Catalyst Timing</strong></td>
+      <td class="metric-good">Expected Q4 2026<br>~6 months away</td>
+      <td class="metric-good">APPROACHING</td>
+      <td style="font-weight:700; color:var(--green);">75</td>
+      <td>Development-stage miners typically re-rate sharply in the 3-6 months before DFS publication as market discounts the forthcoming resource economic confirmation. The closer to DFS, the more specific the catalyst. Medium-term timing improves each month.</td>
+    </tr>
+    <tr>
+      <td><strong>Junior Miner Sentiment</strong></td>
+      <td class="metric-neutral">VIX 23.87 — elevated<br>Tariff risk-off environment</td>
+      <td class="metric-neutral">MIXED</td>
+      <td style="font-weight:700; color:var(--yellow);">52</td>
+      <td>Risk-off from tariffs is a double-edged sword for junior miners: gold price rises (positive) but risk appetite for small-cap speculative names falls (negative). Net effect: higher gold = positive for MNO; risk aversion = modest headwind for liquidity.</td>
+    </tr>
+    <tr>
+      <td><strong>Stop-Loss Buffer</strong></td>
+      <td class="metric-good">C$1.94 - C$1.25 stop = C$0.69 (35.6%)</td>
+      <td class="metric-good">WIDE BUFFER</td>
+      <td style="font-weight:700; color:var(--green);">80</td>
+      <td>35.6% buffer is appropriate for a pre-production junior miner with binary catalyst risk. Stop at C$1.25 represents a level where project economics would likely be compromised or sentiment has fundamentally changed.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============ UNDERLYING DRIVER ANALYSIS ============ -->
+<h2>Underlying Driver Analysis</h2>
+<div class="driver-box">
+  <div class="driver-header">
+    <div>
+      <div class="driver-label">Primary Economic Driver</div>
+      <div style="font-size:22px; font-weight:700; margin:4px 0; color:var(--yellow);">Gold &amp; Copper Commodity Price Regime</div>
+      <div style="font-size:13px; color:var(--text2);">Secondary: Canadian Mining Regulatory Environment | Tertiary: Capital Markets Access for Junior Miners</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="driver-label">Driver Score</div>
+      <div class="driver-score-big" style="color:var(--green);">74</div>
+    </div>
+  </div>
+
+  <table class="detail-table" style="margin:0;">
+    <thead><tr><th>Driver Signal</th><th>Current Reading</th><th>Direction</th><th>Impact on MNO</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Gold Spot Price</strong></td><td>$4,672/oz — near ATH</td><td class="metric-good">↑ Very Positive</td><td>Each $100/oz in gold adds ~$385M to indicated resource gross value. At current prices, project economics are exceptional. This is the single most important driver for MNO.</td></tr>
+      <tr><td><strong>Real Interest Rates</strong></td><td>10Y 4.35% - Fed Funds 3.64% = low real spread. Inflation elevated.</td><td class="metric-good">↑ Positive</td><td>Gold inversely correlated with real yields. Fed cutting in declining inflation = gold supportive environment. If real yields fall further, gold could reach $5,000/oz.</td></tr>
+      <tr><td><strong>USD Strength</strong></td><td>DXY elevated from tariff risk-off</td><td class="metric-neutral">→ Neutral/Mixed</td><td>Strong USD historically negative for gold (inverse correlation), but tariff uncertainty is overriding — risk-off flows into gold despite USD strength. Unusual regime.</td></tr>
+      <tr><td><strong>Copper Supply/Demand</strong></td><td>$5.875/lb · Global supply deficit projected</td><td class="metric-good">↑ Positive</td><td>Copper supply-side constraints (mine depletion, permitting delays) + EV demand = structural deficit. MNO's copper credits make project even more economic.</td></tr>
+      <tr><td><strong>Junior Miner Financing</strong></td><td>Risk-off environment = selective capital</td><td class="metric-neutral">→ Cautious</td><td>At gold $4,672/oz, institutional capital is available for well-resourced, permitted projects. MNO's quality differentiates it from junior speculative names. Financing risk manageable.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px; background:var(--surface2); border-radius:8px; padding:12px;">
+    <div style="font-size:13px; font-weight:600; margin-bottom:8px;">Driver Pillar Adjustments</div>
+    <table class="adjustment-table">
+      <tr><td class="adj-arrow" style="color:var(--green);">↑</td><td>Business Quality</td><td><strong>+3</strong></td><td style="color:var(--text2);">Gold at $4,672/oz transforms project economics — project quality is effectively a function of commodity price for pre-production miners</td></tr>
+      <tr><td class="adj-arrow" style="color:var(--green);">↑</td><td>Valuation</td><td><strong>+2</strong></td><td style="color:var(--text2);">Every dollar increase in gold directly increases NAV and widens the P/NAV discount at C$1.94</td></tr>
+      <tr><td class="adj-arrow" style="color:var(--red);">↓</td><td>Entry/Exit Timing</td><td><strong>-2</strong></td><td style="color:var(--text2);">Risk-off EM/junior miner sentiment from tariffs; TSX closed today; price above entry zone</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ SCENARIO ANALYSIS ============ -->
+<h2>Scenario Analysis</h2>
+<div class="scenario-grid">
+  <div class="scenario-card scenario-bull">
+    <h4 style="color:var(--green);">🐂 Bull Case (35% probability)</h4>
+    <p style="font-size:13px; margin:8px 0;"><strong>DFS published Q4 2026:</strong> NPV confirms project at $4-7B. Management announces construction timeline. Gold stays above $4,500. Institutional investors pre-position ahead of DFS.</p>
+    <p style="font-size:13px; color:var(--text2);"><strong>Target:</strong> C$4.00-7.00 (+106% to +261%) within 12-18 months on DFS confirmation at gold $4,672/oz.</p>
+  </div>
+  <div class="scenario-card scenario-bear">
+    <h4 style="color:var(--red);">🐻 Bear Case (20% probability)</h4>
+    <p style="font-size:13px; margin:8px 0;"><strong>Gold corrects to $3,200-3,500:</strong> Risk-on environment reduces gold safe-haven demand. DFS delayed to 2027. Capital markets tight for junior miners. Share price retreats to entry zone.</p>
+    <p style="font-size:13px; color:var(--text2);"><strong>Target:</strong> C$1.25-1.60 (stop at C$1.25 limits downside). At C$1.58 = entry zone re-established.</p>
+  </div>
+</div>
+<div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin:12px 0; font-size:13px; color:var(--text2);">
+  <strong style="color:var(--text);">Base case (45%):</strong> Price consolidates C$1.80-2.20 range while DFS progresses. Gold sustains $4,200-4,800 range. Pre-DFS re-rating begins in Q3 2026 as announcement approaches. C$2.80-3.50 by year-end 2026.
+</div>
+
+<!-- ============ ENTRY/EXIT RULES ============ -->
+<h2>Entry / Exit Rule Status</h2>
+<div class="rule-box">
+  <h4>📋 Watchlist Entry Rules (from watchlist.json)</h4>
+  <div class="rule-condition" style="border-left-color:var(--yellow);">⚠️ <strong>Entry Zone:</strong> Target entry C$1.58-1.70. Current price C$1.94 is 14-23% above zone. Consider: (a) wait for pullback to zone, (b) accept current price with reduced position size, or (c) partial entry now + add on any pullback to C$1.70.</div>
+  <div class="rule-condition" style="border-left-color:var(--green);">✅ <strong>Gold Threshold:</strong> $4,672/oz &gt; $4,000/oz threshold ✓ — commodity entry condition MET.</div>
+  <div class="rule-condition" style="border-left-color:var(--green);">✅ <strong>Copper Threshold:</strong> $5.875/lb &gt; $4.50/lb threshold ✓ — copper condition MET.</div>
+  <div class="rule-condition" style="border-left-color:var(--green);">✅ <strong>Stop-Loss:</strong> C$1.25 — C$0.69 buffer (35.6%). No trigger.</div>
+  <div class="rule-condition" style="border-left-color:var(--yellow);">⚠️ <strong>DFS Catalyst:</strong> Q4 2026 (~6 months). Strong medium-term catalyst approaching — timing favours patient holders who entered near C$1.58-1.70.</div>
+</div>
+
+<!-- ============ CALIBRATION SNAPSHOT ============ -->
+<h2>Calibration Snapshot (for Future Comparison)</h2>
+<div class="calibration">
+<pre class="cal-json">{
+  "ticker": "MNO.TO",
+  "timestamp": "2026-04-06-EOD",
+  "price_cad": 1.94,
+  "price_note": "TSX closed Easter Monday Apr 6. Last close Apr 2, 2026.",
+  "scores": {
+    "quality": 65,
+    "valuation": 66,
+    "timing": 65,
+    "driver": 74
+  },
+  "signals": {
+    "short": "HOLD",
+    "medium": "BUY",
+    "long": "STRONG_BUY"
+  },
+  "composite_scores": {
+    "short": 65,
+    "medium": 66,
+    "long": 68
+  },
+  "moat_score": 57,
+  "commodities": {
+    "gold_usd_oz": 4672,
+    "gold_threshold": 4000,
+    "gold_above_threshold": true,
+    "gold_pct_above_threshold": 16.8,
+    "copper_usd_lb": 5.875,
+    "copper_usd_mt": 12951,
+    "copper_threshold_usd_lb": 4.50,
+    "copper_above_threshold": true,
+    "copper_pct_above_threshold": 30.6,
+    "copper_data_date": "2026-02"
+  },
+  "project": {
+    "name": "Tower Gold Project",
+    "location": "98km east of Timmins, ON",
+    "indicated_oz": 4500000,
+    "inferred_oz": 8300000,
+    "total_resource_oz": 12800000,
+    "dfs_expected": "Q4 2026",
+    "permitted": true,
+    "lifecycle_stage": "Pre-Production Stage 1"
+  },
+  "key_levels": {
+    "stop_loss_cad": 1.25,
+    "entry_zone_low_cad": 1.58,
+    "entry_zone_high_cad": 1.70,
+    "current_vs_entry_zone": "14-23% above zone"
+  },
+  "prior_calibration": {
+    "timestamp": "2026-04-06-1700",
+    "quality": 65,
+    "valuation": 64,
+    "timing": 67,
+    "driver": 72
+  },
+  "macro": {
+    "fed_funds": 3.64,
+    "ten_yr_yield": 4.35,
+    "vix": 23.87
+  }
+}</pre>
+</div>
+
+<div class="disclaimer" style="margin-top:32px;">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+</body>
+</html>

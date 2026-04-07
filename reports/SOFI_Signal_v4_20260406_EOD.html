@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOFI Stock Signal Report v4 — April 6, 2026 (After-Market)</title>
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3347; --text: #e1e4ed; --text2: #8b90a5;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; padding:20px; max-width:1200px; margin:0 auto; }
+.disclaimer { background:var(--surface); border:1px solid var(--yellow); border-radius:8px; padding:14px 18px; margin-bottom:24px; font-size:13px; color:var(--yellow); }
+h1 { font-size:28px; margin-bottom:4px; }
+h2 { font-size:20px; margin:32px 0 16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+h3 { font-size:16px; margin:20px 0 10px; color:var(--blue); }
+.header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.header-left h1 span { color:var(--text2); font-weight:400; font-size:18px; }
+.header-right { text-align:right; color:var(--text2); font-size:14px; }
+.price-box { font-size:36px; font-weight:700; color:var(--green); }
+.price-change { font-size:14px; color:var(--red); }
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-right:6px; }
+.tag-sector { background:var(--blue-bg); color:var(--blue); }
+.tag-warn { background:var(--yellow-bg); color:var(--yellow); }
+.signal-banner { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:24px; }
+.signal-table { width:100%; border-collapse:collapse; }
+.signal-table th, .signal-table td { padding:10px 14px; text-align:center; border-bottom:1px solid var(--border); }
+.signal-table th { color:var(--text2); font-size:13px; font-weight:500; text-transform:uppercase; }
+.signal-table td { font-size:15px; }
+.signal-buy { background:var(--green-bg); color:var(--green); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-strongbuy { background:rgba(34,197,94,0.25); color:#4ade80; font-weight:700; border-radius:6px; padding:4px 12px; border:1px solid var(--green); }
+.signal-hold { background:var(--yellow-bg); color:var(--yellow); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-sell { background:var(--red-bg); color:var(--red); font-weight:700; border-radius:6px; padding:4px 12px; }
+.score-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px; }
+.score-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.score-card h3 { margin:0 0 12px; font-size:14px; text-transform:uppercase; letter-spacing:0.5px; }
+.score-value { font-size:48px; font-weight:800; line-height:1; }
+.score-bar { height:6px; border-radius:3px; background:var(--surface2); margin:12px 0 8px; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; }
+.score-label { font-size:13px; color:var(--text2); }
+.confidence { font-size:12px; color:var(--text2); margin-top:6px; }
+.gate-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:10px; }
+.gate-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:center; gap:10px; }
+.gate-icon { font-size:20px; }
+.gate-clear { color:var(--green); }
+.gate-triggered { color:var(--red); }
+.gate-text { font-size:13px; }
+.detail-table { width:100%; border-collapse:collapse; margin:12px 0 20px; font-size:14px; }
+.detail-table th { text-align:left; padding:8px 12px; background:var(--surface2); color:var(--text2); font-size:12px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+.detail-table td { padding:8px 12px; border-bottom:1px solid rgba(46,51,71,0.5); vertical-align:top; }
+.detail-table tr:hover td { background:var(--surface2); }
+.metric-good { color:var(--green); }
+.metric-neutral { color:var(--yellow); }
+.metric-bad { color:var(--red); }
+.moat-grid { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin:12px 0 20px; }
+.moat-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center; }
+.moat-item h4 { font-size:11px; color:var(--text2); text-transform:uppercase; margin-bottom:6px; }
+.moat-score { font-size:28px; font-weight:700; }
+.driver-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin:16px 0; }
+.driver-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.driver-label { font-size:13px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; }
+.driver-score-big { font-size:36px; font-weight:800; }
+.adjustment-table { width:100%; font-size:13px; margin-top:12px; }
+.adjustment-table td { padding:4px 8px; }
+.adj-arrow { font-weight:700; }
+.scenario-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.scenario-card { background:var(--surface); border-radius:10px; padding:16px; }
+.scenario-bull { border:1px solid var(--green); }
+.scenario-bear { border:1px solid var(--red); }
+.scenario-card h4 { font-size:14px; margin-bottom:8px; }
+.rule-box { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:10px 0; }
+.rule-box h4 { font-size:13px; color:var(--blue); text-transform:uppercase; margin-bottom:8px; }
+.rule-condition { font-size:13px; margin:4px 0; padding-left:12px; border-left:2px solid var(--border); }
+.calibration { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:16px 0; }
+pre.cal-json { background:var(--surface2); border-radius:6px; padding:12px; font-size:12px; overflow-x:auto; color:var(--text2); }
+.changes-box { background:var(--surface); border:1px solid var(--blue); border-radius:10px; padding:16px; margin:16px 0; }
+@media (max-width:768px) {
+  .score-grid { grid-template-columns:1fr; }
+  .moat-grid { grid-template-columns:repeat(3, 1fr); }
+  .scenario-grid { grid-template-columns:1fr; }
+  .header { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+  <a href="https://donatien.ca/" style="color:#3b82f6; text-decoration:none; font-size:14px;">← Back to SignalDeck</a>
+  <a href="https://donatien.ca/reports/archive-SOFI.html" style="color:#8b90a5; text-decoration:none; font-size:13px;">See previous reports →</a>
+</div>
+
+<div class="disclaimer">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>SOFI <span>SoFi Technologies, Inc.</span></h1>
+    <div style="margin-top:8px;">
+      <span class="tag tag-sector">Fintech / Digital Banking</span>
+      <span class="tag tag-sector">Maturing Growth</span>
+      <span class="tag tag-warn">Earnings Apr 29</span>
+    </div>
+    <div style="margin-top:8px; font-size:13px; color:var(--text2);">NASDAQ · HQ: San Francisco, CA · CEO: Anthony Noto · Mkt Cap: ~$17.1B</div>
+  </div>
+  <div class="header-right">
+    <div class="price-box">$16.27</div>
+    <div style="font-size:14px; color:var(--green);">+$0.42 (+2.33%) today</div>
+    <div class="price-change">-39.0% YTD &nbsp;|&nbsp; -49% from 52w High ($31.98) &nbsp;|&nbsp; +8.9% from 52w Low ($14.93)</div>
+    <div style="font-size:12px; margin-top:4px;">April 6, 2026 · After-Market · Signal v4</div>
+  </div>
+</div>
+
+<!-- CHANGES SINCE LAST REPORT -->
+<div class="changes-box">
+  <h3 style="color:var(--blue); margin:0 0 10px;">📊 Changes Since Last Report (17:00 same-day calibration)</h3>
+  <table class="detail-table" style="margin:0;">
+    <thead><tr><th>Pillar</th><th>Previous</th><th>Current</th><th>Delta</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Business Quality</strong></td><td>69</td><td style="color:var(--green);">72</td><td class="metric-good">+3</td><td>FY2025 confirmed: revenue $3.6B (+38% YoY), EBITDA $1.1B (29% margin), net income $481M. Stronger than initially modelled.</td></tr>
+      <tr><td><strong>Valuation</strong></td><td>67</td><td style="color:var(--green);">70</td><td class="metric-good">+3</td><td>Price $16.27 vs $18-21 fair value range = 9% below bottom. Fwd P/E ~31x on improving trajectory. Better-than-prior discount calibration.</td></tr>
+      <tr><td><strong>Entry/Exit Timing</strong></td><td>47</td><td style="color:var(--yellow);">45</td><td class="metric-bad">-2</td><td>MACD now Day 2/3 positive (improving) but price $16.27 still 2.8% below SMA20 ~$16.73. Gap narrowing; one more confirmation day needed.</td></tr>
+      <tr><td><strong>Underlying Driver</strong></td><td>64</td><td style="color:var(--green);">65</td><td class="metric-good">+1</td><td>Rate cut trajectory intact; Fed Funds 3.64% and declining supports lending demand and refi cycle longer-term.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ SIGNAL BANNER ============ -->
+<div class="signal-banner">
+  <table class="signal-table">
+    <thead>
+      <tr>
+        <th>Horizon</th>
+        <th>Signal</th>
+        <th>Composite Score</th>
+        <th>Confidence</th>
+        <th>Key Driver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Short-term (1-3 mo)</td>
+        <td><span class="signal-hold">HOLD</span></td>
+        <td>58</td>
+        <td>55%</td>
+        <td>Technical entry not yet confirmed; earnings binary risk Apr 29</td>
+      </tr>
+      <tr>
+        <td>Medium-term (6-12 mo)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>64</td>
+        <td>62%</td>
+        <td>Quality + valuation + improving rate environment</td>
+      </tr>
+      <tr>
+        <td>Long-term (3-5 yr)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>66</td>
+        <td>65%</td>
+        <td>Bank charter + super-app model + 35% member growth dominates at this horizon</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ THREE-PILLAR SCORECARD ============ -->
+<h2>Three-Pillar Scorecard</h2>
+<div class="score-grid">
+  <div class="score-card">
+    <h3 style="color:var(--blue);">Business Quality</h3>
+    <div class="score-value" style="color:var(--green);">72</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:72%; background:var(--green);"></div></div>
+    <div class="score-label">Strong growth, improving profitability</div>
+    <div class="confidence">Confidence: 68% · Pre-adjustment: 69</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--green);">Valuation Attractiveness</h3>
+    <div class="score-value" style="color:var(--green);">70</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:70%; background:var(--green);"></div></div>
+    <div class="score-label">Below fair value, justified growth premium</div>
+    <div class="confidence">Confidence: 65% · Pre-adjustment: 67</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--orange);">Entry/Exit Timing</h3>
+    <div class="score-value" style="color:var(--yellow);">45</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:45%; background:var(--yellow);"></div></div>
+    <div class="score-label">Improving — 1 confirmation day remaining</div>
+    <div class="confidence">Confidence: 55% · Pre-adjustment: 47</div>
+  </div>
+</div>
+
+<!-- ============ HARD GATES & DO NOT BUY ============ -->
+<h2>Hard Gate & Do-Not-Buy Status</h2>
+<div class="gate-grid">
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Financial Distress</strong><br>FDIC-insured bank, $10B+ deposits, regulatory capital healthy</div></div>
+  <div class="gate-item"><span class="gate-icon gate-triggered">⚠️</span><div class="gate-text"><strong>Earnings Event Risk</strong><br>Q1 2026 earnings Apr 29 — 23 days away. Binary risk present. Size accordingly.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Valuation Ceiling</strong><br>$16.27 well below analyst high target $37. P/E 41.7x TTM — elevated but not extreme for 38% growth.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Accounting / Dilution</strong><br>GAAP profitable since 2023. SBC declining as % of revenue. No concerning adjustments.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>Regulatory / Binary</strong><br>Bank charter in good standing. No pending regulatory actions.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Leverage + Rates</strong><br>Bank balance sheet — well-capitalised. Declining rates support lending demand.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Valuation Extreme</strong><br>P/E 31x forward is reasonable for 38% revenue growth. PEG ~0.82x — fair.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Negative Revisions</strong><br>Consensus HOLD with avg target $19.20. No significant downward revision trend.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Insider Selling</strong><br>No abnormal insider selling detected.</div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">✅</span><div class="gate-text"><strong>DNB: Structural Threat</strong><br>Digital banking consolidating in SoFi's favour. No existential threat.</div></div>
+</div>
+
+<!-- ============ PILLAR 1: BUSINESS QUALITY ============ -->
+<h2>Pillar 1: Business Quality — 72/100</h2>
+<p style="font-size:14px; color:var(--text2); margin-bottom:16px;">Sector Profile: <strong>Fintech / Digital Banking (Maturing Stage)</strong> — Metrics: Revenue growth, ROE, NIM, efficiency ratio, member/product growth, FCF, credit quality. Hybrid approach: blending tech growth metrics with banking profitability benchmarks.</p>
+
+<h3>Sub-Signal Scores</h3>
+<table class="detail-table">
+  <thead><tr><th>Sub-Signal</th><th>Raw Data</th><th>Sector Context</th><th>Score</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Revenue Trajectory</strong></td>
+      <td class="metric-good">FY 2025: +38% YoY → $3.6B<br>Q4 2025: +40% YoY → $1.0B</td>
+      <td>Fintech growth median: 15-25%</td>
+      <td style="font-weight:700; color:var(--green);">82</td>
+      <td>Strong for a maturing fintech crossing $3.5B. Growth accelerating in Q4. Fee-based revenue +53% YoY to $443M — reducing reliance on spread income.</td>
+    </tr>
+    <tr>
+      <td><strong>Profitability</strong></td>
+      <td class="metric-good">Net margin: 13% (FY2025)<br>EBITDA margin: 29% (+7ppt YoY)<br>Net income: $481M (+142% YoY)</td>
+      <td>Mature fintech: 15-25% net margin</td>
+      <td style="font-weight:700; color:var(--green);">72</td>
+      <td>Profitability inflecting strongly — crossed $1B EBITDA for first time. Net margin expanding; approaching mature-fintech benchmarks. ROE estimated ~8.7% (below 12% target, but trajectory correct).</td>
+    </tr>
+    <tr>
+      <td><strong>Cash Generation</strong></td>
+      <td class="metric-neutral">EBITDA $1.1B (29% margin)<br>FCF estimated $400-450M<br>FY 2024 net income: $198M → FY2025 $481M (+143%)</td>
+      <td>FCF margin target: >15%</td>
+      <td style="font-weight:700; color:var(--yellow);">65</td>
+      <td>EBITDA conversion strong, but full FCF harder to parse for bank (capital deployment in loans). Earnings trajectory exceptional (+143% YoY). Net income firmly positive and accelerating.</td>
+    </tr>
+    <tr>
+      <td><strong>Balance Sheet / Credit Quality</strong></td>
+      <td class="metric-neutral">Bank charter: FDIC insured<br>CET1 ratio: est. ~11-12% (healthy)<br>Focus on high-income borrowers</td>
+      <td>CET1 >10% strong; NPL ratio key</td>
+      <td style="font-weight:700; color:var(--yellow);">64</td>
+      <td>Credit quality has been a concern (student/personal loan book exposed to macro). Targeting higher FICO borrowers. VIX 23.87 + tariff uncertainty = elevated credit watchlist. No distress signals, but monitoring warranted.</td>
+    </tr>
+    <tr>
+      <td><strong>Member &amp; Product Growth</strong></td>
+      <td class="metric-good">Members: 13.7M (+35% YoY)<br>Products: 20.2M (+37% YoY)<br>Q4 product adds: 1.6M (record)</td>
+      <td>Super-app: products/member ratio rising</td>
+      <td style="font-weight:700; color:var(--green);">88</td>
+      <td>Exceptional engagement. Products/member ratio growing = cross-sell flywheel working. 1M members added in Q4 alone. This is the core compounding engine of the SoFi story.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Competitive Moat Scorecard — 62/100</h3>
+<div class="moat-grid">
+  <div class="moat-item"><h4>Pricing Power</h4><div class="moat-score" style="color:var(--yellow);">55</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Tech bank vs legacy = cost advantage; rate products competitive</div></div>
+  <div class="moat-item"><h4>Network Effects</h4><div class="moat-score" style="color:var(--yellow);">65</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Super-app: each product deepens ecosystem engagement</div></div>
+  <div class="moat-item"><h4>Switching Costs</h4><div class="moat-score" style="color:var(--green);">70</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Bank account + loan + invest = high friction to leave</div></div>
+  <div class="moat-item"><h4>Cost Advantage</h4><div class="moat-score" style="color:var(--yellow);">60</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Technology-first structure; efficiency ratio improving toward 52%</div></div>
+  <div class="moat-item"><h4>Intangible Assets</h4><div class="moat-score" style="color:var(--yellow);">60</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Bank charter = regulatory moat; SoFi brand growing</div></div>
+</div>
+
+<h3>ROIC & Capital Allocation — 65/100</h3>
+<table class="detail-table">
+  <thead><tr><th>Component</th><th>Score</th><th>Detail</th></tr></thead>
+  <tbody>
+    <tr><td><strong>ROIC / ROE (40%)</strong></td><td style="font-weight:700; color:var(--yellow);">55</td><td>ROE ~8.7% (below 12% mature-fintech target, but rapidly improving from ~3% in 2024). ROIC trajectory is correct; timeline to 12%+ ROE = 2027-2028 per analyst models. Penalty for current sub-target ROE, but trending in right direction.</td></tr>
+    <tr><td><strong>Capital Allocation (30%)</strong></td><td style="font-weight:700; color:var(--yellow);">68</td><td>Reinvesting aggressively in Technology Platform segment (SoFi's B2B API business) which now generates high-margin recurring revenue. No dividends (reinvesting for growth). Share count growing modestly from SBC — acceptable at this growth stage.</td></tr>
+    <tr><td><strong>Management Quality (30%)</strong></td><td style="font-weight:700; color:var(--green);">72</td><td>CEO Anthony Noto (ex-Twitter, Goldman Sachs) has rebuilt SoFi around profitability discipline. Q4 EPS $0.13 — 4th consecutive profitable quarter. Guidance credible: Q1 2026 EPS $0.12. Management track record improving markedly.</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ PILLAR 2: VALUATION ============ -->
+<h2>Pillar 2: Valuation Attractiveness — 70/100</h2>
+
+<h3>Valuation Multiples vs References</h3>
+<table class="detail-table">
+  <thead><tr><th>Multiple</th><th>Current</th><th>Sector Median</th><th>Context</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>P/E (TTM)</strong></td>
+      <td class="metric-neutral">41.7x ($16.27 / $0.39 EPS)</td>
+      <td>Fintech growth: 30-60x</td>
+      <td>At 38% revenue growth, PEG = 1.1x — fairly valued. Was 200x+ pre-profitability.</td>
+      <td style="font-weight:700; color:var(--yellow);">62</td>
+    </tr>
+    <tr>
+      <td><strong>Forward P/E</strong></td>
+      <td class="metric-good">~31.3x (Q1 guidance $0.12/q annualised → ~$0.52)</td>
+      <td>Fintech maturing: 25-40x fwd</td>
+      <td>Re-rating potential to 40x+ if growth trajectory holds. PEG fwd = 0.82x (attractive).</td>
+      <td style="font-weight:700; color:var(--green);">72</td>
+    </tr>
+    <tr>
+      <td><strong>Price vs. Fair Value</strong></td>
+      <td class="metric-good">$16.27 vs. $18-21 range (watchlist)</td>
+      <td>9% below range bottom</td>
+      <td>Intrinsic value range $18-21 reflects DCF at 25-30% growth assumption. Currently trading below even the conservative case.</td>
+      <td style="font-weight:700; color:var(--green);">75</td>
+    </tr>
+    <tr>
+      <td><strong>Price vs. Analyst Consensus</strong></td>
+      <td class="metric-good">$16.27 vs. ~$19.20 consensus</td>
+      <td>18% discount to mean target</td>
+      <td>Wide target range ($3 to $37). Consensus HOLD; 35% of analysts are Buy/Strong Buy. Target set on Apr 6 at $25.91 by one source — bullish outlier.</td>
+      <td style="font-weight:700; color:var(--green);">70</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Reverse DCF — Implied Growth Check</h3>
+<div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:12px 0;">
+  <p style="font-size:14px;">At <strong>$16.27</strong>, the market is implying approximately <strong>20-25% annual revenue growth</strong> over 5 years (10% WACC, 18% terminal FCF margin).</p>
+  <p style="font-size:14px; margin-top:8px;">Company delivered <strong>38% growth in FY2025</strong> and is guiding to continued strong expansion. The discount-to-implied-growth ratio supports the BUY case for medium/long horizons. Key risk: credit cycle deterioration from tariff-driven slowdown.</p>
+</div>
+
+<!-- ============ PILLAR 3: ENTRY/EXIT TIMING ============ -->
+<h2>Pillar 3: Entry/Exit Timing — 45/100</h2>
+
+<h3>Multi-Timeframe Technical Analysis (Daily bars — Apr 2, 2026 close + Apr 6 estimates)</h3>
+<table class="detail-table">
+  <thead><tr><th>Indicator</th><th>Value</th><th>Signal</th><th>Score</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>RSI (14)</strong></td>
+      <td class="metric-neutral">~37-40 (Apr 6 est.)<br>Apr 2 actual: 33.63</td>
+      <td class="metric-neutral">NEUTRAL — Recovering</td>
+      <td style="font-weight:700; color:var(--yellow);">58</td>
+      <td>Above oversold (30) but not yet in bullish zone. Recovering from 22.5 low on Mar 27. Momentum improving.</td>
+    </tr>
+    <tr>
+      <td><strong>MACD Histogram</strong></td>
+      <td class="metric-good">+0.022 (Apr 2, Day 1 positive)<br>Est. +0.04-0.08 (Apr 6, Day 2)</td>
+      <td class="metric-good">BULLISH — Day 2/3</td>
+      <td style="font-weight:700; color:var(--green);">62</td>
+      <td>Watchlist rule requires 3 consecutive positive histogram bars for technical entry confirmation. Day 2 of 3 today. One more day needed (Apr 7).</td>
+    </tr>
+    <tr>
+      <td><strong>Price vs SMA20</strong></td>
+      <td class="metric-bad">$16.27 vs est. ~$16.73 SMA20<br>Gap: -2.8%</td>
+      <td class="metric-bad">NOT MET</td>
+      <td style="font-weight:700; color:var(--red);">35</td>
+      <td>Entry requires price ≥ SMA20. Gap has narrowed significantly (was 7% one week ago, now 2.8%). SMA20 declining ~$0.15/day; approaching from above as price recovers.</td>
+    </tr>
+    <tr>
+      <td><strong>Price vs SMA50</strong></td>
+      <td class="metric-bad">$16.27 vs ~$19.12 SMA50<br>Gap: -15%</td>
+      <td class="metric-bad">BEARISH</td>
+      <td style="font-weight:700; color:var(--red);">25</td>
+      <td>Well below SMA50 — medium-term downtrend intact. SMA50 at ~$19.12 (Apr 2: $19.35, declining). No golden cross in sight near-term.</td>
+    </tr>
+    <tr>
+      <td><strong>Price Action / Structure</strong></td>
+      <td class="metric-good">Low $14.93 (Mar 29) → $16.27 today<br>Recovery: +8.9%</td>
+      <td class="metric-neutral">FORMING BASE</td>
+      <td style="font-weight:700; color:var(--yellow);">55</td>
+      <td>Potential capitulation low at $14.93 (Apr 2 intraday). Only $0.43 above stop loss $14.50. Price closing above $16 is a constructive sign. Need volume confirmation.</td>
+    </tr>
+    <tr>
+      <td><strong>Volume / OBV</strong></td>
+      <td class="metric-bad">OBV: -995.3M (Apr 2)<br>Today vol: 42.6M (below prev 53.2M)</td>
+      <td class="metric-bad">BEARISH</td>
+      <td style="font-weight:700; color:var(--red);">28</td>
+      <td>OBV deeply negative — sustained distribution. Today's recovery (+2.3%) on lower volume than prior session = not yet a conviction reversal. Volume needs to pick up on up days.</td>
+    </tr>
+    <tr>
+      <td><strong>Stop-Loss Buffer</strong></td>
+      <td class="metric-neutral">$16.27 - $14.50 stop = $1.77 (10.9%)</td>
+      <td class="metric-neutral">MODERATE</td>
+      <td style="font-weight:700; color:var(--yellow);">55</td>
+      <td>10.9% buffer is adequate for a volatile stock in downtrend. Note: Apr 2 intraday low $14.93 was only $0.43 above stop — stop was nearly triggered. Risk is real.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============ UNDERLYING DRIVER ANALYSIS ============ -->
+<h2>Underlying Driver Analysis</h2>
+<div class="driver-box">
+  <div class="driver-header">
+    <div>
+      <div class="driver-label">Primary Economic Driver</div>
+      <div style="font-size:22px; font-weight:700; margin:4px 0; color:var(--blue);">Interest Rate Regime + Consumer Credit Quality</div>
+      <div style="font-size:13px; color:var(--text2);">Secondary: Tariff/Macro Uncertainty → Consumer Demand | Tertiary: Fintech Regulatory Environment</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="driver-label">Driver Score</div>
+      <div class="driver-score-big" style="color:var(--green);">65</div>
+    </div>
+  </div>
+
+  <table class="detail-table" style="margin:0;">
+    <thead><tr><th>Driver Signal</th><th>Current Reading</th><th>Direction</th><th>Impact on SOFI</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Fed Funds Rate</strong></td><td>3.64% (cutting cycle)</td><td class="metric-good">↓ Positive</td><td>Declining rates stimulate loan demand (refi, personal loans). Short-term NIM compression offset by volume growth. Net positive 6-12 months out.</td></tr>
+      <tr><td><strong>10Y Treasury</strong></td><td>4.35%</td><td class="metric-neutral">→ Neutral</td><td>Mortgage portfolio manageable. Yield curve normal (51bp spread) = bank economics healthy.</td></tr>
+      <tr><td><strong>Consumer Confidence</strong></td><td>VIX 23.87 (elevated)</td><td class="metric-bad">↑ Caution</td><td>Tariff uncertainty → consumer anxiety → potential slowdown in loan demand and rise in delinquencies. Key credit quality watch factor.</td></tr>
+      <tr><td><strong>Unemployment</strong></td><td>~4.1% (low)</td><td class="metric-good">↓ Positive</td><td>Low unemployment = good loan performance, SoFi's target borrowers (high-income) especially insulated.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px; background:var(--surface2); border-radius:8px; padding:12px;">
+    <div style="font-size:13px; font-weight:600; margin-bottom:8px;">Driver Pillar Adjustments</div>
+    <table class="adjustment-table">
+      <tr><td class="adj-arrow" style="color:var(--green);">↑</td><td>Business Quality</td><td><strong>+3</strong></td><td style="color:var(--text2);">Rate environment supports lending demand; consumer credit quality robust at current unemployment</td></tr>
+      <tr><td class="adj-arrow" style="color:var(--green);">↑</td><td>Valuation</td><td><strong>+3</strong></td><td style="color:var(--text2);">Improving earnings trajectory from operational leverage; rate cycle supports multiple expansion</td></tr>
+      <tr><td class="adj-arrow" style="color:var(--red);">↓</td><td>Entry/Exit Timing</td><td><strong>-2</strong></td><td style="color:var(--text2);">VIX elevated; tariff uncertainty adds short-term volatility risk; earnings 23 days away</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ SCENARIO ANALYSIS ============ -->
+<h2>Scenario Analysis</h2>
+<div class="scenario-grid">
+  <div class="scenario-card scenario-bull">
+    <h4 style="color:var(--green);">🐂 Bull Case (35% probability)</h4>
+    <p style="font-size:13px; margin:8px 0;"><strong>Q1 2026 earnings beat Apr 29:</strong> EPS $0.14-0.16 vs $0.12 guide. Members cross 14M. Credit quality holds. Management raises FY2026 guidance.</p>
+    <p style="font-size:13px; color:var(--text2);"><strong>Target:</strong> $21-24 (+29% to +47% from current) within 6 months. Re-rates to 40x forward P/E.</p>
+    <p style="font-size:13px; color:var(--text2); margin-top:4px;"><strong>Trigger:</strong> MACD Day 3 positive + price cross SMA20 ~Apr 7-8. Then hold through earnings.</p>
+  </div>
+  <div class="scenario-card scenario-bear">
+    <h4 style="color:var(--red);">🐻 Bear Case (20% probability)</h4>
+    <p style="font-size:13px; margin:8px 0;"><strong>Earnings miss Apr 29:</strong> Credit provisions rise on tariff-driven consumer stress. EPS $0.08 or below. Members miss. Macro deterioration hits loan origination.</p>
+    <p style="font-size:13px; color:var(--text2);"><strong>Target:</strong> $13.50-14.50 (-11% to -17% from current). Stop at $14.50 is activated.</p>
+    <p style="font-size:13px; color:var(--text2); margin-top:4px;"><strong>Defence:</strong> Stop-loss $14.50 limits downside to $1.77/share (10.9%) from current price.</p>
+  </div>
+</div>
+<div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin:12px 0; font-size:13px; color:var(--text2);">
+  <strong style="color:var(--text);">Base case (45%):</strong> Modest recovery to $17-19 range over 2-3 months as MACD confirms and price recaptures SMA20. Earnings in-line. Market re-evaluates at end of tariff uncertainty period.
+</div>
+
+<!-- ============ ENTRY/EXIT RULES ============ -->
+<h2>Entry / Exit Rule Status</h2>
+<div class="rule-box">
+  <h4>📋 Watchlist Entry Rules (from watchlist.json)</h4>
+  <div class="rule-condition" style="border-left-color:var(--red);">❌ <strong>Technical Entry:</strong> Requires price ≥ SMA20 (~$16.73) AND 3 consecutive positive MACD histogram bars. Currently: Day 2/3 ✓ but price $16.27 &lt; SMA20 $16.73 ✗. <em>Approaching — est. 1-3 trading days.</em></div>
+  <div class="rule-condition" style="border-left-color:var(--green);">✅ <strong>Fundamental Entry:</strong> Price $16.27 &lt; fair value $18 ✓ · RSI ~37 &gt; 30 ✓ · Earnings 23 days away ✓ (within 30-day window)</div>
+  <div class="rule-condition" style="border-left-color:var(--green);">✅ <strong>Stop-Loss:</strong> $14.50 — $1.77 buffer (10.9%). No trigger.</div>
+  <div class="rule-condition" style="border-left-color:var(--yellow);">⚠️ <strong>Profit Target:</strong> $21 (+29.1% required). Long way to go — patience required.</div>
+  <div class="rule-condition" style="border-left-color:var(--yellow);">⚠️ <strong>Earnings Risk:</strong> April 29. Reduce position size or consider protective options if entering before then.</div>
+</div>
+
+<!-- ============ CALIBRATION SNAPSHOT ============ -->
+<h2>Calibration Snapshot (for Future Comparison)</h2>
+<div class="calibration">
+<pre class="cal-json">{
+  "ticker": "SOFI",
+  "timestamp": "2026-04-06-EOD",
+  "price": 16.27,
+  "ytd_pct": -39.0,
+  "52w_high": 31.98,
+  "52w_low": 14.93,
+  "volume_today": 42594176,
+  "scores": {
+    "quality": 72,
+    "valuation": 70,
+    "timing": 45,
+    "driver": 65
+  },
+  "signals": {
+    "short": "HOLD",
+    "medium": "BUY",
+    "long": "BUY"
+  },
+  "composite_scores": {
+    "short": 58,
+    "medium": 64,
+    "long": 66
+  },
+  "moat_score": 62,
+  "technicals": {
+    "rsi_apr2": 33.63,
+    "rsi_apr6_est": 37,
+    "macd_histogram_apr2": 0.022,
+    "macd_day": "2 of 3",
+    "sma20_apr2": 17.0075,
+    "sma20_apr6_est": 16.73,
+    "sma50_apr2": 19.3474,
+    "price_vs_sma20_gap_pct": -2.8,
+    "obv": -995320345
+  },
+  "fundamentals": {
+    "fy2025_revenue": 3600000000,
+    "fy2025_revenue_growth_pct": 38,
+    "fy2025_net_income": 481000000,
+    "fy2025_ebitda": 1100000000,
+    "fy2025_ebitda_margin_pct": 29,
+    "fy2025_eps": 0.39,
+    "q4_members": 13700000,
+    "q4_member_growth_pct": 35,
+    "q4_products": 20200000
+  },
+  "key_levels": {
+    "stop_loss": 14.50,
+    "fair_value_low": 18.00,
+    "fair_value_high": 21.00,
+    "analyst_consensus_target": 19.20,
+    "sma20_resistance": 16.73,
+    "next_earnings": "2026-04-29"
+  },
+  "prior_calibration": {
+    "timestamp": "2026-04-06-1700",
+    "quality": 69,
+    "valuation": 67,
+    "timing": 47,
+    "driver": 64
+  },
+  "macro": {
+    "fed_funds": 3.64,
+    "ten_yr_yield": 4.35,
+    "vix": 23.87
+  }
+}</pre>
+</div>
+
+<div class="disclaimer" style="margin-top:32px;">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+</body>
+</html>
