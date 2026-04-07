@@ -1,0 +1,123 @@
+{
+  "ticker": "MNO",
+  "exchange": "TSX",
+  "exchange_ticker": "TSX:MNO",
+  "isin": "GB00BR3SVZ18",
+  "api_ticker": "MNO.TO",
+  "company": "Meridian Mining UK Societas",
+  "analysis_date": "2026-04-07",
+  "analysis_version": "v4",
+  "first_analysis": true,
+  "price": 1.94,
+  "currency": "CAD",
+  "market_cap_cad_m": 820.52,
+  "shares_outstanding_m": 419.46,
+  "pillar_scores": {
+    "business_quality": { "pre_driver": 78, "post_driver": 88, "confidence": "high" },
+    "valuation": { "pre_driver": 81, "post_driver": 91, "confidence": "medium" },
+    "timing": { "pre_driver": 76, "post_driver": 84, "confidence": "medium_low" }
+  },
+  "underlying_driver": {
+    "primary": "gold_spot",
+    "primary_weight": 0.65,
+    "primary_price_usd": 4665,
+    "primary_pfs_assumption_usd": 1950,
+    "secondary": "copper_spot",
+    "secondary_weight": 0.35,
+    "secondary_price_usd_lb": 5.90,
+    "driver_score": 95,
+    "pillar_adjustment": 10
+  },
+  "composite_score": 88.05,
+  "signals": {
+    "short_term": "HOLD_WAIT",
+    "medium_term": "STRONG_BUY",
+    "long_term": "STRONG_BUY"
+  },
+  "nav_analysis": {
+    "pfs_npv5_usd_m": 984,
+    "pfs_nav_cad_per_share": 3.26,
+    "pfs_p_nav": 0.60,
+    "spot_nav_cad_per_share_est": 8.76,
+    "spot_p_nav_est": 0.22,
+    "implied_gold_price_usd": 2300
+  },
+  "technical": {
+    "rsi_daily_est": 75,
+    "rsi_weekly_est": 68,
+    "price_vs_sma20_est": "above",
+    "price_vs_sma50_est": "above",
+    "price_vs_sma200_est": "above",
+    "data_quality": "estimated_web_search"
+  },
+  "key_levels": {
+    "current_price": 1.94,
+    "resistance_52w_high": 2.00,
+    "sma20_est": 1.68,
+    "bought_deal_support": 1.58,
+    "stop_loss": 1.25,
+    "analyst_median_target": 2.9667,
+    "analyst_high_target": 3.50,
+    "pfs_nav_per_share": 3.26
+  },
+  "entry_rules": {
+    "fundamental": {
+      "price_below": 2.20,
+      "cash_above_cad_m": 60,
+      "no_adverse_permitting_news_days": 30
+    },
+    "technical": {
+      "ideal_entry_range": [1.70, 1.80],
+      "rsi_below_for_ideal": 55,
+      "hold_above_bought_deal_support": 1.58
+    },
+    "catalyst": {
+      "trigger": "IL_submission_confirmed OR long_lead_items_placed",
+      "next_major_catalyst": "IL_submission_H1_2026"
+    }
+  },
+  "exit_rules": {
+    "stop_loss": { "price_below": 1.25, "consecutive_days": 2 },
+    "thesis_invalidation": {
+      "il_rejection": true,
+      "cash_below_cad_m": 30,
+      "copper_below_usd_lb": 3.00,
+      "copper_below_days": 90
+    },
+    "profit_target": { "price_above": 3.50, "rsi_above": 75 }
+  },
+  "hard_gates": "ALL_CLEAR",
+  "do_not_buy_triggers": "NONE_TRIGGERED",
+  "permitting_status": {
+    "preliminary_licence": "APPROVED_NOV_2025",
+    "installation_licence": "SUBMISSION_H1_2026",
+    "final_investment_decision": "PENDING_IL_AND_FINANCE",
+    "construction_start_target": "H1_2027",
+    "production_start_target": "END_2028"
+  },
+  "analysts": {
+    "count": 6,
+    "buy": 6,
+    "neutral": 0,
+    "sell": 0,
+    "median_target_cad": 2.9667,
+    "high_target_cad": 3.50,
+    "low_target_cad": 2.50,
+    "last_known_upgrade": {
+      "firm": "Scotiabank",
+      "date": "2026-01-26",
+      "target": 3.00,
+      "from_target": 2.50,
+      "recency_weight": 0.60
+    }
+  },
+  "macro_context": {
+    "gold_spot_usd": 4665,
+    "copper_spot_usd_lb": 5.90,
+    "vix": 23.87,
+    "dxy": 99.81,
+    "fed_funds": 3.64,
+    "us_10y": 4.35,
+    "stagflation_probability_pct": 48
+  }
+}

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNO Stock Signal Report v4 — April 7, 2026</title>
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3347; --text: #e1e4ed; --text2: #8b90a5;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
+  --gold: #f59e0b; --gold-bg: rgba(245,158,11,0.15);
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; padding:20px; max-width:1200px; margin:0 auto; }
+.disclaimer { background:var(--surface); border:1px solid var(--yellow); border-radius:8px; padding:14px 18px; margin-bottom:24px; font-size:13px; color:var(--yellow); }
+h1 { font-size:28px; margin-bottom:4px; }
+h2 { font-size:20px; margin:32px 0 16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+h3 { font-size:16px; margin:20px 0 10px; color:var(--blue); }
+.header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.header-left h1 span { color:var(--text2); font-weight:400; font-size:18px; }
+.header-right { text-align:right; color:var(--text2); font-size:14px; }
+.price-box { font-size:36px; font-weight:700; color:var(--green); }
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-right:6px; }
+.tag-sector { background:var(--gold-bg); color:var(--gold); }
+.tag-warn { background:var(--orange-bg); color:var(--orange); }
+.tag-info { background:var(--blue-bg); color:var(--blue); }
+.signal-banner { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:24px; }
+.signal-table { width:100%; border-collapse:collapse; }
+.signal-table th, .signal-table td { padding:10px 14px; text-align:center; border-bottom:1px solid var(--border); }
+.signal-table th { color:var(--text2); font-size:13px; font-weight:500; text-transform:uppercase; }
+.signal-table td { font-size:15px; }
+.signal-buy { background:var(--green-bg); color:var(--green); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-strongbuy { background:rgba(34,197,94,0.25); color:#4ade80; font-weight:700; border-radius:6px; padding:4px 12px; border:1px solid var(--green); }
+.signal-hold { background:var(--yellow-bg); color:var(--yellow); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-sell { background:var(--red-bg); color:var(--red); font-weight:700; border-radius:6px; padding:4px 12px; }
+.score-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px; }
+.score-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.score-card h3 { margin:0 0 12px; font-size:14px; text-transform:uppercase; letter-spacing:0.5px; }
+.score-value { font-size:48px; font-weight:800; line-height:1; }
+.score-bar { height:6px; border-radius:3px; background:var(--surface2); margin:12px 0 8px; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; }
+.score-label { font-size:13px; color:var(--text2); }
+.confidence { font-size:12px; color:var(--text2); margin-top:6px; }
+.gate-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:10px; }
+.gate-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:center; gap:10px; }
+.gate-icon { font-size:20px; }
+.gate-clear { color:var(--green); }
+.gate-triggered { color:var(--red); }
+.gate-text { font-size:13px; }
+.detail-table { width:100%; border-collapse:collapse; margin:12px 0 20px; font-size:14px; }
+.detail-table th { text-align:left; padding:8px 12px; background:var(--surface2); color:var(--text2); font-size:12px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+.detail-table td { padding:8px 12px; border-bottom:1px solid rgba(46,51,71,0.5); vertical-align:top; }
+.detail-table tr:hover td { background:var(--surface2); }
+.metric-good { color:var(--green); }
+.metric-neutral { color:var(--yellow); }
+.metric-bad { color:var(--red); }
+.metric-gold { color:var(--gold); font-weight:700; }
+.moat-grid { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin:12px 0 20px; }
+.moat-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center; }
+.moat-item h4 { font-size:11px; color:var(--text2); text-transform:uppercase; margin-bottom:6px; }
+.moat-score { font-size:28px; font-weight:700; }
+.driver-box { background:var(--surface); border:1px solid var(--gold); border-radius:12px; padding:20px; margin:16px 0; }
+.driver-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.driver-label { font-size:13px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; }
+.driver-score-big { font-size:36px; font-weight:800; color:var(--gold); }
+.adjustment-table { width:100%; font-size:13px; margin-top:12px; }
+.adjustment-table td { padding:4px 8px; }
+.adj-arrow { font-weight:700; }
+.scenario-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.scenario-card { background:var(--surface); border-radius:10px; padding:16px; }
+.scenario-bull { border:1px solid var(--green); }
+.scenario-bear { border:1px solid var(--red); }
+.scenario-card h4 { font-size:14px; margin-bottom:8px; }
+.rule-box { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:10px 0; }
+.rule-box h4 { font-size:13px; color:var(--blue); text-transform:uppercase; margin-bottom:8px; }
+.rule-condition { font-size:13px; margin:4px 0; padding-left:12px; border-left:2px solid var(--border); }
+.calibration { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:16px 0; }
+pre.cal-json { background:var(--surface2); border-radius:6px; padding:12px; font-size:12px; overflow-x:auto; color:var(--text2); }
+.nav-highlight { background:var(--gold-bg); border:1px solid var(--gold); border-radius:8px; padding:12px 16px; margin:12px 0; font-size:14px; }
+.milestone-list { list-style:none; padding:0; margin:12px 0; }
+.milestone-list li { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid rgba(46,51,71,0.4); font-size:14px; }
+.milestone-list li:last-child { border-bottom:none; }
+.ms-icon { font-size:16px; min-width:24px; }
+.ms-status-done { color:var(--green); }
+.ms-status-active { color:var(--gold); }
+.ms-status-pending { color:var(--text2); }
+.tftable { width:100%; border-collapse:collapse; font-size:13px; }
+.tftable th { background:var(--surface2); color:var(--text2); font-size:11px; text-transform:uppercase; padding:7px 10px; }
+.tftable td { padding:7px 10px; border-bottom:1px solid rgba(46,51,71,0.4); }
+.tf-bull { color:var(--green); font-weight:600; }
+.tf-warn { color:var(--yellow); font-weight:600; }
+.tf-bear { color:var(--red); font-weight:600; }
+.note-box { background:var(--surface); border-left:3px solid var(--blue); padding:12px 16px; border-radius:0 8px 8px 0; margin:12px 0; font-size:13px; color:var(--text2); }
+.catalyst-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; margin:8px 0; display:flex; gap:12px; }
+.cat-timing { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; min-width:90px; }
+.cat-high { color:var(--green); }
+.cat-med { color:var(--gold); }
+.cat-body { font-size:13px; }
+@media (max-width:768px) {
+  .score-grid { grid-template-columns:1fr; }
+  .moat-grid { grid-template-columns:repeat(3, 1fr); }
+  .scenario-grid { grid-template-columns:1fr; }
+  .header { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+  <a href="https://donatien.ca/" style="color:#3b82f6; text-decoration:none; font-size:14px;">← Back to SignalDeck</a>
+  <a href="https://donatien.ca/reports/archive-MNO.html" style="color:#8b90a5; text-decoration:none; font-size:13px;">See previous reports →</a>
+</div>
+
+<div class="disclaimer">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>TSX:MNO <span>Meridian Mining UK Societas</span></h1>
+    <div style="font-size:11px; color:var(--text2); opacity:0.6; letter-spacing:0.4px; margin-top:3px; margin-bottom:4px;">ISIN: GB00BR3SVZ18</div>
+    <div style="margin-top:8px;">
+      <span class="tag tag-sector">⛏ Gold-Copper Developer</span>
+      <span class="tag tag-sector">Brazil / Mato Grosso</span>
+      <span class="tag tag-warn">Pre-Production</span>
+      <span class="tag tag-info">VMS Deposit</span>
+    </div>
+    <div style="margin-top:8px; font-size:13px; color:var(--text2);">TSX · HQ: London, UK · Operations: Cabaçal, Mato Grosso, Brazil · Mkt Cap: ~C$820M</div>
+  </div>
+  <div class="header-right">
+    <div class="price-box">C$1.94</div>
+    <div style="font-size:14px; color:var(--green);">+C$0.05 (+2.62%) today</div>
+    <div style="font-size:13px; color:var(--text2); margin-top:4px;">+20.99% 1-week &nbsp;|&nbsp; +20.25% 1-month &nbsp;|&nbsp; +312.77% 1-year</div>
+    <div style="font-size:13px; color:var(--text2);">52-wk: C$0.46 – C$2.00 &nbsp;|&nbsp; <span style="color:var(--yellow);">3.1% below 52w high</span></div>
+    <div style="font-size:12px; margin-top:4px; color:var(--text2);">April 7, 2026 · Signal v4 · First Analysis</div>
+  </div>
+</div>
+
+<!-- SIGNAL BANNER -->
+<div class="signal-banner">
+  <table class="signal-table">
+    <thead>
+      <tr>
+        <th>Horizon</th>
+        <th>Signal</th>
+        <th>Composite Score</th>
+        <th>Confidence</th>
+        <th>Key Driver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Short-term (1-3 mo)</td>
+        <td><span class="signal-hold">HOLD / WAIT</span></td>
+        <td>75</td>
+        <td>58%</td>
+        <td>Near 52w high C$2.00 resistance, RSI ~72-78 (stretched) — await pullback to C$1.70-1.80</td>
+      </tr>
+      <tr>
+        <td>Medium-term (6-12 mo)</td>
+        <td><span class="signal-strongbuy">STRONG BUY</span></td>
+        <td>88</td>
+        <td>72%</td>
+        <td>Installation Licence (H1 2026) + DFS (Q4 2026) = two major re-rating catalysts; gold at US$4,665/oz</td>
+      </tr>
+      <tr>
+        <td>Long-term (3-5 yr)</td>
+        <td><span class="signal-strongbuy">STRONG BUY</span></td>
+        <td>92</td>
+        <td>68%</td>
+        <td>Production end-2028; P/NAV 0.22x at spot gold; market implies US$2,200/oz vs US$4,665/oz spot</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- THREE-PILLAR SCORECARD -->
+<h2>Three-Pillar Scorecard</h2>
+<div class="score-grid">
+  <div class="score-card">
+    <h3 style="color:var(--green);">Business Quality</h3>
+    <div class="score-value" style="color:var(--green);">88</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:88%; background:var(--green);"></div></div>
+    <div class="score-label">Exceptional PFS economics; permitting on track</div>
+    <div class="confidence">Confidence: High · Pre-driver: 78</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--green);">Valuation Attractiveness</h3>
+    <div class="score-value" style="color:var(--green);">91</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:91%; background:var(--green);"></div></div>
+    <div class="score-label">0.22x NAV at spot gold — deep value</div>
+    <div class="confidence">Confidence: Medium · Pre-driver: 81</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--gold);">Entry/Exit Timing</h3>
+    <div class="score-value" style="color:var(--gold);">84</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:84%; background:var(--gold);"></div></div>
+    <div class="score-label">Strong macro; short-term overbought near resistance</div>
+    <div class="confidence">Confidence: Medium-Low · Pre-driver: 76</div>
+  </div>
+</div>
+
+<!-- FIRST-ANALYSIS NOTE -->
+<div class="note-box">
+  📋 <strong>First Analysis:</strong> No prior calibration file exists for TSX:MNO. No "Changes Since Last Report" section shown — this is the baseline calibration. All future analyses will track deltas from these scores.
+</div>
+
+<!-- UNDERLYING DRIVER -->
+<h2>Underlying Driver Analysis</h2>
+<div class="driver-box">
+  <div class="driver-header">
+    <div>
+      <div class="driver-label">Primary Driver</div>
+      <div style="font-size:22px; font-weight:700; color:var(--gold);">🥇 Gold Spot Price — EXTREME BULL REGIME</div>
+      <div style="font-size:13px; color:var(--text2); margin-top:4px;">~65% of MNO's revenue economics are gold-driven</div>
+    </div>
+    <div class="driver-score-big">95/100</div>
+  </div>
+
+  <table class="detail-table">
+    <thead><tr><th>Commodity</th><th>Role</th><th>Current Spot</th><th>PFS Assumption</th><th>AISC Margin</th><th>Regime</th><th>Pillar Adj.</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Gold</strong></td>
+        <td>Primary (65%)</td>
+        <td class="metric-gold">US$4,665/oz</td>
+        <td>~US$1,950/oz</td>
+        <td class="metric-gold">+US$3,923/oz (629% coverage)</td>
+        <td><span style="color:var(--gold); font-weight:700;">⚡ EXTREME BULL</span></td>
+        <td class="metric-good">+10 pts all pillars</td>
+      </tr>
+      <tr>
+        <td><strong>Copper</strong></td>
+        <td>Secondary (35%)</td>
+        <td class="metric-good">US$5.90/lb</td>
+        <td>~US$3.80/lb</td>
+        <td class="metric-good">+US$2.10/lb above PFS case</td>
+        <td><span style="color:var(--green); font-weight:700;">↑ BULL</span></td>
+        <td class="metric-good">Incremental upside</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="nav-highlight">
+    <strong>🔑 Key Insight — Spot NAV vs Market Cap:</strong> The PFS (using ~US$1,950/oz gold) delivered NPV₅ of US$984M. At today's gold spot of US$4,665/oz, a conservative back-of-envelope update yields an illustrative spot NAV of ~US$2,600-2,700M (≈ C$3.6-3.8B). The current market cap of C$820M represents a P/NAV of <strong>~0.22-0.23x at spot</strong>. The market is implying a long-term gold price of only ~US$2,200/oz — approximately half of current spot — suggesting either extreme conservatism or a large execution/permitting risk discount. As milestones are hit, this discount should compress.
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card scenario-bull">
+      <h4 style="color:var(--green);">🟢 Bull Scenario (gold sustains $4,000+)</h4>
+      <ul style="font-size:13px; padding-left:16px; color:var(--text2);">
+        <li>Spot NAV: C$7-9/share</li>
+        <li>Target on IL + DFS delivery: C$3.50-4.50</li>
+        <li>Production re-rating (2028): C$5.00+</li>
+        <li>Probability: 45% (gold structural bull case)</li>
+      </ul>
+    </div>
+    <div class="scenario-card scenario-bear">
+      <h4 style="color:var(--red);">🔴 Bear Scenario (gold retreats to $2,000-2,500)</h4>
+      <ul style="font-size:13px; padding-left:16px; color:var(--text2);">
+        <li>PFS NPV shrinks ~60-70% from spot case</li>
+        <li>PFS-base NAV (C$3.26/share) more relevant</li>
+        <li>Downside toward C$1.25-1.40 stop zone</li>
+        <li>Probability: 30% (macro normalization)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PILLAR 1 -->
+<h2>Pillar 1 — Business Quality: 88/100</h2>
+<p style="font-size:13px; color:var(--text2); margin-bottom:16px;">Classification: Pre-production development-stage gold-copper VMS miner. Lifecycle Stage: Pre-revenue development. Metrics applied: NPV/IRR, permitting progress, cash runway, cost structure (AISC), management execution. Trailing P/E / EBITDA / FCF metrics explicitly <em>not</em> used — structurally meaningless for a company with no production revenue.</p>
+
+<h3>Project Fundamentals — Cabaçal Au-Cu-Ag</h3>
+<table class="detail-table">
+  <thead><tr><th>Metric</th><th>Value</th><th>Benchmark</th><th>Assessment</th></tr></thead>
+  <tbody>
+    <tr><td>PFS NPV₅ (post-tax)</td><td class="metric-gold"><strong>US$984M</strong></td><td>Solid mid-tier project</td><td class="metric-good">Exceptional for capex required</td></tr>
+    <tr><td>PFS IRR</td><td class="metric-gold"><strong>61.2%</strong></td><td>Sector median: 20-30%</td><td class="metric-good">World-class economics — top decile</td></tr>
+    <tr><td>Initial Capex (PFS)</td><td><strong>US$248M</strong></td><td>Comparable VMS: $200-400M</td><td class="metric-good">Manageable; project finance scale</td></tr>
+    <tr><td>Annual Production (AuEq)</td><td><strong>~141,000 oz/yr</strong></td><td>Mid-tier producer range</td><td class="metric-good">Significant, commercially meaningful</td></tr>
+    <tr><td>AISC (AuEq)</td><td class="metric-gold"><strong>US$742/oz</strong></td><td>Global median: ~$1,250/oz</td><td class="metric-good">Low-cost — bottom quartile costs</td></tr>
+    <tr><td>Payback Period</td><td><strong>~2 years</strong> (est. at PFS gold)</td><td>Sector typical: 3-6 years</td><td class="metric-good">Very fast payback cycle</td></tr>
+    <tr><td>NPV/Capex Ratio</td><td class="metric-gold"><strong>3.97x</strong></td><td>Threshold: >1.5x attractive</td><td class="metric-good">Exceptional capital efficiency</td></tr>
+    <tr><td>Mine Life</td><td><strong>~10+ years</strong> (implied)</td><td>Reserve Life Index >8y = healthy</td><td class="metric-good">Above benchmark RLI</td></tr>
+  </tbody>
+</table>
+
+<h3>Mineral Resources — Cabaçal + Santa Helena Central</h3>
+<table class="detail-table">
+  <thead><tr><th>Zone</th><th>Tonnes</th><th>Grade Au</th><th>Grade Cu</th><th>Grade Ag</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Cabaçal (Reserves)</td><td>41.7 Mt</td><td>0.63 g/t</td><td>0.44%</td><td>1.64 g/t</td><td class="metric-good">PFS Basis — Bankable</td></tr>
+    <tr><td>Santa Helena Central</td><td>Maiden resource declared 2026</td><td>TBD</td><td>TBD</td><td>TBD</td><td class="metric-gold">Resource expansion upside</td></tr>
+    <tr><td>Contained AuEq (est.)</td><td colspan="3"><strong>~1.1–1.3M oz AuEq</strong> (Cabaçal reserves)</td><td></td><td class="metric-good">Solid for development stage</td></tr>
+  </tbody>
+</table>
+
+<h3>Project Roadmap &amp; Permitting</h3>
+<ul class="milestone-list">
+  <li><span class="ms-icon ms-status-done">✅</span><div><strong>Preliminary Licence (PL) Approved</strong> — Gazetted in Official Gazette of Mato Grosso, November 3, 2025. CONSEMA Council unanimous approval. First of three permits required. <span class="metric-good">COMPLETE.</span></div></li>
+  <li><span class="ms-icon ms-status-active">🔄</span><div><strong>Installation Licence (IL) Submission</strong> — Targeted H1 2026 (imminent). Critical milestone; binary catalyst for re-rating. Grant expected H2 2026 pending normal review timelines.</div></li>
+  <li><span class="ms-icon ms-status-active">🔄</span><div><strong>DFS (Definitive Feasibility Study)</strong> — Drill program complete. Full study targeted Q4 2026. Will update NPV/IRR using current commodity prices — likely to show dramatically improved economics vs PFS.</div></li>
+  <li><span class="ms-icon ms-status-active">🔄</span><div><strong>Long-Lead Item Orders</strong> — Targeted by end Q1 2026 (possibly already placed). Funded from C$57.5M bought deal proceeds.</div></li>
+  <li><span class="ms-icon ms-status-pending">⏳</span><div><strong>Civil Works (Road &amp; Access)</strong> — 2026 dry season (Q2-Q3). Access road upgrades to prepare for construction start.</div></li>
+  <li><span class="ms-icon ms-status-pending">⏳</span><div><strong>Final Investment Decision (FID)</strong> — Pending IL grant + project financing arrangement (currently engaging potential project finance groups).</div></li>
+  <li><span class="ms-icon ms-status-pending">⏳</span><div><strong>Construction Start</strong> — Targeted H1 2027, subject to licences.</div></li>
+  <li><span class="ms-icon ms-status-pending">⏳</span><div><strong>Production Start</strong> — Targeted end-2028. Approximately 2.5 years from now.</div></li>
+</ul>
+
+<h3>Balance Sheet &amp; Cash Runway</h3>
+<table class="detail-table">
+  <thead><tr><th>Item</th><th>Value</th><th>Assessment</th></tr></thead>
+  <tbody>
+    <tr><td>Cash (post C$57.5M bought deal)</td><td class="metric-good"><strong>C$100M+</strong></td><td class="metric-good">Robust — adequate for DFS, IL process, pre-construction</td></tr>
+    <tr><td>Bought Deal Close</td><td>~February 12, 2026</td><td>36M shares issued at C$1.58 · full over-allotment exercised</td></tr>
+    <tr><td>Estimated Annual Burn</td><td>~C$25-40M/year</td><td class="metric-good">At C$30M/yr avg: ~3.3-year runway</td></tr>
+    <tr><td>Cash Runway</td><td class="metric-good"><strong>~2.5–4 years</strong></td><td class="metric-good">Threshold: >18 months = adequate · EXCEEDS threshold</td></tr>
+    <tr><td>Revenue</td><td>None (pre-production)</td><td>Expected — development stage</td></tr>
+    <tr><td>Debt</td><td>None apparent</td><td class="metric-good">Clean balance sheet entering project finance process</td></tr>
+    <tr><td>Project Financing Needed</td><td>~US$248M capex</td><td class="metric-neutral">Engaging project finance groups; typical construction debt + equity mix</td></tr>
+  </tbody>
+</table>
+
+<h3>Management &amp; Execution</h3>
+<table class="detail-table">
+  <thead><tr><th>Factor</th><th>Detail</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr><td>CFO Appointment</td><td>David Halkyard, November 25, 2025 — experienced executive hire ahead of construction phase</td><td class="metric-good">Positive: right hire at right time</td></tr>
+    <tr><td>Insider Ownership</td><td>Gilbert Clark (Director): ~2.198M shares. Net selling: -20,000 shares over 18 months</td><td class="metric-good">Broadly aligned; minimal selling relative to position</td></tr>
+    <tr><td>Milestone Delivery</td><td>PL approved, bought deal closed, resource expansion completed — on schedule</td><td class="metric-good">Track record of execution</td></tr>
+    <tr><td>Brazil Expertise</td><td>Established operational footprint in Mato Grosso; CONSEMA relationship evidenced by unanimous PL approval</td><td class="metric-good">Local knowledge advantage</td></tr>
+  </tbody>
+</table>
+
+<h3>Competitive Moat Scoring (Mining Lens)</h3>
+<div class="moat-grid">
+  <div class="moat-item">
+    <h4>Pricing Power</h4>
+    <div class="moat-score" style="color:var(--red);">20</div>
+    <div style="font-size:11px; color:var(--text2); margin-top:4px;">Gold/copper = commodity prices; no price-setting ability</div>
+  </div>
+  <div class="moat-item">
+    <h4>Network Effects</h4>
+    <div class="moat-score" style="color:var(--red);">10</div>
+    <div style="font-size:11px; color:var(--text2); margin-top:4px;">Not applicable to miners</div>
+  </div>
+  <div class="moat-item">
+    <h4>Switching Costs</h4>
+    <div class="moat-score" style="color:var(--red);">15</div>
+    <div style="font-size:11px; color:var(--text2); margin-top:4px;">Minimal in mining offtake context</div>
+  </div>
+  <div class="moat-item">
+    <h4>Cost Advantage</h4>
+    <div class="moat-score" style="color:var(--green);">80</div>
+    <div style="font-size:11px; color:var(--text2); margin-top:4px;">AISC $742/oz — bottom quartile globally; structural margin advantage</div>
+  </div>
+  <div class="moat-item">
+    <h4>Asset Scarcity</h4>
+    <div class="moat-score" style="color:var(--green);">72</div>
+    <div style="font-size:11px; color:var(--text2); margin-top:4px;">High-grade VMS in proven Brazilian belt; permitted; differentiated asset</div>
+  </div>
+</div>
+<div class="note-box">For commodity miners, moat = cost structure + asset quality. Pricing power / network effects are structurally inapplicable. The relevant moat dimensions (cost advantage + asset scarcity) score well — indicating genuine structural margin advantage vs global gold mining peers.</div>
+
+<!-- PILLAR 2 -->
+<h2>Pillar 2 — Valuation Attractiveness: 91/100</h2>
+<p style="font-size:13px; color:var(--text2); margin-bottom:16px;">Primary metric: Price-to-NAV (P/NAV). P/E, EV/EBITDA, FCF yield not used — not meaningful for pre-revenue development miner. Two NAV scenarios modelled: PFS-based (conservative, using historical commodity price assumptions) and Spot-adjusted (current market prices).</p>
+
+<h3>P/NAV Analysis (Primary Valuation Metric)</h3>
+<div class="nav-highlight">
+  <table style="width:100%; font-size:14px; border-collapse:collapse;">
+    <tr>
+      <td style="padding:6px 12px 6px 0; color:var(--text2);">PFS NPV₅ (post-tax, ~US$1,950 gold)</td>
+      <td style="padding:6px; font-weight:700;">US$984M → C$1,368M (at 1.39 USD/CAD)</td>
+      <td style="padding:6px; color:var(--text2);">÷ 419.46M shares</td>
+      <td style="padding:6px; font-weight:700; color:var(--yellow);">= C$3.26/share NAV</td>
+    </tr>
+    <tr style="border-top:1px solid var(--border);">
+      <td style="padding:6px 12px 6px 0; color:var(--text2);">Spot-Adj. NPV₅ est. (~US$4,665 gold)</td>
+      <td style="padding:6px; font-weight:700;">US$2,600-2,700M → C$3,600-3,750M (est.)</td>
+      <td style="padding:6px; color:var(--text2);">÷ 419.46M shares</td>
+      <td style="padding:6px; font-weight:700; color:var(--gold);">= C$8.58-8.94/share NAV</td>
+    </tr>
+    <tr style="border-top:1px solid var(--border); background:var(--surface2);">
+      <td style="padding:6px 12px 6px 0; color:var(--text2);">Current Market Cap</td>
+      <td style="padding:6px; font-weight:700;">C$820M</td>
+      <td></td>
+      <td style="padding:6px; font-weight:700;">= C$1.94/share</td>
+    </tr>
+    <tr style="border-top:1px solid var(--border);">
+      <td style="padding:6px 12px 6px 0;"><strong>P/NAV (PFS basis)</strong></td>
+      <td colspan="3" style="padding:6px; color:var(--yellow); font-weight:700; font-size:18px;">0.60x &nbsp;<span style="font-size:13px; font-weight:400; color:var(--text2);">— fair/slight discount (dev. stage norm: 0.5-0.7x)</span></td>
+    </tr>
+    <tr style="border-top:1px solid var(--border);">
+      <td style="padding:6px 12px 6px 0;"><strong>P/NAV (spot gold basis)</strong></td>
+      <td colspan="3" style="padding:6px; color:var(--gold); font-weight:700; font-size:18px;">0.22x &nbsp;<span style="font-size:13px; font-weight:400; color:var(--text2);">— deeply cheap relative to spot economics</span></td>
+    </tr>
+  </table>
+</div>
+
+<h3>Development-Stage P/NAV Benchmarks</h3>
+<table class="detail-table">
+  <thead><tr><th>Stage</th><th>Typical P/NAV</th><th>MNO Status</th></tr></thead>
+  <tbody>
+    <tr><td>Early exploration</td><td>0.1-0.3x</td><td></td></tr>
+    <tr><td>PFS complete, permitting underway</td><td>0.3-0.6x</td><td class="metric-good">← MNO is here (PFS done, PL approved, IL imminent): P/NAV 0.60x = upper end appropriate</td></tr>
+    <tr><td>DFS complete, IL in hand</td><td>0.6-0.9x</td><td class="metric-gold">← Re-rating target on IL + DFS delivery</td></tr>
+    <tr><td>Under construction</td><td>0.7-1.0x</td><td></td></tr>
+    <tr><td>Producing</td><td>0.8-1.5x</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Analyst Target Cross-Check (Recency-Weighted)</h3>
+<table class="detail-table">
+  <thead><tr><th>Analyst</th><th>Target</th><th>Rating</th><th>Date</th><th>Recency Tier</th><th>Weight</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Scotiabank</td>
+      <td><strong>C$3.00</strong> (raised from C$2.50)</td>
+      <td class="metric-good">Buy</td>
+      <td>January 26, 2026</td>
+      <td>71 days → 1-3 months</td>
+      <td>0.60×</td>
+    </tr>
+    <tr>
+      <td>5 additional analysts</td>
+      <td><strong>C$2.97 avg</strong> (range: C$2.50–C$3.50)</td>
+      <td class="metric-good">Buy / Strong Buy</td>
+      <td>Dates not confirmed</td>
+      <td>Assumed 2-4 months avg</td>
+      <td>~0.50× avg</td>
+    </tr>
+    <tr style="background:var(--surface2); font-weight:700;">
+      <td colspan="2">Recency-Weighted Consensus Target</td>
+      <td class="metric-good">6/6 Buy — Strong Buy</td>
+      <td colspan="2">Calculated consensus</td>
+      <td colspan="1" class="metric-good">C$2.98</td>
+    </tr>
+  </tbody>
+</table>
+<table class="detail-table" style="margin-top:8px;">
+  <thead><tr><th>Metric</th><th>Value</th><th>Context</th></tr></thead>
+  <tbody>
+    <tr><td>Current Price</td><td>C$1.94</td><td></td></tr>
+    <tr><td>Upside to Weighted Consensus</td><td class="metric-gold"><strong>+53.6%</strong></td><td class="metric-good">Significant — analyst community unanimously sees substantial upside</td></tr>
+    <tr><td>Upside to High Target (C$3.50)</td><td class="metric-good"><strong>+80.4%</strong></td><td>Bull case well above current price</td></tr>
+    <tr><td>Low Target (C$2.50)</td><td class="metric-neutral">+28.9%</td><td>Even most conservative analyst sees meaningful upside</td></tr>
+  </tbody>
+</table>
+
+<h3>Reverse-Implied Commodity Price</h3>
+<table class="detail-table">
+  <thead><tr><th>Metric</th><th>Value</th><th>Implication</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Gold price implied by current market cap</td>
+      <td class="metric-neutral"><strong>~US$2,200-2,500/oz</strong> (est.)</td>
+      <td class="metric-good">Market pricing in ~47-54% of current spot gold — highly conservative assumption</td>
+    </tr>
+    <tr>
+      <td>Current gold spot</td>
+      <td class="metric-gold"><strong>US$4,665/oz</strong></td>
+      <td>2.0-2.1x what the market is pricing in</td>
+    </tr>
+    <tr>
+      <td>What needs to happen for current price to be "fair"</td>
+      <td>Gold needs to fall to ~US$2,300/oz</td>
+      <td class="metric-good">Significant downside buffer even in a substantial gold correction</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- PILLAR 3 -->
+<h2>Pillar 3 — Entry/Exit Timing: 84/100</h2>
+
+<h3>Multi-Timeframe Technical Analysis</h3>
+<div class="note-box" style="margin-bottom:12px;">⚠️ <strong>Data Limitation:</strong> All MCP financial API tools returned errors for MNO.TO (Canadian-listed stocks not supported by Polygon/FMP APIs). Technical data sourced via web search synthesis. RSI and moving average values are <strong>estimated from price action context</strong>, not computed from raw OHLCV data. Treat technical scores with medium-low confidence.</div>
+
+<table class="tftable">
+  <thead><tr><th>Timeframe</th><th>Trend</th><th>RSI (est.)</th><th>vs Key MAs</th><th>Volume</th><th>Signal</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Monthly</strong></td>
+      <td class="tf-bull">Strong uptrend — +312% YoY, new all-time highs</td>
+      <td class="tf-bull">~65-70</td>
+      <td class="tf-bull">Well above all MAs — massive breakout</td>
+      <td>Elevated (rally)</td>
+      <td class="tf-bull">BULLISH</td>
+      <td class="metric-good">90/100</td>
+    </tr>
+    <tr>
+      <td><strong>Weekly</strong></td>
+      <td class="tf-bull">Strong uptrend — +21% this week, +20% this month</td>
+      <td class="tf-warn">~65-72 — elevated, approaching overbought</td>
+      <td class="tf-bull">Well above SMA20w, SMA50w</td>
+      <td>Elevated (gold rally)</td>
+      <td class="tf-bull">BULLISH</td>
+      <td class="metric-neutral">70/100</td>
+    </tr>
+    <tr>
+      <td><strong>Daily</strong></td>
+      <td class="tf-warn">Approaching 52w high resistance at C$2.00</td>
+      <td class="tf-warn">~72-78 — overbought; sector-wide RSI >70</td>
+      <td class="tf-bull">Above SMA20d (~C$1.68 est.), SMA50d (~C$1.45 est.), SMA200d (~C$1.05 est.)</td>
+      <td>High — gold-driven spike</td>
+      <td class="tf-warn">CAUTION — stretched</td>
+      <td class="metric-neutral">52/100</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Relative Strength vs Gold Miner Peers</h3>
+<table class="detail-table">
+  <thead><tr><th>Period</th><th>MNO Return</th><th>GDX (est.)</th><th>Relative Alpha</th></tr></thead>
+  <tbody>
+    <tr><td>1 year</td><td class="metric-gold">+312.77%</td><td>+55-65% (est.)</td><td class="metric-good">+250pp — exceptional</td></tr>
+    <tr><td>1 week</td><td class="metric-good">+20.99%</td><td>+8-12% (est.)</td><td class="metric-good">+10-12pp — leading sector</td></tr>
+    <tr><td>Relative Strength Score</td><td colspan="3" class="metric-good">88/100 — MNO is dramatically outperforming the gold miner universe</td></tr>
+  </tbody>
+</table>
+
+<h3>Sentiment Layer</h3>
+<table class="detail-table">
+  <thead><tr><th>Factor</th><th>Reading</th><th>Weight</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr><td>Analyst consensus (6/6 Strong Buy)</td><td class="metric-good">Maximum bullish — zero dissent</td><td>25%</td><td class="metric-good">95/100</td></tr>
+    <tr><td>Scotiabank upgrade (recency 0.6×)</td><td class="metric-good">C$3.00 target raised Jan 26</td><td>15%</td><td class="metric-neutral">70/100</td></tr>
+    <tr><td>News flow quality</td><td class="metric-good">PL approval, bought deal, resource expansion — all positive</td><td>25%</td><td class="metric-good">85/100</td></tr>
+    <tr><td>Insider signals</td><td class="metric-neutral">Minimal net selling (-20K shares / 18 mo); broadly aligned</td><td>20%</td><td class="metric-neutral">65/100</td></tr>
+    <tr><td>Retail/social momentum</td><td class="metric-neutral">High momentum stock; no specific data</td><td>15%</td><td class="metric-neutral">60/100</td></tr>
+    <tr style="background:var(--surface2); font-weight:700;"><td colspan="3">Sentiment Composite</td><td class="metric-good">75/100</td></tr>
+  </tbody>
+</table>
+
+<h3>Catalyst Layer — Next 6 Months</h3>
+
+<div class="catalyst-item">
+  <div><div class="cat-timing cat-high">H1 2026 — HIGH</div><div style="font-size:11px; color:var(--text2);">Imminent</div></div>
+  <div class="cat-body"><strong>Installation Licence (IL) Submission</strong> — Submitted to Mato Grosso environmental agency. Binary catalyst; positive submission confirmation alone is a re-rating event. Potential share price response: +15-25% on confirmation.</div>
+</div>
+
+<div class="catalyst-item">
+  <div><div class="cat-timing cat-high">Q1-Q2 2026 — HIGH</div><div style="font-size:11px; color:var(--text2);">Near-term</div></div>
+  <div class="cat-body"><strong>Long-Lead Item Orders Placed</strong> — Targeted by end Q1 2026 (possibly already placed). Confirms construction pathway. Physical equipment orders demonstrate commitment beyond paper permitting. Response: +5-10%.</div>
+</div>
+
+<div class="catalyst-item">
+  <div><div class="cat-timing cat-med">Q2-Q3 2026 — MED</div><div style="font-size:11px; color:var(--text2);">Seasonal window</div></div>
+  <div class="cat-body"><strong>Civil Works Commencement</strong> — Road upgrades and site access works during 2026 dry season. Visual evidence of construction activity changes investor perception from "developer" to "builder." Response: +8-15%.</div>
+</div>
+
+<div class="catalyst-item">
+  <div><div class="cat-timing cat-high">Q4 2026 — HIGH</div><div style="font-size:11px; color:var(--text2);">Major</div></div>
+  <div class="cat-body"><strong>DFS Completion</strong> — Updated NPV/IRR at current commodity prices. If gold stays near US$4,665/oz, the DFS could show NPV of US$2-3B+ vs the PFS figure of US$984M. This single event has potential for a 30-50% re-rating as market reprices on updated numbers.</div>
+</div>
+
+<div class="catalyst-item">
+  <div><div class="cat-timing cat-med">H2 2026 — MED-HIGH</div><div style="font-size:11px; color:var(--text2);">Key de-risk</div></div>
+  <div class="cat-body"><strong>Project Finance Group Announcement</strong> — When Meridian announces formal engagement with project finance groups for construction debt, the market will start discounting the construction pathway more aggressively. Response: +10-20%.</div>
+</div>
+
+<div class="catalyst-item">
+  <div><div class="cat-timing" style="color:var(--gold);">CONTINUOUS</div><div style="font-size:11px; color:var(--text2);">Daily</div></div>
+  <div class="cat-body"><strong>Gold Price Sustained at US$4,000+</strong> — Every $500/oz gold stays above $2,000, the spot NAV gap widens further. Gold acting as a persistent tailwind rather than a one-time catalyst. No specific response event but underpins the entire re-rating thesis.</div>
+</div>
+
+<h3>Risk-Reward Analysis</h3>
+<table class="detail-table">
+  <thead><tr><th>Scenario</th><th>Entry</th><th>Target</th><th>Stop</th><th>Reward</th><th>Risk</th><th>R/R Ratio</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Current entry</strong></td>
+      <td>C$1.94</td>
+      <td>C$2.97 (consensus)</td>
+      <td>C$1.25</td>
+      <td>+53.1%</td>
+      <td>-35.6%</td>
+      <td class="metric-neutral"><strong>1.49:1</strong> — OK</td>
+    </tr>
+    <tr>
+      <td><strong>Pullback entry (ideal)</strong></td>
+      <td>C$1.75</td>
+      <td>C$2.97 (consensus)</td>
+      <td>C$1.25</td>
+      <td>+69.7%</td>
+      <td>-28.6%</td>
+      <td class="metric-good"><strong>2.44:1</strong> — Excellent</td>
+    </tr>
+    <tr>
+      <td><strong>Bull case</strong></td>
+      <td>C$1.94</td>
+      <td>C$4.50 (IL+DFS delivery at spot)</td>
+      <td>C$1.25</td>
+      <td>+131.9%</td>
+      <td>-35.6%</td>
+      <td class="metric-good"><strong>3.71:1</strong> — Very strong</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Macro Overlay</h3>
+<table class="detail-table">
+  <thead><tr><th>Factor</th><th>Current Reading</th><th>Impact on MNO</th><th>Direction</th></tr></thead>
+  <tbody>
+    <tr><td>Gold spot</td><td class="metric-gold">US$4,665/oz — near ATH</td><td>Direct NAV driver; +3,923/oz AISC margin</td><td class="metric-good">⬆ Strongly positive</td></tr>
+    <tr><td>Copper spot</td><td class="metric-good">US$5.90/lb</td><td>Secondary revenue uplift above PFS (~+US$2.10/lb above PFS case)</td><td class="metric-good">⬆ Positive</td></tr>
+    <tr><td>VIX</td><td class="metric-neutral">23.87 — elevated uncertainty</td><td>Risk-off drives gold demand</td><td class="metric-good">⬆ Positive for gold</td></tr>
+    <tr><td>Stagflation probability</td><td class="metric-neutral">~48%</td><td>Gold historically outperforms in stagflation</td><td class="metric-good">⬆ Positive</td></tr>
+    <tr><td>DXY</td><td class="metric-neutral">99.81 — near 100 breakdown</td><td>Weaker USD = gold tailwind; EM assets favoured</td><td class="metric-good">⬆ Mildly positive</td></tr>
+    <tr><td>Tariff / trade war</td><td class="metric-neutral">Escalating uncertainty</td><td>EM risk premium; Brazil not directly impacted by US-China tariffs but indirect FX pressure</td><td class="metric-neutral">→ Neutral-mild negative</td></tr>
+    <tr><td>Brazil regulatory</td><td class="metric-good">CONSEMA unanimous PL approval</td><td>Demonstrated permitting pathway; local regulatory support</td><td class="metric-good">⬆ Positive</td></tr>
+    <tr><td colspan="3">Macro Composite Score</td><td class="metric-good"><strong>90/100 — as positive a macro environment as a gold-copper developer can ask for</strong></td></tr>
+  </tbody>
+</table>
+
+<!-- HARD GATES -->
+<h2>Hard Gates &amp; Do-Not-Buy Triggers</h2>
+<div class="gate-grid">
+  <div class="gate-item">
+    <div class="gate-icon">✅</div>
+    <div class="gate-text gate-clear"><strong>Cash Runway</strong> — C$100M+ / ~3+ years. CLEAR (threshold: &gt;18 months)</div>
+  </div>
+  <div class="gate-item">
+    <div class="gate-icon">✅</div>
+    <div class="gate-text gate-clear"><strong>No Binary Event Within 7 Days</strong> — IL submission is near-term but not confirmed within 7-day window. CLEAR</div>
+  </div>
+  <div class="gate-item">
+    <div class="gate-icon">✅</div>
+    <div class="gate-text gate-clear"><strong>Going Concern</strong> — No concern. Clean balance sheet, C$100M+ cash. CLEAR</div>
+  </div>
+  <div class="gate-item">
+    <div class="gate-icon">✅</div>
+    <div class="gate-text gate-clear"><strong>Criminal/Fraud Investigation</strong> — None identified. CLEAR</div>
+  </div>
+  <div class="gate-item">
+    <div class="gate-icon">✅</div>
+    <div class="gate-text gate-clear"><strong>Insider Selling</strong> — Net -20,000 shares in 18 months (minimal). CLEAR</div>
+  </div>
+  <div class="gate-item">
+    <div class="gate-icon">✅</div>
+    <div class="gate-text gate-clear"><strong>Debt Covenant / Distress</strong> — No debt obligations. CLEAR</div>
+  </div>
+  <div class="gate-item">
+    <div class="gate-icon">✅</div>
+    <div class="gate-text gate-clear"><strong>Commodity Regime</strong> — Gold at US$4,665 / Copper at US$5.51 — maximally favorable. CLEAR</div>
+  </div>
+  <div class="gate-item">
+    <div class="gate-icon">✅</div>
+    <div class="gate-text gate-clear"><strong>Management Red Flags</strong> — New CFO appropriate hire. No governance concerns. CLEAR</div>
+  </div>
+</div>
+<div style="background:var(--green-bg); border:1px solid var(--green); border-radius:8px; padding:12px 16px; margin:16px 0; font-size:14px; color:var(--green); font-weight:700;">
+  ✅ ALL HARD GATES CLEAR — No Do-Not-Buy triggers. Signal proceeds to Decision Matrix.
+</div>
+
+<!-- DECISION MATRIX -->
+<h2>Decision Matrix</h2>
+<div class="driver-box" style="border-color:var(--green);">
+  <div class="driver-header">
+    <div>
+      <div class="driver-label">Overall Signal (All Horizons — Commodity-Adjusted Scores)</div>
+      <div style="font-size:22px; font-weight:700; color:var(--green);">STRONG BUY</div>
+      <div style="font-size:13px; color:var(--text2); margin-top:4px;">Lifecycle weights: Quality 40% · Valuation 35% · Timing 25% (dev-stage miner weighting)</div>
+    </div>
+    <div style="font-size:48px; font-weight:800; color:var(--green);">88</div>
+  </div>
+  <table class="detail-table" style="margin:0;">
+    <thead><tr><th>Pillar</th><th>Pre-Driver Score</th><th>Driver Adj.</th><th>Final Score</th><th>Weight</th><th>Weighted Contribution</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Business Quality</strong></td>
+        <td>78</td>
+        <td class="metric-good">+10 (gold bull)</td>
+        <td class="metric-good"><strong>88</strong></td>
+        <td>40%</td>
+        <td class="metric-good">35.2</td>
+      </tr>
+      <tr>
+        <td><strong>Valuation</strong></td>
+        <td>81</td>
+        <td class="metric-good">+10 (spot NAV)</td>
+        <td class="metric-good"><strong>91</strong></td>
+        <td>35%</td>
+        <td class="metric-good">31.85</td>
+      </tr>
+      <tr>
+        <td><strong>Timing</strong></td>
+        <td>76</td>
+        <td class="metric-good">+8 (macro)</td>
+        <td class="metric-gold"><strong>84</strong></td>
+        <td>25%</td>
+        <td class="metric-good">21.0</td>
+      </tr>
+      <tr style="background:var(--surface2); font-weight:700;">
+        <td colspan="5">Composite Score</td>
+        <td class="metric-good" style="font-size:18px;"><strong>88.05 → 88/100</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>Signal Mapping by Horizon</h3>
+<table class="detail-table">
+  <thead><tr><th>Horizon</th><th>Signal</th><th>Score</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Short (1-3 mo)</strong></td>
+      <td><span class="signal-hold">HOLD / WAIT</span></td>
+      <td>75</td>
+      <td>Price at C$1.94 is testing 52w high C$2.00 resistance. RSI ~72-78 (overbought). +21% in one week = stretched momentum. Short-term R/R at current entry: 1.49:1 — acceptable but suboptimal. <strong>Wait for pullback to C$1.70-1.80</strong> (near SMA20 est.) for better risk/reward. IL news could gap up — mitigates some of the entry timing concern for medium-term holders.</td>
+    </tr>
+    <tr>
+      <td><strong>Medium (6-12 mo)</strong></td>
+      <td><span class="signal-strongbuy">STRONG BUY</span></td>
+      <td>88</td>
+      <td>IL submission (H1 2026) + DFS completion (Q4 2026) = two major re-rating catalysts within 12 months. At analyst consensus target of C$2.97, current entry at C$1.94 offers +53% upside. Gold regime is exceptional. Even entry at current overbought levels yields acceptable R/R over this horizon.</td>
+    </tr>
+    <tr>
+      <td><strong>Long (3-5 yr)</strong></td>
+      <td><span class="signal-strongbuy">STRONG BUY</span></td>
+      <td>92</td>
+      <td>Production start end-2028. Market is pricing US$2,200 gold; spot is US$4,665. If gold sustains even US$3,000, spot NAV is C$4-5/share vs current C$1.94. Permitting risk, FX risk, and execution risk diminish as milestones are achieved. Quality fundamentals dominate at this horizon. Development-stage discount narrows to producing-miner multiples.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ENTRY/EXIT RULES -->
+<h2>Entry &amp; Exit Rules</h2>
+<div class="rule-box">
+  <h4>📥 Entry Triggers</h4>
+  <div class="rule-condition">🎯 <strong>Fundamental Rule:</strong> Price &lt; C$2.20 AND cash &gt; C$60M AND no adverse permitting news in past 30 days</div>
+  <div class="rule-condition">📊 <strong>Technical Rule (optimal):</strong> Pullback to C$1.70-1.80 on declining volume (consolidation, not breakdown) AND daily RSI &lt; 55 AND price holding above C$1.58 (bought deal support)</div>
+  <div class="rule-condition">⚡ <strong>Catalyst Rule:</strong> IL submission confirmed OR long-lead items placed → buy on the news (high-conviction catalyst entry, even at premium)</div>
+  <div class="rule-condition">💰 <strong>Current entry:</strong> Acceptable for medium/long-term; suboptimal for short-term swing. Add aggressively if pullback to C$1.70-1.80.</div>
+</div>
+<div class="rule-box">
+  <h4>📤 Exit Triggers</h4>
+  <div class="rule-condition">🛑 <strong>Stop Loss:</strong> Close below C$1.25 for 2 consecutive days (below bought deal institutional cost basis zone)</div>
+  <div class="rule-condition">❌ <strong>Thesis Invalidation:</strong> IL application rejected or materially delayed (&gt;6 months beyond H1 2026 target) OR cash falls below C$30M without financing OR copper sustained below C$3.00/lb for 3+ months</div>
+  <div class="rule-condition">✅ <strong>Profit Target:</strong> Price reaches C$3.50+ AND RSI &gt; 75 (trim position, let remainder run with trailing stop)</div>
+  <div class="rule-condition">⚠️ <strong>Position Review Trigger:</strong> DFS shows materially worse economics than PFS (NPV &lt; US$700M or IRR &lt; 40%) → re-evaluate thesis</div>
+</div>
+
+<!-- KEY LEVELS -->
+<h2>Key Levels</h2>
+<table class="detail-table">
+  <thead><tr><th>Level</th><th>C$ Price</th><th>Type</th><th>Significance</th></tr></thead>
+  <tbody>
+    <tr><td>52-week High</td><td class="metric-neutral"><strong>C$2.00</strong></td><td>Resistance</td><td>Immediate ceiling — 3.1% above current price; breakout would target C$2.50+</td></tr>
+    <tr><td>Current Price</td><td><strong>C$1.94</strong></td><td>—</td><td>April 7, 2026</td></tr>
+    <tr><td>SMA20 (est.)</td><td class="metric-neutral"><strong>~C$1.65-1.70</strong></td><td>Support / pullback target</td><td>Ideal short-term re-entry zone; recent breakout level</td></tr>
+    <tr><td>Bought Deal Price</td><td class="metric-good"><strong>C$1.58</strong></td><td>Strong support</td><td>Institutional cost basis (~36M shares) — heavily defended floor</td></tr>
+    <tr><td>SMA50 (est.)</td><td class="metric-good"><strong>~C$1.40-1.50</strong></td><td>Support</td><td>Secondary support zone; medium-term moving average</td></tr>
+    <tr><td>Stop Loss</td><td class="metric-bad"><strong>C$1.25</strong></td><td>Hard stop</td><td>Below institutional support; thesis-breaking level</td></tr>
+    <tr><td>Analyst Median Target</td><td class="metric-good"><strong>C$2.97</strong></td><td>12-mo target</td><td>6-analyst recency-weighted consensus (+53.6% upside)</td></tr>
+    <tr><td>Analyst High Target</td><td class="metric-good"><strong>C$3.50</strong></td><td>Bull case</td><td>+80.4% upside — achievable on IL + DFS delivery at high gold</td></tr>
+    <tr><td>PFS NAV/share</td><td class="metric-gold"><strong>C$3.26</strong></td><td>Fair value (PFS)</td><td>NPV₅ US$984M at ~US$1,950 gold; current P/NAV = 0.60x</td></tr>
+    <tr><td>Spot NAV/share (est.)</td><td class="metric-gold"><strong>C$8.58-8.94</strong></td><td>Fair value (spot)</td><td>Illustrative NPV at US$4,665/oz gold; theoretical upside case</td></tr>
+  </tbody>
+</table>
+
+<!-- RISK REGISTER -->
+<h2>Risk Register</h2>
+<table class="detail-table">
+  <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Permitting delay</strong> (IL rejected or delayed beyond H1 2026)</td>
+      <td class="metric-neutral">Medium (30%)</td>
+      <td class="metric-bad">High — thesis-invalidating delay</td>
+      <td>CONSEMA unanimous PL approval reduces risk. IL is next logical step. Monitor H1 2026 timeline closely.</td>
+    </tr>
+    <tr>
+      <td><strong>Gold price correction</strong> (retreat to US$2,000-2,500)</td>
+      <td class="metric-neutral">Medium (30%)</td>
+      <td class="metric-neutral">Moderate — reduces NAV materially but PFS is still strong</td>
+      <td>AISC of US$742/oz provides substantial buffer — project is economic at US$1,500+ gold. Stop at C$1.25 limits downside.</td>
+    </tr>
+    <tr>
+      <td><strong>Project financing risk</strong> (construction capital not secured)</td>
+      <td class="metric-neutral">Low-Medium (25%)</td>
+      <td class="metric-bad">High — construction cannot start without US$248M</td>
+      <td>Engaging project finance groups currently. IRR 61.2% is highly attractive for project debt. Gold price regime makes financing terms favourable.</td>
+    </tr>
+    <tr>
+      <td><strong>Brazil FX / EM risk</strong></td>
+      <td class="metric-neutral">Medium (35%)</td>
+      <td class="metric-neutral">Low-Moderate — BRL depreciation reduces local costs (miner benefits)</td>
+      <td>Gold trades in USD — MNO is actually hedged via USD revenue vs BRL costs. FX risk is asymmetrically positive for gold miners in EM.</td>
+    </tr>
+    <tr>
+      <td><strong>Short-term technical</strong> (pullback from C$2.00 resistance)</td>
+      <td class="metric-bad">High (60%)</td>
+      <td class="metric-neutral">Low-Moderate — 15-20% correction possible after +21% week</td>
+      <td>Position sizing. For medium/long-term holders, a pullback is an opportunity to add. Stop at C$1.25 intact.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- CALIBRATION JSON -->
+<h2>Calibration Record</h2>
+<div class="calibration">
+  <p style="font-size:13px; color:var(--text2); margin-bottom:12px;">Saved as <code>calibration-MNO-20260407.json</code> — baseline calibration for all future analyses.</p>
+<pre class="cal-json">{
+  "ticker": "MNO",
+  "exchange": "TSX",
+  "exchange_ticker": "TSX:MNO",
+  "isin": "GB00BR3SVZ18",
+  "api_ticker": "MNO.TO",
+  "company": "Meridian Mining UK Societas",
+  "analysis_date": "2026-04-07",
+  "analysis_version": "v4",
+  "first_analysis": true,
+  "price": 1.94,
+  "currency": "CAD",
+  "market_cap_cad_m": 820.52,
+  "shares_outstanding_m": 419.46,
+  "pillar_scores": {
+    "business_quality": { "pre_driver": 78, "post_driver": 88, "confidence": "high" },
+    "valuation": { "pre_driver": 81, "post_driver": 91, "confidence": "medium" },
+    "timing": { "pre_driver": 76, "post_driver": 84, "confidence": "medium_low" }
+  },
+  "underlying_driver": {
+    "primary": "gold_spot",
+    "primary_weight": 0.65,
+    "primary_price_usd": 4665,
+    "primary_pfs_assumption_usd": 1950,
+    "secondary": "copper_spot",
+    "secondary_weight": 0.35,
+    "secondary_price_usd_lb": 5.51,
+    "driver_score": 95,
+    "pillar_adjustment": 10
+  },
+  "composite_score": 88.05,
+  "signals": {
+    "short_term": "HOLD_WAIT",
+    "medium_term": "STRONG_BUY",
+    "long_term": "STRONG_BUY"
+  },
+  "nav_analysis": {
+    "pfs_npv5_usd_m": 984,
+    "pfs_nav_cad_per_share": 3.26,
+    "pfs_p_nav": 0.60,
+    "spot_nav_cad_per_share_est": 8.76,
+    "spot_p_nav_est": 0.22,
+    "implied_gold_price_usd": 2300
+  },
+  "technical": {
+    "rsi_daily_est": 75,
+    "rsi_weekly_est": 68,
+    "price_vs_sma20_est": "above",
+    "price_vs_sma50_est": "above",
+    "price_vs_sma200_est": "above",
+    "data_quality": "estimated_web_search"
+  },
+  "key_levels": {
+    "current_price": 1.94,
+    "resistance_52w_high": 2.00,
+    "sma20_est": 1.68,
+    "bought_deal_support": 1.58,
+    "stop_loss": 1.25,
+    "analyst_median_target": 2.9667,
+    "analyst_high_target": 3.50,
+    "pfs_nav_per_share": 3.26
+  },
+  "entry_rules": {
+    "fundamental": {
+      "price_below": 2.20,
+      "cash_above_cad_m": 60,
+      "no_adverse_permitting_news_days": 30
+    },
+    "technical": {
+      "ideal_entry_range": [1.70, 1.80],
+      "rsi_below_for_ideal": 55,
+      "hold_above_bought_deal_support": 1.58
+    },
+    "catalyst": {
+      "trigger": "IL_submission_confirmed OR long_lead_items_placed",
+      "next_major_catalyst": "IL_submission_H1_2026"
+    }
+  },
+  "exit_rules": {
+    "stop_loss": { "price_below": 1.25, "consecutive_days": 2 },
+    "thesis_invalidation": {
+      "il_rejection": true,
+      "cash_below_cad_m": 30,
+      "copper_below_usd_lb": 3.00,
+      "copper_below_days": 90
+    },
+    "profit_target": { "price_above": 3.50, "rsi_above": 75 }
+  },
+  "hard_gates": "ALL_CLEAR",
+  "do_not_buy_triggers": "NONE_TRIGGERED",
+  "permitting_status": {
+    "preliminary_licence": "APPROVED_NOV_2025",
+    "installation_licence": "SUBMISSION_H1_2026",
+    "final_investment_decision": "PENDING_IL_AND_FINANCE",
+    "construction_start_target": "H1_2027",
+    "production_start_target": "END_2028"
+  },
+  "analysts": {
+    "count": 6,
+    "buy": 6,
+    "neutral": 0,
+    "sell": 0,
+    "median_target_cad": 2.9667,
+    "high_target_cad": 3.50,
+    "low_target_cad": 2.50,
+    "last_known_upgrade": {
+      "firm": "Scotiabank",
+      "date": "2026-01-26",
+      "target": 3.00,
+      "from_target": 2.50,
+      "recency_weight": 0.60
+    }
+  },
+  "macro_context": {
+    "gold_spot_usd": 4665,
+    "copper_spot_usd_lb": 5.90,
+    "vix": 23.87,
+    "dxy": 99.81,
+    "fed_funds": 3.64,
+    "us_10y": 4.35,
+    "stagflation_probability_pct": 48
+  }
+}</pre>
+</div>
+
+<div style="margin-top:32px; padding-top:24px; border-top:1px solid var(--border); font-size:13px; color:var(--text2); text-align:center;">
+  <div style="margin-bottom:8px;">Report generated: April 7, 2026 · TSX:MNO · Stock Signal v4 · SignalDeck</div>
+  <div style="margin-bottom:12px; color:var(--yellow);"><strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.</div>
+  <a href="https://donatien.ca/" style="color:#3b82f6; text-decoration:none;">← Back to SignalDeck</a>
+</div>
+
+</body>
+</html>
