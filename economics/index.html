@@ -250,6 +250,11 @@ th[data-tooltip]:hover::after { opacity:1; }
 .matrix-wrap td.high { background:rgba(239,68,68,0.10); color:var(--red); font-weight:700; }
 @media(max-width:900px) { .scenario-grid { grid-template-columns:repeat(2,1fr); } }
 @media(max-width:600px) { .scenario-grid { grid-template-columns:1fr; } }
+
+/* ── Cycle Map Asset Chips ── */
+.cycle-assets { margin-top:7px; padding-top:7px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:4px; text-align:left; }
+.cycle-assets-row { display:flex; flex-wrap:wrap; gap:3px; align-items:flex-start; }
+.cycle-assets-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; width:100%; margin-bottom:1px; }
 </style>
 </head>
 <body>
@@ -669,126 +674,206 @@ th[data-tooltip]:hover::after { opacity:1; }
     </div>
     <p style="font-size:11px; color:var(--text2); margin:-6px 0 12px;"><strong style="color:var(--text);">Momentum</strong> scores range from −1.0 (rapid deterioration) to +1.0 (rapid improvement) and reflect the rate of change within a phase, not just the phase itself.</p>
 
-    <div class="cycle-grid" id="cycle-map">
+    <div class="cycle-grid" id="cycle-map" style="grid-template-columns:repeat(auto-fill, minmax(210px,1fr));">
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1FA;&#x1F1F8;</div>
         <div class="cycle-country">United States</div>
         <div class="cycle-phase phase-peak">Late Expansion&rarr;Peak</div>
         <div class="cycle-momentum">Momentum: &minus;0.3 &darr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Commodities</span><span class="sc-achip sc-achip-bull">Energy equities</span><span class="sc-achip sc-achip-bull">TIPS</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Long bonds</span><span class="sc-achip sc-achip-bear">Growth equities</span><span class="sc-achip sc-achip-bear">EM equities</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EA;&#x1F1FA;</div>
         <div class="cycle-country">Euro Area</div>
         <div class="cycle-phase phase-contraction">Contraction Risk</div>
         <div class="cycle-momentum">Momentum: &minus;0.5 &darr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Gov bonds</span><span class="sc-achip sc-achip-bull">Defensives</span><span class="sc-achip sc-achip-bull">Gold</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span><span class="sc-achip sc-achip-bear">Small caps</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E8;&#x1F1F3;</div>
         <div class="cycle-country">China</div>
         <div class="cycle-phase phase-trough">Trough / Stabilising</div>
         <div class="cycle-momentum">Momentum: +0.2 &rarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Long bonds</span><span class="sc-achip sc-achip-bull">Gold</span><span class="sc-achip sc-achip-bull">Cash</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Equities</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EF;&#x1F1F5;</div>
         <div class="cycle-country">Japan</div>
         <div class="cycle-phase phase-peak">Late Expansion</div>
         <div class="cycle-momentum">Momentum: +0.1 &rarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Commodities</span><span class="sc-achip sc-achip-bull">Energy equities</span><span class="sc-achip sc-achip-bull">TIPS</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Long bonds</span><span class="sc-achip sc-achip-bear">Growth equities</span><span class="sc-achip sc-achip-bear">EM equities</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EC;&#x1F1E7;</div>
         <div class="cycle-country">United Kingdom</div>
         <div class="cycle-phase phase-recovery">Recovery</div>
         <div class="cycle-momentum">Momentum: +0.1 &rarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Equities</span><span class="sc-achip sc-achip-bull">Small caps</span><span class="sc-achip sc-achip-bull">High-yield credit</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Gov bonds</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Cash</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E8;&#x1F1E6;</div>
         <div class="cycle-country">Canada</div>
         <div class="cycle-phase phase-expansion">Late Expansion</div>
         <div class="cycle-momentum">Momentum: +0.3 &uarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Equities</span><span class="sc-achip sc-achip-bull">Cyclicals</span><span class="sc-achip sc-achip-bull">Corp credit</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Gov bonds</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Cash</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E9;&#x1F1EA;</div>
         <div class="cycle-country">Germany</div>
         <div class="cycle-phase phase-trough">Trough</div>
         <div class="cycle-momentum">Momentum: &minus;0.3 &darr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Long bonds</span><span class="sc-achip sc-achip-bull">Gold</span><span class="sc-achip sc-achip-bull">Cash</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Equities</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EB;&#x1F1F7;</div>
         <div class="cycle-country">France</div>
         <div class="cycle-phase phase-contraction">Contraction</div>
         <div class="cycle-momentum">Momentum: &minus;0.2 &darr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Gov bonds</span><span class="sc-achip sc-achip-bull">Defensives</span><span class="sc-achip sc-achip-bull">Gold</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span><span class="sc-achip sc-achip-bear">Small caps</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EE;&#x1F1F3;</div>
         <div class="cycle-country">India</div>
         <div class="cycle-phase phase-expansion">Expansion</div>
         <div class="cycle-momentum">Momentum: +0.6 &uarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Equities</span><span class="sc-achip sc-achip-bull">Cyclicals</span><span class="sc-achip sc-achip-bull">Corp credit</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Gov bonds</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Cash</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E7;&#x1F1F7;</div>
         <div class="cycle-country">Brazil</div>
         <div class="cycle-phase phase-expansion">Expansion</div>
         <div class="cycle-momentum">Momentum: +0.4 &uarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Equities</span><span class="sc-achip sc-achip-bull">Cyclicals</span><span class="sc-achip sc-achip-bull">Corp credit</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Gov bonds</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Cash</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1F0;&#x1F1F7;</div>
         <div class="cycle-country">South Korea</div>
         <div class="cycle-phase phase-contraction">Contraction</div>
         <div class="cycle-momentum">Momentum: &minus;0.2 &darr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Gov bonds</span><span class="sc-achip sc-achip-bull">Defensives</span><span class="sc-achip sc-achip-bull">Gold</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span><span class="sc-achip sc-achip-bear">Small caps</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E6;&#x1F1FA;</div>
         <div class="cycle-country">Australia</div>
         <div class="cycle-phase phase-expansion">Expansion</div>
         <div class="cycle-momentum">Momentum: +0.5 &uarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Equities</span><span class="sc-achip sc-achip-bull">Cyclicals</span><span class="sc-achip sc-achip-bull">Corp credit</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Gov bonds</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Cash</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EE;&#x1F1E9;</div>
         <div class="cycle-country">Indonesia</div>
         <div class="cycle-phase phase-expansion">Expansion</div>
         <div class="cycle-momentum">Momentum: +0.4 &uarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Equities</span><span class="sc-achip sc-achip-bull">Cyclicals</span><span class="sc-achip sc-achip-bull">Corp credit</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Gov bonds</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Cash</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1F8;&#x1F1E6;</div>
         <div class="cycle-country">Saudi Arabia</div>
         <div class="cycle-phase phase-expansion">Expansion</div>
         <div class="cycle-momentum">Momentum: +0.6 &uarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Equities</span><span class="sc-achip sc-achip-bull">Cyclicals</span><span class="sc-achip sc-achip-bull">Corp credit</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Gov bonds</span><span class="sc-achip sc-achip-bear">Gold</span><span class="sc-achip sc-achip-bear">Cash</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1EE;&#x1F1F9;</div>
         <div class="cycle-country">Italy</div>
         <div class="cycle-phase phase-contraction">Contraction</div>
         <div class="cycle-momentum">Momentum: &minus;0.3 &darr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Gov bonds</span><span class="sc-achip sc-achip-bull">Defensives</span><span class="sc-achip sc-achip-bull">Gold</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span><span class="sc-achip sc-achip-bear">Small caps</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1F9;&#x1F1F7;</div>
         <div class="cycle-country">Turkey</div>
         <div class="cycle-phase phase-contraction">Contraction</div>
         <div class="cycle-momentum">Momentum: &minus;0.3 &darr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Gov bonds</span><span class="sc-achip sc-achip-bull">Defensives</span><span class="sc-achip sc-achip-bull">Gold</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span><span class="sc-achip sc-achip-bear">Small caps</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1F2;&#x1F1FD;</div>
         <div class="cycle-country">Mexico</div>
         <div class="cycle-phase phase-contraction">Contraction</div>
         <div class="cycle-momentum">Momentum: &minus;0.4 &darr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Gov bonds</span><span class="sc-achip sc-achip-bull">Defensives</span><span class="sc-achip sc-achip-bull">Gold</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span><span class="sc-achip sc-achip-bear">Small caps</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1F7;&#x1F1FA;</div>
         <div class="cycle-country">Russia</div>
         <div class="cycle-phase phase-peak">Overheating</div>
         <div class="cycle-momentum">Momentum: +0.1 &rarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Commodities</span><span class="sc-achip sc-achip-bull">Gold</span><span class="sc-achip sc-achip-bull">Energy equities</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Long bonds</span><span class="sc-achip sc-achip-bear">Growth equities</span><span class="sc-achip sc-achip-bear">Consumer discr.</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1E6;&#x1F1F7;</div>
         <div class="cycle-country">Argentina</div>
         <div class="cycle-phase phase-trough">Trough / Early Recovery</div>
         <div class="cycle-momentum">Momentum: +0.3 &uarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Long bonds</span><span class="sc-achip sc-achip-bull">Gold</span><span class="sc-achip sc-achip-bull">Cash</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Equities</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span></div>
+        </div>
       </div>
       <div class="cycle-cell">
         <div class="cycle-flag">&#x1F1FF;&#x1F1E6;</div>
         <div class="cycle-country">South Africa</div>
         <div class="cycle-phase phase-trough">Trough / Early Recovery</div>
         <div class="cycle-momentum">Momentum: +0.2 &uarr;</div>
+        <div class="cycle-assets">
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bull">&#9650; OW</span><span class="sc-achip sc-achip-bull">Long bonds</span><span class="sc-achip sc-achip-bull">Gold</span><span class="sc-achip sc-achip-bull">Cash</span></div>
+          <div class="cycle-assets-row"><span class="cycle-assets-lbl lbl-bear">&#9660; UW</span><span class="sc-achip sc-achip-bear">Equities</span><span class="sc-achip sc-achip-bear">Cyclicals</span><span class="sc-achip sc-achip-bear">Corp credit</span></div>
+        </div>
       </div>
     </div>
   </div>
