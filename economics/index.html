@@ -198,6 +198,26 @@ th[data-tooltip]:hover::after { opacity:1; }
   .scenario-bar { grid-template-columns:1fr; }
   .stats-bar { flex-direction:column; }
 }
+
+/* ── Combined Indicator Tiles v2 ── */
+.indicators-grid-v2 { display:grid; grid-template-columns:repeat(auto-fill, minmax(290px, 1fr)); gap:12px; }
+.indicator-tile { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--border); border-radius:10px; padding:14px 16px; display:flex; flex-direction:column; }
+.tile-ok { border-left-color:var(--green); }
+.tile-warn { border-left-color:var(--orange); }
+.tile-alert { border-left-color:var(--red); }
+.it-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; gap:8px; }
+.it-name { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); line-height:1.3; }
+.it-status { font-size:9px; font-weight:700; padding:2px 7px; border-radius:8px; white-space:nowrap; flex-shrink:0; }
+.status-ok { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,0.2); }
+.status-warn { background:var(--orange-bg); color:var(--orange); border:1px solid rgba(249,115,22,0.2); }
+.status-alert { background:var(--red-bg); color:var(--red); border:1px solid rgba(239,68,68,0.2); }
+.it-value { font-size:26px; font-weight:800; line-height:1.1; margin-bottom:4px; }
+.it-meaning { font-size:10px; color:var(--text2); line-height:1.4; margin-bottom:6px; flex-grow:1; }
+.it-divider { border:none; border-top:1px solid var(--border); margin:10px 0; }
+.it-threshold-label { font-size:10px; color:var(--text2); margin-bottom:4px; }
+.it-impact { font-size:10px; color:var(--blue); line-height:1.4; margin-top:4px; }
+@media(max-width:900px) { .indicators-grid-v2 { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:600px) { .indicators-grid-v2 { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -304,55 +324,104 @@ th[data-tooltip]:hover::after { opacity:1; }
     <!-- US Indicators -->
     <div class="indicators-group">
       <div class="indicators-group-label">🇺🇸 United States</div>
-      <div class="indicators-grid">
+      <div class="indicators-grid-v2">
 
-        <div class="stat-item">
-          <div class="stat-value" id="fed-rate">3.64%</div>
-          <div class="stat-label">Fed Funds Rate</div>
-          <div class="stat-meaning">Benchmark cost of borrowing set by the Federal Reserve. Drives mortgage, business, and consumer loan rates globally.</div>
-          <div class="stat-trend trend-flat">→ HELD &mdash; Taylor Rule implies 4.375%; Fed is 0.74pp behind the curve</div>
+        <div class="indicator-tile tile-ok">
+          <div class="it-header">
+            <div class="it-name">Fed Funds Rate</div>
+            <div class="it-status status-ok">✓ OK</div>
+          </div>
+          <div class="it-value" id="fed-rate">3.64%</div>
+          <div class="it-meaning">Benchmark borrowing cost set by the Federal Reserve. Drives mortgage, business, and consumer loan rates globally.</div>
+          <div class="it-trend trend-flat">→ HELD &mdash; Taylor Rule implies 4.375%; Fed is 0.74pp behind the curve</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &gt;5.25% (restrictive) / &lt;2.50% (accommodation)</div>
+          <div class="it-proximity prox-far">OK &mdash; 161bp below restrictive threshold</div>
+          <div class="it-impact">💥 If &gt;5.25%: credit crunch risk; long bonds +10-15%; equities &minus;15%; USD short-term rally then structural reversal</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="cpi" style="color:var(--orange);">2.4%</div>
-          <div class="stat-label">CPI Inflation (YoY)</div>
-          <div class="stat-meaning">Annual change in consumer prices. Above the Fed's 2% target. Core (ex-food &amp; energy): 2.5%. Feb 2026 &mdash; pre-Hormuz baseline.</div>
-          <div class="stat-trend trend-surge">↑ SURGING &mdash; March print (Apr 11) forecast 3.2%; energy shock not yet in data</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">CPI Inflation (YoY)</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="cpi" style="color:var(--orange);">2.4%</div>
+          <div class="it-meaning">Annual change in consumer prices. Above the Fed's 2% target. Core (ex-food &amp; energy): 2.5%. Feb 2026 &mdash; pre-Hormuz baseline.</div>
+          <div class="it-trend trend-surge">↑ SURGING &mdash; March print (Apr 11) forecast 3.2%; energy shock not yet in data</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &gt;3.5% (stagflation regime confirmed)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; 1.1pp from trigger; April data likely to breach</div>
+          <div class="it-impact">💥 If breached: Fed rate cuts off-table; Gold +10%; Bonds &minus;5-8%; Growth equities &minus;10%; Stagflation +10pp probability</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="unemp">4.3%</div>
-          <div class="stat-label">Unemployment Rate</div>
-          <div class="stat-meaning">Share of the workforce actively seeking work. Below the Fed's threshold of concern (5.0%). March 2026.</div>
-          <div class="stat-trend trend-easing">↓ IMPROVING &mdash; From 4.4% prior; tariff disruption may add +0.6pp over 6 months</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">Unemployment Rate</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="unemp">4.3%</div>
+          <div class="it-meaning">Share of the workforce actively seeking work. Below the Fed's threshold of concern (5.0%). March 2026.</div>
+          <div class="it-trend trend-easing">↓ IMPROVING &mdash; From 4.4% prior; tariff disruption may add +0.6pp over 6 months</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &gt;5.0% (recession declared)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; 70bp away; tariff headwind building</div>
+          <div class="it-impact">💥 If breached: recession declared; Fed emergency cuts; Equities &minus;10-20%; Bonds +8%; USD weakens; Deflationary Bust rises sharply</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="ten-y">4.31%</div>
-          <div class="stat-label">10Y Treasury Yield</div>
-          <div class="stat-meaning">Long-term US government borrowing cost. Reflects market expectations for growth and inflation. Critical threshold: 5.5% (intervention zone).</div>
-          <div class="stat-trend trend-rising">↑ STEEPENING &mdash; 2Y at 3.79%; yield curve +51bp &mdash; recession probability declining but inflation risk rising</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">10Y Treasury Yield</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="ten-y">4.31%</div>
+          <div class="it-meaning">Long-term US government borrowing cost. Reflects market expectations for growth and inflation. Critical threshold: 5.5% (intervention zone).</div>
+          <div class="it-trend trend-rising">↑ STEEPENING &mdash; 2Y at 3.79%; yield curve +51bp &mdash; recession probability declining but inflation risk rising</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &gt;4.70% (duration stress zone)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; 39bp from trigger; curve steepening</div>
+          <div class="it-impact">💥 If breached: REITs &minus;5-8%; mortgage rates spike; equity P/E compression; potential Fed YCC intervention above 5.5%</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="m2">$22.67T</div>
-          <div class="stat-label">M2 Money Supply</div>
-          <div class="stat-meaning">Total money in the economy: cash, deposits, and money market funds. Expansion re-liquefies the system; contraction tightens it.</div>
-          <div class="stat-trend trend-rising">↑ EXPANDING &mdash; +$497B since Sep 2025 (~+5.3% ann.); re-liquefying after 2023-24 contraction</div>
+        <div class="indicator-tile tile-ok">
+          <div class="it-header">
+            <div class="it-name">M2 Money Supply</div>
+            <div class="it-status status-ok">✓ OK</div>
+          </div>
+          <div class="it-value" id="m2">$22.67T</div>
+          <div class="it-meaning">Total money in the economy: cash, deposits, and money market funds. Expansion re-liquefies the system; contraction tightens it.</div>
+          <div class="it-trend trend-rising">↑ EXPANDING &mdash; +$497B since Sep 2025 (~+5.3% ann.); re-liquefying after 2023-24 contraction</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: YoY growth &gt;+8% (re-inflationary zone)</div>
+          <div class="it-proximity prox-far">OK &mdash; within normal range; direction monitored monthly</div>
+          <div class="it-impact">💥 If breached: inflationary re-ignition forces Fed re-tightening; Gold +5%; Bonds &minus;3%; growth stocks under margin pressure</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="gdp">2.4%</div>
-          <div class="stat-label">GDP Growth (ann.)</div>
-          <div class="stat-meaning">Rate US economic output is expanding, annualised. Q4 2025 advance estimate. Tariff impact and energy shock will weigh on Q1 2026.</div>
-          <div class="stat-trend trend-warn">↓ SLOWING &mdash; Down from 3.1% Q3 2025; tariff drag and energy cost squeeze to deepen in Q2</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">GDP Growth (ann.)</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="gdp">2.4%</div>
+          <div class="it-meaning">Rate US economic output is expanding, annualised. Q4 2025 advance estimate. Tariff impact and energy shock will weigh on Q1 2026.</div>
+          <div class="it-trend trend-warn">↓ SLOWING &mdash; Down from 3.1% Q3 2025; tariff drag and energy cost squeeze to deepen in Q2</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &lt;1.5% ann. (stagnation) / &lt;0% (recession)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; decelerating toward stagnation threshold</div>
+          <div class="it-impact">💥 If &lt;1.5%: stagflation deepens; defensives outperform; Growth stocks &minus;10-15% &nbsp;|&nbsp; If &lt;0%: Bonds +8-12%; Equities &minus;20-30%; recession declared</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="us-debt">124%</div>
-          <div class="stat-label">Govt Debt / GDP</div>
-          <div class="stat-meaning">Total federal debt as a share of the economy. $36T+ debt vs ~$29T GDP. Rising debt service costs as rates stay elevated are a key fiscal risk.</div>
-          <div class="stat-trend trend-rising">↑ RISING &mdash; Up from ~100% pre-COVID; interest payments now ~$1T/year and accelerating</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">Govt Debt / GDP</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="us-debt">124%</div>
+          <div class="it-meaning">Total federal debt as a share of the economy. $36T+ debt vs ~$29T GDP. Rising debt service costs as rates stay elevated are a key fiscal risk.</div>
+          <div class="it-trend trend-rising">↑ RISING &mdash; Up from ~100% pre-COVID; interest payments now ~$1T/year and accelerating</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &gt;130% (fiscal stress zone)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; 6pp from stress zone; rising ~2-3pp/year</div>
+          <div class="it-impact">💥 If breached: bond vigilantes active; USD &minus;3-5%; 10Y yield +50-100bp; Gold +5-10%; sovereign risk premium rises globally</div>
         </div>
 
       </div>
@@ -361,62 +430,118 @@ th[data-tooltip]:hover::after { opacity:1; }
     <!-- Global Indicators -->
     <div class="indicators-group">
       <div class="indicators-group-label">🌍 Global Markets</div>
-      <div class="indicators-grid">
+      <div class="indicators-grid-v2">
 
-        <div class="stat-item">
-          <div class="stat-value" id="vix" style="color:var(--yellow);">23.87</div>
-          <div class="stat-label">VIX — Fear Index</div>
-          <div class="stat-meaning">S&amp;P 500 options-implied volatility for next 30 days. &lt;20 = calm, 20–30 = elevated, &gt;30 = fear, &gt;40 = crisis. Global risk sentiment proxy.</div>
-          <div class="stat-trend trend-easing">↓ RETREATING &mdash; Down from 31.05 peak (Mar 27); still above 20 &ldquo;caution&rdquo; threshold</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">VIX &mdash; Fear Index</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="vix" style="color:var(--yellow);">23.87</div>
+          <div class="it-meaning">S&amp;P 500 options-implied volatility for next 30 days. &lt;20 = calm, 20–30 = elevated, &gt;30 = fear, &gt;40 = crisis. Global risk sentiment proxy.</div>
+          <div class="it-trend trend-easing">↓ RETREATING &mdash; Down from 31.05 peak (Mar 27); still above 20 &ldquo;caution&rdquo; threshold</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &gt;30 (fear zone) / &gt;40 (crisis)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; 6.13 below trigger; recently breached</div>
+          <div class="it-impact">💥 If &gt;30: risk-off; Gold +5%; Bonds +3%; Equities &minus;5-8% &nbsp;|&nbsp; If &gt;40: crisis; Cash/Gold/Long bonds only; Equities &minus;15-25%</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="oil-price" style="color:var(--red);">$111.81</div>
-          <div class="stat-label">WTI Crude ($/bbl)</div>
-          <div class="stat-meaning">US oil benchmark; global energy cost driver. Feeds into food, transport, manufacturing prices worldwide. ⚠️ $100 threshold breached.</div>
-          <div class="stat-trend trend-surge">↑ SURGING &mdash; +73.5% vs Feb avg ($64.44); Strait of Hormuz closure since Mar 4</div>
+        <div class="indicator-tile tile-alert">
+          <div class="it-header">
+            <div class="it-name">WTI Crude ($/bbl)</div>
+            <div class="it-status status-alert">🔴 BREACHED</div>
+          </div>
+          <div class="it-value" id="oil-price" style="color:var(--red);">$111.81</div>
+          <div class="it-meaning">US oil benchmark; global energy cost driver. Feeds into food, transport, manufacturing prices worldwide. ⚠️ $100 threshold breached.</div>
+          <div class="it-trend trend-surge">↑ SURGING &mdash; +73.5% vs Feb avg ($64.44); Strait of Hormuz closure since Mar 4</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &gt;$100 ✅ BREACHED / next: &gt;$130 (demand destruction)</div>
+          <div class="it-proximity prox-breached">⚠ BREACHED &mdash; $11.81 above $100 trigger; $18.19 from $130 next level</div>
+          <div class="it-impact">💥 At $130+: demand destruction cascade; CPI +1-2pp; Growth stocks &minus;15%; recession probability doubles; Gold +10%</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="gold-price" style="color:var(--yellow);">$4,665</div>
-          <div class="stat-label">Gold ($/oz)</div>
-          <div class="stat-meaning">Monetary safe haven and store of value. Rises on geopolitical stress, inflation fears, and central bank reserve diversification away from USD.</div>
-          <div class="stat-trend trend-rising">↑ NEAR RECORD HIGHS &mdash; Geopolitical premium + de-dollarisation bid; CFTC net long 163.2K contracts</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">Gold ($/oz)</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="gold-price" style="color:var(--yellow);">$4,665</div>
+          <div class="it-meaning">Monetary safe haven and store of value. Rises on geopolitical stress, inflation fears, and central bank reserve diversification away from USD.</div>
+          <div class="it-trend trend-rising">↑ NEAR RECORD HIGHS &mdash; Geopolitical premium + de-dollarisation bid; CFTC net long 163.2K contracts</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &gt;$5,000/oz (extreme fear / currency debasement signal)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; $334.91 from psychological crisis threshold</div>
+          <div class="it-impact">💥 If breached: extreme systemic fear priced; USD &minus;3-5%; equity selling accelerates; safe haven crowding amplifies volatility</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="dxy" style="color:var(--orange);">99.81</div>
-          <div class="stat-label">DXY — USD Index</div>
-          <div class="stat-meaning">US dollar strength vs basket of 6 major currencies (EUR, JPY, GBP, CAD, SEK, CHF). Below 100 is unusual during a geopolitical crisis.</div>
-          <div class="stat-trend trend-warn">↓ WEAKENING &mdash; &ldquo;Sell America&rdquo; trade underway; capital rotating out of US assets despite war premium</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">DXY &mdash; USD Index</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="dxy" style="color:var(--orange);">99.81</div>
+          <div class="it-meaning">US dollar strength vs basket of 6 major currencies (EUR, JPY, GBP, CAD, SEK, CHF). Below 100 is unusual during a geopolitical crisis.</div>
+          <div class="it-trend trend-warn">↓ WEAKENING &mdash; &ldquo;Sell America&rdquo; trade underway; capital rotating out of US assets despite war premium</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &lt;98.00 (&ldquo;Sell America&rdquo; confirmed)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; 1.8133 above breakdown level; at key support</div>
+          <div class="it-impact">💥 If breached: USD weakness adds +0.3-0.5pp to US CPI; EM and commodities rally; foreign demand for Treasuries falls; Gold +3-5%</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="copper-price" style="color:var(--yellow);">$5.51</div>
-          <div class="stat-label">Copper ($/lb)</div>
-          <div class="stat-meaning">Industrial metal used in construction, EVs, and electronics. The world&rsquo;s best leading indicator of global growth — nicknamed &ldquo;Dr. Copper.&rdquo;</div>
-          <div class="stat-trend trend-warn">↓ SOFTENING &mdash; Down from Feb avg $5.88/lb (-6.3%); China demand slowdown weighing on outlook</div>
+        <div class="indicator-tile tile-ok">
+          <div class="it-header">
+            <div class="it-name">Copper ($/lb)</div>
+            <div class="it-status status-ok">✓ OK</div>
+          </div>
+          <div class="it-value" id="copper-price" style="color:var(--yellow);">$5.51</div>
+          <div class="it-meaning">Industrial metal used in construction, EVs, and electronics. The world&rsquo;s best leading indicator of global growth &mdash; nicknamed &ldquo;Dr. Copper.&rdquo;</div>
+          <div class="it-trend trend-warn">↓ SOFTENING &mdash; Down from Feb avg $5.88/lb (&minus;6.3%); China demand slowdown weighing on outlook</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &lt;$4.50/lb (global recession confirmed by &ldquo;Dr. Copper&rdquo;)</div>
+          <div class="it-proximity prox-far">OK &mdash; $1.01 above recession signal; softening but intact</div>
+          <div class="it-impact">💥 If breached: global growth recession confirmed; EM equities &minus;15-20%; commodity complex falls; Australia, Brazil, Chile hit hardest</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="ecb-rate">3.15%</div>
-          <div class="stat-label">ECB Deposit Rate</div>
-          <div class="stat-meaning">Eurozone benchmark borrowing cost set by the European Central Bank. Governs credit conditions for 350M+ people. Cut cycle now paused.</div>
-          <div class="stat-trend trend-flat">→ HELD &mdash; Cut cycle paused; energy shock forcing ECB to delay easing; next cut pushed to Sept 2026</div>
+        <div class="indicator-tile tile-ok">
+          <div class="it-header">
+            <div class="it-name">ECB Deposit Rate</div>
+            <div class="it-status status-ok">✓ OK</div>
+          </div>
+          <div class="it-value" id="ecb-rate">3.15%</div>
+          <div class="it-meaning">Eurozone benchmark borrowing cost set by the European Central Bank. Governs credit conditions for 350M+ people. Cut cycle now paused.</div>
+          <div class="it-trend trend-flat">→ HELD &mdash; Cut cycle paused; energy shock forcing ECB to delay easing; next cut pushed to Sept 2026</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &lt;2.00% (full accommodation cycle reached)</div>
+          <div class="it-proximity prox-far">OK &mdash; 115bp from accommodation zone; energy shock blocking easing path</div>
+          <div class="it-impact">💥 If &lt;2.00%: European equities rally 10-15%; EUR/USD weakens; credit spreads compress; Eurozone growth re-ignites &mdash; watch for this inflection</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="china-gdp">4.8%</div>
-          <div class="stat-label">China GDP (YoY)</div>
-          <div class="stat-meaning">Annual growth of the world&rsquo;s 2nd largest economy. A major driver of global commodity demand, EM capital flows, and supply chain pricing.</div>
-          <div class="stat-trend trend-warn">↓ SLOWING &mdash; 2025 annual; Q1 2026 forecast 4.5% as US tariff drag accelerates from March</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">China GDP (YoY)</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="china-gdp">4.8%</div>
+          <div class="it-meaning">Annual growth of the world&rsquo;s 2nd largest economy. A major driver of global commodity demand, EM capital flows, and supply chain pricing.</div>
+          <div class="it-trend trend-warn">↓ SLOWING &mdash; 2025 annual; Q1 2026 forecast 4.5% as US tariff drag accelerates from March</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &lt;4.0% (demand collapse / deflation export)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; approaching 4.0% danger zone; tariff drag accelerating</div>
+          <div class="it-impact">💥 If breached: iron ore/copper &minus;15%; EM commodity exporters (Brazil, Australia) &minus;10%; global trade volume falls; deflation exported worldwide</div>
         </div>
 
-        <div class="stat-item">
-          <div class="stat-value" id="g20-debt">~98%</div>
-          <div class="stat-label">G20 Avg Debt / GDP</div>
-          <div class="stat-meaning">Average government debt-to-GDP across G20 economies. High debt loads limit fiscal room to respond to shocks and amplify the cost of rising rates.</div>
-          <div class="stat-trend trend-rising">↑ RISING &mdash; Up from ~85% pre-COVID; elevated debt service costs eroding fiscal space globally</div>
+        <div class="indicator-tile tile-warn">
+          <div class="it-header">
+            <div class="it-name">G20 Avg Debt / GDP</div>
+            <div class="it-status status-warn">⚠ WATCHING</div>
+          </div>
+          <div class="it-value" id="g20-debt">~98%</div>
+          <div class="it-meaning">Average government debt-to-GDP across G20 economies. High debt loads limit fiscal room to respond to shocks and amplify the cost of rising rates.</div>
+          <div class="it-trend trend-rising">↑ RISING &mdash; Up from ~85% pre-COVID; elevated debt service costs eroding fiscal space globally</div>
+          <hr class="it-divider">
+          <div class="it-threshold-label">Trigger: &gt;100% (global fiscal stress zone)</div>
+          <div class="it-proximity prox-close">WATCHING &mdash; ~2pp from 100% structural threshold; trending up</div>
+          <div class="it-impact">💥 If breached: fiscal dominance risk globally; bond markets under pressure; monetisation/inflation risk rises; Gold +5%; reduced stimulus capacity in next recession</div>
         </div>
 
       </div>
@@ -424,180 +549,8 @@ th[data-tooltip]:hover::after { opacity:1; }
 
   </div>
 
-  <!-- ══════════ KEY THRESHOLD PROXIMITY ══════════ -->
-  <div class="section">
-    <h2>Key Threshold Proximity</h2>
-    <p style="font-size:11px; color:var(--text2); margin:-8px 0 16px;">Critical levels for each global indicator. When crossed, these thresholds trigger regime changes, policy responses, and significant asset price moves. One threshold per indicator — the single most important level to watch.</p>
 
-    <!-- US Thresholds -->
-    <div class="threshold-group">
-      <div class="threshold-group-label">🇺🇸 United States</div>
-      <div class="threshold-list">
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-ok">✓</div>
-          <div class="threshold-info">
-            <div class="threshold-name">Fed Funds Rate — trigger: &gt;5.25% (restrictive) / &lt;2.50% (accommodation)</div>
-            <div class="threshold-detail">Current: 3.64% — well within operating range. Taylor Rule implies 4.375%; 74bp behind the curve.</div>
-            <div class="threshold-proximity prox-far">OK — 161bp below restrictive threshold</div>
-            <div class="threshold-impact">💥 If &gt;5.25%: credit crunch risk; long bonds +10-15%; equities −15%; USD short-term rally then structural reversal</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">CPI Inflation (YoY) — trigger: &gt;3.5% (stagflation regime confirmed)</div>
-            <div class="threshold-detail">Current: 2.4% (Feb 2026, pre-crisis). March print due Apr 11; Boris forecast 3.2% — energy shock not yet in data.</div>
-            <div class="threshold-proximity prox-close">WATCHING — 1.1pp from trigger; April data likely to breach</div>
-            <div class="threshold-impact">💥 If breached: Fed rate cuts off-table; Gold +10%; Bonds −5-8%; Growth equities −10%; Stagflation scenario +10pp probability</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">Unemployment Rate — trigger: &gt;5.0% (recession declared)</div>
-            <div class="threshold-detail">Current: 4.3% (Mar 2026). Tariff disruption to manufacturing adds estimated +0.6pp risk over 6 months.</div>
-            <div class="threshold-proximity prox-close">WATCHING — 70bp away; tariff headwind building</div>
-            <div class="threshold-impact">💥 If breached: recession declared; Fed emergency cuts; Equities −10-20%; Bonds +8%; USD weakens; Deflationary Bust probability rises sharply</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">10Y Treasury Yield — trigger: &gt;4.70% (duration stress zone)</div>
-            <div class="threshold-detail">Current: 4.31%. 2Y at 3.79%; curve +51bp steepening. Stagflation + fiscal pressures driving yield higher.</div>
-            <div class="threshold-proximity prox-close">WATCHING — 39bp from trigger; curve steepening</div>
-            <div class="threshold-impact">💥 If breached: REITs −5-8%; mortgage rates spike; equity P/E compression; potential Fed YCC intervention above 5.5%</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-ok">✓</div>
-          <div class="threshold-info">
-            <div class="threshold-name">M2 Money Supply — trigger: YoY growth &gt;+8% (re-inflationary zone)</div>
-            <div class="threshold-detail">Current: $22,667B (~+5.3% ann.). Expanding since Sep 2025 (+$497B); re-liquefying after 2023-24 contraction.</div>
-            <div class="threshold-proximity prox-far">OK — within normal range; direction monitored monthly</div>
-            <div class="threshold-impact">💥 If breached: inflationary re-ignition forces Fed re-tightening; Gold +5%; Bonds −3%; growth stocks under margin pressure</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">GDP Growth — trigger: &lt;1.5% ann. (stagnation) / &lt;0% (recession)</div>
-            <div class="threshold-detail">Current: 2.4% Q4 2025. Tariff drag + energy cost squeeze deepening in Q1-Q2 2026. Q1 estimate: 1.6-1.9%.</div>
-            <div class="threshold-proximity prox-close">WATCHING — decelerating toward stagnation threshold</div>
-            <div class="threshold-impact">💥 If &lt;1.5%: stagflation deepens; defensives outperform; Growth stocks −10-15% | If &lt;0%: Bonds +8-12%; Equities −20-30%; recession declared</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">Govt Debt / GDP — trigger: &gt;130% (fiscal stress zone)</div>
-            <div class="threshold-detail">Current: 124%. Debt service ~$1T/year and accelerating. Rising rates compound the burden at $36T+ total debt.</div>
-            <div class="threshold-proximity prox-close">WATCHING — 6pp from stress zone; rising ~2-3pp/year</div>
-            <div class="threshold-impact">💥 If breached: bond vigilantes active; USD −3-5%; 10Y yield +50-100bp; Gold +5-10%; sovereign risk premium rises globally</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Global Thresholds -->
-    <div class="threshold-group">
-      <div class="threshold-group-label">🌍 Global Markets</div>
-      <div class="threshold-list">
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">VIX — trigger: &gt;30 (fear zone) / &gt;40 (crisis)</div>
-            <div class="threshold-detail">Current: 23.87. Peaked at 31.05 on Mar 27 — fear threshold briefly breached. Now retreating but fragile.</div>
-            <div class="threshold-proximity prox-close">WATCHING — 6.13 below trigger; recently breached</div>
-            <div class="threshold-impact">💥 If &gt;30: risk-off; Gold +5%; Bonds +3%; Equities −5-8% initial drop | If &gt;40: crisis; Cash/Gold/Long bonds only; Equities −15-25%</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-alert">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">WTI Crude — trigger: &gt;$100/bbl ✅ BREACHED / next: &gt;$130 (demand destruction)</div>
-            <div class="threshold-detail">Current: $111.81 (Hormuz closure since Mar 4). $100 threshold confirmed stagflation. Next critical level: $130.</div>
-            <div class="threshold-proximity prox-breached">⚠ BREACHED — $11.81 above $100 trigger; $18.19 from $130 next level</div>
-            <div class="threshold-impact">💥 At $130+: demand destruction cascade; CPI +1-2pp; Growth stocks −15%; recession probability doubles; Gold +10%</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">Gold — trigger: &gt;$5,000/oz (extreme fear / currency debasement signal)</div>
-            <div class="threshold-detail">Current: $4,665.09. CFTC net long 163.2K contracts. Geopolitical premium + central bank buying + de-dollarisation bid.</div>
-            <div class="threshold-proximity prox-close">WATCHING — $334.91 from psychological crisis threshold</div>
-            <div class="threshold-impact">💥 If breached: extreme systemic fear priced; USD −3-5%; equity selling accelerates; safe haven crowding amplifies volatility</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">DXY (USD Index) — trigger: &lt;98.00 ("Sell America" confirmed)</div>
-            <div class="threshold-detail">Current: 99.8133. Unusual: USD weakening during a geopolitical crisis signals capital rotation out of US assets.</div>
-            <div class="threshold-proximity prox-close">WATCHING — 1.8133 above breakdown level; at key support</div>
-            <div class="threshold-impact">💥 If breached: USD weakness adds +0.3-0.5pp to US CPI; EM and commodities rally; foreign demand for Treasuries falls; Gold +3-5%</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-ok">✓</div>
-          <div class="threshold-info">
-            <div class="threshold-name">Copper — trigger: &lt;$4.50/lb (global recession confirmed by "Dr. Copper")</div>
-            <div class="threshold-detail">Current: $5.51/lb. Down from Feb avg $5.88/lb (−6.3%). China demand slowdown weighing. Watching for further deceleration.</div>
-            <div class="threshold-proximity prox-far">OK — $1.01 above recession signal; softening but intact</div>
-            <div class="threshold-impact">💥 If breached: global growth recession confirmed; EM equities −15-20%; commodity complex falls; Australia, Brazil, Chile hit hardest</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-ok">✓</div>
-          <div class="threshold-info">
-            <div class="threshold-name">ECB Deposit Rate — trigger: &lt;2.00% (full accommodation cycle reached)</div>
-            <div class="threshold-detail">Current: 3.15% (cut cycle paused). Energy shock forcing ECB to delay. Next cut pushed to Sept 2026 at earliest.</div>
-            <div class="threshold-proximity prox-far">OK — 115bp from accommodation zone; energy shock blocking easing path</div>
-            <div class="threshold-impact">💥 If &lt;2.00%: European equities rally 10-15%; EUR/USD weakens; credit spreads compress; Eurozone growth re-ignites — watch for this inflection</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">China GDP (YoY) — trigger: &lt;4.0% (demand collapse / deflation export)</div>
-            <div class="threshold-detail">Current: 4.8% (2025 annual). Q1 2026 Boris forecast: 4.5% as US tariff drag accelerates from March 2026.</div>
-            <div class="threshold-proximity prox-close">WATCHING — approaching 4.0% danger zone; tariff drag accelerating</div>
-            <div class="threshold-impact">💥 If breached: iron ore/copper −15%; EM commodity exporters (Brazil, Australia) −10%; global trade volume falls; deflation exported worldwide</div>
-          </div>
-        </div>
-
-        <div class="threshold-item">
-          <div class="threshold-icon th-warn">⚠</div>
-          <div class="threshold-info">
-            <div class="threshold-name">G20 Avg Debt / GDP — trigger: &gt;100% (global fiscal stress zone)</div>
-            <div class="threshold-detail">Current: ~98%. Up from ~85% pre-COVID. Rising debt service costs eroding fiscal room to respond to the next shock.</div>
-            <div class="threshold-proximity prox-close">WATCHING — ~2pp from 100% structural threshold; trending up</div>
-            <div class="threshold-impact">💥 If breached: fiscal dominance risk globally; bond markets under pressure; monetisation/inflation risk rises; Gold +5%; reduced capacity for stimulus in next recession</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ══════════ G20 CYCLE MAP ══════════ -->
+    <!-- ══════════ G20 CYCLE MAP ══════════ -->
   <div class="section">
     <h2>G20 Cycle Map</h2>
 
