@@ -22,6 +22,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,Bl
 .disclaimer{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--yellow);margin:16px 0;}
 .section{margin:28px 0;}
 .section-title{font-size:18px;font-weight:800;letter-spacing:-0.3px;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.section-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font-size:14px;font-weight:800;flex-shrink:0;line-height:1;}
 .section-sub{font-size:13px;color:var(--text2);margin-bottom:16px;}
 .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:4px;display:inline-block;}
 .badge-orange{background:rgba(249,115,22,0.15);color:var(--orange);border:1px solid rgba(249,115,22,0.25);}
@@ -194,7 +195,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title">📊 Economic Scenario <span class="badge badge-orange">PRIMARY: Stagflation-to-Contraction 45%</span></div>
+  <div class="section-title"><span class="section-num">1</span>📊 Current Economic Scenario <span class="badge badge-orange">PRIMARY: Stagflation-to-Contraction 45%</span></div>
   <div class="section-sub">Probability-weighted scenario distribution — Week of 7 April 2026</div>
   <div class="scenario-grid">
     <div class="scenario-card sc-stag">
@@ -247,7 +248,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title">🌊 Signal Cascade — Driver × Asset Matrix</div>
+  <div class="section-title"><span class="section-num">2</span>🌊 Driver-Asset Impact Matrix</div>
   <div class="section-sub">Executive summary: 13 active drivers mapped to 15 asset classes. Dominance-weighted contributions.</div>
   <div class="cascade-reading">
     <strong>Reading guide:</strong> Each row = one macro driver (<span style="color:var(--orange);font-weight:700;">TEMP</span> = Temporary, event-driven; <span style="color:var(--blue);font-weight:700;">END</span> = Enduring, structural multi-year force). Cells show directional impact symbol and weighted contribution (impact × dominance ÷ total dominance). The <strong style="color:var(--orange);">NET SIGNAL</strong> row aggregates all active driver contributions into the asset class forecast. Total active dominance = 35.
@@ -575,7 +576,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title">🔍 Driver Deep Dives</div>
+  <div class="section-title"><span class="section-num">3</span>🔍 Economic Driver Deep Dives</div>
   <div class="section-sub">Indicator tiles, trajectory forecasts, and watchlist impact for each active driver.</div>
 
 <div class="driver-section" style="border-top:3px solid var(--red);">
@@ -874,7 +875,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title">⚖️ Net Forecast: Asset Classes</div>
+  <div class="section-title"><span class="section-num">4</span>⚖️ Economic Asset Class Forecast</div>
   <div class="section-sub">Aggregated from 13 active drivers (total dominance 35). Signals represent relative performance over each timeframe.</div>
   <table class="forecast-table">
     <thead><tr><th style="width:280px;">Asset Class</th><th>Net Score</th><th>Signal</th><th>Key Rationale</th></tr></thead>
@@ -901,7 +902,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </tbody></table></div>
 
 <div class="section">
-  <div class="section-title">📋 Watchlist Impact Matrix</div>
+  <div class="section-title"><span class="section-num">5</span>📋 Economic Watchlist Forecast</div>
   <div class="section-sub">Macro signal per watchlist stock across three timeframes. Based on sector/geographic sensitivity profiles.</div>
   <table class="watchlist-table">
     <thead>
@@ -939,7 +940,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title">💰 Net Capital Flow Map</div>
+  <div class="section-title"><span class="section-num">6</span>💰 Net Capital Flow Forecast</div>
   <div class="section-sub">Driver-sourced capital flow analysis. Each flow traces back to specific macro drivers with explicit causal chains.</div>
 
   <div style="font-size:14px;font-weight:700;color:var(--green);margin:12px 0 6px;">Part A — Inflows (Capital Moving In)</div>
@@ -1149,7 +1150,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title">📅 2-Week Forecast Calendar</div>
+  <div class="section-title"><span class="section-num">7</span>📅 Economic Forecast Calendar: 2 Week</div>
   <div class="section-sub">7 April – 21 April 2026 · Boris forecast vs market consensus · Scenario weights: Stagflation 45% | Deflationary Bust 30% | Soft Landing 15% | Reacceleration 10%</div>
 
   <div class="cal-week-header">📅 Week 1 — 7–13 April 2026</div>
@@ -1282,7 +1283,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title">🔗 Driver Interactions & Double-Count Prevention</div>
+  <div class="section-title"><span class="section-num">8</span>🔗 Driver Interactions & Double-Count Prevention</div>
   <table class="interactions-table">
     <thead><tr><th>Primary Driver</th><th>Transmission Channel</th><th>Affected Driver</th><th>Interaction Type</th><th>Double-Count Prevention</th></tr></thead>
     <tbody>
@@ -1298,7 +1299,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title">💾 State Snapshot</div>
+  <div class="section-title"><span class="section-num">9</span>💾 State Snapshot</div>
   <div class="section-sub">Continuity data for next run. Load this to track driver changes and forecast accuracy.</div>
   <div class="state-pre">{
   "run_id": "MacroDriver-20260407-weekly",
