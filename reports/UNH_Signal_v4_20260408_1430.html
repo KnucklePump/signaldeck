@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNH Stock Signal v4 Analysis | April 8, 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0f1117;
+            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .navbar {
+            background-color: #1a1d29;
+            border-bottom: 1px solid #2d3148;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .navbar a:hover {
+            color: #60a5fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .disclaimer {
+            background-color: #1a1d29;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #a3acb9;
+        }
+
+        .header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .header-left h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+            font-size: 13px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            color: #8b90a5;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .meta-value {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+
+        .price-box {
+            background-color: #1a1d29;
+            border: 1px solid #2d3148;
+            padding: 20px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .current-price {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .price-change {
+            font-size: 14px;
+            color: #ef4444;
+        }
+
+        .price-range {
+            font-size: 12px;
+            color: #8b90a5;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #2d3148;
+        }
+
+        .signal-banner {
+            background-color: #1a1d29;
+            border: 1px solid #2d3148;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-radius: 6px;
+        }
+
+        .signal-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #e2e8f0;
+        }
+
+        .signal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .signal-card {
+            background-color: #0f1117;
+            border: 1px solid #2d3148;
+            padding: 16px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .signal-horizon {
+            font-size: 12px;
+            color: #8b90a5;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .signal-value {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            padding: 8px 0;
+        }
+
+        .signal-hold {
+            color: #f59e0b;
+        }
+
+        .signal-score-line {
+            font-size: 12px;
+            color: #8b90a5;
+            margin-bottom: 8px;
+        }
+
+        .signal-confidence {
+            font-size: 11px;
+            color: #a3acb9;
+            margin-bottom: 8px;
+        }
+
+        .signal-driver {
+            font-size: 11px;
+            color: #8b90a5;
+            font-style: italic;
+        }
+
+        .scorecard-section {
+            margin-bottom: 32px;
+        }
+
+        .scorecard-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #e2e8f0;
+        }
+
+        .scorecard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .score-card {
+            background-color: #1a1d29;
+            border: 1px solid #2d3148;
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        .score-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #8b90a5;
+            margin-bottom: 12px;
+        }
+
+        .score-bar-container {
+            margin-bottom: 12px;
+        }
+
+        .score-bar {
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .score-bar-high {
+            background-color: #10b981;
+        }
+
+        .score-bar-medium {
+            background-color: #f59e0b;
+        }
+
+        .score-bar-low {
+            background-color: #ef4444;
+        }
+
+        .score-meta {
+            font-size: 12px;
+            color: #8b90a5;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .score-detail {
+            font-size: 11px;
+            color: #a3acb9;
+            font-style: italic;
+        }
+
+        .gates-section {
+            margin-bottom: 32px;
+        }
+
+        .gates-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .gate-item {
+            background-color: #1a1d29;
+            border: 1px solid #2d3148;
+            padding: 16px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .gate-icon {
+            font-size: 20px;
+            min-width: 24px;
+        }
+
+        .gate-icon.clear {
+            color: #10b981;
+        }
+
+        .gate-icon.triggered {
+            color: #f59e0b;
+        }
+
+        .gate-content {
+            flex: 1;
+        }
+
+        .gate-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: #e2e8f0;
+            margin-bottom: 4px;
+        }
+
+        .gate-desc {
+            font-size: 12px;
+            color: #8b90a5;
+        }
+
+        .pillar-section {
+            margin-bottom: 32px;
+            background-color: #1a1d29;
+            border: 1px solid #2d3148;
+            border-radius: 6px;
+            padding: 24px;
+        }
+
+        .pillar-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            gap: 12px;
+        }
+
+        .pillar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .pillar-toggle {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b90a5;
+        }
+
+        .pillar-details {
+            display: none;
+            margin-top: 24px;
+        }
+
+        .pillar-details.active {
+            display: block;
+        }
+
+        .pillar-details summary {
+            display: none;
+        }
+
+        .detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .detail-table th {
+            background-color: #0f1117;
+            border: 1px solid #2d3148;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            color: #8b90a5;
+        }
+
+        .detail-table td {
+            border: 1px solid #2d3148;
+            padding: 12px;
+            font-size: 12px;
+            color: #e2e8f0;
+        }
+
+        .detail-table tr:nth-child(even) {
+            background-color: rgba(26, 29, 41, 0.5);
+        }
+
+        .subsection-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        .code-block {
+            background-color: #0f1117;
+            border: 1px solid #2d3148;
+            padding: 16px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 11px;
+            color: #8b90a5;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .moat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .moat-card {
+            background-color: #0f1117;
+            border: 1px solid #2d3148;
+            padding: 12px;
+            border-radius: 4px;
+        }
+
+        .moat-dimension {
+            font-size: 12px;
+            font-weight: 600;
+            color: #8b90a5;
+            margin-bottom: 4px;
+        }
+
+        .moat-score {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 4px;
+        }
+
+        .moat-rationale {
+            font-size: 11px;
+            color: #a3acb9;
+        }
+
+        .chart-container {
+            background-color: #1a1d29;
+            border: 1px solid #2d3148;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 32px;
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 16px;
+        }
+
+        #priceChart {
+            width: 100%;
+            height: 400px;
+            display: block;
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .scenario-card {
+            background-color: #1a1d29;
+            border: 1px solid #2d3148;
+            padding: 16px;
+            border-radius: 6px;
+        }
+
+        .scenario-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .scenario-prob {
+            font-size: 11px;
+            color: #8b90a5;
+            margin-bottom: 8px;
+        }
+
+        .scenario-text {
+            font-size: 12px;
+            color: #a3acb9;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .scenario-target {
+            font-size: 12px;
+            font-weight: 600;
+            color: #e2e8f0;
+            padding-top: 8px;
+            border-top: 1px solid #2d3148;
+        }
+
+        .bull-border {
+            border-left: 4px solid #10b981;
+        }
+
+        .bear-border {
+            border-left: 4px solid #ef4444;
+        }
+
+        .base-border {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .rules-section {
+            margin-bottom: 32px;
+        }
+
+        .rule-subsection {
+            background-color: #1a1d29;
+            border: 1px solid #2d3148;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .rule-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+
+        .rule-content {
+            font-size: 12px;
+            color: #a3acb9;
+            margin-bottom: 8px;
+        }
+
+        .rule-forecast {
+            font-size: 12px;
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .rule-forecast-item {
+            flex: 1;
+        }
+
+        .rule-forecast-label {
+            font-size: 11px;
+            color: #8b90a5;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .rule-forecast-value {
+            font-size: 12px;
+            color: #e2e8f0;
+        }
+
+        .calibration-json {
+            background-color: #0f1117;
+            border: 1px solid #2d3148;
+            padding: 16px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 11px;
+            color: #8b90a5;
+            overflow-x: auto;
+            margin-bottom: 32px;
+        }
+
+        .footer {
+            border-top: 1px solid #2d3148;
+            padding-top: 24px;
+            margin-top: 32px;
+            text-align: center;
+            font-size: 12px;
+            color: #8b90a5;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                grid-template-columns: 1fr;
+            }
+
+            .signal-grid,
+            .scorecard-grid,
+            .scenario-grid,
+            .moat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="https://donatien.ca/">← Back to SignalDeck</a>
+        <a href="https://donatien.ca/reports/archive-UNH.html">See previous reports →</a>
+    </div>
+
+    <div class="container">
+        <div class="disclaimer">
+            This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+        </div>
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-left">
+                <h1>UNH</h1>
+                <p style="color: #8b90a5; font-size: 14px;">UnitedHealth Group Incorporated</p>
+                <div class="header-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Sector</div>
+                        <div class="meta-value">Healthcare / Managed Care</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Sub-industry</div>
+                        <div class="meta-value">Health Insurance & Health Services</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Lifecycle Stage</div>
+                        <div class="meta-value">Stage 4 — Mature</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Market Cap</div>
+                        <div class="meta-value">~$279B</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Analysis Date</div>
+                        <div class="meta-value">April 8, 2026</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Exchange</div>
+                        <div class="meta-value">NYSE</div>
+                    </div>
+                </div>
+            </div>
+            <div class="price-box">
+                <div style="font-size: 12px; color: #8b90a5; margin-bottom: 8px;">Current Price</div>
+                <div class="current-price">$306.88</div>
+                <div class="price-change">▼ $0.85 (-0.28%) vs close $307.73</div>
+                <div class="price-range">
+                    <strong>52-Week Range:</strong><br>
+                    High: $606.36 | Low: $234.67
+                </div>
+            </div>
+        </div>
+
+        <!-- SIGNAL BANNER -->
+        <div class="signal-banner">
+            <div class="signal-title">Stock Signal v4 — All Horizons Analysis</div>
+            <div class="signal-grid">
+                <div class="signal-card">
+                    <div class="signal-horizon">SHORT-TERM (1-3 months)</div>
+                    <div class="signal-value signal-hold">HOLD</div>
+                    <div class="signal-score-line">Score: 48 / 100</div>
+                    <div class="signal-confidence">Confidence: 45%</div>
+                    <div class="signal-driver">Earnings in 13 days, death cross, oversold bounce</div>
+                </div>
+                <div class="signal-card">
+                    <div class="signal-horizon">MEDIUM-TERM (6-12 months)</div>
+                    <div class="signal-value signal-hold">HOLD (accumulate on dips)</div>
+                    <div class="signal-score-line">Score: 51 / 100</div>
+                    <div class="signal-confidence">Confidence: 55%</div>
+                    <div class="signal-driver">Quality deterioration vs attractive valuation</div>
+                </div>
+                <div class="signal-card">
+                    <div class="signal-horizon">LONG-TERM (3-5 years)</div>
+                    <div class="signal-value signal-hold">HOLD (watch quality)</div>
+                    <div class="signal-score-line">Score: 51 / 100</div>
+                    <div class="signal-confidence">Confidence: 55%</div>
+                    <div class="signal-driver">MCR must normalize before becoming a Buy</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THREE-PILLAR SCORECARD -->
+        <div class="scorecard-section">
+            <div class="scorecard-title">Three-Pillar Scorecard</div>
+            <div class="scorecard-grid">
+                <div class="score-card">
+                    <div class="score-label">Business Quality</div>
+                    <div class="score-bar-container">
+                        <div class="score-bar score-bar-low" style="width: 46%;">46/100</div>
+                        <div class="score-meta">
+                            <span>Confidence: 60%</span>
+                        </div>
+                    </div>
+                    <div class="score-detail">Margin deterioration</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-label">Valuation Attractiveness</div>
+                    <div class="score-bar-container">
+                        <div class="score-bar score-bar-medium" style="width: 65%;">65/100</div>
+                        <div class="score-meta">
+                            <span>Confidence: 65%</span>
+                        </div>
+                    </div>
+                    <div class="score-detail">Cheap vs history</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-label">Entry/Exit Timing</div>
+                    <div class="score-bar-container">
+                        <div class="score-bar score-bar-low" style="width: 41%;">41/100</div>
+                        <div class="score-meta">
+                            <span>Confidence: 60%</span>
+                        </div>
+                    </div>
+                    <div class="score-detail">Downtrend, oversold bounce</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HARD GATES & DO NOT BUY STATUS -->
+        <div class="gates-section">
+            <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #e2e8f0;">Hard Gates & Do Not Buy Status</h2>
+            <div class="gates-grid">
+                <div class="gate-item">
+                    <div class="gate-icon clear">✓</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Gate 1: Financial Distress</div>
+                        <div class="gate-desc">CLEAR — Net Debt/EBITDA 2.1x, well below 5x threshold</div>
+                    </div>
+                </div>
+                <div class="gate-item">
+                    <div class="gate-icon triggered">⚠</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Gate 2: Earnings Event Risk</div>
+                        <div class="gate-desc">TRIGGERED — Q1 earnings April 21, 13 days away — timing confidence capped at 40%</div>
+                    </div>
+                </div>
+                <div class="gate-item">
+                    <div class="gate-icon clear">✓</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Gate 3: Valuation Ceiling</div>
+                        <div class="gate-desc">CLEAR — Price $307 well below analyst targets and historical multiples</div>
+                    </div>
+                </div>
+                <div class="gate-item">
+                    <div class="gate-icon clear">✓</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Gate 4: Accounting/Dilution</div>
+                        <div class="gate-desc">CLEAR — No dilution concerns</div>
+                    </div>
+                </div>
+                <div class="gate-item">
+                    <div class="gate-icon triggered">⚠</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Gate 5: Regulatory/Binary</div>
+                        <div class="gate-desc">WATCH — DOJ investigation ongoing but not a single binary event</div>
+                    </div>
+                </div>
+                <div class="gate-item">
+                    <div class="gate-icon clear">✓</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Do Not Buy Trigger 1: Leverage + Rising Rates</div>
+                        <div class="gate-desc">CLEAR</div>
+                    </div>
+                </div>
+                <div class="gate-item">
+                    <div class="gate-icon clear">✓</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Do Not Buy Trigger 2: Valuation at Extreme</div>
+                        <div class="gate-desc">CLEAR — Forward P/E 15.8x is below historical average</div>
+                    </div>
+                </div>
+                <div class="gate-item">
+                    <div class="gate-icon clear">✓</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Do Not Buy Trigger 3: Negative Earnings Revisions</div>
+                        <div class="gate-desc">CLEAR</div>
+                    </div>
+                </div>
+                <div class="gate-item">
+                    <div class="gate-icon clear">✓</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Do Not Buy Trigger 4: Insider Selling Spike</div>
+                        <div class="gate-desc">CLEAR — Opposite: massive insider BUYING</div>
+                    </div>
+                </div>
+                <div class="gate-item">
+                    <div class="gate-icon clear">✓</div>
+                    <div class="gate-content">
+                        <div class="gate-name">Do Not Buy Trigger 5: Structural Threat</div>
+                        <div class="gate-desc">CLEAR — DOJ risk is manageable</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRICE CHART -->
+        <div class="chart-container">
+            <div class="chart-title">6-Month Price Chart (Oct 2025 - Apr 2026) with Key Levels</div>
+            <canvas id="priceChart"></canvas>
+        </div>
+
+        <!-- PILLAR 1: BUSINESS QUALITY -->
+        <div class="pillar-section">
+            <div class="pillar-header" onclick="togglePillar(this)">
+                <h2>Pillar 1: Business Quality (46/100)</h2>
+                <div class="pillar-toggle">▼</div>
+            </div>
+            <div class="pillar-details active">
+                <div class="subsection-title">Lifecycle & Sector Classification</div>
+                <table class="detail-table">
+                    <tr>
+                        <td><strong>Sector</strong></td>
+                        <td>Healthcare / Managed Care</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lifecycle</strong></td>
+                        <td>Stage 4 — Mature (&lt;15% growth, profitable, stable cash flow)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Metric Profile</strong></td>
+                        <td>Insurance-like metrics (MCR as primary profitability metric, ROE, operating margin)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Note</strong></td>
+                        <td>UNH is a hybrid — health insurance (UnitedHealthcare) + health services/tech (Optum). Scored primarily on insurance metrics for UHC and services margins for Optum.</td>
+                    </tr>
+                </table>
+
+                <div class="subsection-title">Sub-Signal Scores</div>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Sub-Signal</th>
+                            <th>Value</th>
+                            <th>Sector Median</th>
+                            <th>Score</th>
+                            <th>Rationale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Revenue Trajectory</strong></td>
+                            <td>$447.6B (+12% YoY FY25), 2026 guide &gt;$439B (-2%)</td>
+                            <td>~8-10% for MCOs</td>
+                            <td><strong>45</strong></td>
+                            <td>Strong FY25 growth but guided down for 2026 as company "right-sizes"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Profitability (MCR)</strong></td>
+                            <td>88.9% (FY25) vs 85.5% (FY24)</td>
+                            <td>83-86%</td>
+                            <td><strong>30</strong></td>
+                            <td>340bps deterioration is alarming. UHC segment margin collapsed from 5.2% to 2.7%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Operating Margin</strong></td>
+                            <td>3.33% (FY25) vs 5.01% (FY24)</td>
+                            <td>4-6%</td>
+                            <td><strong>32</strong></td>
+                            <td>Significant margin compression. 2026 guided for recovery with Optum at ~5.1% margin</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cash Generation</strong></td>
+                            <td>FCF $16.07B (FY25), down 22% from $20.7B. FCF margin 3.6%. Cash from ops $19.7B (1.5x net income)</td>
+                            <td>FCF yield 5%+ for mature MCOs</td>
+                            <td><strong>55</strong></td>
+                            <td>FCF decline is concerning but absolute level remains strong. Cash conversion healthy.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Balance Sheet</strong></td>
+                            <td>Net Debt/EBITDA 2.1x, D/E 0.82, Cash $28.12B, Debt $78.39B</td>
+                            <td>&lt;3.0x</td>
+                            <td><strong>70</strong></td>
+                            <td>Leverage manageable. Cash position strong. No imminent refinancing risk.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="subsection-title">Medical Care Ratio (Insurance Equivalent of Combined Ratio)</div>
+                <div class="code-block">
+MCR FY2025: 88.9% | FY2024: 85.5% | FY2023: ~83%
+Rating: DETERIORATING — MCR trending in wrong direction for 3 years
+Benchmark Score: 35/100
+
+Context: Managed care peer median MCR is 83-86%. UNH at 88.9% is well above peers.
+UHC segment specifically at loss-making levels. Biden-era Medicare funding cuts + elevated
+utilization are the primary causes.
+                </div>
+
+                <div class="subsection-title">Competitive Moat Scorecard</div>
+                <div class="moat-grid">
+                    <div class="moat-card">
+                        <div class="moat-dimension">Pricing Power</div>
+                        <div class="moat-score">55</div>
+                        <div class="moat-rationale">Regulated environment constrains pricing. Medicare/Medicaid rates set by government. Commercial has more flexibility but competitive.</div>
+                    </div>
+                    <div class="moat-card">
+                        <div class="moat-dimension">Network Effects</div>
+                        <div class="moat-score">65</div>
+                        <div class="moat-rationale">Largest provider network in US creates value for members and employers. Optum's data/analytics improve with scale.</div>
+                    </div>
+                    <div class="moat-card">
+                        <div class="moat-dimension">Switching Costs</div>
+                        <div class="moat-score">70</div>
+                        <div class="moat-rationale">Employer plans are sticky (annual enrollment cycles). Medicare Advantage members face disruption switching providers. Optum deeply embedded in health systems.</div>
+                    </div>
+                    <div class="moat-card">
+                        <div class="moat-dimension">Cost Advantage</div>
+                        <div class="moat-score">60</div>
+                        <div class="moat-rationale">Scale benefits in claims processing, pharmacy benefits, and provider negotiations. Largest MCO in the US with operational scale advantages.</div>
+                    </div>
+                    <div class="moat-card">
+                        <div class="moat-dimension">Intangible Assets</div>
+                        <div class="moat-score">70</div>
+                        <div class="moat-rationale">UnitedHealthcare brand, Optum technology platform, regulatory relationships, vast data assets on 150M+ members.</div>
+                    </div>
+                    <div class="moat-card">
+                        <div class="moat-dimension"><strong>Average Moat</strong></div>
+                        <div class="moat-score" style="color: #f59e0b;">64</div>
+                        <div class="moat-rationale">Solid moat from scale and switching costs, but pricing power is constrained by regulation.</div>
+                    </div>
+                </div>
+
+                <div class="subsection-title">ROIC & Capital Allocation</div>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Score</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ROIC (40%)</strong></td>
+                            <td><strong>35</strong></td>
+                            <td>ROIC at 8.92%, declining trend. Below cost of capital for most frameworks. Below peer median.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capital Allocation (30%)</strong></td>
+                            <td><strong>50</strong></td>
+                            <td>Optum acquisitions have been strategic but returns declining. Buybacks ongoing but at various prices. Dividend well covered.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Management Skin in Game (30%)</strong></td>
+                            <td><strong>85</strong></td>
+                            <td>CEO Hemsley purchased 86,700 shares (~$25M) in May 2025 at ~$288.57/share. CFO Rex bought 17,175 shares (~$5M). Multiple insider purchases in past 12 months vs minimal selling. Strong insider conviction.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weighted Average</strong></td>
+                            <td><strong>55</strong></td>
+                            <td>Insider conviction is very strong, but ROIC decline and mixed capital allocation weigh on score.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 12px; color: #8b90a5; margin-top: 16px;"><strong>Quality Confidence:</strong> 60% (key metrics available via web search, some estimation for sector medians)</p>
+            </div>
+        </div>
+
+        <!-- PILLAR 2: VALUATION ATTRACTIVENESS -->
+        <div class="pillar-section">
+            <div class="pillar-header" onclick="togglePillar(this)">
+                <h2>Pillar 2: Valuation Attractiveness (65/100)</h2>
+                <div class="pillar-toggle">▼</div>
+            </div>
+            <div class="pillar-details active">
+                <div class="subsection-title">Valuation Multiples</div>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Multiple</th>
+                            <th>Current</th>
+                            <th>Sector Median</th>
+                            <th>5-Year Avg (UNH)</th>
+                            <th>Historical Decile</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Forward P/E</strong></td>
+                            <td>15.8x</td>
+                            <td>15.4x</td>
+                            <td>25.2x</td>
+                            <td>Decile 2 (bottom 20% of 5yr range)</td>
+                            <td><strong>72</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trailing P/E</strong></td>
+                            <td>~21.3x</td>
+                            <td>12.1x (insurance) / 28.5x (healthcare svcs)</td>
+                            <td>25.2x</td>
+                            <td>Decile 3-4</td>
+                            <td><strong>60</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EV/EBITDA</strong></td>
+                            <td>14.55x</td>
+                            <td>12-15x for MCOs</td>
+                            <td>16-18x</td>
+                            <td>Decile 3</td>
+                            <td><strong>62</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="subsection-title">FCF Yield (Universal Anchor)</div>
+                <div style="background-color: #0f1117; border-left: 4px solid #10b981; padding: 16px; border-radius: 4px; margin-bottom: 20px;">
+                    <p style="font-size: 12px; margin-bottom: 8px;">FCF: $16.07B / Market Cap ~$279B = <strong style="color: #10b981; font-size: 14px;">5.76% FCF yield</strong></p>
+                    <p style="font-size: 12px; color: #a3acb9;">Interpretation: Attractive (5-8% range). The business is generating substantial cash relative to its price even with margin compression.</p>
+                    <p style="font-size: 12px; color: #a3acb9; margin-top: 8px;"><strong>Score: 72</strong></p>
+                </div>
+
+                <div class="subsection-title">Reverse DCF / Implied Growth</div>
+                <div style="background-color: #0f1117; border: 1px solid #2d3148; padding: 16px; border-radius: 4px; margin-bottom: 20px; font-size: 12px; color: #a3acb9; line-height: 1.8;">
+                    At the current price of $306.88 with forward adjusted EPS of $17.75:<br><br>
+                    • Forward P/E of 15.8x implies very modest single-digit earnings growth<br>
+                    • Analyst consensus expects EPS recovery toward $20+ by 2027 as margins normalize<br>
+                    • The market is pricing in ~2-3% annual EPS growth, while consensus expects ~10-12% CAGR over next 3 years<br>
+                    • Market is PESSIMISTIC relative to consensus → Attractive<br><br>
+                    <strong style="color: #e2e8f0;">Score: 68</strong>
+                </div>
+
+                <div class="subsection-title">Analyst Target Cross-Check</div>
+                <div style="background-color: #0f1117; border: 1px solid #2d3148; padding: 16px; border-radius: 4px; margin-bottom: 20px; font-size: 12px; color: #a3acb9; line-height: 1.8;">
+                    • Median target: ~$364 (18.6% upside from $307)<br>
+                    • High: $440, Low: $255<br>
+                    • BofA raised to $337 on April 7 (very recent, weight 1.0x)<br>
+                    • Consensus Buy rating (21% Strong Buy, 58% Buy, 13% Hold, 8% Sell)<br><br>
+                    <strong style="color: #e2e8f0;">Score: 70</strong>
+                </div>
+
+                <div class="subsection-title">Peer Comparison</div>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Peer</th>
+                            <th>Forward P/E</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>UNH</strong></td>
+                            <td>15.8x</td>
+                            <td>At sector median</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ELV (Elevance)</strong></td>
+                            <td>11.4x</td>
+                            <td>Trading at a discount, below 5yr median of 13.4x</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HUM (Humana)</strong></td>
+                            <td>16.9x</td>
+                            <td>Premium to UNH despite more concentrated MA exposure</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Managed Care Avg</strong></td>
+                            <td>15.4x</td>
+                            <td>UNH roughly at industry average</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 12px; color: #8b90a5; margin-top: 16px;"><strong>Valuation Confidence:</strong> 65% (forward estimates available, good sector comparables, historical data solid)</p>
+            </div>
+        </div>
+
+        <!-- PILLAR 3: ENTRY/EXIT TIMING -->
+        <div class="pillar-section">
+            <div class="pillar-header" onclick="togglePillar(this)">
+                <h2>Pillar 3: Entry/Exit Timing (41/100)</h2>
+                <div class="pillar-toggle">▼</div>
+            </div>
+            <div class="pillar-details active">
+                <div class="subsection-title">Multi-Timeframe Technical Analysis</div>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Timeframe</th>
+                            <th>Trend</th>
+                            <th>Direction</th>
+                            <th>RSI</th>
+                            <th>MACD</th>
+                            <th>Key S/R</th>
+                            <th>Breakout</th>
+                            <th>Vol</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Monthly</strong></td>
+                            <td>Strong Down ↓</td>
+                            <td>Bearish</td>
+                            <td>~35</td>
+                            <td>-, falling</td>
+                            <td>S: $234.67 R: $450</td>
+                            <td>None</td>
+                            <td>Low</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weekly</strong></td>
+                            <td>Downtrend ↓</td>
+                            <td>Bearish</td>
+                            <td>~38</td>
+                            <td>-, bottoming?</td>
+                            <td>S: $266 R: $356</td>
+                            <td>None</td>
+                            <td>Below avg</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Daily</strong></td>
+                            <td>Recovering →</td>
+                            <td>Neutral</td>
+                            <td>39.9</td>
+                            <td>-, below signal</td>
+                            <td>S: $281 R: $322 (200 SMA)</td>
+                            <td>None</td>
+                            <td>1.1x (rally day)</td>
+                        </tr>
+                        <tr>
+                            <td colspan="8"><strong>Confluence:</strong> Mostly Bearish | MTF Score: 36</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 12px; color: #a3acb9; margin-top: 12px;"><strong>Note:</strong> Hourly and 15-min data unavailable (requires Polygon Stocks Starter plan). Weights reallocated to Monthly 35%, Weekly 30%, Daily 35%.</p>
+                <p style="font-size: 12px; color: #a3acb9; margin-top: 12px;">Monthly and weekly trends are firmly bearish with the stock down 54% from its 52-week high. However, the daily chart is showing nascent recovery signals — price reclaimed the 50-day SMA ($292.9) with the April 7 Medicare Advantage rate rally. The 200-day SMA at $322 is the key overhead resistance to watch. Death cross (50 SMA below 200 SMA) remains in effect.</p>
+
+                <div class="subsection-title">Risk-Reward Assessment</div>
+                <div style="background-color: #0f1117; border: 1px solid #2d3148; padding: 16px; border-radius: 4px; margin-bottom: 20px; font-size: 12px; color: #a3acb9;">
+                    Price: $306.88<br><br>
+                    <strong style="color: #e2e8f0;">Nearest support:</strong> ~$281 (April 7 pre-rally low) → ~$26 away (~1.5-2 ATR)<br>
+                    <strong style="color: #e2e8f0;">Key support:</strong> ~$266 (March lows) → ~$41 away (~2.5 ATR)<br>
+                    <strong style="color: #e2e8f0;">52-week low:</strong> $234.67 → $72 away<br>
+                    <strong style="color: #e2e8f0;">Key resistance:</strong> $322 (200-day SMA) → $15 away<br><br>
+                    <strong style="color: #e2e8f0;">Risk-Reward ratio (to $322 resistance vs $281 support): 15:26 = 0.58:1 → Unfavorable</strong><br>
+                    <strong style="color: #e2e8f0;">Score: 35</strong>
+                </div>
+
+                <div class="subsection-title">Relative Strength Benchmarking</div>
+                <div style="background-color: #0f1117; border: 1px solid #2d3148; padding: 16px; border-radius: 4px; margin-bottom: 20px; font-size: 12px; color: #a3acb9;">
+                    • UNH 1-month return: ~+10% (rally from lows)<br>
+                    • SPY 1-month return: ~-5%<br>
+                    • XLV (Health Care ETF) 1-month: ~-2%<br>
+                    • UNH is outperforming short-term but severely underperforming on 3-month and 6-month basis<br>
+                    • 52-week range position: ($306.88 - $234.67) / ($606.36 - $234.67) = 19.4% → Near 52-week lows<br><br>
+                    <strong style="color: #e2e8f0;">Score: 30</strong>
+                </div>
+
+                <div class="subsection-title">Macro Regime</div>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Sub-Signal</th>
+                            <th>Value</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Fed direction</strong></td>
+                            <td>Holding at 3.64%, market expects further cuts</td>
+                            <td>60 (mildly favorable)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>VIX</strong></td>
+                            <td>25.78</td>
+                            <td>35 (elevated, risk-off lean)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Yield curve</strong></td>
+                            <td>+0.52% (normal, steepening)</td>
+                            <td>65 (favorable)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sector regime</strong></td>
+                            <td>Healthcare in turmoil from regulatory uncertainty but MA rate increase is tailwind</td>
+                            <td>45</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Weighted macro score: 50</strong> | Dynamic macro weight for Healthcare: Low (10% of timing)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="subsection-title">Sentiment Layer</div>
+                <div style="background-color: #0f1117; border: 1px solid #2d3148; padding: 16px; border-radius: 4px; margin-bottom: 20px; font-size: 12px; color: #a3acb9;">
+                    <strong style="color: #e2e8f0;">Analyst revisions:</strong> Mixed. BofA raised target on Apr 7 (positive). But earlier in 2026, consensus cut 2026 EPS estimates after weak guidance. Score: 55<br><br>
+                    <strong style="color: #e2e8f0;">News tone:</strong> Medicare rate increase very positive (Apr 7). DOJ investigation negative (ongoing). Net recent tone is positive due to MA rate catalyst. Score: 60<br><br>
+                    <strong style="color: #e2e8f0;">Insider activity:</strong> Bullish. CEO Hemsley bought $25M in May 2025 at ~$288.57. CFO Rex bought ~$5M. Net insider buying over past 12 months is strongly positive. Score: 80<br><br>
+                    <strong style="color: #e2e8f0;">Weighted sentiment: 65</strong> | Sentiment weight: 20%
+                </div>
+
+                <div class="subsection-title">Catalyst Layer</div>
+                <div style="background-color: #0f1117; border: 1px solid #2d3148; padding: 16px; border-radius: 4px; margin-bottom: 20px; font-size: 12px; color: #a3acb9;">
+                    • <strong style="color: #e2e8f0;">Q1 2026 Earnings:</strong> April 21 (13 days away) — HIGH impact. This is the dominant near-term catalyst.<br>
+                    • <strong style="color: #e2e8f0;">DOJ Investigation updates:</strong> Ongoing, unpredictable timing<br>
+                    • <strong style="color: #e2e8f0;">Medicare Advantage 2027 rates:</strong> Just finalized (positive, already reflected in price)<br>
+                    • <strong style="color: #e2e8f0;">CMS policy changes:</strong> Ongoing regulatory monitoring<br><br>
+                    <strong style="color: #e2e8f0;">Catalyst clustering: 1 clear catalyst within 30 days → Score 55 (focused)</strong><br>
+                    Catalyst weight: 20%
+                </div>
+
+                <div class="subsection-title">Economic Event Risk (Next 30 Days)</div>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Event</th>
+                            <th>Impact</th>
+                            <th>Relevance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Apr 10</td>
+                            <td>CPI (YoY)</td>
+                            <td>High</td>
+                            <td>⚠️ Medium — inflation affects healthcare costs</td>
+                        </tr>
+                        <tr>
+                            <td>Apr 21</td>
+                            <td>UNH Q1 Earnings</td>
+                            <td>HIGH</td>
+                            <td>✓ Critical — dominant catalyst</td>
+                        </tr>
+                        <tr>
+                            <td>Apr 30</td>
+                            <td>FOMC Rate Decision</td>
+                            <td>High</td>
+                            <td>⚠️ Low — Healthcare has low rate sensitivity</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 12px; color: #8b90a5; margin-top: 16px;"><strong>Timing Confidence:</strong> 60% base - 15% (earnings within 14 days) = <strong>45%</strong></p>
+            </div>
+        </div>
+
+        <!-- UNDERLYING DRIVER ANALYSIS -->
+        <div class="pillar-section">
+            <div class="pillar-header" onclick="togglePillar(this)">
+                <h2>Underlying Driver Analysis: Healthcare Policy / Medicare Reimbursement Rates</h2>
+                <div class="pillar-toggle">▼</div>
+            </div>
+            <div class="pillar-details active">
+                <p style="font-size: 12px; color: #a3acb9; margin-bottom: 16px;">UNH derives a significant portion of revenue from Medicare Advantage. Government reimbursement rates are the single most important external force affecting margins and growth.</p>
+
+                <div class="subsection-title">Three-Horizon Assessment</div>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Horizon</th>
+                            <th>Score</th>
+                            <th>Assessment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Historical (25%)</strong></td>
+                            <td><strong>35</strong></td>
+                            <td>Biden-era Medicare Advantage rate cuts hurt margins significantly. MCR deteriorated from 83% to 88.9% over 3 years. V26 rates were inadequate to cover cost trends.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Current (50%)</strong></td>
+                            <td><strong>72</strong></td>
+                            <td>CMS finalized 2027 MA rates with 2.48% increase on April 7. This is the biggest positive policy shift in 2 years. Stock rallied 9.37% on the news.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Forward (25%)</strong></td>
+                            <td><strong>60</strong></td>
+                            <td>Rate increase is positive, but DOJ investigation adds regulatory uncertainty. Trump admin appears more insurer-friendly than Biden on MA, but DOJ probe predates current admin.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 12px; color: #a3acb9; margin-top: 16px;"><strong>Driver Score:</strong> 0.25×35 + 0.50×72 + 0.25×60 = 8.75 + 36 + 15 = <strong style="color: #e2e8f0;">60 (Neutral)</strong></p>
+                <p style="font-size: 12px; color: #a3acb9; margin-top: 8px;"><strong>Pillar Impact:</strong> Driver is Neutral (50-64) → No adjustments to pillar scores. Pre-adjustment = Post-adjustment for all three pillars.</p>
+                <p style="font-size: 12px; color: #a3acb9; margin-top: 8px;"><strong>Driver Confidence:</strong> 55% (healthcare policy is inherently uncertain, DOJ adds -10, forward outlook has mixed signals)</p>
+            </div>
+        </div>
+
+        <!-- SCENARIO SUMMARY -->
+        <div style="margin-bottom: 32px;">
+            <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #e2e8f0;">Scenario Summary</h2>
+            <div class="scenario-grid">
+                <div class="scenario-card bull-border">
+                    <div class="scenario-title">Bull Case</div>
+                    <div class="scenario-prob">Probability: 35%</div>
+                    <div class="scenario-text">Q1 earnings on April 21 beat expectations. MCR shows improvement toward 86-87%. DOJ investigation resolves favorably or with manageable fine. Optum margin recovery accelerates. 2027 MA rate increase flows through.</div>
+                    <div class="scenario-target">Target: $400+ (30% upside)</div>
+                </div>
+                <div class="scenario-card bear-border">
+                    <div class="scenario-title">Bear Case</div>
+                    <div class="scenario-prob">Probability: 30%</div>
+                    <div class="scenario-text">Q1 MCR remains elevated above 89%. DOJ investigation escalates to formal charges. 2026 guidance is cut. Medicare Advantage membership contraction accelerates.</div>
+                    <div class="scenario-target">Target: $220-250 (25-30% downside)</div>
+                </div>
+                <div class="scenario-card base-border">
+                    <div class="scenario-title">Base Case</div>
+                    <div class="scenario-prob">Probability: 35%</div>
+                    <div class="scenario-text">Gradual margin recovery through 2026 as MA rates improve. DOJ overhang lingers but manageable. EPS tracks toward $17.75 guidance. Stock grinds higher toward $350-380.</div>
+                    <div class="scenario-target">Target: $350 (14% upside)</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background-color: #1a1d29; border: 1px solid #2d3148; padding: 16px; border-radius: 6px; margin-bottom: 32px;">
+            <div class="subsection-title">What Would Change the Signal</div>
+            <p style="font-size: 12px; color: #a3acb9; margin-bottom: 8px;"><strong style="color: #10b981;">UPGRADE to BUY:</strong> Q1 MCR drops below 87% AND DOJ reaches settlement → Quality jumps to 55+, timing improves</p>
+            <p style="font-size: 12px; color: #a3acb9;"><strong style="color: #ef4444;">DOWNGRADE to SELL:</strong> MCR exceeds 90% AND DOJ files formal charges → Quality drops below 35, valuation support erodes</p>
+        </div>
+
+        <!-- ENTRY/EXIT RULES -->
+        <div class="rules-section">
+            <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #e2e8f0;">Entry/Exit Rules with Forecasts</h2>
+
+            <h3 style="font-size: 14px; font-weight: 600; color: #e2e8f0; margin-bottom: 16px;">Entry Rules</h3>
+
+            <div class="rule-subsection">
+                <div class="rule-name">ENTRY RULE 1 (Fundamental): BUY if</div>
+                <div class="rule-content">
+                    • MCR improves to ≤87% in Q1 2026 (April 21 earnings) AND<br>
+                    • 2026 EPS guidance reaffirmed at >$17.75 AND<br>
+                    • No DOJ escalation
+                </div>
+                <div class="rule-forecast">
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Forecast</div>
+                        <div class="rule-forecast-value">Depends on April 21 earnings. Consensus expects $6.59 EPS for Q1. MCR improvement is plausible given MA rate increase but may not show in Q1 results.</div>
+                    </div>
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Confidence</div>
+                        <div class="rule-forecast-value">Moderate</div>
+                    </div>
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Basis</div>
+                        <div class="rule-forecast-value">Company guided for MCR improvement in 2026. MA rate increase supports it. But Q1 may be too early for full impact.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-subsection">
+                <div class="rule-name">ENTRY RULE 2 (Technical): BUY if</div>
+                <div class="rule-content">
+                    • Price closes above $322 (200-day SMA) on volume >1.5x 20-day average AND<br>
+                    • RSI between 40-65 AND<br>
+                    • MACD crosses above signal line
+                </div>
+                <div class="rule-forecast">
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Forecast</div>
+                        <div class="rule-forecast-value">~4-8 weeks at current trajectory</div>
+                    </div>
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Confidence</div>
+                        <div class="rule-forecast-value">Low</div>
+                    </div>
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Basis</div>
+                        <div class="rule-forecast-value">Price needs to rally another 5% to reach 200 SMA, must sustain. Only likely if earnings on April 21 are strong.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-subsection">
+                <div class="rule-name">ENTRY RULE 3 (Value): ACCUMULATE if</div>
+                <div class="rule-content">
+                    • Price drops to $265-275 range (March support zone) AND<br>
+                    • No fundamental deterioration AND<br>
+                    • FCF yield exceeds 7%
+                </div>
+                <div class="rule-forecast">
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Forecast</div>
+                        <div class="rule-forecast-value">Only if earnings disappoint on April 21 or broader market selloff</div>
+                    </div>
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Confidence</div>
+                        <div class="rule-forecast-value">Low (would require ~12% decline from current)</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 14px; font-weight: 600; color: #e2e8f0; margin-bottom: 16px; margin-top: 24px;">Exit Rules</h3>
+
+            <div class="rule-subsection">
+                <div class="rule-name">EXIT RULE 1 (Stop-Loss): SELL if</div>
+                <div class="rule-content">
+                    • Price closes below $234.67 (52-week low) for 2 consecutive days
+                </div>
+                <div class="rule-forecast">
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Forecast</div>
+                        <div class="rule-forecast-value">Unlikely in next 4-6 weeks unless DOJ escalation or terrible earnings</div>
+                    </div>
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Confidence</div>
+                        <div class="rule-forecast-value">High (price is $307, 24% above this level)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-subsection">
+                <div class="rule-name">EXIT RULE 2 (Thesis Invalidation): SELL if</div>
+                <div class="rule-content">
+                    • FY2026 guidance cut below $15 adjusted EPS AND<br>
+                    • MCR exceeds 91% AND<br>
+                    • DOJ files formal criminal charges against executives
+                </div>
+                <div class="rule-forecast">
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Forecast</div>
+                        <div class="rule-forecast-value">Unlikely barring worst-case scenario</div>
+                    </div>
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Confidence</div>
+                        <div class="rule-forecast-value">High that this won't trigger</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-subsection">
+                <div class="rule-name">EXIT RULE 3 (Profit Target): Consider trimming at</div>
+                <div class="rule-content">
+                    • Price reaches $380 (near median analyst target) AND<br>
+                    • RSI > 70
+                </div>
+                <div class="rule-forecast">
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Forecast</div>
+                        <div class="rule-forecast-value">6-12 months if base case plays out</div>
+                    </div>
+                    <div class="rule-forecast-item">
+                        <div class="rule-forecast-label">Confidence</div>
+                        <div class="rule-forecast-value">Moderate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POSITION SIZING NOTE -->
+        <div style="background-color: #1a1d29; border: 1px solid #2d3148; padding: 16px; border-radius: 6px; margin-bottom: 32px;">
+            <h3 style="font-size: 14px; font-weight: 600; color: #e2e8f0; margin-bottom: 8px;">Position Sizing</h3>
+            <p style="font-size: 12px; color: #a3acb9;"><strong>Position sizing not computed</strong> — specify your portfolio allocation and role for sizing guidance.</p>
+            <p style="font-size: 12px; color: #a3acb9; margin-top: 8px;"><strong style="color: #e2e8f0;">Volatility Context:</strong><br>
+            • Estimated ATR: ~$12-15/day (~4-5% of price)<br>
+            • Recent 52-week max drawdown: -54% from $606.36 to $234.67<br>
+            • Beta vs SPY: ~0.8-1.0 (historically low beta but recent period much higher volatility)<br>
+            • This is an unusually volatile period for a historically stable mega-cap</p>
+        </div>
+
+        <!-- CALIBRATION SNAPSHOT -->
+        <div class="chart-container">
+            <div class="chart-title">Calibration Snapshot (JSON)</div>
+            <div class="calibration-json">{
+  "ticker": "UNH",
+  "date": "2026-04-08",
+  "version": "v4",
+  "user_context": {
+    "horizon": "all_horizons",
+    "allocation_pct": null,
+    "portfolio_role": null
+  },
+  "price_at_rating": 306.88,
+  "signal_short": "HOLD",
+  "signal_medium": "HOLD_ACCUMULATE_DIPS",
+  "signal_long": "HOLD_WATCH_QUALITY",
+  "quality_score": 46,
+  "lifecycle_stage": "mature",
+  "quality_detail": {
+    "industry_benchmark_name": "Medical Care Ratio",
+    "industry_benchmark_value": 88.9,
+    "industry_benchmark_score": 35,
+    "moat_score": 64,
+    "roic_percentile_vs_peers": 35,
+    "capital_allocation": 50,
+    "management_skin_in_game": 85
+  },
+  "valuation_score": 65,
+  "valuation_detail": {
+    "fcf_yield": 5.76,
+    "implied_growth_rate": 3,
+    "consensus_growth_rate": 11,
+    "historical_valuation_decile": 2
+  },
+  "timing_score": 41,
+  "timing_detail": {
+    "mtf_confluence": 36,
+    "risk_reward_score": 35,
+    "relative_strength_vs_spy": -45,
+    "relative_strength_vs_sector": -40,
+    "catalyst_clustering_score": 55,
+    "dynamic_macro_weight": 0.10
+  },
+  "driver_score": 60,
+  "overall_confidence": 45,
+  "fair_value_est": 380,
+  "stop_loss": 234.67,
+  "target_price": 400,
+  "gates_triggered": ["earnings_event_risk"],
+  "do_not_buy_triggers": [],
+  "next_check_date": "2026-04-22"
+}</div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="disclaimer" style="margin-bottom: 16px;">
+                This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+            </div>
+            <p>Stock Signal v4 Analysis | UnitedHealth Group (UNH) | April 8, 2026 @ 2:30 PM ET</p>
+        </div>
+    </div>
+
+    <script>
+        function togglePillar(header) {
+            const details = header.nextElementSibling;
+            details.classList.toggle('active');
+            const toggle = header.querySelector('.pillar-toggle');
+            toggle.textContent = details.classList.contains('active') ? '▼' : '▶';
+        }
+
+        function drawPriceChart() {
+            const canvas = document.getElementById('priceChart');
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+
+            // High DPI
+            const scale = window.devicePixelRatio || 1;
+            canvas.width = rect.width * scale;
+            canvas.height = rect.height * scale;
+            ctx.scale(scale, scale);
+
+            const width = rect.width;
+            const height = rect.height;
+            const padding = { top: 30, right: 30, bottom: 50, left: 50 };
+            const plotWidth = width - padding.left - padding.right;
+            const plotHeight = height - padding.top - padding.bottom;
+
+            // Data points (6 months Oct 2025 - Apr 2026)
+            const data = [
+                { month: 'Oct', price: 560 },
+                { month: 'Nov', price: 550 },
+                { month: 'Dec', price: 500 },
+                { month: 'Jan', price: 520 },
+                { month: 'Jan-E', price: 356 },
+                { month: 'Feb', price: 340 },
+                { month: 'Feb-L', price: 274 },
+                { month: 'Mar', price: 290 },
+                { month: 'Apr-7', price: 307.73 },
+                { month: 'Apr-8', price: 306.88 }
+            ];
+
+            const minPrice = 200;
+            const maxPrice = 650;
+            const priceRange = maxPrice - minPrice;
+
+            // Background
+            ctx.fillStyle = '#0f1117';
+            ctx.fillRect(0, 0, width, height);
+
+            // Grid
+            ctx.strokeStyle = '#2d3148';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 5; i++) {
+                const y = padding.top + (plotHeight / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding.left, y);
+                ctx.lineTo(width - padding.right, y);
+                ctx.stroke();
+
+                const price = Math.round(maxPrice - (priceRange / 5) * i);
+                ctx.fillStyle = '#8b90a5';
+                ctx.font = '11px sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText('$' + price, padding.left - 8, y + 4);
+            }
+
+            // Y-axis
+            ctx.strokeStyle = '#2d3148';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding.left, padding.top);
+            ctx.lineTo(padding.left, height - padding.bottom);
+            ctx.stroke();
+
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(padding.left, height - padding.bottom);
+            ctx.lineTo(width - padding.right, height - padding.bottom);
+            ctx.stroke();
+
+            // Plot price line
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for (let i = 0; i < data.length; i++) {
+                const x = padding.left + (plotWidth / (data.length - 1)) * i;
+                const y = padding.top + plotHeight - ((data[i].price - minPrice) / priceRange) * plotHeight;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Plot data points
+            ctx.fillStyle = '#3b82f6';
+            for (let i = 0; i < data.length; i++) {
+                const x = padding.left + (plotWidth / (data.length - 1)) * i;
+                const y = padding.top + plotHeight - ((data[i].price - minPrice) / priceRange) * plotHeight;
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Key support/resistance levels
+            const levels = [
+                { price: 322, label: '200-day SMA', color: '#f59e0b', dash: true },
+                { price: 293, label: '50-day SMA', color: '#8b90a5', dash: true },
+                { price: 364, label: 'Analyst Target', color: '#10b981', dash: false },
+                { price: 266, label: 'Support', color: '#ef4444', dash: false },
+                { price: 235, label: '52W Low', color: '#ef4444', dash: true }
+            ];
+
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'left';
+            for (const level of levels) {
+                const y = padding.top + plotHeight - ((level.price - minPrice) / priceRange) * plotHeight;
+
+                if (level.dash) {
+                    ctx.strokeStyle = level.color;
+                    ctx.setLineDash([5, 5]);
+                    ctx.lineWidth = 1;
+                } else {
+                    ctx.strokeStyle = level.color;
+                    ctx.setLineDash([]);
+                    ctx.lineWidth = 1.5;
+                }
+
+                ctx.beginPath();
+                ctx.moveTo(padding.left, y);
+                ctx.lineTo(width - padding.right, y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                ctx.fillStyle = level.color;
+                ctx.fillText(level.label + ' $' + level.price, padding.left + 8, y - 5);
+            }
+
+            // X-axis labels
+            ctx.fillStyle = '#8b90a5';
+            ctx.font = '11px sans-serif';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < data.length; i += 2) {
+                const x = padding.left + (plotWidth / (data.length - 1)) * i;
+                ctx.fillText(data[i].month, x, height - padding.bottom + 20);
+            }
+
+            // Title
+            ctx.fillStyle = '#e2e8f0';
+            ctx.font = 'bold 12px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('UnitedHealth Group (UNH) — 6 Month Price Action', width / 2, 18);
+        }
+
+        window.addEventListener('load', drawPriceChart);
+        window.addEventListener('resize', drawPriceChart);
+    </script>
+</body>
+</html>

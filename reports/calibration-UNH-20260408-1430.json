@@ -1,0 +1,80 @@
+{
+  "ticker": "UNH",
+  "date": "2026-04-08",
+  "version": "v4",
+  "user_context": {
+    "horizon": "all_horizons",
+    "allocation_pct": null,
+    "portfolio_role": null
+  },
+  "price_at_rating": 306.88,
+  "signal_short": "HOLD",
+  "signal_medium": "HOLD_ACCUMULATE_DIPS",
+  "signal_long": "HOLD_WATCH_QUALITY",
+  "quality_score": 46,
+  "lifecycle_stage": "mature",
+  "quality_detail": {
+    "industry_benchmark_name": "Medical Care Ratio",
+    "industry_benchmark_value": 88.9,
+    "industry_benchmark_score": 35,
+    "moat_score": 64,
+    "roic_percentile_vs_peers": 35,
+    "capital_allocation": 50,
+    "management_skin_in_game": 80
+  },
+  "valuation_score": 65,
+  "valuation_detail": {
+    "fcf_yield": 5.76,
+    "implied_growth_rate": 3,
+    "consensus_growth_rate": 11,
+    "historical_valuation_decile": 2
+  },
+  "timing_score": 41,
+  "timing_detail": {
+    "mtf_confluence": 36,
+    "risk_reward_score": 35,
+    "relative_strength_vs_spy": -45,
+    "relative_strength_vs_sector": -40,
+    "catalyst_clustering_score": 55,
+    "dynamic_macro_weight": 0.10
+  },
+  "driver_score": 60,
+  "driver_name": "Healthcare Policy / Medicare Reimbursement Rates",
+  "overall_confidence": 45,
+  "fair_value_est": 380,
+  "stop_loss": 234.67,
+  "target_price": 400,
+  "gates_triggered": ["earnings_event_risk", "regulatory_watch"],
+  "do_not_buy_triggers": [],
+  "rule_forecasts": [
+    {
+      "rule": "Entry Rule 1 (Fundamental)",
+      "type": "fundamental",
+      "forecast": "Depends on Apr 21 earnings",
+      "confidence": "moderate",
+      "basis": "MCR improvement plausible given MA rate increase but may not show in Q1"
+    },
+    {
+      "rule": "Entry Rule 2 (Technical)",
+      "type": "technical",
+      "forecast": "~4-8 weeks",
+      "confidence": "low",
+      "basis": "Needs 5% rally to 200 SMA at $322, requires earnings support"
+    },
+    {
+      "rule": "Entry Rule 3 (Value)",
+      "type": "technical",
+      "forecast": "Only on earnings miss or market selloff",
+      "confidence": "low",
+      "basis": "Would require ~12% decline to $265-275 support zone"
+    },
+    {
+      "rule": "Exit Rule 1 (Stop-Loss)",
+      "type": "technical",
+      "forecast": "Unlikely next 4-6 weeks",
+      "confidence": "high",
+      "basis": "Price 24% above 52-week low of $234.67"
+    }
+  ],
+  "next_check_date": "2026-04-22"
+}
