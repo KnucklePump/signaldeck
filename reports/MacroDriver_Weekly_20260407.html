@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MacroDriver Weekly — 7 April 2026 | SignalDeck</title>
+<style>
+:root {
+  --bg: #0a0c10; --surface: #12151c; --surface2: #1a1e28;
+  --border: #252a3a; --text: #e1e4ed; --text2: #7a8099;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.10);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.10);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.10);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.10);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.10);
+  --purple: #a855f7; --purple-bg: rgba(168,85,247,0.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; font-size:14px; }
+.container { max-width:1200px; margin:0 auto; padding:0 24px; }
+a { color:var(--blue); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+/* Header */
+.report-header { background:var(--surface); border-bottom:1px solid var(--border); padding:20px 0; margin-bottom:24px; }
+.nav-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; font-size:13px; }
+.report-title { font-size:28px; font-weight:800; letter-spacing:-0.5px; }
+.report-title span { color:var(--orange); }
+.report-meta { font-size:12px; color:var(--text2); margin-top:4px; }
+.report-type-badge { display:inline-block; background:var(--orange-bg); color:var(--orange); border:1px solid rgba(249,115,22,0.3); border-radius:6px; padding:2px 10px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-right:8px; }
+.scenario-badge { display:inline-block; background:rgba(249,115,22,0.15); color:var(--orange); border:1px solid rgba(249,115,22,0.4); border-radius:6px; padding:3px 12px; font-size:12px; font-weight:700; }
+
+/* Disclaimer */
+.disclaimer { background:var(--yellow-bg); border:1px solid rgba(234,179,8,0.3); border-radius:8px; padding:12px 16px; font-size:12px; color:var(--yellow); margin-bottom:24px; }
+
+/* Sections */
+.section { margin:32px 0; }
+.section h2 { font-size:18px; font-weight:700; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+.section-num { color:var(--text2); font-size:13px; font-weight:600; }
+.badge { font-size:11px; font-weight:700; padding:2px 10px; border-radius:10px; display:inline-block; }
+.badge-red { background:var(--red-bg); color:var(--red); }
+.badge-orange { background:var(--orange-bg); color:var(--orange); }
+.badge-green { background:var(--green-bg); color:var(--green); }
+.badge-blue { background:var(--blue-bg); color:var(--blue); }
+.badge-purple { background:var(--purple-bg); color:var(--purple); }
+.badge-yellow { background:var(--yellow-bg); color:var(--yellow); }
+
+/* Driver Dominance Bar */
+.dominance-grid { display:flex; flex-direction:column; gap:8px; }
+.dom-row { display:grid; grid-template-columns:220px 60px 1fr 120px; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 14px; }
+.dom-name { font-size:13px; font-weight:600; }
+.dom-score { font-size:18px; font-weight:800; text-align:center; }
+.dom-bar-wrap { height:8px; background:var(--surface2); border-radius:4px; overflow:hidden; }
+.dom-bar { height:100%; border-radius:4px; }
+.dom-label { font-size:11px; font-weight:700; text-align:right; }
+.score-5 { color:var(--red); }
+.score-4 { color:var(--orange); }
+.score-3 { color:var(--yellow); }
+.score-2 { color:var(--blue); }
+.score-1 { color:var(--text2); }
+.bar-5 { background:var(--red); width:100%; }
+.bar-4 { background:var(--orange); width:80%; }
+.bar-3 { background:var(--yellow); width:60%; }
+.bar-2 { background:var(--blue); width:40%; }
+.bar-1 { background:var(--text2); width:20%; }
+.type-tag { font-size:10px; color:var(--text2); }
+
+/* Scenario */
+.scenario-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.sc-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; position:relative; overflow:hidden; }
+.sc-card::after { content:''; position:absolute; top:0; left:0; right:0; height:4px; border-radius:4px 4px 0 0; }
+.sc-stag::after { background:var(--orange); }
+.sc-bust::after { background:var(--red); }
+.sc-soft::after { background:var(--green); }
+.sc-reaccel::after { background:var(--blue); }
+.sc-active { border-color:var(--orange); box-shadow:0 0 20px rgba(249,115,22,0.15); }
+.sc-prob { font-size:32px; font-weight:800; margin-bottom:2px; }
+.sc-name { font-size:13px; font-weight:700; margin-bottom:6px; }
+.sc-desc { font-size:12px; color:var(--text2); line-height:1.5; }
+.sc-drivers { margin-top:10px; }
+.sc-driver-tag { display:inline-block; font-size:11px; background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:1px 6px; margin:2px 2px 0 0; color:var(--text2); }
+
+/* Scenario meta */
+.scenario-meta { margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.sc-meta-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px; }
+.sc-meta-title { font-size:12px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+.sc-meta-item { font-size:13px; color:var(--text); margin-bottom:6px; padding-left:12px; position:relative; }
+.sc-meta-item::before { content:'›'; position:absolute; left:0; color:var(--orange); }
+
+/* Driver deep dive */
+.driver-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; margin-bottom:20px; overflow:hidden; }
+.driver-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; }
+.driver-title { font-size:16px; font-weight:700; flex:1; }
+.driver-conf { font-size:11px; color:var(--text2); }
+.driver-body { padding:20px; }
+.driver-section-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); margin-bottom:10px; }
+
+/* Indicators table */
+.ind-table { width:100%; border-collapse:collapse; margin-bottom:20px; }
+.ind-table th { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); text-align:left; padding:6px 10px; border-bottom:1px solid var(--border); }
+.ind-table td { font-size:13px; padding:8px 10px; border-bottom:1px solid rgba(37,42,58,0.5); }
+.ind-table tr:last-child td { border-bottom:none; }
+.status-ok { color:var(--green); font-weight:700; }
+.status-watch { color:var(--yellow); font-weight:700; }
+.status-breach { color:var(--red); font-weight:700; }
+
+/* Trajectory */
+.traj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+.traj-card { background:var(--surface2); border-radius:8px; padding:12px; }
+.traj-horizon { font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
+.traj-direction { font-size:13px; font-weight:700; margin-bottom:4px; }
+.traj-text { font-size:12px; color:var(--text2); line-height:1.5; }
+.traj-up { color:var(--green); }
+.traj-down { color:var(--red); }
+.traj-mixed { color:var(--yellow); }
+.traj-neutral { color:var(--text2); }
+
+/* Asset class impact */
+.impact-table { width:100%; border-collapse:collapse; font-size:12px; }
+.impact-table th { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); padding:6px 8px; border-bottom:1px solid var(--border); text-align:center; }
+.impact-table th:first-child { text-align:left; }
+.impact-table td { padding:6px 8px; border-bottom:1px solid rgba(37,42,58,0.4); text-align:center; }
+.impact-table td:first-child { text-align:left; color:var(--text2); }
+.impact-table tr:last-child td { border-bottom:none; }
+.impact-so { color:var(--green); font-weight:700; background:rgba(34,197,94,0.06); border-radius:4px; }
+.impact-op { color:var(--green); }
+.impact-n { color:var(--text2); }
+.impact-un { color:var(--red); }
+.impact-su { color:var(--red); font-weight:700; background:rgba(239,68,68,0.06); border-radius:4px; }
+.impact-group-header td { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--blue); background:rgba(59,130,246,0.05); padding:8px 8px 4px; }
+
+/* Net Forecast table */
+.net-table { width:100%; border-collapse:collapse; }
+.net-table th { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); padding:8px 10px; border-bottom:2px solid var(--border); text-align:center; background:var(--surface2); }
+.net-table th:first-child { text-align:left; }
+.net-table td { padding:9px 10px; border-bottom:1px solid rgba(37,42,58,0.5); font-size:13px; text-align:center; }
+.net-table td:first-child { text-align:left; font-weight:600; }
+.net-table td.conv { font-size:11px; color:var(--text2); }
+.net-table td.driver-list { font-size:11px; color:var(--text2); text-align:left; }
+.net-so { background:rgba(34,197,94,0.12); color:var(--green); font-weight:800; border-radius:4px; }
+.net-op { color:var(--green); font-weight:700; }
+.net-n { color:var(--text2); }
+.net-un { color:var(--red); font-weight:700; }
+.net-su { background:rgba(239,68,68,0.12); color:var(--red); font-weight:800; border-radius:4px; }
+.net-group-row td { background:rgba(59,130,246,0.05); font-size:11px; font-weight:700; text-transform:uppercase; color:var(--blue); letter-spacing:0.5px; padding:6px 10px; }
+
+/* Watchlist matrix */
+.wl-table { width:100%; border-collapse:collapse; }
+.wl-table th { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); padding:8px 12px; border-bottom:2px solid var(--border); background:var(--surface2); }
+.wl-table td { padding:10px 12px; border-bottom:1px solid rgba(37,42,58,0.5); font-size:13px; }
+.wl-ticker { font-weight:700; font-size:14px; }
+.wl-sector { font-size:11px; color:var(--text2); }
+.wl-cell { text-align:center; font-weight:700; border-radius:4px; padding:4px 8px; }
+.wl-so { color:var(--green); background:rgba(34,197,94,0.12); }
+.wl-op { color:var(--green); }
+.wl-n { color:var(--text2); }
+.wl-un { color:var(--red); }
+.wl-su { color:var(--red); background:rgba(239,68,68,0.12); }
+.wl-rationale { font-size:11px; color:var(--text2); }
+
+/* Capital flows */
+.flow-section-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.flow-block { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; }
+.flow-block-title { font-size:13px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.flow-item { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(37,42,58,0.4); font-size:13px; }
+.flow-item:last-child { border-bottom:none; }
+.flow-asset { color:var(--text); }
+.flow-direction { font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px; }
+.flow-in-strong { background:rgba(34,197,94,0.15); color:var(--green); }
+.flow-in-mod { background:rgba(34,197,94,0.08); color:var(--green); }
+.flow-out-mod { background:rgba(239,68,68,0.08); color:var(--red); }
+.flow-out-strong { background:rgba(239,68,68,0.15); color:var(--red); }
+.flow-neutral { background:var(--surface2); color:var(--text2); }
+.flow-speed { font-size:11px; color:var(--text2); margin-top:2px; }
+
+/* Calendar */
+.cal-table { width:100%; border-collapse:collapse; }
+.cal-table th { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); padding:8px 10px; border-bottom:2px solid var(--border); background:var(--surface2); }
+.cal-table td { padding:10px; border-bottom:1px solid rgba(37,42,58,0.4); font-size:13px; vertical-align:top; }
+.cal-table tr:last-child td { border-bottom:none; }
+.cal-date { font-weight:700; white-space:nowrap; }
+.cal-event { font-weight:600; }
+.cal-driver-tag { display:inline-block; font-size:10px; background:var(--surface2); border:1px solid var(--border); border-radius:3px; padding:1px 5px; color:var(--text2); margin-left:6px; }
+.cal-forecast { font-size:12px; color:var(--text); }
+.cal-consensus { font-size:11px; color:var(--text2); margin-top:2px; }
+.cal-diff { font-size:11px; font-weight:700; color:var(--orange); }
+.cal-assets { display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
+.asset-chip { font-size:10px; font-weight:700; padding:2px 7px; border-radius:3px; }
+.chip-bull { background:rgba(34,197,94,0.15); color:var(--green); }
+.chip-bear { background:rgba(239,68,68,0.15); color:var(--red); }
+.chip-neut { background:var(--surface2); color:var(--text2); }
+.cal-week { font-size:12px; font-weight:700; color:var(--blue); background:rgba(59,130,246,0.08); padding:8px 10px; }
+
+/* Interactions */
+.interact-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; margin-bottom:10px; }
+.interact-pair { font-size:13px; font-weight:700; margin-bottom:6px; }
+.interact-arrow { color:var(--orange); margin:0 6px; }
+.interact-detail { font-size:12px; color:var(--text2); line-height:1.6; }
+.interact-resolution { font-size:12px; color:var(--blue); margin-top:4px; }
+
+/* State snapshot */
+.state-json { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:16px; font-family:'Fira Code','Courier New',monospace; font-size:12px; color:var(--text2); overflow-x:auto; white-space:pre; line-height:1.6; }
+
+/* Footer */
+.footer { background:var(--surface); border-top:1px solid var(--border); padding:24px 0; margin-top:48px; text-align:center; font-size:12px; color:var(--text2); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════ HEADER ═══ -->
+<div class="report-header">
+<div class="container">
+  <div class="nav-row">
+    <a href="/economics/">← Economics Dashboard</a>
+    <a href="/">← SignalDeck</a>
+  </div>
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+    <div>
+      <div class="report-title">Macro<span>Driver</span> Weekly</div>
+      <div class="report-meta">
+        <span class="report-type-badge">Driver-Based Analysis</span>
+        7 April 2026 &nbsp;·&nbsp; 10 Active Drivers &nbsp;·&nbsp; First Run
+      </div>
+    </div>
+    <div style="text-align:right;">
+      <div class="scenario-badge">⚠ Stagflation-to-Contraction Transition</div>
+      <div style="font-size:11px; color:var(--text2); margin-top:6px;">Dominant scenario · 48% probability</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- ═══ DISCLAIMER TOP ═══ -->
+<div class="disclaimer">
+  ⚠ <strong>Important:</strong> This is a quantitative macro-economic framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- ═══════════════════ §1 DRIVER DOMINANCE SUMMARY ═══════════════════ -->
+<div class="section">
+<h2><span class="section-num">§1</span> Driver Dominance Summary — What's Moving Markets</h2>
+<div class="dominance-grid">
+
+  <div class="dom-row">
+    <div class="dom-name">Iran/Hormuz War <div class="type-tag">TEMPORARY</div></div>
+    <div class="dom-score score-4">4</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-4"></div></div>
+    <div class="dom-label badge badge-orange">HIGH</div>
+  </div>
+
+  <div class="dom-row">
+    <div class="dom-name">US-China Tariff War <div class="type-tag">TEMPORARY</div></div>
+    <div class="dom-score score-4">4</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-4"></div></div>
+    <div class="dom-label badge badge-orange">HIGH</div>
+  </div>
+
+  <div class="dom-row">
+    <div class="dom-name">US Economic Health <div class="type-tag">ENDURING</div></div>
+    <div class="dom-score score-3">3</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-3"></div></div>
+    <div class="dom-label badge badge-yellow">MODERATE</div>
+  </div>
+
+  <div class="dom-row">
+    <div class="dom-name">Global Monetary Policy <div class="type-tag">ENDURING</div></div>
+    <div class="dom-score score-3">3</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-3"></div></div>
+    <div class="dom-label badge badge-yellow">MODERATE</div>
+  </div>
+
+  <div class="dom-row">
+    <div class="dom-name">Structural Deglobalisation <div class="type-tag">ENDURING</div></div>
+    <div class="dom-score score-3">3</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-3"></div></div>
+    <div class="dom-label badge badge-yellow">MODERATE</div>
+  </div>
+
+  <div class="dom-row">
+    <div class="dom-name">China Economic Health <div class="type-tag">ENDURING</div></div>
+    <div class="dom-score score-2">2</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-2"></div></div>
+    <div class="dom-label badge badge-blue">BACKGROUND</div>
+  </div>
+
+  <div class="dom-row">
+    <div class="dom-name">US Fiscal Trajectory <div class="type-tag">ENDURING</div></div>
+    <div class="dom-score score-2">2</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-2"></div></div>
+    <div class="dom-label badge badge-blue">BACKGROUND</div>
+  </div>
+
+  <div class="dom-row">
+    <div class="dom-name">AI &amp; Productivity Revolution <div class="type-tag">ENDURING</div></div>
+    <div class="dom-score score-2">2</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-2"></div></div>
+    <div class="dom-label badge badge-blue">BACKGROUND</div>
+  </div>
+
+  <div class="dom-row">
+    <div class="dom-name">Climate &amp; Resource Stress <div class="type-tag">ENDURING</div></div>
+    <div class="dom-score score-2">2</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-2"></div></div>
+    <div class="dom-label badge badge-blue">BACKGROUND</div>
+  </div>
+
+  <div class="dom-row" style="opacity:0.5;">
+    <div class="dom-name">Global Demographics &amp; Debt <div class="type-tag">ENDURING</div></div>
+    <div class="dom-score score-1">1</div>
+    <div class="dom-bar-wrap"><div class="dom-bar bar-1"></div></div>
+    <div class="dom-label badge" style="background:rgba(122,128,153,0.1); color:var(--text2);">DORMANT</div>
+  </div>
+
+</div>
+<div style="font-size:12px; color:var(--text2); margin-top:12px;">
+  Total active dominance: 25 points across 9 non-dormant drivers. Two temporary drivers (Iran War + Tariff War) account for 32% of total weight — an unusually elevated share of event-driven risk.
+</div>
+</div>
+
+<!-- ═══════════════════ §2 ECONOMIC SCENARIO ═══════════════════ -->
+<div class="section">
+<h2><span class="section-num">§2</span> Economic Scenario</h2>
+<div class="scenario-grid">
+  <div class="sc-card sc-stag sc-active">
+    <div class="sc-prob" style="color:var(--orange);">48%</div>
+    <div class="sc-name">Stagflation-to-Contraction</div>
+    <div class="sc-desc">Tariffs deliver a supply-side inflationary shock while simultaneously compressing growth. The Fed is boxed in — cutting risks inflation acceleration; holding risks recession. Oil price volatility adds uncertainty but tariff-driven goods price increases persist regardless of Hormuz.</div>
+    <div class="sc-drivers">
+      <span class="sc-driver-tag">Tariff War</span>
+      <span class="sc-driver-tag">US Economic Health</span>
+      <span class="sc-driver-tag">Deglobalisation</span>
+    </div>
+  </div>
+  <div class="sc-card sc-bust">
+    <div class="sc-prob" style="color:var(--red);">25%</div>
+    <div class="sc-name">Deflationary Bust</div>
+    <div class="sc-desc">Trade war escalation exceeds tariff shock, triggering a demand collapse. Companies freeze investment, hiring contracts, unemployment rises sharply. Fed cuts aggressively but is behind the curve. Long bonds rally hard; equities crater.</div>
+    <div class="sc-drivers">
+      <span class="sc-driver-tag">Tariff War escalates</span>
+      <span class="sc-driver-tag">China slowdown</span>
+    </div>
+  </div>
+  <div class="sc-card sc-soft">
+    <div class="sc-prob" style="color:var(--green);">18%</div>
+    <div class="sc-name">Soft Landing (Preserved)</div>
+    <div class="sc-desc">Iran ceasefire holds, OPEC+ reversal contained, US-China trade deal progress reduces tariff impact. Fed cuts 2x in H2 2026. Economy absorbs shock; unemployment stays below 4.7%. Growth tech recovers; credit holds.</div>
+    <div class="sc-drivers">
+      <span class="sc-driver-tag">Ceasefire holds</span>
+      <span class="sc-driver-tag">Trade negotiation</span>
+    </div>
+  </div>
+  <div class="sc-card sc-reaccel">
+    <div class="sc-prob" style="color:var(--blue);">9%</div>
+    <div class="sc-name">Reacceleration</div>
+    <div class="sc-desc">Tariffs reversed or exempted broadly. Iran deal resolves Hormuz. AI productivity wave accelerates, lifting real GDP above 3%. Fed cuts cautiously. Risk assets surge. Dollar weakens structurally. Highly unlikely from current policy trajectory.</div>
+    <div class="sc-drivers">
+      <span class="sc-driver-tag">Policy reversal</span>
+      <span class="sc-driver-tag">AI productivity</span>
+    </div>
+  </div>
+</div>
+
+<div class="scenario-meta">
+  <div class="sc-meta-card">
+    <div class="sc-meta-title">⚡ Scenario Transition Risks</div>
+    <div class="sc-meta-item">Iran ceasefire breaks down → oil spikes → stagflation probability rises to 60%+</div>
+    <div class="sc-meta-item">US Q2 GDP print &lt;0% → deflationary bust probability rises to 45%</div>
+    <div class="sc-meta-item">US-China tariff deal → soft landing probability rises to 40%</div>
+    <div class="sc-meta-item">Fed emergency cut signal → reacceleration probability rises to 20%</div>
+  </div>
+  <div class="sc-meta-card">
+    <div class="sc-meta-title">🔍 Falsification Signals (watch these)</div>
+    <div class="sc-meta-item">Unemployment below 4.2% by June 2026 → stagflation scenario intact</div>
+    <div class="sc-meta-item">Core CPI above 3.5% by May 2026 → validates stagflation direction</div>
+    <div class="sc-meta-item">ISM Manufacturing PMI below 45 → bust scenario accelerating</div>
+    <div class="sc-meta-item">10Y yield above 5.0% → fiscal stress / bond vigilante scenario emerging</div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════ §3 DRIVER DEEP DIVES ═══════════════════ -->
+<div class="section">
+<h2><span class="section-num">§3</span> Driver Deep Dives</h2>
+
+<!-- ─── DRIVER: Iran/Hormuz War ─── -->
+<div class="driver-card">
+<div class="driver-header">
+  <div>
+    <div class="driver-title">🔴 Iran/Hormuz War — April 2026</div>
+    <div class="driver-conf">Temporary Driver &nbsp;·&nbsp; Confidence: Medium</div>
+  </div>
+  <div class="badge badge-orange">HIGH · 4</div>
+</div>
+<div class="driver-body">
+  <div class="driver-section-label">Triggering Event &amp; Market Mechanism</div>
+  <p style="font-size:13px; color:var(--text2); margin-bottom:16px;">
+    Initiated: early April 2026 with Iranian threats to close Strait of Hormuz (20% of global oil supply). Today's trigger: ceasefire talks reported — USO collapsed 13.56% intraday (largest single-day oil drop in recent memory). Market mechanism: Hormuz disruption → oil supply shock → energy inflation → stagflation pressure on Fed. Ceasefire → supply normalises → energy deflation → Fed gains room to cut. Binary outcome with outsized daily price action.
+  </p>
+
+  <div class="driver-section-label">Key Indicators</div>
+  <table class="ind-table">
+    <tr><th>Indicator</th><th>Current Value</th><th>Watch Level</th><th>Status</th></tr>
+    <tr><td>USO (Oil ETF) 1-day</td><td>−13.56%</td><td>±5%</td><td class="status-breach">BREACH</td></tr>
+    <tr><td>Brent Crude implied</td><td>~$65/bbl (post-drop)</td><td>&gt;$90/bbl = stress</td><td class="status-ok">OK (deflated)</td></tr>
+    <tr><td>Strait of Hormuz status</td><td>Ceasefire talks active</td><td>Full closure</td><td class="status-watch">WATCH</td></tr>
+    <tr><td>India/Iran oil imports</td><td>Resumed</td><td>—</td><td class="status-watch">WATCH</td></tr>
+    <tr><td>Gold reaction</td><td>+3.33%</td><td>—</td><td class="status-watch">WATCH (geopolit. hedge)</td></tr>
+  </table>
+
+  <div class="driver-section-label">Trajectory Predictions</div>
+  <div class="traj-grid">
+    <div class="traj-card">
+      <div class="traj-horizon">Short (0–4 weeks)</div>
+      <div class="traj-direction traj-mixed">⚡ High Uncertainty</div>
+      <div class="traj-text">50/50 ceasefire vs. escalation. Today's oil crash prices in ceasefire — if talks fail, sharp reversal upward. Net energy impact is Neutral to the aggregation given uncertainty. Gold stays elevated as hedge regardless of outcome.</div>
+    </div>
+    <div class="traj-card">
+      <div class="traj-horizon">Medium (1–6 months)</div>
+      <div class="traj-direction traj-down">↓ Fading</div>
+      <div class="traj-text">Geopolitical events of this type typically resolve within 4–8 weeks through diplomatic channels or military conclusion. Dominance expected to drop to 2 (Background) by May unless Hormuz is physically closed.</div>
+    </div>
+    <div class="traj-card">
+      <div class="traj-horizon">Long (6–18 months)</div>
+      <div class="traj-direction traj-neutral">→ Dormant</div>
+      <div class="traj-text">Expected resolution by Q3 2026. Long-term structural oil story (transition, OPEC+ dynamics) takes over. This driver retires to Dormant. Residual risk of re-escalation if Iran nuclear talks collapse.</div>
+    </div>
+  </div>
+
+  <div class="driver-section-label">Asset Class Impact</div>
+  <table class="impact-table">
+    <tr><th>Asset Class</th><th>Short</th><th>Medium</th><th>Long</th></tr>
+    <tr><td>Gold</td><td class="impact-so">Strong OP</td><td class="impact-op">Outperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>Oil / Energy (USO/XLE)</td><td class="impact-n">Neutral (binary)</td><td class="impact-n">Neutral</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>US Large Cap (SPY)</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>EM Equities</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>Japanese Yen</td><td class="impact-op">Outperform</td><td class="impact-n">Neutral</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>US Dollar</td><td class="impact-n">Neutral</td><td class="impact-n">Neutral</td><td class="impact-n">Neutral</td></tr>
+  </table>
+
+  <div class="driver-section-label">Retirement Criteria</div>
+  <p style="font-size:12px; color:var(--text2);">Ceasefire confirmed + Hormuz passage normalised for 10 consecutive days → drop to Dormant. Oil &lt;±2% daily for 2 weeks → drop to Background (2).</p>
+</div>
+</div>
+
+<!-- ─── DRIVER: US-China Tariff War ─── -->
+<div class="driver-card">
+<div class="driver-header">
+  <div>
+    <div class="driver-title">🔴 US-China Tariff War — April 2026 Escalation</div>
+    <div class="driver-conf">Temporary Driver &nbsp;·&nbsp; Confidence: High</div>
+  </div>
+  <div class="badge badge-orange">HIGH · 4</div>
+</div>
+<div class="driver-body">
+  <div class="driver-section-label">Triggering Event &amp; Market Mechanism</div>
+  <p style="font-size:13px; color:var(--text2); margin-bottom:16px;">
+    Trump administration doubled tariffs on Chinese goods in April 2026 (rates now reportedly 104%+ on broad categories, with China retaliating with 34%+ counter-tariffs). India has resumed purchasing Iranian oil. Market mechanism: tariffs → import cost inflation → stagflation pressure → earnings compression for US companies with China supply chains → business investment freeze → growth shock.
+  </p>
+
+  <div class="driver-section-label">Key Indicators</div>
+  <table class="ind-table">
+    <tr><th>Indicator</th><th>Current Value</th><th>Watch Level</th><th>Status</th></tr>
+    <tr><td>US Tariff Effective Rate (China)</td><td>~104%+ on key categories</td><td>&gt;20% avg</td><td class="status-breach">BREACH</td></tr>
+    <tr><td>China Retaliation Rate</td><td>34%+ counter-tariffs</td><td>—</td><td class="status-breach">BREACH</td></tr>
+    <tr><td>Supply Chain Pressure</td><td>Elevated (post-announcement)</td><td>&gt;1.5 std dev</td><td class="status-watch">WATCH</td></tr>
+    <tr><td>USD (UUP)</td><td>−0.65% today</td><td>—</td><td class="status-watch">WATCH (dollar weakening)</td></tr>
+    <tr><td>SPY 1-day reaction</td><td>+2.29% (ceasefire offset)</td><td>—</td><td class="status-watch">WATCH</td></tr>
+  </table>
+
+  <div class="driver-section-label">Trajectory Predictions</div>
+  <div class="traj-grid">
+    <div class="traj-card">
+      <div class="traj-horizon">Short (0–4 weeks)</div>
+      <div class="traj-direction traj-down">↓ Deteriorating</div>
+      <div class="traj-text">No trade deal imminent. Tariffs remain elevated. China counter-tariffs bite into US agricultural exporters and tech hardware. Earnings warnings accelerating. This driver stays High (4) dominance through April.</div>
+    </div>
+    <div class="traj-card">
+      <div class="traj-horizon">Medium (1–6 months)</div>
+      <div class="traj-direction traj-mixed">⚡ Uncertain</div>
+      <div class="traj-text">Two paths: (1) Escalation to full decoupling → High (4) or Critical (5) dominance, stagflation confirmed. (2) Negotiated framework → tariff rollback to 50% baseline → drops to Moderate (3). Monitoring USTR statements, G20 sideline meetings.</div>
+    </div>
+    <div class="traj-card">
+      <div class="traj-horizon">Long (6–18 months)</div>
+      <div class="traj-direction traj-down">↓ Structural drag</div>
+      <div class="traj-text">Even in deal scenario, structural decoupling continues feeding into Deglobalisation enduring driver. Partial rollback likely, but 20%+ baseline tariffs become the new normal. Long-term inflationary drag on goods prices.</div>
+    </div>
+  </div>
+
+  <div class="driver-section-label">Asset Class Impact</div>
+  <table class="impact-table">
+    <tr><th>Asset Class</th><th>Short</th><th>Medium</th><th>Long</th></tr>
+    <tr><td>US Growth / Tech (QQQ)</td><td class="impact-su">Strong UN</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td></tr>
+    <tr><td>US Large Cap (SPY)</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td></tr>
+    <tr><td>China Equities (FXI/KWEB)</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>EM Equities (EEM)</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>US HY Corp (HYG)</td><td class="impact-su">Strong UN</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>US Dollar (UUP)</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-su">Strong UN</td></tr>
+    <tr><td>Gold (GLD)</td><td class="impact-so">Strong OP</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td></tr>
+    <tr><td>TIPS (TIP)</td><td class="impact-so">Strong OP</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td></tr>
+    <tr><td>Agricultural Comm. (DBA)</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td><td class="impact-n">Neutral</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ─── DRIVER: US Economic Health ─── -->
+<div class="driver-card">
+<div class="driver-header">
+  <div>
+    <div class="driver-title">🟡 US Economic Health</div>
+    <div class="driver-conf">Enduring Driver &nbsp;·&nbsp; Confidence: Medium</div>
+  </div>
+  <div class="badge badge-yellow">MODERATE · 3</div>
+</div>
+<div class="driver-body">
+  <div class="driver-section-label">Current Cycle Phase: Late Expansion / Peak (deteriorating)</div>
+
+  <div class="driver-section-label">Key Indicators</div>
+  <table class="ind-table">
+    <tr><th>Indicator</th><th>Current Value</th><th>Watch Level</th><th>Status</th></tr>
+    <tr><td>Fed Funds Rate</td><td>3.64%</td><td>&gt;4.50%</td><td class="status-ok">OK</td></tr>
+    <tr><td>Headline CPI (YoY)</td><td>2.434%</td><td>&gt;3.5%</td><td class="status-ok">OK</td></tr>
+    <tr><td>Core CPI (YoY)</td><td>~2.5%</td><td>&gt;3.0%</td><td class="status-ok">OK (but rising)</td></tr>
+    <tr><td>Unemployment Rate</td><td>4.3%</td><td>&gt;4.5%</td><td class="status-ok">OK (approaching watch)</td></tr>
+    <tr><td>10Y Treasury Yield</td><td>4.34%</td><td>&gt;4.5%</td><td class="status-ok">OK</td></tr>
+    <tr><td>2Y-10Y Yield Curve</td><td>+0.52bp</td><td>&lt;0bp (inverted)</td><td class="status-ok">OK (positive, de-inverting)</td></tr>
+    <tr><td>VIX</td><td>24.17</td><td>&gt;30 = stress</td><td class="status-watch">WATCH (elevated)</td></tr>
+    <tr><td>M2 Money Supply</td><td>$22,667.3B</td><td>YoY &lt;3%</td><td class="status-ok">OK</td></tr>
+  </table>
+
+  <div class="driver-section-label">Trajectory Predictions</div>
+  <div class="traj-grid">
+    <div class="traj-card">
+      <div class="traj-horizon">Short (0–4 weeks)</div>
+      <div class="traj-direction traj-down">↓ Weakening</div>
+      <div class="traj-text">Tariff shock is not yet reflected in CPI or unemployment data (lagging indicators). Leading indicators (VIX 24, yield curve de-inverting, business surveys) suggest growth deceleration incoming. Cycle phase: Peak transitioning to Contraction.</div>
+    </div>
+    <div class="traj-card">
+      <div class="traj-horizon">Medium (1–6 months)</div>
+      <div class="traj-direction traj-down">↓ Contraction risk</div>
+      <div class="traj-text">Tariff inflation passes through to Core CPI — watch for 3.0%+ breach by Q3 2026. Unemployment likely rises toward 4.5%–4.7% as hiring freezes take hold. GDP growth trajectory: 2.0% annualised H1, decelerating to 1.0%–1.5% H2.</div>
+    </div>
+    <div class="traj-card">
+      <div class="traj-horizon">Long (6–18 months)</div>
+      <div class="traj-direction traj-mixed">⚡ Cycle dependent</div>
+      <div class="traj-text">If trade deal materialises in H2 2026, recovery resumes. If tariffs persist, 2027 recession probability rises to 45%. Fed's ability to cut is constrained by inflation — the classic stagflation policy trap.</div>
+    </div>
+  </div>
+
+  <div class="driver-section-label">Asset Class Impact (Cycle Phase: Late Expansion → Peak)</div>
+  <table class="impact-table">
+    <tr><th>Asset Class</th><th>Short</th><th>Medium</th><th>Long</th></tr>
+    <tr><td>US Large Cap (SPY)</td><td class="impact-n">Neutral</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>US Growth / Tech (QQQ)</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>US Defensives</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>TIPS</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>US HY Corp</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>Gold</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td><td class="impact-n">Neutral</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ─── DRIVER: Global Monetary Policy ─── -->
+<div class="driver-card">
+<div class="driver-header">
+  <div>
+    <div class="driver-title">🟡 Global Monetary Policy</div>
+    <div class="driver-conf">Enduring Driver &nbsp;·&nbsp; Confidence: Medium</div>
+  </div>
+  <div class="badge badge-yellow">MODERATE · 3</div>
+</div>
+<div class="driver-body">
+  <div class="driver-section-label">Key Indicators</div>
+  <table class="ind-table">
+    <tr><th>Indicator</th><th>Current Value</th><th>Watch Level</th><th>Status</th></tr>
+    <tr><td>Fed Funds Rate</td><td>3.64%</td><td>&gt;4.50% or &lt;3.00%</td><td class="status-ok">OK (between bounds)</td></tr>
+    <tr><td>2Y Treasury Yield</td><td>3.84%</td><td>—</td><td class="status-ok">OK</td></tr>
+    <tr><td>10Y Treasury Yield</td><td>4.34%</td><td>&gt;4.50%</td><td class="status-ok">OK</td></tr>
+    <tr><td>Yield Curve (10Y-2Y)</td><td>+0.52bp</td><td>&lt;0bp</td><td class="status-ok">OK (positive, de-inverting)</td></tr>
+    <tr><td>Taylor Rule Gap</td><td>~−80bp (over-tightened for growth)</td><td>&gt;+100bp</td><td class="status-watch">WATCH (Fed constrained)</td></tr>
+    <tr><td>Market-implied cuts (2026)</td><td>~3–4 cuts priced (news-derived)</td><td>—</td><td class="status-watch">WATCH</td></tr>
+  </table>
+
+  <div class="driver-section-label">Trajectory Predictions</div>
+  <div class="traj-grid">
+    <div class="traj-card">
+      <div class="traj-horizon">Short (0–4 weeks)</div>
+      <div class="traj-direction traj-neutral">→ On Hold</div>
+      <div class="traj-text">Fed holds. Tariff inflation prevents cuts — even as growth risk rises, the Fed cannot cut while inflation expectations are unanchored by tariff uncertainty. This is the classic stagflation policy trap. FOMC language becomes critical.</div>
+    </div>
+    <div class="traj-card">
+      <div class="traj-horizon">Medium (1–6 months)</div>
+      <div class="traj-direction traj-down">↓ Cuts likely delayed</div>
+      <div class="traj-text">Fed may cut once (25bp) in Q3 2026 as insurance if unemployment rises to 4.6%+. But inflation data must cooperate. ECB likely cuts ahead of Fed given weaker European growth. BOJ continuing normalisation (rate hike to 0.75%+ possible) creates carry trade risk.</div>
+    </div>
+    <div class="traj-card">
+      <div class="traj-horizon">Long (6–18 months)</div>
+      <div class="traj-direction traj-down">↓ Easing cycle begins</div>
+      <div class="traj-text">Fed expected to cut 75–100bp in 2026–2027 as growth decelerates definitively. This is structurally bullish for long bonds, gold, and growth equities if inflation cooperates. Key risk: tariff inflation forces Fed to stay higher for longer.</div>
+    </div>
+  </div>
+
+  <div class="driver-section-label">Asset Class Impact</div>
+  <table class="impact-table">
+    <tr><th>Asset Class</th><th>Short</th><th>Medium</th><th>Long</th></tr>
+    <tr><td>US Long Bonds (TLT)</td><td class="impact-n">Neutral</td><td class="impact-n">Neutral</td><td class="impact-op">Outperform</td></tr>
+    <tr><td>Short-dated UST</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>US Growth / Tech</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-op">Outperform</td></tr>
+    <tr><td>US REITs</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td><td class="impact-op">Outperform</td></tr>
+    <tr><td>Gold</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td></tr>
+    <tr><td>US Dollar</td><td class="impact-n">Neutral</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ─── DRIVER: Structural Deglobalisation ─── -->
+<div class="driver-card">
+<div class="driver-header">
+  <div>
+    <div class="driver-title">🟡 Structural Deglobalisation &amp; Trade</div>
+    <div class="driver-conf">Enduring Driver &nbsp;·&nbsp; Confidence: High</div>
+  </div>
+  <div class="badge badge-yellow">MODERATE · 3</div>
+</div>
+<div class="driver-body">
+  <p style="font-size:13px; color:var(--text2); margin-bottom:16px;">
+    The tariff war temporary driver is the acute manifestation of this enduring structural force. Even when the temporary driver resolves, deglobalisation continues: reshoring capex, supply chain redundancy, sanctions regimes, and geopolitical bloc formation remain permanently elevated. Asset class impacts extend beyond the acute tariff shock.
+  </p>
+
+  <div class="driver-section-label">Asset Class Impact</div>
+  <table class="impact-table">
+    <tr><th>Asset Class</th><th>Short</th><th>Medium</th><th>Long</th></tr>
+    <tr><td>TIPS</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td></tr>
+    <tr><td>Agricultural Comm.</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td></tr>
+    <tr><td>Gold</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td><td class="impact-op">Outperform</td></tr>
+    <tr><td>EM Equities</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td></tr>
+    <tr><td>China Equities</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-n">Neutral</td></tr>
+    <tr><td>US Growth / Tech</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td></tr>
+    <tr><td>US Dollar</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td><td class="impact-un">Underperform</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ─── BACKGROUND DRIVERS SUMMARY TABLE ─── -->
+<div class="driver-card">
+<div class="driver-header">
+  <div>
+    <div class="driver-title">Background &amp; Dormant Drivers — Compact Summary</div>
+  </div>
+</div>
+<div class="driver-body">
+<table class="ind-table">
+  <tr>
+    <th>Driver</th><th>Dom.</th><th>Key Status</th><th>Short Signal</th><th>Long Signal</th>
+  </tr>
+  <tr>
+    <td><strong>China Economic Health</strong> <span class="badge badge-blue" style="font-size:10px;">BG·2</span></td>
+    <td>2</td>
+    <td>GDP ~4.5%, property sector stabilising, PBOC easing, Caixin PMI ~49.5</td>
+    <td class="status-watch">Muted / Neutral</td>
+    <td class="status-ok">Slight Positive if deal</td>
+  </tr>
+  <tr>
+    <td><strong>US Fiscal Trajectory</strong> <span class="badge badge-blue" style="font-size:10px;">BG·2</span></td>
+    <td>2</td>
+    <td>Debt/GDP ~124%, deficit ~6.5% GDP, DOGE cuts minor vs spend, 10Y 4.34%</td>
+    <td class="status-watch">TLT Headwind</td>
+    <td class="status-watch">Gold Tailwind</td>
+  </tr>
+  <tr>
+    <td><strong>AI &amp; Productivity</strong> <span class="badge badge-blue" style="font-size:10px;">BG·2</span></td>
+    <td>2</td>
+    <td>Big Tech capex continuing, enterprise adoption 30%+ of S&amp;P 500, Nvidia revenues strong</td>
+    <td class="status-ok">QQQ mild support</td>
+    <td class="status-ok">Growth Tech OP (long)</td>
+  </tr>
+  <tr>
+    <td><strong>Climate &amp; Resource Stress</strong> <span class="badge badge-blue" style="font-size:10px;">BG·2</span></td>
+    <td>2</td>
+    <td>La Niña weakening, food prices stable, energy transition ongoing</td>
+    <td class="status-ok">Neutral most assets</td>
+    <td class="status-ok">Agricultural mild OP</td>
+  </tr>
+  <tr>
+    <td><strong>Global Demographics &amp; Debt</strong> <span class="badge" style="font-size:10px; background:rgba(122,128,153,0.1); color:var(--text2);">DORMANT·1</span></td>
+    <td>1</td>
+    <td>Structural background — aging populations, high G20 debt. Not causing near-term price action.</td>
+    <td class="status-ok">Neutral (dormant)</td>
+    <td class="status-watch">Long bond OP (structural)</td>
+  </tr>
+</table>
+</div>
+</div>
+
+</div><!-- end §3 -->
+
+<!-- ═══════════════════ §4 DRIVER INTERACTIONS ═══════════════════ -->
+<div class="section">
+<h2><span class="section-num">§4</span> Driver Interactions &amp; Double-Count Prevention</h2>
+
+<div class="interact-card">
+  <div class="interact-pair">Iran/Hormuz War <span class="interact-arrow">→</span> US Economic Health</div>
+  <div class="interact-detail">Oil price spike from Hormuz closure would feed into headline CPI, tightening the Fed's policy constraint and weighing on consumer spending. Channel: energy inflation → real income squeeze → consumption contraction.</div>
+  <div class="interact-resolution">✓ Resolution: Iran driver assigned the <em>primary</em> oil impact for the short-term. US Economic Health driver captures the <em>transmission</em> effect via CPI/employment lagging indicators. No double-count in energy asset class (scored once under Iran driver, Neutral for US Econ Health).</div>
+</div>
+
+<div class="interact-card">
+  <div class="interact-pair">US-China Tariff War <span class="interact-arrow">→</span> Structural Deglobalisation</div>
+  <div class="interact-detail">The tariff war is an acute event manifestation of the structural deglobalisation trend. Both point in the same direction for most asset classes (EM Underperform, TIPS Outperform, Gold Outperform).</div>
+  <div class="interact-resolution">✓ Resolution: Acknowledged as directionally reinforcing (not double-counting because they affect different time horizons). Tariff War drives Short/Medium signals; Deglobalisation drives Medium/Long signals. Convictions appropriately High for overlapping signals.</div>
+</div>
+
+<div class="interact-card">
+  <div class="interact-pair">US-China Tariff War <span class="interact-arrow">→</span> China Economic Health</div>
+  <div class="interact-detail">Tariffs reduce China's export receipts, adding to existing property sector pressure. However China is countering with PBOC easing and domestic stimulus. The two forces partly offset at the China equities level.</div>
+  <div class="interact-resolution">✓ Resolution: China Equities is scored Neutral in the short-term aggregation (tariff pressure ≈ PBOC stimulus offset). The temporary driver handles the acute trade shock; China enduring driver captures the domestic cycle separately.</div>
+</div>
+
+<div class="interact-card">
+  <div class="interact-pair">Global Monetary Policy <span class="interact-arrow">→</span> US Fiscal Trajectory</div>
+  <div class="interact-detail">Higher-for-longer rates increase US debt service costs, accelerating fiscal stress. But this interaction is slow-moving and doesn't create near-term double-counting in asset class scores.</div>
+  <div class="interact-resolution">✓ Resolution: No short-term double-count. Both drivers independently assign Long Bond as Underperform (supply pressure vs. rate pressure). This reinforcement correctly yields a Underperform net signal for TLT.</div>
+</div>
+</div>
+
+<!-- ═══════════════════ §5 NET FORECAST: ASSET CLASSES ═══════════════════ -->
+<div class="section">
+<h2><span class="section-num">§5</span> Net Forecast: Asset Classes</h2>
+<p style="font-size:12px; color:var(--text2); margin-bottom:16px;">Aggregation formula: net(a,t) = Σ(impact × dominance) / Σ(dominance). Total active dominance = 25. Scores converted: &gt;+0.5 = Strong Outperform, +0.25–+0.5 = Outperform, ±0.25 = Neutral, –0.25 to –0.5 = Underperform, &lt;–0.5 = Strong Underperform.</p>
+
+<table class="net-table">
+<thead>
+<tr>
+  <th style="text-align:left; min-width:180px;">Asset Class</th>
+  <th>Short (0–4wk)</th>
+  <th>Medium (1–6mo)</th>
+  <th>Long (6–18mo)</th>
+  <th>Conv.</th>
+  <th style="text-align:left;">Primary Drivers</th>
+</tr>
+</thead>
+<tbody>
+<!-- EQUITIES GROUP -->
+<tr class="net-group-row"><td colspan="6">EQUITIES</td></tr>
+<tr>
+  <td>US Large Cap (SPY)</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Tariff War (−4), US Econ (−3), Deglob (−3)</td>
+</tr>
+<tr>
+  <td>US Growth / Tech (QQQ)</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Tariff War (−4), Deglob (−3), Monetary +AI partial offset</td>
+</tr>
+<tr>
+  <td>US Small Cap (IWM)</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">Medium</td>
+  <td class="driver-list">US Econ (−3), domestic exposure buffers tariff impact partially</td>
+</tr>
+<tr>
+  <td>US Defensives (XLU/VDC)</td>
+  <td class="net-op">Outperform</td>
+  <td class="net-op">Outperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">High</td>
+  <td class="driver-list">US Econ flight-to-safety (+3), Monetary rate sensitivity</td>
+</tr>
+<tr>
+  <td>European Equities (VGK)</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">Low</td>
+  <td class="driver-list">Mixed: Deglob (−) vs. ECB easing (+), China linked</td>
+</tr>
+<tr>
+  <td>EM Equities (EEM)</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Tariff War (−4), Iran War (−4 short), Deglob (−3)</td>
+</tr>
+<tr>
+  <td>China Equities (FXI/KWEB)</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">Low</td>
+  <td class="driver-list">Tariff War (−) offset by PBOC stimulus (+), China Econ</td>
+</tr>
+
+<!-- FIXED INCOME GROUP -->
+<tr class="net-group-row"><td colspan="6">FIXED INCOME</td></tr>
+<tr>
+  <td>US Long Bonds (TLT)</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-op">Outperform</td>
+  <td class="conv">Medium</td>
+  <td class="driver-list">Fiscal supply (−2), inflation risk (−) vs. rate cuts long (+ Monetary)</td>
+</tr>
+<tr>
+  <td>US IG Corp (LQD)</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">Medium</td>
+  <td class="driver-list">Credit spread widening risk (Tariff War, US Econ deterioration)</td>
+</tr>
+<tr>
+  <td>US High Yield (HYG)</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Default risk rising (Tariff War −4, US Econ −3)</td>
+</tr>
+<tr>
+  <td>TIPS (TIP)</td>
+  <td class="net-so">Strong Outperform</td>
+  <td class="net-so">Strong Outperform</td>
+  <td class="net-op">Outperform</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Tariff inflation (+4), Deglob (+3), US Econ CPI rising (+3)</td>
+</tr>
+<tr>
+  <td>Short-dated UST (SHY/BIL)</td>
+  <td class="net-op">Outperform</td>
+  <td class="net-op">Outperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">High</td>
+  <td class="driver-list">High yield vs. risk (3.64% Fed Funds), flight to quality</td>
+</tr>
+
+<!-- COMMODITIES GROUP -->
+<tr class="net-group-row"><td colspan="6">COMMODITIES</td></tr>
+<tr>
+  <td>Gold (GLD)</td>
+  <td class="net-so">Strong Outperform</td>
+  <td class="net-so">Strong Outperform</td>
+  <td class="net-so">Strong Outperform</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Iran War (+4), Tariff War (+4), Monetary (+3), Fiscal (+2) — all pointing same direction</td>
+</tr>
+<tr>
+  <td>Silver (SLV)</td>
+  <td class="net-so">Strong Outperform</td>
+  <td class="net-op">Outperform</td>
+  <td class="net-op">Outperform</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Gold correlation + industrial demand (AI/solar), partial tariff offset</td>
+</tr>
+<tr>
+  <td>Oil / Energy (USO/XLE)</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">Low</td>
+  <td class="driver-list">Iran binary (50/50 ceasefire vs. escalation), OPEC+ production increase = offsetting forces</td>
+</tr>
+<tr>
+  <td>Industrial Metals (PDBC/CPER)</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">Low</td>
+  <td class="driver-list">China demand stable (BG·2) vs. tariff supply chain disruption, net offset</td>
+</tr>
+<tr>
+  <td>Agricultural Comm. (DBA)</td>
+  <td class="net-op">Outperform</td>
+  <td class="net-op">Outperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Tariff War (+4 — China counter-tariffs hit US ag exports → domestic price rise), Deglob (+3)</td>
+</tr>
+
+<!-- ALTERNATIVES GROUP -->
+<tr class="net-group-row"><td colspan="6">ALTERNATIVES</td></tr>
+<tr>
+  <td>US Dollar (UUP)</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-su">Strong Underperform</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Tariff War (−4), Deglob (−3), Monetary easing ahead (−3), Fiscal deterioration (−2)</td>
+</tr>
+<tr>
+  <td>Japanese Yen (FXY)</td>
+  <td class="net-so">Strong Outperform</td>
+  <td class="net-op">Outperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">High</td>
+  <td class="driver-list">Iran War safe haven (+4), BOJ normalisation (+3), risk-off USD weakness</td>
+</tr>
+<tr>
+  <td>EM Currencies (CEW)</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="conv">Medium</td>
+  <td class="driver-list">USD weakness (mildly positive) vs. EM growth headwinds (negative), China linked</td>
+</tr>
+<tr>
+  <td>Crypto (IBIT)</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-op">Outperform</td>
+  <td class="conv">Low</td>
+  <td class="driver-list">Risk-off headwind (short) vs. USD weakness tailwind + fiscal debasement (long)</td>
+</tr>
+<tr>
+  <td>US REITs (VNQ)</td>
+  <td class="net-un">Underperform</td>
+  <td class="net-n">Neutral</td>
+  <td class="net-op">Outperform</td>
+  <td class="conv">Medium</td>
+  <td class="driver-list">Rate sensitivity (Monetary constrained short), recovers as cuts materialise long</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ═══════════════════ §6 WATCHLIST IMPACT MATRIX ═══════════════════ -->
+<div class="section">
+<h2><span class="section-num">§6</span> Watchlist Impact Matrix</h2>
+<p style="font-size:12px; color:var(--text2); margin-bottom:16px;">Stock-level signals derived from asset class net scores, adjusted for each company's specific macro sensitivity profile (sector, geography, commodity exposure, rate sensitivity, USD direction).</p>
+
+<table class="wl-table">
+<thead>
+<tr>
+  <th>Ticker</th>
+  <th>Sector / Profile</th>
+  <th>Short (0–4wk)</th>
+  <th>Medium (1–6mo)</th>
+  <th>Long (6–18mo)</th>
+  <th>Primary Macro Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>
+    <div class="wl-ticker">SOFI</div>
+    <div class="wl-sector">US Financial / Fintech</div>
+  </td>
+  <td>
+    <div style="font-size:12px;">High rate sensitivity (benefits from cuts)<br>Domestic US focus<br>Consumer lending exposure</div>
+  </td>
+  <td><div class="wl-cell wl-un">Underperform</div></td>
+  <td><div class="wl-cell wl-n">Neutral</div></td>
+  <td><div class="wl-cell wl-n">Neutral</div></td>
+  <td class="wl-rationale">Short: Consumer credit stress as tariff shock hits disposable income; VIX 24 signals risk-off repricing of growth fintech. Medium: Fed cuts help net interest margin, but credit quality risk remains. Long: Fed easing cycle eventually positive if recession avoided.</td>
+</tr>
+<tr>
+  <td>
+    <div class="wl-ticker">DLO</div>
+    <div class="wl-sector">EM Fintech / Payments</div>
+  </td>
+  <td>
+    <div style="font-size:12px;">EM currency exposure<br>Latin America / Global EM<br>USD-denominated revenues partially</div>
+  </td>
+  <td><div class="wl-cell wl-un">Underperform</div></td>
+  <td><div class="wl-cell wl-n">Neutral</div></td>
+  <td><div class="wl-cell wl-op">Outperform</div></td>
+  <td class="wl-rationale">Short: EM Equities under pressure from tariff war + Iran uncertainty; dollar weakness partially offsets. Medium: EM stabilisation if tariff deal progress. Long: USD structural weakness is a tailwind for EM fintech; payment volumes in EM grow structurally independent of US cycle.</td>
+</tr>
+<tr>
+  <td>
+    <div class="wl-ticker">MNO.TO</div>
+    <div class="wl-sector">Junior Mining / Gold</div>
+  </td>
+  <td>
+    <div style="font-size:12px;">Gold price leverage<br>Canadian dollar (CAD) sensitivity<br>Development stage — high beta</div>
+  </td>
+  <td><div class="wl-cell wl-n">Neutral</div></td>
+  <td><div class="wl-cell wl-op">Outperform</div></td>
+  <td><div class="wl-cell wl-so">Strong Outperform</div></td>
+  <td class="wl-rationale">Short: Gold +3.33% today is positive, but junior miner specific risks (financing, permitting) cap short-term upside; last price C$1.72. Medium: Gold macro environment is structurally bullish — all major drivers point to Outperform for gold, junior miners leverage this. Long: Strong Outperform for gold (all 4 main drivers aligned) creates a powerful tailwind for development-stage gold equities.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ═══════════════════ §7 NET CAPITAL FLOW MAP ═══════════════════ -->
+<div class="section">
+<h2><span class="section-num">§7</span> Net Capital Flow Map</h2>
+
+<div class="flow-section-grid">
+  <div class="flow-block">
+    <div class="flow-block-title" style="color:var(--green);">📥 Strong Inflows</div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">Gold (GLD)</div>
+        <div class="flow-speed">Real Money + Fast Money · Driver: Tariff War, Iran, Monetary, Fiscal (all aligned)</div>
+      </div>
+      <span class="flow-direction flow-in-strong">Strong Inflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">TIPS (TIP)</div>
+        <div class="flow-speed">Real Money dominant · Driver: Tariff inflation + Deglobalisation structural</div>
+      </div>
+      <span class="flow-direction flow-in-strong">Strong Inflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">Silver (SLV)</div>
+        <div class="flow-speed">Fast Money + Real Money · Gold correlation + industrial/solar demand</div>
+      </div>
+      <span class="flow-direction flow-in-strong">Strong Inflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">Japanese Yen (FXY)</div>
+        <div class="flow-speed">Fast Money · Safe haven + BOJ normalisation carry unwind</div>
+      </div>
+      <span class="flow-direction flow-in-strong">Strong Inflow</span>
+    </div>
+  </div>
+
+  <div class="flow-block">
+    <div class="flow-block-title" style="color:var(--green);">📥 Moderate Inflows</div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">US Defensives (XLU/VDC)</div>
+        <div class="flow-speed">Real Money · Flight to safety from risk-off repricing</div>
+      </div>
+      <span class="flow-direction flow-in-mod">Moderate Inflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">Short-dated UST (SHY/BIL)</div>
+        <div class="flow-speed">Real Money · 3.64% yield + safety, money market overflow</div>
+      </div>
+      <span class="flow-direction flow-in-mod">Moderate Inflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">Agricultural Comm. (DBA)</div>
+        <div class="flow-speed">Fast Money · Tariff-driven food price inflation hedge</div>
+      </div>
+      <span class="flow-direction flow-in-mod">Moderate Inflow</span>
+    </div>
+  </div>
+
+  <div class="flow-block">
+    <div class="flow-block-title" style="color:var(--red);">📤 Strong Outflows</div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">US Dollar (UUP)</div>
+        <div class="flow-speed">Real Money + Fast Money · Tariff war fiscal deterioration, USD reserve status questioned</div>
+      </div>
+      <span class="flow-direction flow-out-strong">Strong Outflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">US High Yield (HYG)</div>
+        <div class="flow-speed">Fast Money · Credit spread widening, default risk pricing</div>
+      </div>
+      <span class="flow-direction flow-out-strong">Strong Outflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">US Growth / Tech (QQQ)</div>
+        <div class="flow-speed">Fast Money · Tariff supply chain, rate constraint, risk-off</div>
+      </div>
+      <span class="flow-direction flow-out-strong">Strong Outflow</span>
+    </div>
+  </div>
+
+  <div class="flow-block">
+    <div class="flow-block-title" style="color:var(--red);">📤 Moderate Outflows</div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">EM Equities (EEM)</div>
+        <div class="flow-speed">Real Money + Fast Money · Tariff war, Iran risk premium, USD outflows</div>
+      </div>
+      <span class="flow-direction flow-out-mod">Moderate Outflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">US IG Corp (LQD)</div>
+        <div class="flow-speed">Real Money · Spread widening as growth outlook deteriorates</div>
+      </div>
+      <span class="flow-direction flow-out-mod">Moderate Outflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">US Large Cap (SPY)</div>
+        <div class="flow-speed">Real Money rotation to defensives + Fast Money risk-off</div>
+      </div>
+      <span class="flow-direction flow-out-mod">Moderate Outflow</span>
+    </div>
+    <div class="flow-item">
+      <div>
+        <div class="flow-asset">US REITs (VNQ)</div>
+        <div class="flow-speed">Real Money · Rate-constrained environment caps real estate pricing</div>
+      </div>
+      <span class="flow-direction flow-out-mod">Moderate Outflow</span>
+    </div>
+  </div>
+</div>
+
+<div style="background:var(--surface); border:1px solid var(--orange); border-radius:8px; padding:12px 16px; margin-top:16px; font-size:12px; color:var(--text2);">
+  ⚠ <strong style="color:var(--orange);">Divergence Alert:</strong> Real money is buying gold and TIPS structurally (slow, durable), while fast money is rapidly selling growth equities and USD. When fast money and real money diverge, real money wins over weeks/months. The structural gold/TIPS bid has high conviction and durability.
+</div>
+</div>
+
+<!-- ═══════════════════ §8 CALENDAR TRIGGERS ═══════════════════ -->
+<div class="section">
+<h2><span class="section-num">§8</span> Calendar Triggers — Next 2 Weeks</h2>
+<p style="font-size:12px; color:var(--text2); margin-bottom:16px;">Events where the macro-analyst forecast diverges from consensus are the highest-value signals. Note: Economic calendar API unavailable for this run — events derived from news and scheduled release cadence.</p>
+
+<table class="cal-table">
+<thead>
+<tr>
+  <th style="text-align:left; width:100px;">Date</th>
+  <th style="text-align:left;">Event</th>
+  <th style="text-align:left;">Macro-Analyst Forecast vs Consensus</th>
+  <th style="text-align:left;">Asset Impact (if correct)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td colspan="4" class="cal-week">WEEK OF 7 APRIL 2026</td>
+</tr>
+<tr>
+  <td class="cal-date">7 Apr</td>
+  <td>
+    <span class="cal-event">Iran Ceasefire Talks (Ongoing)</span>
+    <span class="cal-driver-tag">Iran War</span>
+  </td>
+  <td>
+    <div class="cal-forecast">Boris: Partial ceasefire likely — oil consolidates $65–72/bbl range; Hormuz remains technically open</div>
+    <div class="cal-consensus">Consensus: Binary; market pricing in ceasefire (oil −13% today)</div>
+    <div class="cal-diff">↑ Higher probability of partial agreement than full deal or full escalation</div>
+    <div class="cal-assets">
+      <span class="asset-chip chip-bull">GLD ↑</span>
+      <span class="asset-chip chip-neut">USO ±</span>
+      <span class="asset-chip chip-bull">FXY ↑</span>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td class="cal-date">8 Apr</td>
+  <td>
+    <span class="cal-event">OPEC+ Emergency Meeting (reported)</span>
+    <span class="cal-driver-tag">Iran War</span>
+    <span class="cal-driver-tag">Climate/Resource</span>
+  </td>
+  <td>
+    <div class="cal-forecast">Boris: OPEC+ signals production increase — confirms downward oil price pressure, reduces Iran war oil premium further</div>
+    <div class="cal-consensus">Consensus: Mixed — possible production restraint if Iran escalates</div>
+    <div class="cal-diff">↓ Boris sees production increase as more likely than restraint given Saudi revenue needs</div>
+    <div class="cal-assets">
+      <span class="asset-chip chip-bear">USO ↓</span>
+      <span class="asset-chip chip-bull">SPY (lower costs)</span>
+      <span class="asset-chip chip-bull">TIPS (inflation relief)</span>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td class="cal-date">9 Apr</td>
+  <td>
+    <span class="cal-event">US-China Trade Statement (expected)</span>
+    <span class="cal-driver-tag">Tariff War</span>
+  </td>
+  <td>
+    <div class="cal-forecast">Boris: No meaningful deal — rhetoric continues. Tariff rates remain at 104% with limited exemptions on consumer electronics</div>
+    <div class="cal-consensus">Consensus: Hopes for "off-ramp" dialogue; markets pricing 15% chance of rapid de-escalation</div>
+    <div class="cal-diff">↓ Boris sees lower probability of near-term deal than market consensus (15% → 8%)</div>
+    <div class="cal-assets">
+      <span class="asset-chip chip-bear">QQQ ↓</span>
+      <span class="asset-chip chip-bear">EEM ↓</span>
+      <span class="asset-chip chip-bull">GLD ↑</span>
+      <span class="asset-chip chip-bull">TIPS ↑</span>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td colspan="4" class="cal-week">WEEK OF 14 APRIL 2026</td>
+</tr>
+<tr>
+  <td class="cal-date">15 Apr</td>
+  <td>
+    <span class="cal-event">US CPI (March data)</span>
+    <span class="cal-driver-tag">US Econ Health</span>
+    <span class="cal-driver-tag">Monetary Policy</span>
+  </td>
+  <td>
+    <div class="cal-forecast">Boris: Headline CPI 2.5–2.7% YoY (flat to slightly above prior 2.434%). Pre-tariff data — tariff impact not yet in March figures. Core CPI stable ~2.5%</div>
+    <div class="cal-consensus">Consensus: ~2.5–2.6% headline; market watching for tariff pass-through</div>
+    <div class="cal-diff">→ Boris aligned with consensus on March print; April/May data will be the tariff shock print</div>
+    <div class="cal-assets">
+      <span class="asset-chip chip-neut">TLT ±</span>
+      <span class="asset-chip chip-neut">SPY ±</span>
+      <span class="asset-chip chip-bull">Short UST ↑</span>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td class="cal-date">16 Apr</td>
+  <td>
+    <span class="cal-event">US Retail Sales (March)</span>
+    <span class="cal-driver-tag">US Econ Health</span>
+  </td>
+  <td>
+    <div class="cal-forecast">Boris: Retail sales flat to +0.2% MoM — front-loading of consumer purchases before tariff price increases partially offsets underlying weakness</div>
+    <div class="cal-consensus">Consensus: +0.4–0.6% (front-loading expected)</div>
+    <div class="cal-diff">↓ Boris sees front-loading effect smaller than consensus; underlying demand softer</div>
+    <div class="cal-assets">
+      <span class="asset-chip chip-bear">Consumer stocks ↓</span>
+      <span class="asset-chip chip-bull">GLD ↑ (recession hedge)</span>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td class="cal-date">17 Apr</td>
+  <td>
+    <span class="cal-event">Initial Jobless Claims</span>
+    <span class="cal-driver-tag">US Econ Health</span>
+  </td>
+  <td>
+    <div class="cal-forecast">Boris: Claims 220–235K (slightly elevated). Tariff uncertainty beginning to freeze hiring. Unemployment trajectory toward 4.5%+ by Q3 2026</div>
+    <div class="cal-consensus">Consensus: ~215K (stable)</div>
+    <div class="cal-diff">↑ Boris sees higher claims than consensus — tariff hiring freeze underappreciated</div>
+    <div class="cal-assets">
+      <span class="asset-chip chip-bear">SPY ↓</span>
+      <span class="asset-chip chip-bull">TLT ↑ (recession hedge)</span>
+      <span class="asset-chip chip-bull">GLD ↑</span>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td class="cal-date">18 Apr</td>
+  <td>
+    <span class="cal-event">University of Michigan Sentiment (Preliminary)</span>
+    <span class="cal-driver-tag">US Econ Health</span>
+  </td>
+  <td>
+    <div class="cal-forecast">Boris: Sentiment prints 67–70 (significantly below consensus). Tariff news cycle has materially damaged consumer confidence. This could be a major market mover</div>
+    <div class="cal-consensus">Consensus: ~72–75</div>
+    <div class="cal-diff">↓ Boris meaningfully below consensus — tariff sentiment impact underappreciated by markets</div>
+    <div class="cal-assets">
+      <span class="asset-chip chip-bear">SPY ↓</span>
+      <span class="asset-chip chip-bear">Consumer stocks ↓</span>
+      <span class="asset-chip chip-bull">GLD ↑</span>
+      <span class="asset-chip chip-bull">FXY ↑</span>
+    </div>
+  </td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ═══════════════════ §9 STATE SNAPSHOT ═══════════════════ -->
+<div class="section">
+<h2><span class="section-num">§9</span> State Snapshot — JSON</h2>
+<div class="state-json">{
+  "run_date": "2026-04-07",
+  "run_number": 1,
+  "scenario": {
+    "primary": "Stagflation-to-Contraction",
+    "probability": 0.48,
+    "alternatives": [
+      {"label": "Deflationary Bust", "probability": 0.25},
+      {"label": "Soft Landing", "probability": 0.18},
+      {"label": "Reacceleration", "probability": 0.09}
+    ]
+  },
+  "drivers": {
+    "temporary": [
+      {"name": "Iran/Hormuz War", "dominance": 4, "label": "HIGH", "trend": "new"},
+      {"name": "US-China Tariff War", "dominance": 4, "label": "HIGH", "trend": "new"}
+    ],
+    "enduring": [
+      {"name": "US Economic Health", "dominance": 3, "label": "MODERATE", "cycle_phase": "Late Expansion / Peak"},
+      {"name": "Global Monetary Policy", "dominance": 3, "label": "MODERATE", "policy_stance": "On Hold / Constrained"},
+      {"name": "Structural Deglobalisation", "dominance": 3, "label": "MODERATE"},
+      {"name": "China Economic Health", "dominance": 2, "label": "BACKGROUND"},
+      {"name": "US Fiscal Trajectory", "dominance": 2, "label": "BACKGROUND"},
+      {"name": "AI & Productivity Revolution", "dominance": 2, "label": "BACKGROUND"},
+      {"name": "Climate & Resource Stress", "dominance": 2, "label": "BACKGROUND"},
+      {"name": "Global Demographics & Debt", "dominance": 1, "label": "DORMANT"}
+    ]
+  },
+  "total_active_dominance": 25,
+  "key_indicators": {
+    "fed_funds": 3.64,
+    "cpi_headline_yoy": 2.434,
+    "core_cpi_yoy": 2.5,
+    "unemployment": 4.3,
+    "treasury_10y": 4.34,
+    "treasury_2y": 3.84,
+    "yield_curve_10y2y": 0.52,
+    "vix": 24.17,
+    "m2_billions": 22667.3
+  },
+  "net_forecast_short": {
+    "gold": "Strong Outperform",
+    "tips": "Strong Outperform",
+    "silver": "Strong Outperform",
+    "jpy": "Strong Outperform",
+    "us_defensives": "Outperform",
+    "short_ust": "Outperform",
+    "agri_commodities": "Outperform",
+    "us_large_cap": "Underperform",
+    "us_growth_tech": "Underperform",
+    "em_equities": "Underperform",
+    "hy_corp": "Underperform",
+    "ig_corp": "Underperform",
+    "us_reits": "Underperform",
+    "usd": "Underperform",
+    "oil_energy": "Neutral",
+    "industrial_metals": "Neutral",
+    "china_equities": "Neutral",
+    "european_equities": "Neutral",
+    "crypto": "Neutral",
+    "long_bonds": "Underperform"
+  },
+  "watchlist": {
+    "SOFI": {"short": "Underperform", "medium": "Neutral", "long": "Neutral"},
+    "DLO": {"short": "Underperform", "medium": "Neutral", "long": "Outperform"},
+    "MNO.TO": {"short": "Neutral", "medium": "Outperform", "long": "Strong Outperform"}
+  }
+}</div>
+</div>
+
+<!-- ═══ DISCLAIMER BOTTOM ═══ -->
+<div class="disclaimer" style="margin-top:40px;">
+  ⚠ <strong>Important:</strong> This is a quantitative macro-economic framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <div class="container">
+    <div>MacroDriver Weekly &nbsp;·&nbsp; 7 April 2026 &nbsp;·&nbsp; SignalDeck</div>
+    <div style="margin-top:6px;">Driver-based macro analysis · 10 drivers tracked · First run (no prior state)</div>
+  </div>
+</div>
+
+</body>
+</html>
