@@ -116,6 +116,13 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 .chip-conf-med{background:#78350f;color:#fcd34d;}
 .chip-conf-low{background:#374151;color:#9ca3af;}
 .chip-horizon{background:var(--surface2);color:var(--text2);}
+.hz-wrap{display:inline-flex;gap:3px;align-items:center;}
+.hz-chip{font-size:9px;padding:2px 5px;border-radius:3px;font-weight:800;letter-spacing:0.4px;}
+.hz-on{background:var(--orange);color:#fff;}
+.hz-off{background:var(--surface2);color:var(--text2);opacity:0.35;}
+.flow-in{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;background:#14532d;color:#86efac;}
+.flow-out{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;background:#450a0a;color:#fca5a5;}
+.flow-null{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;background:var(--surface2);color:var(--text2);opacity:0.35;}
 .chip-driver{font-size:10px;padding:1px 7px;border-radius:3px;font-weight:700;background:#7c2d12;color:#fdba74;}
 .flow-rationale{font-size:12px;color:var(--text2);}
 .divergence-box{background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:8px;padding:14px;margin:10px 0;}
@@ -195,8 +202,8 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title"><span class="section-num">1</span>📊 Current Economic Scenario <span class="badge badge-orange">PRIMARY: Stagflation-to-Contraction 45%</span></div>
-  <div class="section-sub">Probability-weighted scenario distribution — Week of 7 April 2026</div>
+  <div class="section-title"><span class="section-num">1</span>Current Economic Scenario <span class="badge badge-orange">PRIMARY: Stagflation-to-Contraction 45%</span></div>
+  <div class="section-sub">Four macro regimes ranked by current probability. Each shows the key drivers pushing toward it, the assets that outperform or underperform in that regime, and how likely the scenario is to persist or shift over the next 3–6 months. The dominant regime sets the directional bias for all sections that follow.</div>
   <div class="scenario-grid">
     <div class="scenario-card sc-stag">
       <div class="scenario-name">Stagflation-to-Contraction</div>
@@ -208,6 +215,20 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
         <div style="font-size:11px;">Iran war inflation impulse · Tariff cost pass-through · Private credit stress rising · Fed on hold longer · Unemployment 4.3%↑</div>
         <div style="font-size:10px;font-weight:700;color:var(--green);margin:6px 0 2px;">FALSIFICATION SIGNALS</div>
         <div style="font-size:11px;">Iran ceasefire holds >4 weeks · Core CPI below 2.5% March · Fed emergency cut · Credit spreads tighten <300bp</div>
+      </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">▲ OUTPERFORM</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;">
+          <span class="asset-chip chip-bull">Gold</span><span class="asset-chip chip-bull">TIPS</span><span class="asset-chip chip-bull">Energy (USO)</span><span class="asset-chip chip-bull">Silver</span><span class="asset-chip chip-bull">Commodities</span><span class="asset-chip chip-bull">Defense ETFs</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;">▼ UNDERPERFORM</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;">
+          <span class="asset-chip chip-bear">QQQ</span><span class="asset-chip chip-bear">SPY</span><span class="asset-chip chip-bear">HYG</span><span class="asset-chip chip-bear">EEM</span><span class="asset-chip chip-bear">VNQ</span><span class="asset-chip chip-bear">USD</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:4px;">WATCHLIST</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;">
+          <span class="asset-chip chip-bear">SOFI ↓ — credit stress + consumer slowdown</span><span class="asset-chip chip-bear">DLO ↓ — EM risk-off + USD strength</span><span class="asset-chip chip-neut">MNO.TO → — gold mining offset by junior risk-off</span>
+        </div>
       </div>
     </div>
     <div class="scenario-card sc-defl">
@@ -221,6 +242,20 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
         <div style="font-size:10px;font-weight:700;color:var(--green);margin:6px 0 2px;">FALSIFICATION SIGNALS</div>
         <div style="font-size:11px;">No major credit manager gate event · Fed begins emergency cuts · M2 accelerates above 8% YoY</div>
       </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">▲ OUTPERFORM</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;">
+          <span class="asset-chip chip-bull">Long Bonds (TLT)</span><span class="asset-chip chip-bull">Gold</span><span class="asset-chip chip-bull">USD</span><span class="asset-chip chip-bull">Cash</span><span class="asset-chip chip-bull">Defensives (XLU/XLP)</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;">▼ UNDERPERFORM</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;">
+          <span class="asset-chip chip-bear">All Equities</span><span class="asset-chip chip-bear">HYG</span><span class="asset-chip chip-bear">Commodities</span><span class="asset-chip chip-bear">EEM</span><span class="asset-chip chip-bear">VNQ</span><span class="asset-chip chip-bear">Crypto</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:4px;">WATCHLIST</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;">
+          <span class="asset-chip chip-bear">SOFI ↓↓ — credit crisis hits fintech hard</span><span class="asset-chip chip-bear">DLO ↓↓ — EM payments collapse in risk-off</span><span class="asset-chip chip-bear">MNO.TO ↓ — junior miners crushed in risk-off</span>
+        </div>
+      </div>
     </div>
     <div class="scenario-card sc-soft">
       <div class="scenario-name">Soft Landing</div>
@@ -233,6 +268,20 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
         <div style="font-size:10px;font-weight:700;color:var(--red);margin:6px 0 2px;">TRANSITION RISKS</div>
         <div style="font-size:11px;">Ceasefire breaks down · March CPI surprises high · BOJ hike triggers carry unwind</div>
       </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">▲ OUTPERFORM</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;">
+          <span class="asset-chip chip-bull">SPY</span><span class="asset-chip chip-bull">QQQ</span><span class="asset-chip chip-bull">LQD/HYG</span><span class="asset-chip chip-bull">EEM</span><span class="asset-chip chip-bull">VNQ</span><span class="asset-chip chip-bull">Growth stocks</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;">▼ UNDERPERFORM</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;">
+          <span class="asset-chip chip-bear">Gold</span><span class="asset-chip chip-bear">Commodities</span><span class="asset-chip chip-bear">Defensives</span><span class="asset-chip chip-bear">Short bonds</span><span class="asset-chip chip-bear">USD (safe haven unwind)</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:4px;">WATCHLIST</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;">
+          <span class="asset-chip chip-bull">SOFI ↑ — fintech thrives in benign credit environment</span><span class="asset-chip chip-bull">DLO ↑ — EM payments recover on risk-on</span><span class="asset-chip chip-neut">MNO.TO → — gold mining mixed in soft landing</span>
+        </div>
+      </div>
     </div>
     <div class="scenario-card sc-reacc">
       <div class="scenario-name">Reacceleration</div>
@@ -243,13 +292,27 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
         <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:4px;">REQUIRED CONDITIONS</div>
         <div style="font-size:11px;">Iran resolution + tariff truce + Fed pivot + China fiscal stimulus simultaneously — considered a low-probability tail</div>
       </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">▲ OUTPERFORM</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;">
+          <span class="asset-chip chip-bull">Cyclicals</span><span class="asset-chip chip-bull">EEM</span><span class="asset-chip chip-bull">Copper / Industrials</span><span class="asset-chip chip-bull">Small caps (IWM)</span><span class="asset-chip chip-bull">Energy</span><span class="asset-chip chip-bull">SPY</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;">▼ UNDERPERFORM</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px;">
+          <span class="asset-chip chip-bear">Long Bonds (TLT)</span><span class="asset-chip chip-bear">Gold</span><span class="asset-chip chip-bear">Defensives (XLU/XLP)</span><span class="asset-chip chip-bear">Cash</span><span class="asset-chip chip-bear">USD</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:4px;">WATCHLIST</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;">
+          <span class="asset-chip chip-bull">SOFI ↑↑ — financials boom in growth cycle</span><span class="asset-chip chip-bull">DLO ↑↑ — EM payments surge on EM boom</span><span class="asset-chip chip-bull">MNO.TO ↑ — mining boom lifts junior miners</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="section">
-  <div class="section-title"><span class="section-num">2</span>🌊 Driver-Asset Impact Matrix</div>
-  <div class="section-sub">Executive summary: 13 active drivers mapped to 15 asset classes. Dominance-weighted contributions.</div>
+  <div class="section-title"><span class="section-num">2</span>Driver-Asset Impact Matrix</div>
+  <div class="section-sub">A heat-map grid showing how each active macro driver is pushing individual asset classes up or down. Read across any row to see a single driver's full market reach — scan down any column to see every force acting on one asset. The bottom row aggregates all drivers into a net directional signal.</div>
   <div class="cascade-reading">
     <strong>Reading guide:</strong> Each row = one macro driver (<span style="color:var(--orange);font-weight:700;">TEMP</span> = Temporary, event-driven; <span style="color:var(--blue);font-weight:700;">END</span> = Enduring, structural multi-year force). Cells show directional impact symbol and weighted contribution (impact × dominance ÷ total dominance). The <strong style="color:var(--orange);">NET SIGNAL</strong> row aggregates all active driver contributions into the asset class forecast. Total active dominance = 35.
   </div>
@@ -576,7 +639,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title"><span class="section-num">3</span>🔍 Economic Driver Deep Dives</div>
+  <div class="section-title"><span class="section-num">3</span>Economic Driver Deep Dives</div>
   <div class="section-sub">Indicator tiles, trajectory forecasts, and watchlist impact for each active driver.</div>
 
 <div class="driver-section" style="border-top:3px solid var(--red);">
@@ -875,34 +938,132 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title"><span class="section-num">4</span>⚖️ Economic Asset Class Forecast</div>
-  <div class="section-sub">Aggregated from 13 active drivers (total dominance 35). Signals represent relative performance over each timeframe.</div>
+  <div class="section-title"><span class="section-num">4</span>Economic Asset Class Forecast</div>
+  <div class="section-sub">Aggregated from 13 active drivers (total dominance 35). Signals show relative performance per timeframe — read across the three horizon columns to see how the outlook evolves.</div>
   <table class="forecast-table">
-    <thead><tr><th style="width:280px;">Asset Class</th><th>Net Score</th><th>Signal</th><th>Key Rationale</th></tr></thead>
-    <tbody>
-<tr class="forecast-group-header"><td colspan="4">Equities</td></tr>
-<tr><td style="font-weight:600;">US Large Cap (SPY)</td><td style="font-weight:700;color:#ef4444;">-0.657</td><td><span class="sig-chip sig-su">Strong Underperform</span></td><td style="color:var(--text2);font-size:11px;">Iran war recession risk + Private Credit stress + Tariff margins → Strong Underperform</td></tr>
-<tr><td style="font-weight:600;">US Growth/Tech (QQQ)</td><td style="font-weight:700;color:#ef4444;">-0.629</td><td><span class="sig-chip sig-su">Strong Underperform</span></td><td style="color:var(--text2);font-size:11px;">Iran + Tariff tech decoupling + Private Credit SaaS disruption → Strong Underperform (despite AI tailwind)</td></tr>
-<tr><td style="font-weight:600;">EM Equities (EEM)</td><td style="font-weight:700;color:#ef4444;">-0.686</td><td><span class="sig-chip sig-su">Strong Underperform</span></td><td style="color:var(--text2);font-size:11px;">Iran risk-off + Tariff war + USD strength → Worst performing asset class</td></tr>
-<tr class="forecast-group-header"><td colspan="4">Fixed Income</td></tr>
-<tr><td style="font-weight:600;">Long Treasuries (TLT)</td><td style="font-weight:700;color:#22c55e;">+0.314</td><td><span class="sig-chip sig-o">Outperform</span></td><td style="color:var(--text2);font-size:11px;">Private Credit flight-to-quality + Fed easing path → Outperform (offsets fiscal supply pressure)</td></tr>
-<tr><td style="font-weight:600;">TIPS</td><td style="font-weight:700;color:#22c55e;">+0.600</td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td style="color:var(--text2);font-size:11px;">Inflation protection across all drivers → Strong Outperform; strongest fixed income signal</td></tr>
-<tr><td style="font-weight:600;">High Yield (HYG)</td><td style="font-weight:700;color:#ef4444;">-0.714</td><td><span class="sig-chip sig-su">Strong Underperform</span></td><td style="color:var(--text2);font-size:11px;">Worst signal overall: Private Credit + Iran + Tariff margins → Strong Underperform</td></tr>
-<tr><td style="font-weight:600;">IG Credit (LQD)</td><td style="font-weight:700;color:#f97316;">-0.314</td><td><span class="sig-chip sig-u">Underperform</span></td><td style="color:var(--text2);font-size:11px;">Partial flight-to-quality offset by credit spread widening risk → Underperform</td></tr>
-<tr class="forecast-group-header"><td colspan="4">Commodities</td></tr>
-<tr><td style="font-weight:600;">Gold (GLD)</td><td style="font-weight:700;color:#22c55e;">+0.829</td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td style="color:var(--text2);font-size:11px;">Strongest signal: safe haven + CB buying + fiscal debasement + Iran + de-dollarisation</td></tr>
-<tr><td style="font-weight:600;">Silver (SLV)</td><td style="font-weight:700;color:#22c55e;">+0.429</td><td><span class="sig-chip sig-o">Outperform</span></td><td style="color:var(--text2);font-size:11px;">Supply deficit + gold correlation + energy transition → Outperform</td></tr>
-<tr><td style="font-weight:600;">Oil (USO)</td><td style="font-weight:700;color:#f97316;">-0.171</td><td><span class="sig-chip sig-n">Neutral</span></td><td style="color:var(--text2);font-size:11px;">Iran supply risk offset by global demand slowdown → Neutral; high intraday volatility</td></tr>
-<tr><td style="font-weight:600;">Agriculture (DBA)</td><td style="font-weight:700;color:#22c55e;">+0.343</td><td><span class="sig-chip sig-o">Outperform</span></td><td style="color:var(--text2);font-size:11px;">Iran food costs + trade fragmentation + climate background → Outperform</td></tr>
-<tr><td style="font-weight:600;">Copper/Ind Metals</td><td style="font-weight:700;color:#f97316;">-0.257</td><td><span class="sig-chip sig-u">Underperform</span></td><td style="color:var(--text2);font-size:11px;">Short-term demand slowdown dominant vs long-term electrification bull → Underperform short</td></tr>
-<tr><td style="font-weight:600;">Defense ETFs (XAR)</td><td style="font-weight:700;color:#22c55e;">+0.514</td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td style="color:var(--text2);font-size:11px;">Iran + NATO rearmament structural → Strong Outperform; direct beneficiary</td></tr>
-<tr class="forecast-group-header"><td colspan="4">Currencies & Alternatives</td></tr>
-<tr><td style="font-weight:600;">US Dollar (UUP)</td><td style="font-weight:700;color:#f97316;">-0.314</td><td><span class="sig-chip sig-u">Underperform</span></td><td style="color:var(--text2);font-size:11px;">Rate cuts coming + de-dollarisation + fiscal concerns → Underperform</td></tr>
-<tr><td style="font-weight:600;">JPY / Safe FX</td><td style="font-weight:700;color:#22c55e;">+0.514</td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td style="color:var(--text2);font-size:11px;">Iran safe haven + BOJ hiking + carry trade unwind risk → Strong Outperform</td></tr>
-</tbody></table></div>
+  <thead><tr>
+    <th style="width:220px;">Asset Class</th>
+    <th style="width:130px;">Short (0–4w)</th>
+    <th style="width:130px;">Medium (1–6m)</th>
+    <th style="width:130px;">Long (6–18m)</th>
+    <th>Key Rationale</th>
+  </tr></thead>
+  <tbody>
+<tr class="forecast-group-header"><td colspan="5">Equities</td></tr>
+<tr>
+  <td style="font-weight:600;">US Large Cap (SPY)</td>
+  <td><span class="sig-chip sig-su">Strong Underperform</span></td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td><span class="sig-chip sig-n">Neutral</span></td>
+  <td style="color:var(--text2);font-size:11px;">Short: Iran recession + Private Credit contagion + tariff margins all active. Medium: tariff de-escalation helps but credit stress worsens. Long: policy response + recovery potential.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">US Growth/Tech (QQQ)</td>
+  <td><span class="sig-chip sig-su">Strong Underperform</span></td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td><span class="sig-chip sig-n">Neutral</span></td>
+  <td style="color:var(--text2);font-size:11px;">Short: Iran risk-off + tariff chip restrictions + Private Credit SaaS disruption. Medium: partial tariff relief but AI disruption of software sector. Long: AI tailwind structural.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">EM Equities (EEM)</td>
+  <td><span class="sig-chip sig-su">Strong Underperform</span></td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td><span class="sig-chip sig-n">Neutral</span></td>
+  <td style="color:var(--text2);font-size:11px;">Short: Iran energy shock + tariff war + USD strength — worst performing. Medium: tariff de-escalation partial relief. Long: de-dollarisation + China stimulus partially offset deglobalisation.</td>
+</tr>
+<tr class="forecast-group-header"><td colspan="5">Fixed Income</td></tr>
+<tr>
+  <td style="font-weight:600;">Long Treasuries (TLT)</td>
+  <td><span class="sig-chip sig-o">Outperform</span></td>
+  <td><span class="sig-chip sig-o">Outperform</span></td>
+  <td><span class="sig-chip sig-n">Neutral</span></td>
+  <td style="color:var(--text2);font-size:11px;">Short: Private Credit flight-to-quality bid. Medium: Fed cuts coming (1 projected 2026). Long: fiscal supply headwind offsets easing — neutralises over 6–18m.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">TIPS</td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td><span class="sig-chip sig-o">Outperform</span></td>
+  <td style="color:var(--text2);font-size:11px;">Strongest fixed income signal across all horizons: Iran oil shock + tariff pass-through + fiscal monetisation all drive inflation protection demand.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">High Yield (HYG)</td>
+  <td><span class="sig-chip sig-su">Strong Underperform</span></td>
+  <td><span class="sig-chip sig-su">Strong Underperform</span></td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td style="color:var(--text2);font-size:11px;">Worst fixed income signal: Private Credit shadow defaults 6.4% leak into public HY short and medium. Long: credit cycle resolution reduces to Underperform.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">IG Credit (LQD)</td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td><span class="sig-chip sig-n">Neutral</span></td>
+  <td style="color:var(--text2);font-size:11px;">Credit spread widening from private credit contagion offsets partial flight-to-quality. Long: if credit cycle resolves, spreads normalise.</td>
+</tr>
+<tr class="forecast-group-header"><td colspan="5">Commodities</td></tr>
+<tr>
+  <td style="font-weight:600;">Gold (GLD)</td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td style="color:var(--text2);font-size:11px;">Strongest signal of all 15 assets across all horizons: Iran safe haven + CB structural buying 755T+/yr + fiscal debasement + de-dollarisation — all three converge.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">Silver (SLV)</td>
+  <td><span class="sig-chip sig-o">Outperform</span></td>
+  <td><span class="sig-chip sig-o">Outperform</span></td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td style="color:var(--text2);font-size:11px;">Short/Medium: gold correlation + supply deficit (5th consecutive year). Long: solar manufacturing 160M oz/yr + supply deficit deepening = structural Strong Outperform.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">Oil (USO)</td>
+  <td><span class="sig-chip sig-n">Neutral</span></td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td style="color:var(--text2);font-size:11px;">Short: ceasefire reduces Hormuz risk; demand destruction offsets supply premium. Medium/Long: global demand slows + energy transition reduces structural demand.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">Agriculture (DBA)</td>
+  <td><span class="sig-chip sig-o">Outperform</span></td>
+  <td><span class="sig-chip sig-o">Outperform</span></td>
+  <td><span class="sig-chip sig-n">Neutral</span></td>
+  <td style="color:var(--text2);font-size:11px;">Short/Medium: Iran food cost shock + tariff trade fragmentation + climate background. Long: normalises as shocks resolve.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">Copper / Ind Metals</td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td><span class="sig-chip sig-n">Neutral</span></td>
+  <td><span class="sig-chip sig-o">Outperform</span></td>
+  <td style="color:var(--text2);font-size:11px;">Short: demand slowdown dominant. Medium: tariff de-escalation + China stimulus stabilise. Long: electrification supercycle — EV/grid/solar structural Outperform.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">Defense ETFs (XAR)</td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td style="color:var(--text2);font-size:11px;">Iran active war + NATO €800B structural rearmament = dual near-term and structural demand. 10-year defense capex supercycle.</td>
+</tr>
+<tr class="forecast-group-header"><td colspan="5">Currencies & Alternatives</td></tr>
+<tr>
+  <td style="font-weight:600;">US Dollar (UUP)</td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td><span class="sig-chip sig-u">Underperform</span></td>
+  <td style="color:var(--text2);font-size:11px;">Fed cutting into structural de-dollarisation trend. CB reserve managers reducing USD allocation 59% → 52% by 2030. Consistent Underperform across all horizons.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">JPY / Safe FX</td>
+  <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+  <td><span class="sig-chip sig-o">Outperform</span></td>
+  <td><span class="sig-chip sig-n">Neutral</span></td>
+  <td style="color:var(--text2);font-size:11px;">Short: Iran safe haven bid + BOJ rate hike path. Medium: BOJ hiking continues. Long: carry trade fully unwinds, rate differential normalises — reverts to Neutral.</td>
+</tr>
+  </tbody>
+  </table>
+</div>
 
 <div class="section">
-  <div class="section-title"><span class="section-num">5</span>📋 Economic Watchlist Forecast</div>
+  <div class="section-title"><span class="section-num">5</span>Economic Watchlist Forecast</div>
   <div class="section-sub">Macro signal per watchlist stock across three timeframes. Based on sector/geographic sensitivity profiles.</div>
   <table class="watchlist-table">
     <thead>
@@ -940,176 +1101,147 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title"><span class="section-num">6</span>💰 Net Capital Flow Forecast</div>
-  <div class="section-sub">Driver-sourced capital flow analysis. Each flow traces back to specific macro drivers with explicit causal chains.</div>
+  <div class="section-title"><span class="section-num">6</span>Net Capital Flow Forecast</div>
+  <div class="section-sub">Where macro drivers translate into actual capital movement. Each row shows which assets are receiving inflows or outflows across Short, Medium, and Long horizons — traced back to the specific drivers causing each flow. <span style="color:var(--text);font-weight:600;">Real money</span> = slow, structural flows from institutions (pension funds, sovereign wealth funds, central banks). <span style="color:var(--text);font-weight:600;">Fast money</span> = tactical, sentiment-driven positioning from hedge funds and ETF traders. When both agree, conviction is highest.</div>
 
-  <div style="font-size:14px;font-weight:700;color:var(--green);margin:12px 0 6px;">Part A — Inflows (Capital Moving In)</div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#22c55e;">↑↑</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">Gold (GLD)</span>
-      <span class="flow-chip chip-money-both">BOTH</span>
-      <span class="flow-chip chip-conf-high">HIGH CONF</span>
-      <span class="flow-chip chip-horizon">ALL HORIZONS</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span>
-<span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">De-dollar×2</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">US Fiscal×3</span>
-<span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">Private Credit×4</span>
-</div><div class="flow-rationale">Geopolitical safe-haven + structural CB buying (755T+ annually) + fiscal debasement narrative + credit event hedge — four independent buying rationales across all investor types converge on gold.</div></div></div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#22c55e;">↑↑</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">TIPS</span>
-      <span class="flow-chip chip-money-real">REAL MONEY</span>
-      <span class="flow-chip chip-conf-high">HIGH CONF</span>
-      <span class="flow-chip chip-horizon">SHORT + MEDIUM</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">US Fiscal×3</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span>
-</div><div class="flow-rationale">Inflation protection across Iran oil shock, tariff pass-through, and fiscal monetisation risk — institutional real money (pension, insurance) allocating to inflation-linked bonds structurally.</div></div></div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#22c55e;">↑↑</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">Defense ETFs (XAR)</span>
-      <span class="flow-chip chip-money-both">BOTH</span>
-      <span class="flow-chip chip-conf-high">HIGH CONF</span>
-      <span class="flow-chip chip-horizon">ALL HORIZONS</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span>
-<span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">NATO×2</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">US Fiscal×3</span>
-</div><div class="flow-rationale">Active war = immediate defense budget expansion + NATO structural €800B rearmament commitment = rare confluence of near-term and structural demand drivers in the same sector.</div></div></div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#86efac;">↑</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">JPY / Safe FX</span>
-      <span class="flow-chip chip-money-fast">FAST MONEY</span>
-      <span class="flow-chip chip-conf-med">MED CONF</span>
-      <span class="flow-chip chip-horizon">SHORT + MEDIUM</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span>
-<span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">BOJ Hiking</span>
-</div><div class="flow-rationale">Iran risk-off drives JPY safe-haven demand while BOJ rate hike path strengthens JPY fundamentally — dual bid from macro fear and rate differential compression.</div></div></div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#86efac;">↑</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">Silver (SLV)</span>
-      <span class="flow-chip chip-money-both">BOTH</span>
-      <span class="flow-chip chip-conf-med">MED CONF</span>
-      <span class="flow-chip chip-horizon">MEDIUM + LONG</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">Energy Trans×2</span>
-<span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">De-dollar×2</span>
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span>
-</div><div class="flow-rationale">5th consecutive annual supply deficit + solar manufacturing consuming 160M oz/year + gold correlation provides medium-to-long structural inflow rationale.</div></div></div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#86efac;">↑</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">Long Treasuries (TLT)</span>
-      <span class="flow-chip chip-money-real">REAL MONEY</span>
-      <span class="flow-chip chip-conf-med">MED CONF</span>
-      <span class="flow-chip chip-horizon">MEDIUM</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Private Credit×4</span>
-<span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">Mon Policy×3</span>
-</div><div class="flow-rationale">Credit event flight-to-quality scenario (private credit stress) + anticipated Fed rate cuts create real money institutional reallocation toward long-duration government bonds.</div></div></div>
-<div style="font-size:14px;font-weight:700;color:var(--red);margin:16px 0 6px;">Part B — Outflows (Capital Moving Out)</div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#ef4444;">↓↓</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">High Yield Corp (HYG)</span>
-      <span class="flow-chip chip-money-both">BOTH</span>
-      <span class="flow-chip chip-conf-high">HIGH CONF</span>
-      <span class="flow-chip chip-horizon">MEDIUM + LONG</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Private Credit×4</span>
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span>
-</div><div class="flow-rationale">Private credit shadow default rate 6.4% leaks into public HY via risk-off contagion + Iran recession risk + tariff margin compression compressing coverage ratios — worst net signal of all 15 assets.</div></div></div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#ef4444;">↓↓</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">EM Equities (EEM)</span>
-      <span class="flow-chip chip-money-fast">FAST MONEY</span>
-      <span class="flow-chip chip-conf-high">HIGH CONF</span>
-      <span class="flow-chip chip-horizon">SHORT + MEDIUM</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">Deglobal×3</span>
-</div><div class="flow-rationale">EM triple pressure: Iran energy price shock hits EM importers + tariff war disrupts EM export value chains + deglobalisation fragments EM capital market access.</div></div></div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#ef4444;">↓↓</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">US Equities (SPY)</span>
-      <span class="flow-chip chip-money-both">BOTH</span>
-      <span class="flow-chip chip-conf-high">HIGH CONF</span>
-      <span class="flow-chip chip-horizon">SHORT + MEDIUM</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Private Credit×4</span>
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span>
-</div><div class="flow-rationale">Margin compression from tariffs + credit event tail risk from private credit + Iran demand shock = multiple compression + earnings downgrades simultaneously.</div></div></div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#ef4444;">↓↓</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">US Tech (QQQ)</span>
-      <span class="flow-chip chip-money-both">BOTH</span>
-      <span class="flow-chip chip-conf-high">HIGH CONF</span>
-      <span class="flow-chip chip-horizon">SHORT</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">Deglobal×3</span>
-</div><div class="flow-rationale">Iran risk-off + tariff chip restrictions (China revenue exposure) + deglobalisation fragmenting tech supply chains — despite AI tailwind, near-term QQQ faces structural headwinds. Note: QQQ +2.83% today may reflect ceasefire-driven reversal of recent selling.</div></div></div>
-
-<div class="flow-item">
-  <div class="flow-arrow" style="color:#f97316;">↓</div>
-  <div class="flow-body">
-    <div class="flow-title-row">
-      <span class="flow-asset">US Dollar (UUP)</span>
-      <span class="flow-chip chip-money-real">REAL MONEY</span>
-      <span class="flow-chip chip-conf-med">MED CONF</span>
-      <span class="flow-chip chip-horizon">MEDIUM + LONG</span>
-    </div>
-    <div class="flow-chips">
-<span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">De-dollar×2</span>
-<span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">Mon Policy×3</span>
-<span class="flow-chip" style="background:#78350f;color:#fcd34d;">US Fiscal×3</span>
-</div><div class="flow-rationale">Fed cutting into structural de-dollarisation trend — CB reserve managers reducing USD allocation from 59% toward estimated 52% by 2030 — slow but durable outflow.</div></div></div>
-
+<table class="forecast-table">
+<thead><tr>
+  <th style="width:155px;">Asset</th>
+  <th style="width:40px;text-align:center;">Flow</th>
+  <th style="width:90px;">Money Type</th>
+  <th style="width:80px;">Conf</th>
+  <th style="width:75px;text-align:center;">Short<br><span style="font-weight:400;font-size:10px;">0–4w</span></th>
+  <th style="width:75px;text-align:center;">Med<br><span style="font-weight:400;font-size:10px;">1–6m</span></th>
+  <th style="width:75px;text-align:center;">Long<br><span style="font-weight:400;font-size:10px;">6–18m</span></th>
+  <th style="width:180px;">Key Drivers</th>
+  <th>Rationale</th>
+</tr></thead>
+<tbody>
+<tr class="forecast-group-header"><td colspan="9" style="color:var(--green);">▲ Part A — Inflows</td></tr>
+<tr>
+  <td style="font-weight:600;">Gold (GLD)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#22c55e;">↑↑</td>
+  <td><span class="flow-chip chip-money-real">Real</span> <span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span> <span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">De-dollar×2</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">US Fiscal×3</span> <span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">Priv Credit×4</span></td>
+  <td style="font-size:11px;color:var(--text2);">Four independent buying rationales: geopolitical safe-haven + CB structural buying (755T+/yr) + fiscal debasement hedge + private credit event hedge.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">TIPS</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#22c55e;">↑↑</td>
+  <td><span class="flow-chip chip-money-real">Real</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">US Fiscal×3</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span></td>
+  <td style="font-size:11px;color:var(--text2);">Inflation protection bid: Iran oil shock + tariff pass-through + fiscal monetisation risk — institutional real money allocating to inflation-linked bonds.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">Defense ETFs (XAR)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#22c55e;">↑↑</td>
+  <td><span class="flow-chip chip-money-real">Real</span> <span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span> <span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">NATO×2</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">US Fiscal×3</span></td>
+  <td style="font-size:11px;color:var(--text2);">Active war drives immediate defense budget expansion; NATO €800B rearmament commitment adds structural long-term demand — rare short + long confluence.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">JPY / Safe FX</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#86efac;">↑</td>
+  <td><span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-med">Medium</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span> <span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">BOJ Hiking</span></td>
+  <td style="font-size:11px;color:var(--text2);">Iran risk-off safe-haven bid + BOJ rate hike path strengthens JPY fundamentally via rate differential compression. Fades as Iran risk resolves long-term.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">Silver (SLV)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#86efac;">↑</td>
+  <td><span class="flow-chip chip-money-real">Real</span> <span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-med">Medium</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">Energy Trans×2</span> <span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">De-dollar×2</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span></td>
+  <td style="font-size:11px;color:var(--text2);">5th consecutive annual supply deficit + solar manufacturing consuming 160M oz/yr + gold safe-haven correlation = medium-to-long structural inflow.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">Long Treasuries (TLT)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#86efac;">↑</td>
+  <td><span class="flow-chip chip-money-real">Real</span></td>
+  <td><span class="flow-chip chip-conf-med">Medium</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">Priv Credit×4</span> <span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">Mon Policy×3</span></td>
+  <td style="font-size:11px;color:var(--text2);">Credit event flight-to-quality + anticipated Fed rate cuts create institutional reallocation to long-duration government bonds. Confined to medium horizon.</td>
+</tr>
+<tr class="forecast-group-header"><td colspan="9" style="color:var(--red);">▼ Part B — Outflows</td></tr>
+<tr>
+  <td style="font-weight:600;">High Yield Corp (HYG)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#ef4444;">↓↓</td>
+  <td><span class="flow-chip chip-money-real">Real</span> <span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Priv Credit×4</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span></td>
+  <td style="font-size:11px;color:var(--text2);">Shadow default rate 6.4% leaks into public HY via contagion + Iran recession risk + tariff margin compression crushing coverage ratios — worst net signal across all assets.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">EM Equities (EEM)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#ef4444;">↓↓</td>
+  <td><span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">Deglobal×3</span></td>
+  <td style="font-size:11px;color:var(--text2);">Triple pressure: Iran energy shock hits EM importers + tariff war disrupts export chains + deglobalisation fragments EM capital market access.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">US Equities (SPY)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#ef4444;">↓↓</td>
+  <td><span class="flow-chip chip-money-real">Real</span> <span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Priv Credit×4</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span></td>
+  <td style="font-size:11px;color:var(--text2);">Margin compression from tariffs + credit event tail risk + Iran demand shock = simultaneous multiple compression and earnings downgrades.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">US Tech (QQQ)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#ef4444;">↓↓</td>
+  <td><span class="flow-chip chip-money-real">Real</span> <span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Iran×4</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">Tariffs×3</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">Deglobal×3</span></td>
+  <td style="font-size:11px;color:var(--text2);">Iran risk-off + tariff chip restrictions (China revenue) + deglobalisation fragmenting supply chains. Confined to short horizon; AI tailwind reasserts medium-long.</td>
+</tr>
+<tr>
+  <td style="font-weight:600;">US Dollar (UUP)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#f97316;">↓</td>
+  <td><span class="flow-chip chip-money-real">Real</span></td>
+  <td><span class="flow-chip chip-conf-med">Medium</span></td>
+  <td style="text-align:center;"><span class="flow-null">—</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">De-dollar×2</span> <span class="flow-chip" style="background:#1e3a5f;color:#93c5fd;">Mon Policy×3</span> <span class="flow-chip" style="background:#78350f;color:#fcd34d;">US Fiscal×3</span></td>
+  <td style="font-size:11px;color:var(--text2);">Fed cutting into structural de-dollarisation — CB reserve managers reducing USD from 59% toward 52% by 2030. Slow but durable structural outflow.</td>
+</tr>
+</tbody>
+</table>
 <div style="font-size:14px;font-weight:700;color:var(--yellow);margin:16px 0 6px;">⚡ Part C — Divergences (Highest Signal Quality)</div>
 <div class="divergence-box">
   <div style="font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:8px;">⚡ Long Treasuries (TLT): Real Money Buying vs Fast Money Selling</div>
@@ -1150,7 +1282,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title"><span class="section-num">7</span>📅 Economic Forecast Calendar: 2 Week</div>
+  <div class="section-title"><span class="section-num">7</span>Economic Forecast Calendar: 2 Week</div>
   <div class="section-sub">7 April – 21 April 2026 · Boris forecast vs market consensus · Scenario weights: Stagflation 45% | Deflationary Bust 30% | Soft Landing 15% | Reacceleration 10%</div>
 
   <div class="cal-week-header">📅 Week 1 — 7–13 April 2026</div>
@@ -1283,7 +1415,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title"><span class="section-num">8</span>🔗 Driver Interactions & Double-Count Prevention</div>
+  <div class="section-title"><span class="section-num">8</span>Driver Interactions & Double-Count Prevention</div>
   <table class="interactions-table">
     <thead><tr><th>Primary Driver</th><th>Transmission Channel</th><th>Affected Driver</th><th>Interaction Type</th><th>Double-Count Prevention</th></tr></thead>
     <tbody>
@@ -1299,7 +1431,7 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 </div>
 
 <div class="section">
-  <div class="section-title"><span class="section-num">9</span>💾 State Snapshot</div>
+  <div class="section-title"><span class="section-num">9</span>State Snapshot</div>
   <div class="section-sub">Continuity data for next run. Load this to track driver changes and forecast accuracy.</div>
   <div class="state-pre">{
   "run_id": "MacroDriver-20260407-weekly",
