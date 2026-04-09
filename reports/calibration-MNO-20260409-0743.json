@@ -1,0 +1,200 @@
+{
+  "ticker": "MNO.TO",
+  "exchange_ticker": "TSX:MNO",
+  "exchange": "TSX",
+  "company": "Meridian Mining UK Societas",
+  "isin": "GB00BVPND783",
+  "api_ticker": "MNO.TO",
+  "currency": "CAD",
+  "date": "2026-04-09",
+  "time": "07:43",
+  "version": "v5",
+  "price_at_check": 1.72,
+  "previous_close": 1.69,
+  "day_change_pct": 1.78,
+  "ytd_change_pct": 9.1,
+  "market_cap_cad": 721467760,
+  "shares_outstanding_est": 419458000,
+  "quality_score": 80,
+  "quality_pre_adj": 75,
+  "quality_confidence": 70,
+  "valuation_score": 89,
+  "valuation_pre_adj": 84,
+  "valuation_confidence": 72,
+  "timing_score": 83,
+  "timing_pre_adj": 80,
+  "timing_confidence": 55,
+  "driver_score": 88,
+  "short_composite": 83.8,
+  "medium_composite": 84.5,
+  "long_composite": 83.3,
+  "signal_short": "WAIT FOR EVENT",
+  "signal_short_raw": "STRONG BUY",
+  "signal_medium": "STRONG BUY",
+  "signal_long": "STRONG BUY",
+  "short_override": "Short-term signal overridden to WAIT FOR EVENT due to high-impact US CPI + CA Jobs release Apr 10, 2026 (1 day out). Mining/Materials is High macro sensitivity per skill matrix.",
+  "short_confidence": 63,
+  "medium_confidence": 66,
+  "long_confidence": 68,
+  "analyst_targets": {
+    "high": 3.50,
+    "low": 2.50,
+    "median": 2.90,
+    "consensus": 2.96667,
+    "num_analysts": 6
+  },
+  "analyst_grades": {
+    "strong_buy": 4,
+    "buy": 2,
+    "hold": 0,
+    "sell": 0,
+    "strong_sell": 0,
+    "recommendation_mean": 1.67,
+    "source": "get_grades_consensus (aggregated; per-firm grade actions unavailable on CA ticker tier)"
+  },
+  "fmp_rating": "C-",
+  "fmp_rating_note": "Structural penalty for pre-revenue stage; only DCF score (3/5) is meaningful.",
+  "key_levels": {
+    "stop_loss": 1.25,
+    "bought_deal_support": 1.58,
+    "ideal_entry_low": 1.70,
+    "ideal_entry_high": 1.80,
+    "resistance_52w_high": 2.05,
+    "analyst_median_target": 2.90,
+    "analyst_high_target": 3.50,
+    "pfs_nav_per_share": 3.26,
+    "spot_nav_per_share_est": 8.76
+  },
+  "technicals": {
+    "rsi_daily": 50.3,
+    "macd_hist": 0.00981,
+    "bb_upper": 1.754,
+    "bb_mid": 1.696,
+    "bb_lower": 1.638,
+    "ema20": 1.678,
+    "ema50": 1.678,
+    "sma20": 1.668,
+    "sma50": 1.725,
+    "sma200": 1.301,
+    "atr": 0.1066,
+    "trend": "uptrend (primary), weakening near-term"
+  },
+  "relative_strength": {
+    "benchmark": "XMA.TO (iShares S&P/TSX Global Base Metals)",
+    "rs_6mo_pts": 15.9,
+    "rs_3mo_pts": 0.8,
+    "rs_1mo_pts": -4.2,
+    "mno_6mo_pct": 44.4,
+    "xma_6mo_pct": 28.5
+  },
+  "macro_context": {
+    "copper_usd_per_lb": 5.88,
+    "copper_date": "2026-02-01",
+    "copper_source": "FRED PCOPPUSDM",
+    "gold_usd_per_oz": 4670,
+    "gold_source": "Financial news scrape (FRED monthly lagging)",
+    "us_cpi_yoy_forecast_apr10": 3.4,
+    "us_10y": 4.33,
+    "yield_curve_10y2y": 0.5,
+    "thesis_invalidation_floor_cu": 3.00,
+    "impact_on_mno": "Strong copper + gold tailwinds; Cu ~96% above thesis floor. Electrification structural demand persists."
+  },
+  "imminent_event_blackout": {
+    "triggered": true,
+    "events": [
+      "US CPI (Mar) 2026-04-10 high-impact",
+      "CA Employment/Unemployment (Mar) 2026-04-10 high-impact",
+      "Michigan Consumer Sentiment (Apr P) 2026-04-10 medium-impact"
+    ],
+    "reason": "High-impact releases within 3 trading days on macro-sensitive (Mining/Materials) sector. Short-term signal overridden to WAIT-FOR-EVENT; Timing confidence -10%."
+  },
+  "pillar_adjustments": {
+    "quality_driver_adj": 5,
+    "valuation_driver_adj": 5,
+    "timing_driver_adj": 3,
+    "timing_event_penalty": -10,
+    "timing_yfinance_haircut": -5
+  },
+  "hard_gates": {
+    "currency_verified": "CLEAR",
+    "stop_loss": "CLEAR",
+    "thesis_invalidation": "CLEAR",
+    "liquidity": "CLEAR",
+    "dilution_risk": "CAUTION",
+    "permitting_risk": "CLEAR",
+    "commodity_floor": "CLEAR",
+    "data_quality": "CLEAR",
+    "event_blackout": "TRIGGERED (short-term only)"
+  },
+  "entry_rules": {
+    "fundamental": {
+      "status": "MET",
+      "detail": "C$1.72 < C$2.20 ✓; Cash > C$60M ✓; PL approved, IL on track H1 2026 ✓"
+    },
+    "technical": {
+      "status": "MET",
+      "detail": "C$1.72 in C$1.70-1.80 ideal entry zone ✓; RSI 50.3 < 55 ✓; above C$1.58 bought deal ✓"
+    },
+    "catalyst": {
+      "status": "PENDING",
+      "detail": "IL submission expected H1 2026 — imminent"
+    },
+    "risk_reward": {
+      "status": "MET",
+      "detail": "1:2.51 to median C$2.90; 1:3.79 to high C$3.50"
+    },
+    "event_clear": {
+      "status": "NOT MET",
+      "detail": "Apr 10 CPI + CA jobs — wait for print before short-term entry"
+    }
+  },
+  "exit_rules": {
+    "stop_loss": {
+      "status": "CLEAR",
+      "detail": "C$1.72 — C$0.47 buffer (27.3%)"
+    },
+    "thesis_invalidation": {
+      "status": "CLEAR",
+      "detail": "Cu $5.88/lb vs $3.00 floor; PL approved; IL on track"
+    },
+    "profit_target": {
+      "status": "OPEN",
+      "detail": "+103.5% to C$3.50 high target; +68.6% to C$2.90 median"
+    },
+    "time_stop": {
+      "status": "CLEAR",
+      "detail": "12-18 months to catalyst realization"
+    },
+    "position_review": {
+      "status": "CLEAR",
+      "detail": "Next review after Apr 10 data + next permit milestone"
+    }
+  },
+  "consecutive_days_below_stop": 0,
+  "permitting_status": {
+    "preliminary_licence": "APPROVED",
+    "installation_licence": "PENDING_SUBMISSION_H1_2026"
+  },
+  "deltas_vs_prior": {
+    "prior_date": "2026-04-07 EOD",
+    "prior_price": 1.72,
+    "delta_price": 0.0,
+    "delta_quality": 15,
+    "delta_valuation": 25,
+    "delta_timing": 16,
+    "delta_driver": 16,
+    "delta_signal_short": "BUY → WAIT FOR EVENT",
+    "delta_signal_medium": "STRONG_BUY → STRONG BUY (unchanged direction)",
+    "delta_signal_long": "STRONG_BUY → STRONG BUY (unchanged direction)"
+  },
+  "notable_changes_since_last_check": [
+    "Full v5 rerun with per-pillar sub-components vs prior v4 calibration",
+    "Real analyst targets confirmed: 6 analysts, median C$2.90, high C$3.50, low C$2.50",
+    "Analyst grades aggregate: 4 Strong Buy + 2 Buy = 100% positive",
+    "Real technicals pulled: RSI 50.3 (cooled from est 62), EMA20/50 both C$1.68",
+    "Relative strength vs XMA.TO: +15.9 pts 6mo, 0.8 pts 3mo, -4.2 pts 1mo (pausing near-term)",
+    "Copper confirmed $5.88/lb; gold $4,670/oz all-time high",
+    "Apr 10 CPI + CA jobs blackout triggered on short-term only"
+  ],
+  "next_check_date": "2026-04-10"
+}

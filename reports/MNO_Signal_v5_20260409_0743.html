@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSX:MNO Signal v5 — Meridian Mining — 9 Apr 2026</title>
+<style>
+:root {
+  --bg: #0a0c10; --surface: #12151c; --surface2: #1a1e28;
+  --border: #252a3a; --text: #e1e4ed; --text2: #7a8099;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
+  --purple: #a855f7; --purple-bg: rgba(168,85,247,0.12);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; font-size:14px; padding:20px; }
+a { color:var(--blue); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+h1 { font-size:28px; margin-bottom:4px; }
+h2 { font-size:20px; margin:32px 0 16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+h3 { font-size:16px; margin:20px 0 10px; color:var(--blue); }
+
+.disclaimer { background:var(--yellow-bg); border:1px solid rgba(234,179,8,0.25); border-radius:8px; padding:12px 16px; font-size:12px; color:var(--yellow); margin-bottom:24px; }
+
+.badge { font-size:11px; font-weight:700; padding:2px 10px; border-radius:10px; display:inline-block; }
+.badge-red { background:var(--red-bg); color:var(--red); }
+.badge-orange { background:var(--orange-bg); color:var(--orange); }
+.badge-green { background:var(--green-bg); color:var(--green); }
+.badge-blue { background:var(--blue-bg); color:var(--blue); }
+.badge-purple { background:var(--purple-bg); color:var(--purple); }
+
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-right:6px; }
+.tag-sector { background:var(--blue-bg); color:var(--blue); }
+.tag-horizon { background:var(--purple); color:#fff; opacity:0.85; }
+.tag-warn { background:var(--yellow-bg); color:var(--yellow); }
+
+.detail-table { width:100%; border-collapse:collapse; margin:12px 0 20px; font-size:14px; }
+.detail-table th { text-align:left; padding:8px 12px; background:var(--surface2); color:var(--text2); font-size:12px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+.detail-table td { padding:8px 12px; border-bottom:1px solid rgba(37,42,58,0.5); vertical-align:top; }
+.detail-table tr:hover td { background:var(--surface2); }
+.metric-good { color:var(--green); }
+.metric-neutral { color:var(--yellow); }
+.metric-bad { color:var(--red); }
+
+.scenario-grid { display:grid; gap:16px; margin:12px 0; grid-template-columns:1fr 1fr; }
+.scenario-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; position:relative; overflow:hidden; }
+.scenario-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.scenario-bull { border-color:var(--green); }
+.scenario-bull::before { background:var(--green); }
+.scenario-bear { border-color:var(--red); }
+.scenario-bear::before { background:var(--red); }
+.scenario-card h4 { font-size:14px; margin-bottom:8px; }
+
+.data-status { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:24px; font-size:13px; }
+.data-status-title { font-weight:700; font-size:14px; margin-bottom:10px; color:var(--text); }
+.ds-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:8px; }
+.ds-item { display:flex; align-items:center; gap:8px; padding:4px 0; }
+.ds-icon { width:18px; text-align:center; flex-shrink:0; }
+.ds-ok .ds-icon { color:var(--green); }
+.ds-fail .ds-icon { color:var(--red); }
+.ds-partial .ds-icon { color:var(--yellow); }
+.ds-name { color:var(--text); }
+.ds-note { color:var(--text2); font-size:12px; }
+.ds-impact { margin-top:12px; padding-top:10px; border-top:1px solid var(--border); font-size:12px; color:var(--text2); }
+.ds-impact strong { color:var(--yellow); }
+
+.header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.header-left h1 span { color:var(--text2); font-weight:400; font-size:18px; }
+.header-right { text-align:right; color:var(--text2); font-size:14px; }
+.price-box { font-size:36px; font-weight:700; }
+.price-change { font-size:14px; }
+
+.signal-banner { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:24px; }
+.signal-table { width:100%; border-collapse:collapse; }
+.signal-table th, .signal-table td { padding:10px 14px; text-align:center; border-bottom:1px solid var(--border); }
+.signal-table th { color:var(--text2); font-size:13px; font-weight:500; text-transform:uppercase; }
+.signal-table td { font-size:14px; }
+.signal-buy { background:var(--green-bg); color:var(--green); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-strongbuy { background:rgba(34,197,94,0.25); color:#4ade80; font-weight:700; border-radius:6px; padding:4px 12px; border:1px solid var(--green); }
+.signal-hold { background:var(--yellow-bg); color:var(--yellow); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-wait { background:var(--orange-bg); color:var(--orange); font-weight:700; border-radius:6px; padding:4px 12px; border:1px solid var(--orange); }
+.signal-sell { background:var(--red-bg); color:var(--red); font-weight:700; border-radius:6px; padding:4px 12px; }
+
+.score-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px; }
+.score-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.score-card h3 { margin:0 0 12px; font-size:14px; text-transform:uppercase; letter-spacing:0.5px; }
+.score-value { font-size:48px; font-weight:800; line-height:1; }
+.score-bar { height:6px; border-radius:3px; background:var(--surface2); margin:12px 0 8px; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; }
+.score-label { font-size:13px; color:var(--text2); }
+.confidence { font-size:12px; color:var(--text2); margin-top:6px; }
+
+.gate-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:10px; }
+.gate-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:flex-start; gap:10px; }
+.gate-icon { font-size:16px; margin-top:1px; }
+.gate-clear { color:var(--green); }
+.gate-triggered { color:var(--red); }
+.gate-caution { color:var(--yellow); }
+.gate-text { font-size:13px; }
+.gate-text strong { display:block; margin-bottom:2px; }
+.gate-text span { color:var(--text2); font-size:12px; }
+
+.moat-grid { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin:12px 0 20px; }
+.moat-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center; }
+.moat-item h4 { font-size:11px; color:var(--text2); text-transform:uppercase; margin-bottom:6px; }
+.moat-score { font-size:28px; font-weight:700; }
+
+.driver-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin:16px 0; }
+.driver-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px; }
+.driver-label { font-size:13px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; }
+.driver-score-big { font-size:36px; font-weight:800; color:var(--green); }
+.adj-arrow { font-weight:700; }
+
+.mtf-table { width:100%; border-collapse:collapse; font-size:13px; margin:12px 0; }
+.mtf-table th { padding:8px 10px; background:var(--surface2); color:var(--text2); text-align:center; font-size:11px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+.mtf-table td { padding:8px 10px; text-align:center; border-bottom:1px solid rgba(37,42,58,0.5); }
+.mtf-bullish { background:rgba(34,197,94,0.08); }
+.mtf-bearish { background:rgba(239,68,68,0.08); }
+.mtf-neutral { background:rgba(234,179,8,0.08); }
+
+.chart-container { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin:16px 0; }
+canvas { width:100%; height:350px; }
+
+.rule-box { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:10px 0; }
+.rule-box h4 { font-size:13px; color:var(--blue); text-transform:uppercase; margin-bottom:8px; }
+.rule-condition { font-size:13px; margin:4px 0; padding-left:12px; border-left:2px solid var(--border); }
+
+.calibration { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:16px 0; }
+pre.cal-json { background:var(--surface2); border-radius:6px; padding:12px; font-size:12px; overflow-x:auto; color:var(--text2); }
+
+.changes-box { background:var(--surface); border:1px solid var(--orange); border-radius:10px; padding:16px 20px; margin-bottom:24px; }
+.changes-box h3 { font-size:14px; color:var(--orange); margin-bottom:8px; }
+.changes-box .delta-up { color:var(--green); font-weight:700; }
+.changes-box .delta-down { color:var(--red); font-weight:700; }
+.changes-box .delta-flat { color:var(--text2); font-weight:600; }
+
+.pt-range-bar { background:var(--surface2); border-radius:8px; padding:16px; margin:12px 0; }
+.pt-bar-wrap { position:relative; height:60px; margin:20px 0 16px; }
+.pt-bar-track { position:absolute; left:0; right:0; top:25px; height:10px; background:linear-gradient(90deg, var(--red-bg), var(--yellow-bg), var(--green-bg)); border-radius:5px; border:1px solid var(--border); }
+.pt-marker { position:absolute; top:0; height:60px; width:2px; }
+.pt-marker-label { position:absolute; top:-2px; font-size:10px; color:var(--text2); transform:translateX(-50%); white-space:nowrap; }
+.pt-marker-val { position:absolute; top:38px; font-size:11px; font-weight:700; transform:translateX(-50%); white-space:nowrap; }
+
+.grades-bar-wrap { margin:12px 0; }
+.grades-bar { height:32px; display:flex; border-radius:6px; overflow:hidden; border:1px solid var(--border); }
+.grades-seg { display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; }
+.grades-sb { background:#16a34a; }
+.grades-b { background:#4ade80; color:#052e13; }
+.grades-h { background:#eab308; color:#422006; }
+.grades-s { background:#f87171; }
+.grades-ss { background:#dc2626; }
+.grades-legend { display:flex; gap:14px; font-size:11px; color:var(--text2); margin-top:6px; flex-wrap:wrap; }
+
+.event-risk-box { background:var(--orange-bg); border:1px solid var(--orange); border-radius:10px; padding:14px 18px; margin:12px 0 20px; }
+.event-risk-box h3 { color:var(--orange); margin-bottom:8px; }
+.event-risk-box p { color:var(--text2); font-size:13px; margin-bottom:6px; }
+
+.nav-bar { margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; }
+
+/* 3l. Numbered section headings (orange circle + description) */
+.section-wrap { margin:36px 0 20px; scroll-margin-top:20px; }
+.section-head { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+.section-num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--orange); color:#fff; font-size:15px; font-weight:800; flex-shrink:0; line-height:1; }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-0.3px; margin:0; padding:0; border:none; color:var(--text); }
+.section-sub { font-size:13px; color:var(--text2); margin:4px 0 18px 44px; line-height:1.6; max-width:960px; }
+
+/* 3m. Table of Contents */
+.toc-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin:0 0 28px; }
+.toc-title { font-size:12px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:14px; }
+.toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:6px 18px; }
+.toc-item { display:flex; align-items:center; gap:10px; padding:7px 4px; font-size:13px; color:var(--text); text-decoration:none; border-radius:6px; transition:background 0.15s, color 0.15s; }
+.toc-item:hover { background:var(--surface2); color:var(--orange); text-decoration:none; }
+.toc-num { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--orange); color:#fff; font-size:11px; font-weight:800; flex-shrink:0; line-height:1; }
+.toc-label { flex:1; }
+
+@media (max-width:768px) {
+  .score-grid, .scenario-grid { grid-template-columns:1fr; }
+  .moat-grid { grid-template-columns:repeat(3, 1fr); }
+  .header { flex-direction:column; }
+  .section-sub { margin-left:0; }
+}
+</style>
+</head>
+<body>
+
+<!-- 1. NAVIGATION BAR -->
+<div class="nav-bar">
+  <a href="https://donatien.ca/" style="color:var(--blue); font-size:14px;">&larr; Back to SignalDeck</a>
+  <a href="https://donatien.ca/reports/archive-MNO.html" style="color:var(--text2); font-size:13px;">See previous reports &rarr;</a>
+</div>
+
+<!-- 1a. HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>TSX:MNO <span>Meridian Mining UK Societas</span></h1>
+    <div style="margin-top:8px;">
+      <span class="tag tag-sector">Basic Materials</span>
+      <span class="tag tag-sector">Copper-Gold Developer</span>
+      <span class="tag tag-warn">Pre-Production</span>
+    </div>
+    <div style="margin-top:8px; font-size:13px; color:var(--text2);">
+      TSX &middot; ISIN GB00BVPND783 &middot; HQ London, UK &middot; CEO Gilbert Percy Clark &middot; Mkt Cap C$721.5M &middot; 73 FTE
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="price-box" style="color:var(--green);">C$1.72</div>
+    <div class="price-change" style="color:var(--green);">+C$0.03 (+1.78%) intraday</div>
+    <div style="font-size:12px; margin-top:4px;">9 Apr 2026 &middot; Signal v5</div>
+  </div>
+</div>
+
+<!-- 1b. CHANGES SINCE LAST REPORT -->
+<div class="changes-box">
+  <h3>CHANGES SINCE LAST REPORT (7 Apr 2026 EOD &rarr; 9 Apr 2026)</h3>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; font-size:13px;">
+    <div><strong>Price:</strong> C$1.72 &rarr; C$1.72 <span class="delta-flat">(flat)</span></div>
+    <div><strong>Quality:</strong> 65 &rarr; 80 <span class="delta-up">(+15)</span></div>
+    <div><strong>Valuation:</strong> 64 &rarr; 89 <span class="delta-up">(+25)</span></div>
+    <div><strong>Timing:</strong> 67 &rarr; 83 <span class="delta-up">(+16)</span></div>
+    <div><strong>Driver:</strong> 72 &rarr; 88 <span class="delta-up">(+16)</span></div>
+    <div><strong>Short signal:</strong> BUY &rarr; <span style="color:var(--orange); font-weight:700;">WAIT FOR EVENT</span></div>
+  </div>
+  <div style="margin-top:10px; font-size:12px; color:var(--text2);">
+    Score increases reflect v5 upgrade with full analyst consensus data (4 Strong Buy / 2 Buy, mean target C$2.97), proper P/NAV anchor scoring, relative strength vs XMA.TO now measured (+15.9 pts over 6 mo), and copper/gold regime upgraded to Driver 88 on spot Cu $5.88/lb + Au $4,670/oz all-time highs. Short-term signal overridden to WAIT-FOR-EVENT: high-impact US CPI + CA employment releases on 10 Apr 2026 (1 day), Materials sector is High macro sensitivity.
+  </div>
+</div>
+
+<!-- 2. DISCLAIMER -->
+<div class="disclaimer">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- 3. SIGNAL BANNER -->
+<div class="signal-banner">
+  <table class="signal-table">
+    <thead>
+      <tr><th>Horizon</th><th>Signal</th><th>Composite Score</th><th>Confidence</th><th>Key Driver</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Short-term (1&ndash;3 mo)</td>
+        <td><span class="signal-wait">WAIT FOR EVENT</span></td>
+        <td>83.8</td>
+        <td>63%</td>
+        <td>Raw STRONG BUY overridden: US CPI + CA jobs 10 Apr (1 day out) + Materials=High macro sensitivity</td>
+      </tr>
+      <tr>
+        <td>Medium-term (6&ndash;12 mo)</td>
+        <td><span class="signal-strongbuy">STRONG BUY</span></td>
+        <td>84.5</td>
+        <td>66%</td>
+        <td>IL permit expected H1 2026 + DFS publication + analyst consensus C$2.97 (+72.5% upside) + 4 SB / 2 B / 0 H</td>
+      </tr>
+      <tr>
+        <td>Long-term (3&ndash;5 yr)</td>
+        <td><span class="signal-strongbuy">STRONG BUY</span></td>
+        <td>83.3</td>
+        <td>68%</td>
+        <td>Spot NAV C$8.76/sh vs price C$1.72 (P/NAV 0.20x) + Cu/Au structural regime + Cabaçal production in sight</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 3b. TABLE OF CONTENTS -->
+<div class="toc-box">
+  <div class="toc-title">Table of Contents</div>
+  <div class="toc-grid">
+    <a href="#sec-1" class="toc-item"><span class="toc-num">1</span><span class="toc-label">Three-Pillar Scorecard</span></a>
+    <a href="#sec-2" class="toc-item"><span class="toc-num">2</span><span class="toc-label">Hard Gates &amp; Do-Not-Buy Status</span></a>
+    <a href="#sec-3" class="toc-item"><span class="toc-num">3</span><span class="toc-label">Underlying Driver Analysis</span></a>
+    <a href="#sec-4" class="toc-item"><span class="toc-num">4</span><span class="toc-label">Pillar Detail: Business Quality</span></a>
+    <a href="#sec-5" class="toc-item"><span class="toc-num">5</span><span class="toc-label">Pillar Detail: Valuation Attractiveness</span></a>
+    <a href="#sec-6" class="toc-item"><span class="toc-num">6</span><span class="toc-label">Pillar Detail: Entry/Exit Timing</span></a>
+    <a href="#sec-7" class="toc-item"><span class="toc-num">7</span><span class="toc-label">Economic Event Risk</span></a>
+    <a href="#sec-8" class="toc-item"><span class="toc-num">8</span><span class="toc-label">Multi-Timeframe Technical Analysis</span></a>
+    <a href="#sec-9" class="toc-item"><span class="toc-num">9</span><span class="toc-label">Price Chart (6-Month Daily)</span></a>
+    <a href="#sec-10" class="toc-item"><span class="toc-num">10</span><span class="toc-label">Scenario Summary</span></a>
+    <a href="#sec-11" class="toc-item"><span class="toc-num">11</span><span class="toc-label">Entry / Exit Rules</span></a>
+    <a href="#sec-12" class="toc-item"><span class="toc-num">12</span><span class="toc-label">Position Sizing Context</span></a>
+    <a href="#sec-13" class="toc-item"><span class="toc-num">13</span><span class="toc-label">Calibration Snapshot</span></a>
+    <a href="#sec-14" class="toc-item"><span class="toc-num">14</span><span class="toc-label">Data Sources &amp; Methodology</span></a>
+  </div>
+</div>
+
+<!-- §1. THREE-PILLAR SCORECARD -->
+<div class="section-wrap" id="sec-1">
+  <div class="section-head">
+    <span class="section-num">1</span>
+    <h2 class="section-title">Three-Pillar Scorecard</h2>
+  </div>
+  <div class="section-sub">Three independent scores &mdash; Business Quality, Valuation Attractiveness, and Entry/Exit Timing &mdash; each on a 0&ndash;100 scale with confidence percentages. This section is your one-glance dashboard: each pillar is scored separately so a weak leg is visible rather than washed out by a strong one, and the pre-adjustment score is shown alongside the final so you can see exactly how much the Underlying Driver nudged the result.</div>
+</div>
+<div class="score-grid">
+  <div class="score-card">
+    <h3 style="color:var(--blue);">Business Quality</h3>
+    <div class="score-value" style="color:var(--green);">80</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:80%; background:var(--green);"></div></div>
+    <div class="score-label">Fully-funded through DFS, high-IRR project, strong management</div>
+    <div class="confidence">Confidence: 70% &middot; Pre-adjustment: 75 (+5 driver)</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--blue);">Valuation Attractiveness</h3>
+    <div class="score-value" style="color:var(--green);">89</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:89%; background:var(--green);"></div></div>
+    <div class="score-label">P/NAV 0.53x PFS / 0.20x spot, +72.5% to consensus target</div>
+    <div class="confidence">Confidence: 72% &middot; Pre-adjustment: 84 (+5 driver)</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--blue);">Entry/Exit Timing</h3>
+    <div class="score-value" style="color:var(--green);">83</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:83%; background:var(--green);"></div></div>
+    <div class="score-label">MTF strongly_bullish, RS +15.9pts vs XMA 6mo, R:R 1:3.8</div>
+    <div class="confidence">Confidence: 55% &middot; Pre-adjustment: 80 (+3 driver) &middot; &minus;10 event, &minus;5 yfinance</div>
+  </div>
+</div>
+
+<!-- §2. HARD GATES & DNB -->
+<div class="section-wrap" id="sec-2">
+  <div class="section-head">
+    <span class="section-num">2</span>
+    <h2 class="section-title">Hard Gates &amp; Do-Not-Buy Status</h2>
+  </div>
+  <div class="section-sub">A row of binary safety checks &mdash; liquidity, currency, accounting, debt, dilution, commodity floor, permitting, and imminent-event blackout. Any TRIGGERED gate is a hard Do-Not-Buy regardless of how strong the scores above are; CAUTION gates are notes for position sizing. This section exists so a high composite score can never override a structural risk.</div>
+</div>
+<div class="gate-grid">
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Liquidity Gate</strong><span>CLEAR &mdash; avg vol 786k/day, mkt cap C$721M</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Currency Gate</strong><span>CLEAR &mdash; CAD confirmed, TSX native</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Accounting / Fraud Gate</strong><span>CLEAR &mdash; no auditor concerns, UK regulated</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Debt / Solvency Gate</strong><span>CLEAR &mdash; net cash, no debt overhang</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Going Concern Gate</strong><span>CLEAR &mdash; fully funded through DFS, 18+ mo runway</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-caution">&#9888;</span><div class="gate-text"><strong>Dilution Risk Gate</strong><span>CAUTION &mdash; C$57.5M raise done; construction capex TBD post-DFS</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Commodity Floor Gate</strong><span>CLEAR &mdash; Cu $5.88/lb well above $3/lb thesis floor</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Regulatory / Permitting Gate</strong><span>CLEAR &mdash; PL approved Oct 2025, IL H1 2026</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-triggered">&#10007;</span><div class="gate-text"><strong>Imminent Event Blackout</strong><span>TRIGGERED &mdash; US CPI + CA jobs Apr 10 (1 day). Short WAIT, Timing conf &minus;10</span></div></div>
+</div>
+<div style="margin-top:14px; font-size:13px; color:var(--text2);">
+  No Do-Not-Buy triggers fired. The single caution (Dilution Risk) is a future-state flag for construction financing post-DFS; it does not cap current scoring. The event blackout is a short-term-only override &mdash; medium and long horizons are unaffected.
+</div>
+
+<!-- §3. UNDERLYING DRIVER -->
+<div class="section-wrap" id="sec-3">
+  <div class="section-head">
+    <span class="section-num">3</span>
+    <h2 class="section-title">Underlying Driver Analysis</h2>
+  </div>
+  <div class="section-sub">The dominant external force (commodity, macro regime, or sector theme) the stock is tethered to, scored 0&ndash;100 for tailwind/headwind strength. The driver score asymmetrically nudges each pillar (&plus;5 Quality, &plus;5 Valuation, &plus;3 Timing when &gt;80). This section also names the &ldquo;thesis invalidation floor&rdquo; &mdash; the level at which the whole case breaks.</div>
+</div>
+<div class="driver-box">
+  <div class="driver-header">
+    <div>
+      <div class="driver-label">Primary Driver</div>
+      <div style="font-size:18px; font-weight:700; margin-top:4px;">Copper Price Regime + Gold ATH Rally</div>
+      <div style="font-size:12px; color:var(--text2); margin-top:3px;">Structural electrification (Cu) + safe-haven rally (Au). Cabaçal revenue split ~70% Cu / 30% Au by value.</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="driver-label">Driver Score</div>
+      <div class="driver-score-big">88</div>
+      <div style="font-size:11px; color:var(--text2);">Critical / Tailwind</div>
+    </div>
+  </div>
+  <table class="detail-table">
+    <thead><tr><th>Component</th><th>Level</th><th>Direction</th><th>Sub-Score</th></tr></thead>
+    <tbody>
+      <tr><td>Copper spot (LME proxy)</td><td>US$5.88/lb / US$12,951/mt (Feb 2026 FRED)</td><td class="metric-good">+20.6% over 4 mo, +49% vs Mar 2024</td><td class="metric-good">88</td></tr>
+      <tr><td>Gold spot</td><td>~US$4,670/oz (all-time highs)</td><td class="metric-good">Accelerating uptrend, safe-haven flows</td><td class="metric-good">92</td></tr>
+      <tr><td>Junior mining risk regime</td><td>XMA.TO TSX Materials +28.5% 6 mo</td><td class="metric-good">Risk-on for junior miners</td><td class="metric-good">75</td></tr>
+      <tr><td>Thesis invalidation floor</td><td>Cu must hold &gt; US$3.00/lb</td><td class="metric-good">US$2.88/lb buffer above floor (96% cushion)</td><td class="metric-good">95</td></tr>
+    </tbody>
+  </table>
+  <div style="background:var(--surface2); border-radius:8px; padding:12px 14px; margin-top:12px; font-size:13px; color:var(--text2);">
+    <strong style="color:var(--text);">Asymmetric adjustment applied:</strong> Driver score 88 exceeds the +80 threshold, triggering +5 Quality, +5 Valuation, +3 Timing. The copper thesis is the largest single external variable affecting Cabaçal economics; at spot prices the project NPV per share (C$8.76) implies ~5.1x the current share price vs 1.9x at PFS base-case prices. A sustained move back to US$3.50&ndash;4.00/lb would cut implied NAV by roughly 35&ndash;45% and pressure-test the medium-term thesis. Gold at ATHs adds a smaller but still material tailwind (Cabaçal starter pit has a high-grade gold overprint).
+  </div>
+</div>
+
+<!-- §4. PILLAR DETAIL: BUSINESS QUALITY -->
+<div class="section-wrap" id="sec-4">
+  <div class="section-head">
+    <span class="section-num">4</span>
+    <h2 class="section-title">Pillar Detail: Business Quality (80 &middot; High Conviction)</h2>
+  </div>
+  <div class="section-sub">A deep dive into the 80/100 Quality score: project economics (NPV/IRR), funding runway, permitting, resource quality, jurisdiction, and management. Includes a five-factor competitive moat scorecard and an ROIC-proxy NAV discount table adapted for a development-stage miner. Read this when you want to understand <em>why</em> Quality scored what it did, not just the headline number.</div>
+</div>
+
+<h3>Sub-Signal Breakdown</h3>
+<table class="detail-table">
+  <thead><tr><th>Sub-Signal</th><th>Evidence</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr><td>Project Economics (NPV/IRR)</td><td>Post-tax NPV US$248M, IRR &gt;61%, payback ~20 months (at PFS prices); spot NAV est C$8.76/sh</td><td class="metric-good">92</td></tr>
+    <tr><td>Funding / Runway</td><td>C$57.5M raised Feb 2026 (oversubscribed), fully funded through DFS, C$10M exploration committed, no near-term dilution need</td><td class="metric-good">88</td></tr>
+    <tr><td>Permitting Status</td><td>Preliminary Licence approved Oct 2025 (Mato Grosso CONSEMA unanimous); Installation Licence expected H1 2026</td><td class="metric-good">85</td></tr>
+    <tr><td>Resource Quality &amp; Scale</td><td>52.9 Mt Indicated (0.6 g/t Au, 0.3% Cu, 1.4 g/t Ag) + 10.3 Mt Inferred; 55 km contiguous VMS tenements; high-grade near-surface starter pit</td><td class="metric-good">78</td></tr>
+    <tr><td>Jurisdiction</td><td>Brazil (Mato Grosso) &mdash; mining-friendly state but FX, political and regulatory variability</td><td class="metric-neutral">62</td></tr>
+    <tr><td>Management</td><td>CEO Gilbert Clark, experienced team (73 FTEs); delivered oversubscribed raise; permitting on schedule; LSE listing exploratory</td><td class="metric-good">75</td></tr>
+  </tbody>
+</table>
+
+<h3>Moat Scorecard</h3>
+<div class="moat-grid">
+  <div class="moat-item"><h4>Pricing Power</h4><div class="moat-score" style="color:var(--yellow);">45</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Price-taker</div></div>
+  <div class="moat-item"><h4>Network Effects</h4><div class="moat-score" style="color:var(--red);">20</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">None</div></div>
+  <div class="moat-item"><h4>Switching Costs</h4><div class="moat-score" style="color:var(--red);">25</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Low &mdash; no recurring</div></div>
+  <div class="moat-item"><h4>Cost Advantage</h4><div class="moat-score" style="color:var(--green);">78</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Low-AISC VMS starter pit</div></div>
+  <div class="moat-item"><h4>Intangibles</h4><div class="moat-score" style="color:var(--yellow);">65</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">55 km land pkg + permit</div></div>
+</div>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  <strong>Moat average: 46.6.</strong> Junior miners rarely score high on moat &mdash; they inherit the commodity price as an external factor. Cabaçal's edge is its ore body quality and jurisdictional land package (55 km of contiguous VMS tenements), both of which become permanent advantages once production begins. Until then, this pillar rewards project economics more than structural moat.
+</div>
+
+<h3>ROIC Proxy (NAV Discount for Development-Stage Miner)</h3>
+<table class="detail-table">
+  <thead><tr><th>Anchor</th><th>NAV/Share</th><th>Price</th><th>P/NAV</th><th>Upside</th></tr></thead>
+  <tbody>
+    <tr><td>PFS base case (Cu ~US$4/lb)</td><td>C$3.26</td><td>C$1.72</td><td>0.53x</td><td class="metric-good">+89.5%</td></tr>
+    <tr><td>Spot prices (Cu $5.88 / Au $4,670)</td><td>C$8.76 (est)</td><td>C$1.72</td><td>0.20x</td><td class="metric-good">+409.3%</td></tr>
+  </tbody>
+</table>
+
+<h3>Industry Benchmark (AISC Margin &mdash; Developer)</h3>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Cabaçal's PFS AISC is estimated at approximately US$1.55/lb Cu-equivalent (typical range for a VMS starter pit with high metallurgical recovery and gold credits). At spot Cu US$5.88/lb, the implied margin is approximately <strong style="color:var(--green);">US$4.33/lb (~73.6% of spot)</strong> &mdash; in the top decile for development-stage copper projects globally. Industry benchmark score: <strong>82</strong>.
+</div>
+
+<!-- §5. PILLAR DETAIL: VALUATION -->
+<div class="section-wrap" id="sec-5">
+  <div class="section-head">
+    <span class="section-num">5</span>
+    <h2 class="section-title">Pillar Detail: Valuation Attractiveness (89 &middot; High Conviction)</h2>
+  </div>
+  <div class="section-sub">A deep dive into the 89/100 Valuation score: P/NAV multiples at both PFS and spot prices, a reverse-DCF showing the commodity price currently baked into the share price, the 6-analyst consensus target with upside math, a graphical grades distribution, and an FMP ratings cross-reference. Read this to understand whether the stock is cheap, fairly priced, or expensive against its own fundamentals and the Street.</div>
+</div>
+
+<h3>Primary Multiples (P/NAV &mdash; Developer Anchor)</h3>
+<table class="detail-table">
+  <thead><tr><th>Metric</th><th>Value</th><th>Benchmark (developer)</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td>P/NAV (PFS base)</td><td>0.53x</td><td>0.5&ndash;0.7x pre-construction</td><td class="metric-good">At low end &mdash; attractive</td></tr>
+    <tr><td>P/NAV (spot prices)</td><td>0.20x</td><td>0.8&ndash;1.0x at production</td><td class="metric-good">Exceptional re-rating room</td></tr>
+    <tr><td>EV / Mkt Cap</td><td>C$667M / C$721M</td><td>&mdash;</td><td class="metric-good">Net cash, low EV premium</td></tr>
+    <tr><td>P/B</td><td>12.18x</td><td>N/A for dev stage</td><td class="metric-neutral">Not meaningful</td></tr>
+  </tbody>
+</table>
+
+<h3>FCF Yield</h3>
+<div style="font-size:13px; color:var(--text2); margin-bottom:16px;">
+  <em>Not applicable.</em> MNO is pre-revenue. TTM FCF is negative (roughly C$&minus;17M on a C$721M market cap). For pre-production miners, FCF yield is replaced by NAV discount analysis and AISC margin (above).
+</div>
+
+<h3>Reverse-DCF Equivalent (Implied Commodity Price)</h3>
+<div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:20px;">
+  <p style="font-size:13px; color:var(--text2); margin-bottom:10px;">For a development-stage miner, the reverse-DCF question is: <em>"What commodity price is the market already pricing in?"</em> At C$1.72/share and 419.5M shares outstanding, market cap C$721.5M is roughly equivalent to the PFS NPV at Cu ~US$4.10/lb. Therefore:</p>
+  <table class="detail-table" style="margin:0;">
+    <tbody>
+      <tr><td>Market-implied Cu price</td><td style="text-align:right; font-weight:700;">~US$4.10/lb</td></tr>
+      <tr><td>Spot Cu price (FRED Feb 2026)</td><td style="text-align:right; font-weight:700; color:var(--green);">US$5.88/lb</td></tr>
+      <tr><td>Discount to spot</td><td style="text-align:right; font-weight:700; color:var(--green);">30%</td></tr>
+      <tr><td>Implied upside if market prices spot Cu</td><td style="text-align:right; font-weight:700; color:var(--green);">~+42% to NAV</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>Analyst Consensus Price Target</h3>
+<div class="pt-range-bar">
+  <div style="font-size:13px; margin-bottom:8px; color:var(--text2);">
+    <strong>6 analysts covering</strong> &middot; Low C$2.50 &middot; Median C$2.90 &middot; Consensus C$2.97 &middot; High C$3.50
+  </div>
+  <div class="pt-bar-wrap">
+    <div class="pt-bar-track"></div>
+    <!-- current price marker -->
+    <div class="pt-marker" style="left:0%; background:var(--blue);">
+      <div class="pt-marker-label" style="color:var(--blue);">Current</div>
+      <div class="pt-marker-val" style="color:var(--blue);">C$1.72</div>
+    </div>
+    <!-- low target C$2.50 = 43.8% of way from 1.72 to 3.50 -->
+    <div class="pt-marker" style="left:43.8%; background:var(--yellow);">
+      <div class="pt-marker-label" style="color:var(--yellow);">Low</div>
+      <div class="pt-marker-val" style="color:var(--yellow);">C$2.50</div>
+    </div>
+    <!-- median C$2.90 = 66.3% -->
+    <div class="pt-marker" style="left:66.3%; background:var(--green);">
+      <div class="pt-marker-label" style="color:var(--green);">Median</div>
+      <div class="pt-marker-val" style="color:var(--green);">C$2.90</div>
+    </div>
+    <!-- high C$3.50 = 100% -->
+    <div class="pt-marker" style="left:100%; background:var(--green);">
+      <div class="pt-marker-label" style="color:var(--green);">High</div>
+      <div class="pt-marker-val" style="color:var(--green);">C$3.50</div>
+    </div>
+  </div>
+  <div style="font-size:12px; color:var(--text2); margin-top:14px;">
+    Upside to median: <strong style="color:var(--green);">+68.6%</strong> &middot;
+    Upside to consensus: <strong style="color:var(--green);">+72.5%</strong> &middot;
+    Upside to high: <strong style="color:var(--green);">+103.5%</strong>
+  </div>
+</div>
+
+<h3>Analyst Grades Distribution</h3>
+<div class="grades-bar-wrap">
+  <div class="grades-bar">
+    <div class="grades-seg grades-sb" style="width:66.67%;">4 SB</div>
+    <div class="grades-seg grades-b" style="width:33.33%;">2 B</div>
+  </div>
+  <div class="grades-legend">
+    <span><span style="display:inline-block; width:10px; height:10px; background:#16a34a; border-radius:2px; margin-right:4px;"></span>Strong Buy: 4</span>
+    <span><span style="display:inline-block; width:10px; height:10px; background:#4ade80; border-radius:2px; margin-right:4px;"></span>Buy: 2</span>
+    <span><span style="display:inline-block; width:10px; height:10px; background:#eab308; border-radius:2px; margin-right:4px;"></span>Hold: 0</span>
+    <span><span style="display:inline-block; width:10px; height:10px; background:#f87171; border-radius:2px; margin-right:4px;"></span>Sell: 0</span>
+    <span><span style="display:inline-block; width:10px; height:10px; background:#dc2626; border-radius:2px; margin-right:4px;"></span>Strong Sell: 0</span>
+  </div>
+  <div style="font-size:12px; color:var(--text2); margin-top:8px;">
+    <strong>100% Buy/SB with no Hold or Sell</strong> &mdash; recommendation mean 1.67/5.00 (1 = Strong Buy, 5 = Strong Sell). Among the most bullish consensus distributions observable for a TSX-listed junior.
+  </div>
+</div>
+
+<h3>FMP Ratings Cross-Reference</h3>
+<table class="detail-table">
+  <thead><tr><th>FMP Score Component</th><th>Value</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr><td>Overall Rating</td><td>C&minus;</td><td class="metric-neutral">Penalises pre-revenue status</td></tr>
+    <tr><td>DCF Score</td><td>3 / 5</td><td class="metric-good">Intrinsic DCF sees upside</td></tr>
+    <tr><td>ROE / ROA / D:E / P/E / P/B</td><td>1 / 5 each</td><td class="metric-bad">Expected &mdash; no earnings yet</td></tr>
+  </tbody>
+</table>
+<div style="font-size:12px; color:var(--text2); margin-bottom:20px;">
+  FMP's framework is designed for mature profitable businesses. For a development-stage miner, five of six sub-scores will always score 1 regardless of project quality. The DCF sub-score of 3 is the only meaningful signal and supports the Valuation pillar's bullish stance. This cross-reference is treated as low-weight (10%).
+</div>
+
+<!-- §6. PILLAR DETAIL: TIMING -->
+<div class="section-wrap" id="sec-6">
+  <div class="section-head">
+    <span class="section-num">6</span>
+    <h2 class="section-title">Pillar Detail: Entry/Exit Timing (83 &middot; Moderate Conviction)</h2>
+  </div>
+  <div class="section-sub">A deep dive into the 83/100 Timing score: risk-reward framework anchored to the stop loss, relative strength vs the sector benchmark (XMA.TO), macro overlay at sector-appropriate weight, news-derived sentiment, and a 0&ndash;12 month catalyst cluster. Read this to understand <em>when</em> to act &mdash; even a great company at a great price can be a bad trade the day before a Fed meeting or a major earnings print.</div>
+</div>
+
+<h3>Risk-Reward Framework</h3>
+<table class="detail-table">
+  <thead><tr><th>Level</th><th>Price (CAD)</th><th>Distance</th><th>R:R vs Stop</th></tr></thead>
+  <tbody>
+    <tr><td>Current</td><td>C$1.72</td><td>&mdash;</td><td>&mdash;</td></tr>
+    <tr><td>Stop Loss</td><td>C$1.25</td><td class="metric-bad">&minus;27.3%</td><td>&mdash;</td></tr>
+    <tr><td>Risk per share</td><td>C$0.47</td><td>&mdash;</td><td>&mdash;</td></tr>
+    <tr><td>52-week high / near resistance</td><td>C$2.05</td><td class="metric-good">+19.2%</td><td>1:0.7</td></tr>
+    <tr><td>Analyst median target</td><td>C$2.90</td><td class="metric-good">+68.6%</td><td class="metric-good">1:2.51</td></tr>
+    <tr><td>Analyst high target</td><td>C$3.50</td><td class="metric-good">+103.5%</td><td class="metric-good">1:3.79</td></tr>
+    <tr><td>PFS NAV/share</td><td>C$3.26</td><td class="metric-good">+89.5%</td><td class="metric-good">1:3.28</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Primary R:R at analyst median target: <strong style="color:var(--green);">1:2.5</strong>. Against the PFS NAV anchor: <strong style="color:var(--green);">1:3.3</strong>. Against the spot NAV estimate (C$8.76) the mathematical R:R exceeds 1:15 but should be treated as asymmetric tail exposure, not a base case. Risk-reward score: <strong>88</strong>.
+</div>
+
+<h3>Relative Strength vs TSX Materials (XMA.TO)</h3>
+<table class="detail-table">
+  <thead><tr><th>Window</th><th>MNO.TO</th><th>XMA.TO</th><th>Relative Strength</th><th>Signal</th></tr></thead>
+  <tbody>
+    <tr class="mtf-bullish"><td>6 month</td><td class="metric-good">+44.4%</td><td>+28.5%</td><td class="metric-good">+15.9 pts</td><td class="metric-good">Outperform</td></tr>
+    <tr class="mtf-neutral"><td>3 month</td><td>+9.7%</td><td>+8.9%</td><td>+0.8 pts</td><td class="metric-neutral">In line</td></tr>
+    <tr class="mtf-bearish"><td>1 month</td><td class="metric-bad">&minus;5.6%</td><td>&minus;1.4%</td><td class="metric-bad">&minus;4.2 pts</td><td class="metric-bad">Underperform</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  6-month RS confirms the primary uptrend outperforms sector. 1-month RS has turned negative as MNO pulled back from the C$2.05 Feb 27 high faster than the broader base-metals index &mdash; typical of a mean-reversion move in a higher-beta name after a parabolic run. The daily timeframe is in "weakening + support_breakdown" mode per MTF analysis, supporting the interpretation of a pullback within a larger uptrend. Relative strength score: <strong>68</strong>.
+</div>
+
+<h3>Macro Overlay (High Sensitivity &mdash; Materials)</h3>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Mining/Materials is flagged as <strong>High macro sensitivity</strong> per the skill matrix, so macro gets a 20% weight in the Timing pillar (vs 10% default). The current macro stack is decisively positive for this ticker: copper trending hard (+20.6% over the last 4 months), gold at all-time highs, yield curve positive +50 bps (normalised), 10Y at 4.33% and stable, USD easing. The one soft spot is the Canadian labour market (prior print &minus;83.9k employment change), which partly explains the Mar 19&ndash;20 sector-wide pullback visible in both MNO and XMA. Macro overlay score: <strong>85</strong>.
+</div>
+
+<h3>Sentiment &amp; Analyst Grades (Firm/Date/Action)</h3>
+<div style="background:var(--yellow-bg); border:1px solid rgba(234,179,8,0.25); border-radius:8px; padding:10px 14px; margin-bottom:10px; font-size:12px; color:var(--yellow);">
+  <strong>Note:</strong> Firm-specific grade actions with dates are unavailable for TSX:MNO &mdash; FMP's per-firm grades endpoint returned HTTP 402 (Canadian ticker tier limitation). Only the aggregated Yahoo distribution is available. The table below shows the news-derived catalyst actions as a proxy.
+</div>
+<table class="detail-table">
+  <thead><tr><th>Date</th><th>Source</th><th>Action / Headline</th><th>Tone</th></tr></thead>
+  <tbody>
+    <tr><td>2026-03-04</td><td>Proactive / PDAC</td><td>CEO Clark highlights DFS progress, IRR &gt;61%, C$10M exploration, LSE dual-listing plans</td><td class="metric-good">Positive</td></tr>
+    <tr><td>2026-02-17</td><td>Junior Mining Network</td><td>Post-financing acceleration of 2026 field &amp; corporate programmes after C$57.5M closing</td><td class="metric-good">Positive</td></tr>
+    <tr><td>2026-02 (multiple)</td><td>Globe &amp; Mail / wires</td><td>"Fresh financing to fast-track Cabaçal restart and exploration push"; 10,750m drill programme</td><td class="metric-good">Positive</td></tr>
+    <tr><td>2026-01-16</td><td>Investing.com (Stifel)</td><td>"3 best copper stocks" &mdash; sector-wide positive coverage on copper rally thesis</td><td class="metric-good">Positive (sector)</td></tr>
+    <tr><td>2025-10-30</td><td>Yahoo Finance / company PR</td><td>Preliminary Licence unanimously approved by Mato Grosso CONSEMA Council</td><td class="metric-good">Major positive catalyst</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Tone is uniformly positive across the last six months. The PR-heavy weighting in the news feed (expected for a junior developer) is down-weighted per the skill's News Tone Weighting Rules. Sentiment score: <strong>78</strong>. If per-firm grade actions become available, the score could move ~5 points in either direction based on specific target revisions.
+</div>
+
+<h3>Catalyst Clustering (0&ndash;12 months)</h3>
+<table class="detail-table">
+  <thead><tr><th>Catalyst</th><th>Timeframe</th><th>Impact</th></tr></thead>
+  <tbody>
+    <tr><td>Installation Licence (IL) submission / approval</td><td>H1 2026 (imminent)</td><td class="metric-good">High &mdash; last major permit de-risk</td></tr>
+    <tr><td>Definitive Feasibility Study (DFS) publication</td><td>2026 (mid-late)</td><td class="metric-good">High &mdash; sets construction capex, re-rates NAV</td></tr>
+    <tr><td>2026 exploration drill results (10,750 m)</td><td>Rolling 2026</td><td class="metric-good">Medium &mdash; resource expansion upside</td></tr>
+    <tr><td>LSE dual-listing</td><td>TBC 2026</td><td class="metric-neutral">Medium &mdash; broadens investor base</td></tr>
+    <tr><td>Construction financing decision</td><td>Post-DFS 2026/27</td><td class="metric-neutral">High but dilution risk attached</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Four independent near-term catalysts within 6&ndash;12 months, all with positive skew. Catalyst score: <strong>88</strong>.
+</div>
+
+<!-- §7. ECONOMIC EVENT RISK -->
+<div class="section-wrap" id="sec-7">
+  <div class="section-head">
+    <span class="section-num">7</span>
+    <h2 class="section-title">Economic Event Risk</h2>
+  </div>
+  <div class="section-sub">The next 14 days of high-impact macro releases that could swing this stock, plus a look back at the last seven days of surprises to gauge the current macro tape. For sectors with High macro sensitivity (Materials, Financials, Rates-linked REITs), any high-impact release within 3 trading days triggers a WAIT-FOR-EVENT short-term override regardless of composite score.</div>
+</div>
+<div class="event-risk-box">
+  <h3>Imminent Event Blackout &mdash; Short-Term Signal Override Active</h3>
+  <p>Three high-impact releases scheduled for <strong>Friday 10 April 2026 (1 day from this report)</strong> will materially move base metals and mining equities:</p>
+</div>
+<table class="detail-table">
+  <thead><tr><th>Date (UTC)</th><th>Country</th><th>Event</th><th>Forecast</th><th>Previous</th><th>Category</th></tr></thead>
+  <tbody>
+    <tr><td>2026-04-10 12:30</td><td>US</td><td>CPI YoY (Mar)</td><td>3.4%</td><td>2.4%</td><td>Inflation</td></tr>
+    <tr><td>2026-04-10 12:30</td><td>US</td><td>CPI MoM (Mar)</td><td>1.0%</td><td>0.3%</td><td>Inflation</td></tr>
+    <tr><td>2026-04-10 12:30</td><td>US</td><td>Core Inflation Rate YoY (Mar)</td><td>2.7%</td><td>2.5%</td><td>Inflation</td></tr>
+    <tr><td>2026-04-10 12:30</td><td>CA</td><td>Unemployment Rate (Mar)</td><td>6.8%</td><td>6.7%</td><td>Employment</td></tr>
+    <tr><td>2026-04-10 12:30</td><td>CA</td><td>Employment Change (Mar)</td><td>+15k</td><td>&minus;83.9k</td><td>Employment</td></tr>
+    <tr><td>2026-04-10 14:00</td><td>US</td><td>Michigan Consumer Sentiment (Apr)</td><td>52.0</td><td>53.3</td><td>Consumer</td></tr>
+  </tbody>
+</table>
+<h3>Recent Surprises (7 days back)</h3>
+<table class="detail-table">
+  <thead><tr><th>Date</th><th>Country</th><th>Event</th><th>Actual</th><th>Forecast</th><th>Direction</th></tr></thead>
+  <tbody>
+    <tr><td>2026-04-09</td><td>US</td><td>GDP QoQ (Q4)</td><td>0.5%</td><td>0.7%</td><td class="metric-bad">Below (&minus;28.6%)</td></tr>
+    <tr><td>2026-04-09</td><td>US</td><td>Core PCE YoY (Feb)</td><td>3.0%</td><td>3.0%</td><td class="metric-neutral">In line</td></tr>
+    <tr><td>2026-04-07</td><td>CA</td><td>Ivey PMI (Mar)</td><td>49.7</td><td>55.9</td><td class="metric-bad">Below (&minus;11.1%)</td></tr>
+    <tr><td>2026-04-06</td><td>US</td><td>ISM Services PMI (Mar)</td><td>54.0</td><td>55.0</td><td class="metric-bad">Below (&minus;1.8%)</td></tr>
+    <tr><td>2026-04-03</td><td>US</td><td>NFP (Mar)</td><td>+178k</td><td>+60k</td><td class="metric-good">Above (+197%)</td></tr>
+    <tr><td>2026-04-03</td><td>US</td><td>Unemployment Rate (Mar)</td><td>4.3%</td><td>4.4%</td><td class="metric-good">Below (better)</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  The backdrop heading into CPI is mixed: strong NFP surprise but weakening services and Canadian Ivey PMI, and a soft Q4 GDP print. A CPI forecast of 3.4% YoY (vs 2.4% previous) is itself a large jump; if the actual prints above 3.5%, the USD-DXY rallies and base metals typically sell off 2&ndash;4% intraday. MNO's 1.262 beta means a 4% sector move is roughly a 5% individual move. Prudent to wait for the print before initiating new short-term positions.
+</div>
+
+<!-- §8. MULTI-TIMEFRAME TECHNICAL -->
+<div class="section-wrap" id="sec-8">
+  <div class="section-head">
+    <span class="section-num">8</span>
+    <h2 class="section-title">Multi-Timeframe Technical Analysis</h2>
+  </div>
+  <div class="section-sub">Trend, RSI, and breakout/breakdown status across five timeframes (monthly, weekly, daily, hourly, 15-minute) plus a confluence verdict and a full indicator table (MACD, Bollinger Bands, EMA/SMA stack, ATR, OBV). Read this to spot textbook setups like &ldquo;pullback in a higher-timeframe uptrend&rdquo; or divergences that precede trend changes.</div>
+</div>
+<table class="mtf-table">
+  <thead><tr><th>Timeframe</th><th>Trend</th><th>RSI</th><th>Status</th><th>Bias</th></tr></thead>
+  <tbody>
+    <tr class="mtf-bullish"><td>Monthly</td><td>Uptrend</td><td>72.09</td><td>Breakout</td><td>Bullish</td></tr>
+    <tr class="mtf-bullish"><td>Weekly</td><td>Uptrend</td><td>57.76</td><td>Breakout</td><td>Bullish</td></tr>
+    <tr class="mtf-bearish"><td>Daily</td><td>Weakening</td><td>47.18</td><td>Support breakdown</td><td>Bearish short-term</td></tr>
+    <tr class="mtf-bullish"><td>Hourly</td><td>Uptrend</td><td>50.16</td><td>Breakout (vol 2.16x)</td><td>Bullish</td></tr>
+    <tr class="mtf-bullish"><td>15-minute</td><td>Uptrend</td><td>50.23</td><td>Breakout (vol 5.99x)</td><td>Bullish</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  <strong>Confluence: strongly_bullish.</strong> The daily weakening within a strongly bullish higher-timeframe stack is the textbook "pullback in an uptrend" setup. Daily supports cluster at C$1.57&ndash;1.66 (SMA50 + bought-deal support); daily resistances at C$1.75&ndash;2.05. Daily MACD histogram has just turned positive (+0.00981) suggesting the pullback may be bottoming. ATR C$0.1066 implies ±6.2% daily range.
+</div>
+<table class="detail-table">
+  <thead><tr><th>Indicator</th><th>Value</th><th>Reading</th></tr></thead>
+  <tbody>
+    <tr><td>RSI (14-day)</td><td>50.30</td><td class="metric-neutral">Neutral, bias up</td></tr>
+    <tr><td>MACD Histogram</td><td>+0.00981</td><td class="metric-good">Turning positive</td></tr>
+    <tr><td>Bollinger Bands</td><td>1.638 / 1.696 / 1.754</td><td class="metric-neutral">Mid-band pivot</td></tr>
+    <tr><td>EMA 20 / 50</td><td>1.678 / 1.678</td><td class="metric-neutral">Converging</td></tr>
+    <tr><td>SMA 20 / 50 / 200</td><td>1.668 / 1.725 / 1.301</td><td class="metric-good">Price above SMA200 by 32%</td></tr>
+    <tr><td>ATR (14-day)</td><td>C$0.1066</td><td class="metric-neutral">6.2% daily range</td></tr>
+    <tr><td>OBV</td><td>21,885,900</td><td class="metric-good">Positive, confirming uptrend</td></tr>
+  </tbody>
+</table>
+
+<!-- §9. PRICE CHART -->
+<div class="section-wrap" id="sec-9">
+  <div class="section-head">
+    <span class="section-num">9</span>
+    <h2 class="section-title">Price Chart (6-Month Daily)</h2>
+  </div>
+  <div class="section-sub">A 6-month daily candlestick-equivalent line chart with SMA50 and Bollinger Bands overlaid. This is the visual companion to the MTF table above &mdash; it lets you see the pullback, the support zone, and the primary uptrend at a glance instead of inferring them from numbers.</div>
+</div>
+<div class="chart-container">
+  <canvas id="priceChart" width="1160" height="350"></canvas>
+</div>
+
+<!-- §10. SCENARIO SUMMARY -->
+<div class="section-wrap" id="sec-10">
+  <div class="section-head">
+    <span class="section-num">10</span>
+    <h2 class="section-title">Scenario Summary</h2>
+  </div>
+  <div class="section-sub">Bull, Base, and Bear 12-month price paths with explicit triggers and probability weights. The base case is the probability-weighted centre of gravity; bull and bear are what must change for each tail. Read this to stress-test the core thesis and to calibrate how surprised you should be if the stock moves materially against you.</div>
+</div>
+<div class="scenario-grid">
+  <div class="scenario-card scenario-bull">
+    <h4 style="color:var(--green);">Bull Case &mdash; 12 mo target C$3.50 (+103%)</h4>
+    <div style="font-size:12px; color:var(--text2); line-height:1.7;">
+      <strong>Triggers:</strong> IL approved by Q3, DFS confirms or beats PFS economics, Cu holds $5.50+/lb, exploration hits extend resource at Santa Helena, LSE listing broadens investor base. Market re-rates from 0.53x P/NAV PFS to 0.85x P/NAV as project enters construction. Analyst high target C$3.50 reached as consensus lifts.
+      <br><br><strong>Probability:</strong> 40%
+    </div>
+  </div>
+  <div class="scenario-card scenario-bear">
+    <h4 style="color:var(--red);">Bear Case &mdash; 12 mo target C$1.10 (&minus;36%)</h4>
+    <div style="font-size:12px; color:var(--text2); line-height:1.7;">
+      <strong>Triggers:</strong> IL delayed &gt;H2 2026 (political or environmental hurdle), Cu slumps to $4/lb on China demand shock, DFS reveals capex blowout (&gt;$400M vs expected ~$250M), construction financing requires dilutive equity raise at discount. Stop loss C$1.25 triggered, worst case C$1.00&ndash;1.10.
+      <br><br><strong>Probability:</strong> 20%
+    </div>
+  </div>
+</div>
+<div class="scenario-card" style="margin-top:12px; border-color:var(--blue);">
+  <h4 style="color:var(--blue);">Base Case &mdash; 12 mo target C$2.90 (+69%)</h4>
+  <div style="font-size:12px; color:var(--text2); line-height:1.7;">
+    <strong>Assumptions:</strong> IL approved on schedule H1 2026, DFS published mid-to-late 2026 broadly confirming PFS economics, Cu stays $5.00&ndash;6.00/lb, no material dilution before construction decision. Stock tracks the analyst consensus median target of <strong>C$2.90</strong> (+68.6%) by year-end 2026. R:R 1:2.5. This is the probability-weighted centre of gravity at <strong>40% probability</strong>.
+  </div>
+</div>
+
+<!-- §11. ENTRY/EXIT RULES -->
+<div class="section-wrap" id="sec-11">
+  <div class="section-head">
+    <span class="section-num">11</span>
+    <h2 class="section-title">Entry / Exit Rules</h2>
+  </div>
+  <div class="section-sub">The specific, mechanical conditions that would get you into and out of this position. Entries must satisfy five independent checks (fundamental, technical, RSI, blackout, catalyst); exits are governed by a hard stop, thesis invalidation, and three profit-take scales. Read this to convert the scores above into a concrete action plan.</div>
+</div>
+<div class="rule-box">
+  <h4>Entry Conditions (all must hold)</h4>
+  <div class="rule-condition"><strong>Fundamental:</strong> Price &le; C$2.20, net cash position intact, permitting on track &mdash; <span class="metric-good">MET</span> at C$1.72</div>
+  <div class="rule-condition"><strong>Technical:</strong> Price in C$1.60&ndash;1.80 ideal entry zone, above C$1.58 bought-deal support &mdash; <span class="metric-good">MET</span> (C$1.72 in zone, above C$1.58)</div>
+  <div class="rule-condition"><strong>RSI cooling:</strong> Daily RSI ≤ 55 &mdash; <span class="metric-good">MET</span> (RSI 50.3, cooled from 72 on monthly)</div>
+  <div class="rule-condition"><strong>Short-term blackout:</strong> No high-impact event within 3 days &mdash; <span class="metric-bad">NOT MET</span> (US CPI + CA jobs Apr 10)</div>
+  <div class="rule-condition"><strong>Catalyst:</strong> Major catalyst within 6 months &mdash; <span class="metric-good">MET</span> (IL approval + DFS pending)</div>
+</div>
+<div class="rule-box">
+  <h4>Exit Rules</h4>
+  <div class="rule-condition"><strong>Stop Loss:</strong> Exit if daily close &lt; C$1.25 for 2 consecutive sessions &mdash; current buffer C$0.47 (27.3%)</div>
+  <div class="rule-condition"><strong>Thesis Invalidation:</strong> Exit immediately if Cu &lt; US$3.00/lb sustained OR IL rejected OR DFS materially below PFS &mdash; all CLEAR at present</div>
+  <div class="rule-condition"><strong>Profit Target 1:</strong> Trim 1/3 at C$2.90 (analyst median, +68.6%)</div>
+  <div class="rule-condition"><strong>Profit Target 2:</strong> Trim additional 1/3 at C$3.50 (analyst high, +103.5%)</div>
+  <div class="rule-condition"><strong>Profit Target 3:</strong> Hold final 1/3 for post-production NAV re-rate toward C$8+ spot NAV</div>
+</div>
+
+<!-- §12. POSITION SIZING CONTEXT -->
+<div class="section-wrap" id="sec-12">
+  <div class="section-head">
+    <span class="section-num">12</span>
+    <h2 class="section-title">Position Sizing Context</h2>
+  </div>
+  <div class="section-sub">A framework for translating conviction into an appropriate allocation given the risk per share and the sector-wide volatility. This is illustrative portfolio math only &mdash; not advice &mdash; but it shows how the stop loss, ATR, and correlation with existing holdings should constrain position size.</div>
+</div>
+<table class="detail-table">
+  <thead><tr><th>Input</th><th>Value</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr><td>Entry price</td><td>C$1.72</td><td>Current</td></tr>
+    <tr><td>Stop loss</td><td>C$1.25</td><td>Hard stop, 2 consecutive closes below</td></tr>
+    <tr><td>Risk per share</td><td>C$0.47</td><td>27.3% of entry &mdash; wide by design for a junior miner</td></tr>
+    <tr><td>Suggested portfolio risk</td><td>0.75&ndash;1.00%</td><td>Junior-miner risk bucket; Quality 80 = middle of 0.5&ndash;1.5% band</td></tr>
+    <tr><td>Implied position size (1% risk, C$100k portfolio)</td><td>&asymp; C$3,660 notional (2,127 sh)</td><td>1,000 &times; 0.47 / 1.72 / 0.47 math &mdash; illustrative only</td></tr>
+    <tr><td>Correlated exposure to check</td><td>Other Cu/Au developers, XMA.TO, TSX-V juniors</td><td>Avoid stacking correlated risk into a single commodity cycle</td></tr>
+    <tr><td>Event blackout adjustment</td><td>Delay initiation until after Apr 10 CPI + CA jobs</td><td>Short-term WAIT override active</td></tr>
+  </tbody>
+</table>
+<div style="font-size:12px; color:var(--text2); margin-bottom:20px;">
+  The wide stop (27.3% vs a typical 10&ndash;12% for large caps) reflects the ATR C$0.1066 and ~6.2% daily range typical of this junior miner. A tighter stop would get noise-stopped out before the thesis could play out. Sizing compensates by reducing notional exposure, not by tightening the stop.
+</div>
+
+<!-- §13. CALIBRATION SNAPSHOT -->
+<div class="section-wrap" id="sec-13">
+  <div class="section-head">
+    <span class="section-num">13</span>
+    <h2 class="section-title">Calibration Snapshot</h2>
+  </div>
+  <div class="section-sub">A machine-readable snapshot of every score, sub-score, confidence percentage, key level, delta vs prior report, and signal override that drove this report. Saved alongside the HTML as <code>calibration-MNO-20260409-0743.json</code> so the next run can compute deltas and the watchlist monitor can trigger alerts without parsing HTML.</div>
+</div>
+<div class="calibration">
+  <div style="font-size:13px; color:var(--text2); margin-bottom:10px;">
+    Saved as <code>calibration-MNO-20260409-0743.json</code>. Short signal raw = <strong>STRONG BUY (83.8)</strong>, overridden to <strong>WAIT FOR EVENT</strong> by imminent CPI / jobs release. Medium and long horizons both <strong>STRONG BUY</strong>. All scores include +5 Quality / +5 Valuation / +3 Timing driver adjustments. No Do-Not-Buy triggers fired.
+  </div>
+  <pre class="cal-json">{
+  "ticker": "MNO.TO",
+  "exchange_ticker": "TSX:MNO",
+  "company": "Meridian Mining UK Societas",
+  "isin": "GB00BVPND783",
+  "date": "2026-04-09",
+  "version": "v5",
+  "price": 1.72,
+  "currency": "CAD",
+  "quality_score": 80,
+  "valuation_score": 89,
+  "timing_score": 83,
+  "driver_score": 88,
+  "short_composite": 83.8,
+  "medium_composite": 84.5,
+  "long_composite": 83.3,
+  "signal_short": "WAIT FOR EVENT",
+  "signal_short_raw": "STRONG BUY",
+  "signal_medium": "STRONG BUY",
+  "signal_long": "STRONG BUY",
+  "short_confidence": 63,
+  "medium_confidence": 66,
+  "long_confidence": 68,
+  "imminent_event_blackout": true,
+  "events": ["US CPI 2026-04-10", "CA Unemployment 2026-04-10"],
+  "key_levels": {
+    "stop_loss": 1.25,
+    "ideal_entry": "1.60-1.80",
+    "resistance_52w": 2.05,
+    "pfs_nav": 3.26,
+    "spot_nav_est": 8.76,
+    "analyst_median": 2.90,
+    "analyst_high": 3.50
+  }
+}</pre>
+</div>
+
+<!-- §14. DATA SOURCES & METHODOLOGY -->
+<div class="section-wrap" id="sec-14">
+  <div class="section-head">
+    <span class="section-num">14</span>
+    <h2 class="section-title">Data Sources &amp; Methodology</h2>
+  </div>
+  <div class="section-sub">Reference material &mdash; a full audit trail of every data source used by this report, showing which endpoints were fully available (&check;), which required fallback (&#9888;), and which failed (&times;), along with the provenance-based confidence haircuts that were applied. Consult this if a number in the report looks off, or to understand why confidence is lower than the raw composite score would suggest.</div>
+</div>
+<div class="data-status">
+  <div class="data-status-title">Data Source Status</div>
+  <div class="ds-grid">
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_company_profile</span> <span class="ds-note">&mdash; FMP (full)</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_stock_snapshot</span> <span class="ds-note">&mdash; yfinance fallback</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_financial_ratios</span> <span class="ds-note">&mdash; FMP (full)</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_income_statement</span> <span class="ds-note">&mdash; 6 quarters</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_multi_timeframe_analysis</span> <span class="ds-note">&mdash; all 5 timeframes</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_yahoo_prices (MNO+XMA)</span> <span class="ds-note">&mdash; 130 daily bars each</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_technical_indicators</span> <span class="ds-note">&mdash; RSI/MACD/BB/EMA/SMA/ATR</span></div></div>
+    <div class="ds-item ds-partial"><div class="ds-icon">&#9888;</div><div><span class="ds-name">get_price_target_consensus</span> <span class="ds-note">&mdash; yfinance fallback (6 analysts)</span></div></div>
+    <div class="ds-item ds-partial"><div class="ds-icon">&#9888;</div><div><span class="ds-name">get_grades_consensus</span> <span class="ds-note">&mdash; yfinance fallback (distribution only)</span></div></div>
+    <div class="ds-item ds-fail"><div class="ds-icon">&#10007;</div><div><span class="ds-name">get_stock_grades</span> <span class="ds-note">&mdash; FMP HTTP 402 (CA ticker tier limit)</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_ratings_snapshot</span> <span class="ds-note">&mdash; FMP C- (cross-ref only)</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_polygon_news &amp; get_stock_news</span> <span class="ds-note">&mdash; yfinance fallback (both)</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">search_financial_news (Tavily)</span> <span class="ds-note">&mdash; 10 results</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_economic_calendar</span> <span class="ds-note">&mdash; 85 events, 14-day window</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_key_economic_indicators</span> <span class="ds-note">&mdash; FRED</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_economic_series PCOPPUSDM</span> <span class="ds-note">&mdash; 24 months copper</span></div></div>
+  </div>
+  <div class="ds-impact">
+    <strong>Impact on scores:</strong> Analyst data is sourced via yfinance fallback (Polygon/FMP do not cover TSX:MNO at current tier). FMP per-firm grade actions unavailable &mdash; we rely on aggregated Yahoo distribution (4 SB / 2 B / 0 H / 0 S) instead of firm/date/action table. Timing confidence reduced from baseline 70% to 55% combining a &minus;10 imminent-event penalty (US CPI + CA jobs Apr 10) and a &minus;5 yfinance-fallback haircut on technical provenance. Quality and Valuation confidence reduced modestly (72% / 70%) to reflect yfinance dependency on analyst targets.
+  </div>
+</div>
+
+<!-- DISCLAIMER (BOTTOM) -->
+<div class="disclaimer" style="margin-top:28px; margin-bottom:0;">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- CHART SCRIPT -->
+<script>
+const priceData = [
+{date:"2025-10-01",c:1.17},{date:"2025-10-02",c:1.18},{date:"2025-10-03",c:1.15},{date:"2025-10-06",c:1.22},{date:"2025-10-07",c:1.23},{date:"2025-10-08",c:1.26},{date:"2025-10-09",c:1.22},{date:"2025-10-10",c:1.25},{date:"2025-10-14",c:1.26},{date:"2025-10-15",c:1.29},{date:"2025-10-16",c:1.30},{date:"2025-10-17",c:1.15},{date:"2025-10-20",c:1.19},{date:"2025-10-21",c:1.04},{date:"2025-10-22",c:1.07},{date:"2025-10-23",c:1.13},{date:"2025-10-24",c:1.11},{date:"2025-10-27",c:1.10},{date:"2025-10-28",c:1.09},{date:"2025-10-29",c:1.12},{date:"2025-10-30",c:1.22},{date:"2025-10-31",c:1.29},{date:"2025-11-03",c:1.27},{date:"2025-11-04",c:1.24},{date:"2025-11-05",c:1.25},{date:"2025-11-06",c:1.23},{date:"2025-11-07",c:1.25},{date:"2025-11-10",c:1.32},{date:"2025-11-11",c:1.32},{date:"2025-11-12",c:1.32},{date:"2025-11-13",c:1.33},{date:"2025-11-14",c:1.37},{date:"2025-11-17",c:1.35},{date:"2025-11-18",c:1.36},{date:"2025-11-19",c:1.35},{date:"2025-11-20",c:1.34},{date:"2025-11-21",c:1.35},{date:"2025-11-24",c:1.46},{date:"2025-11-25",c:1.51},{date:"2025-11-26",c:1.59},{date:"2025-11-27",c:1.55},{date:"2025-11-28",c:1.57},{date:"2025-12-01",c:1.58},{date:"2025-12-02",c:1.64},{date:"2025-12-03",c:1.62},{date:"2025-12-04",c:1.65},{date:"2025-12-05",c:1.60},{date:"2025-12-08",c:1.57},{date:"2025-12-09",c:1.55},{date:"2025-12-10",c:1.63},{date:"2025-12-11",c:1.57},{date:"2025-12-12",c:1.54},{date:"2025-12-15",c:1.50},{date:"2025-12-16",c:1.49},{date:"2025-12-17",c:1.44},{date:"2025-12-18",c:1.56},{date:"2025-12-19",c:1.67},{date:"2025-12-22",c:1.64},{date:"2025-12-23",c:1.65},{date:"2025-12-24",c:1.65},{date:"2025-12-29",c:1.58},{date:"2025-12-30",c:1.57},{date:"2025-12-31",c:1.52},{date:"2026-01-02",c:1.50},{date:"2026-01-05",c:1.54},{date:"2026-01-06",c:1.56},{date:"2026-01-07",c:1.57},{date:"2026-01-08",c:1.54},{date:"2026-01-09",c:1.50},{date:"2026-01-12",c:1.52},{date:"2026-01-13",c:1.43},{date:"2026-01-14",c:1.46},{date:"2026-01-15",c:1.48},{date:"2026-01-16",c:1.55},{date:"2026-01-19",c:1.48},{date:"2026-01-20",c:1.52},{date:"2026-01-21",c:1.47},{date:"2026-01-22",c:1.54},{date:"2026-01-23",c:1.57},{date:"2026-01-26",c:1.64},{date:"2026-01-27",c:1.67},{date:"2026-01-28",c:1.71},{date:"2026-01-29",c:1.74},{date:"2026-01-30",c:1.58},{date:"2026-02-02",c:1.55},{date:"2026-02-03",c:1.65},{date:"2026-02-04",c:1.74},{date:"2026-02-05",c:1.61},{date:"2026-02-06",c:1.64},{date:"2026-02-09",c:1.70},{date:"2026-02-10",c:1.69},{date:"2026-02-11",c:1.68},{date:"2026-02-12",c:1.63},{date:"2026-02-13",c:1.69},{date:"2026-02-17",c:1.65},{date:"2026-02-18",c:1.77},{date:"2026-02-19",c:1.83},{date:"2026-02-20",c:1.84},{date:"2026-02-23",c:1.95},{date:"2026-02-24",c:1.91},{date:"2026-02-25",c:1.96},{date:"2026-02-26",c:2.00},{date:"2026-02-27",c:1.98},{date:"2026-03-02",c:1.91},{date:"2026-03-03",c:1.81},{date:"2026-03-04",c:1.80},{date:"2026-03-05",c:1.79},{date:"2026-03-06",c:1.82},{date:"2026-03-09",c:1.79},{date:"2026-03-10",c:1.83},{date:"2026-03-11",c:1.90},{date:"2026-03-12",c:1.85},{date:"2026-03-13",c:1.77},{date:"2026-03-16",c:1.74},{date:"2026-03-17",c:1.74},{date:"2026-03-18",c:1.64},{date:"2026-03-19",c:1.57},{date:"2026-03-20",c:1.50},{date:"2026-03-23",c:1.57},{date:"2026-03-24",c:1.58},{date:"2026-03-25",c:1.63},{date:"2026-03-26",c:1.55},{date:"2026-03-27",c:1.57},{date:"2026-03-30",c:1.56},{date:"2026-03-31",c:1.70},{date:"2026-04-01",c:1.72},{date:"2026-04-02",c:1.70},{date:"2026-04-06",c:1.72},{date:"2026-04-07",c:1.65},{date:"2026-04-08",c:1.69},{date:"2026-04-09",c:1.72}
+];
+
+// SMA calculation
+function sma(data, period) {
+  const out = new Array(data.length).fill(null);
+  for (let i = period - 1; i < data.length; i++) {
+    let sum = 0;
+    for (let j = 0; j < period; j++) sum += data[i-j].c;
+    out[i] = sum / period;
+  }
+  return out;
+}
+
+// Bollinger band upper/lower based on SMA20 + 2 stdev
+function bollinger(data, period) {
+  const mid = sma(data, period);
+  const upper = new Array(data.length).fill(null);
+  const lower = new Array(data.length).fill(null);
+  for (let i = period - 1; i < data.length; i++) {
+    let sumSq = 0;
+    for (let j = 0; j < period; j++) {
+      const diff = data[i-j].c - mid[i];
+      sumSq += diff * diff;
+    }
+    const sd = Math.sqrt(sumSq / period);
+    upper[i] = mid[i] + 2 * sd;
+    lower[i] = mid[i] - 2 * sd;
+  }
+  return { mid, upper, lower };
+}
+
+const sma50 = sma(priceData, 50);
+// Note: SMA200 needs 200 bars; we only have 130, so skip
+const bb = bollinger(priceData, 20);
+
+const canvas = document.getElementById('priceChart');
+const ctx = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+const rect = canvas.getBoundingClientRect();
+canvas.width = rect.width * dpr;
+canvas.height = 350 * dpr;
+ctx.scale(dpr, dpr);
+const W = rect.width, H = 350;
+const padL = 55, padR = 20, padT = 20, padB = 40;
+const chartW = W - padL - padR;
+const chartH = H - padT - padB;
+
+// Find min/max with BB
+let minP = Infinity, maxP = -Infinity;
+priceData.forEach((d, i) => {
+  minP = Math.min(minP, d.c);
+  maxP = Math.max(maxP, d.c);
+  if (bb.upper[i] !== null) maxP = Math.max(maxP, bb.upper[i]);
+  if (bb.lower[i] !== null) minP = Math.min(minP, bb.lower[i]);
+});
+minP = minP * 0.97;
+maxP = maxP * 1.03;
+// Include key levels
+maxP = Math.max(maxP, 2.10);
+minP = Math.min(minP, 1.22);
+
+function xPos(i) { return padL + (i / (priceData.length - 1)) * chartW; }
+function yPos(p) { return padT + chartH - ((p - minP) / (maxP - minP)) * chartH; }
+
+// Grid lines
+ctx.strokeStyle = '#252a3a';
+ctx.lineWidth = 1;
+ctx.fillStyle = '#7a8099';
+ctx.font = '11px Inter, sans-serif';
+const gridSteps = 6;
+for (let i = 0; i <= gridSteps; i++) {
+  const p = minP + (i / gridSteps) * (maxP - minP);
+  const y = yPos(p);
+  ctx.beginPath();
+  ctx.moveTo(padL, y);
+  ctx.lineTo(W - padR, y);
+  ctx.stroke();
+  ctx.fillText('C$' + p.toFixed(2), 5, y + 4);
+}
+
+// Bollinger band fill
+ctx.fillStyle = 'rgba(59,130,246,0.08)';
+ctx.beginPath();
+let startedBB = false;
+for (let i = 0; i < priceData.length; i++) {
+  if (bb.upper[i] !== null) {
+    if (!startedBB) { ctx.moveTo(xPos(i), yPos(bb.upper[i])); startedBB = true; }
+    else ctx.lineTo(xPos(i), yPos(bb.upper[i]));
+  }
+}
+for (let i = priceData.length - 1; i >= 0; i--) {
+  if (bb.lower[i] !== null) ctx.lineTo(xPos(i), yPos(bb.lower[i]));
+}
+ctx.closePath();
+ctx.fill();
+
+// Bollinger band upper line
+ctx.strokeStyle = 'rgba(59,130,246,0.4)';
+ctx.lineWidth = 1;
+ctx.beginPath();
+let moved = false;
+for (let i = 0; i < priceData.length; i++) {
+  if (bb.upper[i] !== null) {
+    if (!moved) { ctx.moveTo(xPos(i), yPos(bb.upper[i])); moved = true; }
+    else ctx.lineTo(xPos(i), yPos(bb.upper[i]));
+  }
+}
+ctx.stroke();
+// Bollinger band lower line
+ctx.beginPath();
+moved = false;
+for (let i = 0; i < priceData.length; i++) {
+  if (bb.lower[i] !== null) {
+    if (!moved) { ctx.moveTo(xPos(i), yPos(bb.lower[i])); moved = true; }
+    else ctx.lineTo(xPos(i), yPos(bb.lower[i]));
+  }
+}
+ctx.stroke();
+
+// SMA50 line
+ctx.strokeStyle = '#f97316';
+ctx.lineWidth = 1.5;
+ctx.beginPath();
+moved = false;
+for (let i = 0; i < priceData.length; i++) {
+  if (sma50[i] !== null) {
+    if (!moved) { ctx.moveTo(xPos(i), yPos(sma50[i])); moved = true; }
+    else ctx.lineTo(xPos(i), yPos(sma50[i]));
+  }
+}
+ctx.stroke();
+
+// Key levels (dashed)
+const levels = [
+  { p: 1.25, label: 'Stop C$1.25', color: '#ef4444' },
+  { p: 1.58, label: 'Deal support C$1.58', color: '#eab308' },
+  { p: 2.05, label: '52w high C$2.05', color: '#22c55e' },
+  { p: 2.90, label: '', color: '#22c55e' } // out of view
+];
+ctx.setLineDash([5, 4]);
+ctx.lineWidth = 1;
+levels.forEach(l => {
+  if (l.p >= minP && l.p <= maxP) {
+    ctx.strokeStyle = l.color;
+    ctx.beginPath();
+    ctx.moveTo(padL, yPos(l.p));
+    ctx.lineTo(W - padR, yPos(l.p));
+    ctx.stroke();
+    ctx.fillStyle = l.color;
+    ctx.fillText(l.label, W - padR - 130, yPos(l.p) - 4);
+  }
+});
+ctx.setLineDash([]);
+
+// Price line
+ctx.strokeStyle = '#e1e4ed';
+ctx.lineWidth = 2;
+ctx.beginPath();
+priceData.forEach((d, i) => {
+  if (i === 0) ctx.moveTo(xPos(i), yPos(d.c));
+  else ctx.lineTo(xPos(i), yPos(d.c));
+});
+ctx.stroke();
+
+// X-axis labels (monthly)
+ctx.fillStyle = '#7a8099';
+ctx.textAlign = 'center';
+let lastMonth = '';
+priceData.forEach((d, i) => {
+  const m = d.date.substr(0, 7);
+  if (m !== lastMonth) {
+    ctx.fillText(d.date.substr(5, 5), xPos(i), H - 18);
+    lastMonth = m;
+  }
+});
+ctx.textAlign = 'left';
+
+// Legend
+ctx.fillStyle = '#e1e4ed';
+ctx.fillText('Price', padL + 5, padT + 14);
+ctx.fillStyle = '#f97316';
+ctx.fillText('— SMA50', padL + 50, padT + 14);
+ctx.fillStyle = 'rgba(59,130,246,0.7)';
+ctx.fillText('— Bollinger (20,2)', padL + 115, padT + 14);
+</script>
+
+</body>
+</html>
