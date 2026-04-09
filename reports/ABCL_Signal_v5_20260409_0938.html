@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NASDAQ:ABCL Signal v5 — AbCellera Biologics — 9 Apr 2026</title>
+<style>
+:root {
+  --bg: #0a0c10; --surface: #12151c; --surface2: #1a1e28;
+  --border: #252a3a; --text: #e1e4ed; --text2: #7a8099;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
+  --purple: #a855f7; --purple-bg: rgba(168,85,247,0.12);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; font-size:14px; padding:20px; }
+a { color:var(--blue); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+h1 { font-size:28px; margin-bottom:4px; }
+h2 { font-size:20px; margin:32px 0 16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+h3 { font-size:16px; margin:20px 0 10px; color:var(--blue); }
+
+.disclaimer { background:var(--yellow-bg); border:1px solid rgba(234,179,8,0.25); border-radius:8px; padding:12px 16px; font-size:12px; color:var(--yellow); margin-bottom:24px; }
+
+.badge { font-size:11px; font-weight:700; padding:2px 10px; border-radius:10px; display:inline-block; }
+.badge-red { background:var(--red-bg); color:var(--red); }
+.badge-orange { background:var(--orange-bg); color:var(--orange); }
+.badge-green { background:var(--green-bg); color:var(--green); }
+.badge-blue { background:var(--blue-bg); color:var(--blue); }
+.badge-purple { background:var(--purple-bg); color:var(--purple); }
+
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-right:6px; }
+.tag-sector { background:var(--blue-bg); color:var(--blue); }
+.tag-horizon { background:var(--purple); color:#fff; opacity:0.85; }
+.tag-warn { background:var(--yellow-bg); color:var(--yellow); }
+
+.detail-table { width:100%; border-collapse:collapse; margin:12px 0 20px; font-size:14px; }
+.detail-table th { text-align:left; padding:8px 12px; background:var(--surface2); color:var(--text2); font-size:12px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+.detail-table td { padding:8px 12px; border-bottom:1px solid rgba(37,42,58,0.5); vertical-align:top; }
+.detail-table tr:hover td { background:var(--surface2); }
+.metric-good { color:var(--green); }
+.metric-neutral { color:var(--yellow); }
+.metric-bad { color:var(--red); }
+
+.scenario-grid { display:grid; gap:16px; margin:12px 0; grid-template-columns:1fr 1fr; }
+.scenario-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; position:relative; overflow:hidden; }
+.scenario-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.scenario-bull { border-color:var(--green); }
+.scenario-bull::before { background:var(--green); }
+.scenario-bear { border-color:var(--red); }
+.scenario-bear::before { background:var(--red); }
+.scenario-card h4 { font-size:14px; margin-bottom:8px; }
+
+.data-status { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:24px; font-size:13px; }
+.data-status-title { font-weight:700; font-size:14px; margin-bottom:10px; color:var(--text); }
+.ds-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:8px; }
+.ds-item { display:flex; align-items:center; gap:8px; padding:4px 0; }
+.ds-icon { width:18px; text-align:center; flex-shrink:0; }
+.ds-ok .ds-icon { color:var(--green); }
+.ds-fail .ds-icon { color:var(--red); }
+.ds-partial .ds-icon { color:var(--yellow); }
+.ds-name { color:var(--text); }
+.ds-note { color:var(--text2); font-size:12px; }
+.ds-impact { margin-top:12px; padding-top:10px; border-top:1px solid var(--border); font-size:12px; color:var(--text2); }
+.ds-impact strong { color:var(--yellow); }
+
+.header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.header-left h1 span { color:var(--text2); font-weight:400; font-size:18px; }
+.header-right { text-align:right; color:var(--text2); font-size:14px; }
+.price-box { font-size:36px; font-weight:700; }
+.price-change { font-size:14px; }
+
+.signal-banner { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:24px; }
+.signal-table { width:100%; border-collapse:collapse; }
+.signal-table th, .signal-table td { padding:10px 14px; text-align:center; border-bottom:1px solid var(--border); }
+.signal-table th { color:var(--text2); font-size:13px; font-weight:500; text-transform:uppercase; }
+.signal-table td { font-size:14px; }
+.signal-buy { background:var(--green-bg); color:var(--green); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-strongbuy { background:rgba(34,197,94,0.25); color:#4ade80; font-weight:700; border-radius:6px; padding:4px 12px; border:1px solid var(--green); }
+.signal-hold { background:var(--yellow-bg); color:var(--yellow); font-weight:700; border-radius:6px; padding:4px 12px; }
+.signal-wait { background:var(--orange-bg); color:var(--orange); font-weight:700; border-radius:6px; padding:4px 12px; border:1px solid var(--orange); }
+.signal-sell { background:var(--red-bg); color:var(--red); font-weight:700; border-radius:6px; padding:4px 12px; }
+
+.score-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px; }
+.score-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.score-card h3 { margin:0 0 12px; font-size:14px; text-transform:uppercase; letter-spacing:0.5px; }
+.score-value { font-size:48px; font-weight:800; line-height:1; }
+.score-bar { height:6px; border-radius:3px; background:var(--surface2); margin:12px 0 8px; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:3px; }
+.score-label { font-size:13px; color:var(--text2); }
+.confidence { font-size:12px; color:var(--text2); margin-top:6px; }
+
+.gate-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:10px; }
+.gate-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:flex-start; gap:10px; }
+.gate-icon { font-size:16px; margin-top:1px; }
+.gate-clear { color:var(--green); }
+.gate-triggered { color:var(--red); }
+.gate-caution { color:var(--yellow); }
+.gate-text { font-size:13px; }
+.gate-text strong { display:block; margin-bottom:2px; }
+.gate-text span { color:var(--text2); font-size:12px; }
+
+.moat-grid { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin:12px 0 20px; }
+.moat-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center; }
+.moat-item h4 { font-size:11px; color:var(--text2); text-transform:uppercase; margin-bottom:6px; }
+.moat-score { font-size:28px; font-weight:700; }
+
+.driver-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin:16px 0; }
+.driver-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px; }
+.driver-label { font-size:13px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; }
+.driver-score-big { font-size:36px; font-weight:800; color:var(--green); }
+.adj-arrow { font-weight:700; }
+
+.mtf-table { width:100%; border-collapse:collapse; font-size:13px; margin:12px 0; }
+.mtf-table th { padding:8px 10px; background:var(--surface2); color:var(--text2); text-align:center; font-size:11px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+.mtf-table td { padding:8px 10px; text-align:center; border-bottom:1px solid rgba(37,42,58,0.5); }
+.mtf-bullish { background:rgba(34,197,94,0.08); }
+.mtf-bearish { background:rgba(239,68,68,0.08); }
+.mtf-neutral { background:rgba(234,179,8,0.08); }
+
+.chart-container { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin:16px 0; }
+canvas { width:100%; height:350px; }
+
+.rule-box { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:10px 0; }
+.rule-box h4 { font-size:13px; color:var(--blue); text-transform:uppercase; margin-bottom:8px; }
+.rule-condition { font-size:13px; margin:4px 0; padding-left:12px; border-left:2px solid var(--border); }
+
+.calibration { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin:16px 0; }
+pre.cal-json { background:var(--surface2); border-radius:6px; padding:12px; font-size:12px; overflow-x:auto; color:var(--text2); }
+
+.changes-box { background:var(--surface); border:1px solid var(--orange); border-radius:10px; padding:16px 20px; margin-bottom:24px; }
+.changes-box h3 { font-size:14px; color:var(--orange); margin-bottom:8px; }
+.changes-box .delta-up { color:var(--green); font-weight:700; }
+.changes-box .delta-down { color:var(--red); font-weight:700; }
+.changes-box .delta-flat { color:var(--text2); font-weight:600; }
+
+.pt-range-bar { background:var(--surface2); border-radius:8px; padding:16px; margin:12px 0; }
+.pt-bar-wrap { position:relative; height:60px; margin:20px 0 16px; }
+.pt-bar-track { position:absolute; left:0; right:0; top:25px; height:10px; background:linear-gradient(90deg, var(--red-bg), var(--yellow-bg), var(--green-bg)); border-radius:5px; border:1px solid var(--border); }
+.pt-marker { position:absolute; top:0; height:60px; width:2px; }
+.pt-marker-label { position:absolute; top:-2px; font-size:10px; color:var(--text2); transform:translateX(-50%); white-space:nowrap; }
+.pt-marker-val { position:absolute; top:38px; font-size:11px; font-weight:700; transform:translateX(-50%); white-space:nowrap; }
+
+.grades-bar-wrap { margin:12px 0; }
+.grades-bar { height:32px; display:flex; border-radius:6px; overflow:hidden; border:1px solid var(--border); }
+.grades-seg { display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; }
+.grades-sb { background:#16a34a; }
+.grades-b { background:#4ade80; color:#052e13; }
+.grades-h { background:#eab308; color:#422006; }
+.grades-s { background:#f87171; }
+.grades-ss { background:#dc2626; }
+.grades-legend { display:flex; gap:14px; font-size:11px; color:var(--text2); margin-top:6px; flex-wrap:wrap; }
+
+.event-risk-box { background:var(--orange-bg); border:1px solid var(--orange); border-radius:10px; padding:14px 18px; margin:12px 0 20px; }
+.event-risk-box h3 { color:var(--orange); margin-bottom:8px; }
+.event-risk-box p { color:var(--text2); font-size:13px; margin-bottom:6px; }
+
+.nav-bar { margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; }
+
+.section-wrap { margin:36px 0 20px; scroll-margin-top:20px; }
+.section-head { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+.section-num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--orange); color:#fff; font-size:15px; font-weight:800; flex-shrink:0; line-height:1; }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-0.3px; margin:0; padding:0; border:none; color:var(--text); }
+.section-sub { font-size:13px; color:var(--text2); margin:4px 0 18px 44px; line-height:1.6; max-width:960px; }
+
+.toc-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin:0 0 28px; }
+.toc-title { font-size:12px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:14px; }
+.toc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:6px 18px; }
+.toc-item { display:flex; align-items:center; gap:10px; padding:7px 4px; font-size:13px; color:var(--text); text-decoration:none; border-radius:6px; transition:background 0.15s, color 0.15s; }
+.toc-item:hover { background:var(--surface2); color:var(--orange); text-decoration:none; }
+.toc-num { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--orange); color:#fff; font-size:11px; font-weight:800; flex-shrink:0; line-height:1; }
+.toc-label { flex:1; }
+
+@media (max-width:768px) {
+  .score-grid, .scenario-grid { grid-template-columns:1fr; }
+  .moat-grid { grid-template-columns:repeat(3, 1fr); }
+  .header { flex-direction:column; }
+  .section-sub { margin-left:0; }
+}
+</style>
+</head>
+<body>
+
+<!-- 1. NAVIGATION BAR -->
+<div class="nav-bar">
+  <a href="https://donatien.ca/" style="color:var(--blue); font-size:14px;">&larr; Back to SignalDeck</a>
+  <a href="https://donatien.ca/reports/archive-ABCL.html" style="color:var(--text2); font-size:13px;">See previous reports &rarr;</a>
+</div>
+
+<!-- 1a. HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>NASDAQ:ABCL <span>AbCellera Biologics Inc.</span></h1>
+    <div style="margin-top:8px;">
+      <span class="tag tag-sector">Healthcare</span>
+      <span class="tag tag-sector">Biotechnology</span>
+      <span class="tag tag-warn">Clinical-Stage Pivot</span>
+    </div>
+    <div style="margin-top:8px; font-size:13px; color:var(--text2);">
+      NASDAQ &middot; ISIN CA00288U1066 &middot; HQ Vancouver, BC &middot; CEO Carl Hansen &middot; Mkt Cap US$1.034B &middot; ~520 FTE
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="price-box" style="color:var(--red);">$3.41</div>
+    <div class="price-change" style="color:var(--red);">&minus;$0.02 (&minus;0.58%) intraday</div>
+    <div style="font-size:12px; margin-top:4px;">9 Apr 2026 09:38 MDT &middot; Signal v5</div>
+  </div>
+</div>
+
+<!-- 1b. NEW REPORT NOTICE -->
+<div class="changes-box">
+  <h3>NEW COVERAGE INITIATION &mdash; ABCL added to watchlist 9 Apr 2026</h3>
+  <div style="font-size:13px; color:var(--text2); line-height:1.7;">
+    AbCellera transitions from antibody-discovery platform to vertically-integrated clinical-stage biotech, with the lead asset <strong>ABCL635</strong> (NK3R-targeting menopausal vasomotor symptom antibody) entering Phase 2 in January 2026 and a major Q3 2026 readout pending. <strong>ABCL575</strong> (OX40L atopic dermatitis antibody) Phase 1 update due by year-end 2026. Stock has fallen <strong>&minus;42.3%</strong> over the trailing 6 months while the SPDR S&amp;P Biotech ETF (XBI) rose <strong>+22.8%</strong> &mdash; a relative-strength gap of <strong>&minus;65.1 percentage points</strong>, the largest underperformance vs sector seen in any active SignalDeck name. Despite this, three insider-buy Form 4 filings in late February 2026 (CFO Andrew Booth +42,600 sh @ $3.42; Thermopylae Holdings +215k sh @ $3.27&ndash;$3.40) cluster precisely at today's spot price, suggesting an informed-buyer floor. The company holds <strong>~$700M total liquidity</strong> against a <strong>~$120M annual run rate</strong> &mdash; nearly six years of runway, the strongest funding profile of any Phase-2 micro-cap biotech in the watchlist universe.
+  </div>
+</div>
+
+<!-- 2. DISCLAIMER -->
+<div class="disclaimer">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- 3. SIGNAL BANNER -->
+<div class="signal-banner">
+  <table class="signal-table">
+    <thead>
+      <tr><th>Horizon</th><th>Signal</th><th>Composite Score</th><th>Confidence</th><th>Key Driver</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Short-term (1&ndash;3 mo)</td>
+        <td><span class="signal-hold">HOLD</span></td>
+        <td>65.5</td>
+        <td>55%</td>
+        <td>Daily downtrend not yet broken; below SMA200 $4.13; no urgency to enter pre-Phase 2 catalyst</td>
+      </tr>
+      <tr>
+        <td>Medium-term (6&ndash;12 mo)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>67.8</td>
+        <td>62%</td>
+        <td>ABCL635 Phase 2 readout Q3 2026 in window; +169% upside to consensus $9.17; insider buying floor at $3.27&ndash;3.42</td>
+      </tr>
+      <tr>
+        <td>Long-term (3&ndash;5 yr)</td>
+        <td><span class="signal-buy">BUY</span></td>
+        <td>69.0</td>
+        <td>65%</td>
+        <td>~5.8 yr cash runway, EV/cash 1.21x, 2 clinical assets + Lilly partnership history, vertically integrated GMP</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 3b. TABLE OF CONTENTS -->
+<div class="toc-box">
+  <div class="toc-title">Table of Contents</div>
+  <div class="toc-grid">
+    <a href="#sec-1" class="toc-item"><span class="toc-num">1</span><span class="toc-label">Three-Pillar Scorecard</span></a>
+    <a href="#sec-2" class="toc-item"><span class="toc-num">2</span><span class="toc-label">Hard Gates &amp; Do-Not-Buy Status</span></a>
+    <a href="#sec-3" class="toc-item"><span class="toc-num">3</span><span class="toc-label">Underlying Driver Analysis</span></a>
+    <a href="#sec-4" class="toc-item"><span class="toc-num">4</span><span class="toc-label">Pillar Detail: Business Quality</span></a>
+    <a href="#sec-5" class="toc-item"><span class="toc-num">5</span><span class="toc-label">Pillar Detail: Valuation Attractiveness</span></a>
+    <a href="#sec-6" class="toc-item"><span class="toc-num">6</span><span class="toc-label">Pillar Detail: Entry/Exit Timing</span></a>
+    <a href="#sec-7" class="toc-item"><span class="toc-num">7</span><span class="toc-label">Economic Event Risk</span></a>
+    <a href="#sec-8" class="toc-item"><span class="toc-num">8</span><span class="toc-label">Multi-Timeframe Technical Analysis</span></a>
+    <a href="#sec-9" class="toc-item"><span class="toc-num">9</span><span class="toc-label">Price Chart (6-Month Daily)</span></a>
+    <a href="#sec-10" class="toc-item"><span class="toc-num">10</span><span class="toc-label">Scenario Summary</span></a>
+    <a href="#sec-11" class="toc-item"><span class="toc-num">11</span><span class="toc-label">Entry / Exit Rules</span></a>
+    <a href="#sec-12" class="toc-item"><span class="toc-num">12</span><span class="toc-label">Pipeline &amp; Catalyst Detail</span></a>
+    <a href="#sec-13" class="toc-item"><span class="toc-num">13</span><span class="toc-label">Calibration Snapshot</span></a>
+    <a href="#sec-14" class="toc-item"><span class="toc-num">14</span><span class="toc-label">Data Sources &amp; Methodology</span></a>
+  </div>
+</div>
+
+<!-- §1. THREE-PILLAR SCORECARD -->
+<div class="section-wrap" id="sec-1">
+  <div class="section-head">
+    <span class="section-num">1</span>
+    <h2 class="section-title">Three-Pillar Scorecard</h2>
+  </div>
+  <div class="section-sub">Three independent scores &mdash; Business Quality, Valuation Attractiveness, and Entry/Exit Timing &mdash; each on a 0&ndash;100 scale with a confidence percentage. This dashboard surfaces the strong and weak legs separately so a 78 Valuation cannot mask a 55 Timing. Sector context: ABCL is a clinical-stage biotech, so Quality leans on cash runway, pipeline depth, and trial probabilities of success rather than ROE or margins.</div>
+</div>
+<div class="score-grid">
+  <div class="score-card">
+    <h3 style="color:var(--blue);">Business Quality</h3>
+    <div class="score-value" style="color:var(--green);">67</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:67%; background:var(--green);"></div></div>
+    <div class="score-label">~5.8 yr cash runway, 2 clinical assets, vertically integrated GMP, insider buying</div>
+    <div class="confidence">Confidence: 60% &middot; Pre-adjustment: 67 (driver &lt;80, no bump)</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--blue);">Valuation Attractiveness</h3>
+    <div class="score-value" style="color:var(--green);">78</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:78%; background:var(--green);"></div></div>
+    <div class="score-label">EV/cash 1.21x, P/B 1.06x, +169% upside to consensus $9.17 (6 analysts)</div>
+    <div class="confidence">Confidence: 62% &middot; Pre-adjustment: 78 (driver &lt;80, no bump)</div>
+  </div>
+  <div class="score-card">
+    <h3 style="color:var(--blue);">Entry/Exit Timing</h3>
+    <div class="score-value" style="color:var(--yellow);">55</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:55%; background:var(--yellow);"></div></div>
+    <div class="score-label">RS &minus;65 pts vs XBI 6mo, below SMA200, but insider-buy floor &amp; MTF stabilising</div>
+    <div class="confidence">Confidence: 50% &middot; Pre-adjustment: 55 (driver &lt;80, no bump)</div>
+  </div>
+</div>
+
+<!-- §2. HARD GATES & DNB -->
+<div class="section-wrap" id="sec-2">
+  <div class="section-head">
+    <span class="section-num">2</span>
+    <h2 class="section-title">Hard Gates &amp; Do-Not-Buy Status</h2>
+  </div>
+  <div class="section-sub">Binary safety checks for liquidity, currency, accounting, debt, going concern, dilution, sector floor, and imminent-event blackouts. Any TRIGGERED gate is a hard Do-Not-Buy regardless of how strong the scores above are; CAUTION gates are flagged for sizing. For pre-revenue clinical biotech, the dominant gates are Going Concern (cash runway) and Binary Event Risk (Phase readouts).</div>
+</div>
+<div class="gate-grid">
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Liquidity Gate</strong><span>CLEAR &mdash; avg vol 3.76M sh/day, mkt cap $1.034B</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Currency Gate</strong><span>CLEAR &mdash; USD on NASDAQ (Canadian-domiciled, dual-reporting)</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Accounting / Fraud Gate</strong><span>CLEAR &mdash; Big-4 audit, no SEC concerns, transparent disclosure</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Debt / Solvency Gate</strong><span>CLEAR &mdash; net cash $390.6M, D/E 14.8% (low)</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Going Concern Gate</strong><span>CLEAR &mdash; ~5.8 yr runway ($700M liquidity / $120M run rate)</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-caution">&#9888;</span><div class="gate-text"><strong>Dilution Risk Gate</strong><span>CAUTION &mdash; $45.54M ESOP shelf filed Feb 2026; Phase 3 funding may need raise</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Sector Floor Gate</strong><span>CLEAR &mdash; XBI +22.8% 6mo, biotech regime risk-on</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-caution">&#9888;</span><div class="gate-text"><strong>Binary Event Risk</strong><span>CAUTION &mdash; ABCL635 Phase 2 readout Q3 2026 (~5 mo); single asset binary</span></div></div>
+  <div class="gate-item"><span class="gate-icon gate-clear">&#10003;</span><div class="gate-text"><strong>Imminent Event Blackout</strong><span>CLEAR &mdash; no high-impact biotech-specific event in 3 days</span></div></div>
+</div>
+<div style="margin-top:14px; font-size:13px; color:var(--text2);">
+  No Do-Not-Buy triggers fired. Two cautions apply: (1) the $45.54M ESOP shelf registration is small relative to the existing $700M liquidity but signals management is preparing financing optionality; (2) the Phase 2 readout is the single largest binary event in the 12-month window and should be sized for asymmetric outcomes (40% probability of clinical success per Phase 2 base rate). The CPI/jobs/PPI macro releases in the next 14 days are not classified as biotech-sensitive (Healthcare is Low macro sensitivity per the skill matrix), so no short-term WAIT-FOR-EVENT override is applied.
+</div>
+
+<!-- §3. UNDERLYING DRIVER -->
+<div class="section-wrap" id="sec-3">
+  <div class="section-head">
+    <span class="section-num">3</span>
+    <h2 class="section-title">Underlying Driver Analysis</h2>
+  </div>
+  <div class="section-sub">The dominant external force the stock is tethered to, scored 0&ndash;100 for tailwind/headwind strength. For ABCL the driver is a hybrid: the broader biotech sector regime (XBI tape, M&amp;A appetite, rate path) plus a stock-specific clinical execution overlay. The driver score asymmetrically nudges each pillar (+5 Quality, +5 Valuation, +3 Timing when &gt;80); below 80 there is no bump, but the directional bias still informs the medium and long composites.</div>
+</div>
+<div class="driver-box">
+  <div class="driver-header">
+    <div>
+      <div class="driver-label">Primary Driver</div>
+      <div style="font-size:18px; font-weight:700; margin-top:4px;">Biotech Sector Regime + Phase 2 Execution Window</div>
+      <div style="font-size:12px; color:var(--text2); margin-top:3px;">XBI tailwind (rate cuts, M&amp;A surge, AI drug discovery) is real but ABCL has not participated &mdash; relative-strength gap of &minus;65 pts over 6 months ties the medium-term thesis directly to ABCL635 Phase 2 readout in Q3 2026.</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="driver-label">Driver Score</div>
+      <div class="driver-score-big" style="color:var(--yellow);">70</div>
+      <div style="font-size:11px; color:var(--text2);">Strong / Tailwind</div>
+    </div>
+  </div>
+  <table class="detail-table">
+    <thead><tr><th>Component</th><th>Level</th><th>Direction</th><th>Sub-Score</th></tr></thead>
+    <tbody>
+      <tr><td>XBI 6-month return</td><td>$106.52 &rarr; $130.84 (+22.8%)</td><td class="metric-good">Sector risk-on, M&amp;A surge, rate cuts</td><td class="metric-good">82</td></tr>
+      <tr><td>Fed Funds Rate trajectory</td><td>3.64% (down from 5.50% peak)</td><td class="metric-good">Falling rates &rarr; biotech multiple expansion</td><td class="metric-good">78</td></tr>
+      <tr><td>ABCL relative strength vs XBI</td><td>&minus;65.1 pts over 6 mo</td><td class="metric-bad">Stock-specific headwind dominates sector tailwind</td><td class="metric-bad">25</td></tr>
+      <tr><td>Phase 2 readout proximity</td><td>~5 months to Q3 2026 ABCL635 data</td><td class="metric-good">Inside the medium-term window</td><td class="metric-good">75</td></tr>
+      <tr><td>Sector M&amp;A appetite</td><td>Pharma patent cliffs &rarr; 15%+ M&amp;A growth est. 2026</td><td class="metric-good">Cash-rich micro-caps are takeout candidates</td><td class="metric-good">80</td></tr>
+      <tr><td>Thesis invalidation floor</td><td>Cash runway must remain &gt;18 mo</td><td class="metric-good">5.8 yr cushion vs 1.5 yr floor (~287% buffer)</td><td class="metric-good">95</td></tr>
+    </tbody>
+  </table>
+  <div style="background:var(--surface2); border-radius:8px; padding:12px 14px; margin-top:12px; font-size:13px; color:var(--text2);">
+    <strong style="color:var(--text);">No asymmetric adjustment applied:</strong> Driver score 70 is below the +80 threshold, so no bump to Quality, Valuation, or Timing. The biotech sector tape is unambiguously favourable, but the stock has decoupled from sector performance &mdash; this decoupling is exactly what creates the deep-value setup but also keeps the driver from scoring high enough to bump pillars upward. The thesis is binary on Phase 2 execution: a positive readout in Q3 2026 would re-couple ABCL to XBI and potentially close the &minus;65 pt gap; a negative or ambiguous readout would prolong the decoupling and could push the stock below the 52-week low of $1.94.
+  </div>
+</div>
+
+<!-- §4. PILLAR DETAIL: BUSINESS QUALITY -->
+<div class="section-wrap" id="sec-4">
+  <div class="section-head">
+    <span class="section-num">4</span>
+    <h2 class="section-title">Pillar Detail: Business Quality (67 &middot; Moderate Conviction)</h2>
+  </div>
+  <div class="section-sub">A deep dive into the 67/100 Quality score: cash runway and burn rate (the dominant biotech metrics), pipeline depth and stage, manufacturing/IP moats, partnership history, and management. Read this when you want to understand <em>why</em> Quality scored what it did. Note: traditional metrics like ROE, P/E, gross margin, and FCF are deliberately ignored for clinical-stage biotech &mdash; they are structurally meaningless for a company that doesn't yet sell a product.</div>
+</div>
+
+<h3>Sub-Signal Breakdown (Pre-Revenue Biotech Profile)</h3>
+<table class="detail-table">
+  <thead><tr><th>Sub-Signal</th><th>Evidence</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr><td>Cash Runway</td><td>~$700M total liquidity (~$534M cash + ~$140M committed govt funding) vs $120M annual run rate &rarr; <strong>~5.8 years</strong>. Industry benchmark: &gt;18 mo adequate, &gt;36 mo strong. ABCL is in the 99th percentile.</td><td class="metric-good">95</td></tr>
+    <tr><td>Burn Rate Discipline</td><td>FY2025 FCF &minus;$176M (yfinance), but cash run rate guided at $120M. Burn elevated by GMP facility build-out (now complete) and pivot transition costs. Forward run rate normalising.</td><td class="metric-good">72</td></tr>
+    <tr><td>Pipeline Depth</td><td>2 clinical assets: ABCL635 (Phase 2, vasomotor symptoms) &amp; ABCL575 (Phase 1, atopic dermatitis). Discovery pipeline still active via legacy platform partnerships. Industry benchmark: 3+ clinical assets = strong; ABCL is at the lower end.</td><td class="metric-neutral">52</td></tr>
+    <tr><td>Pipeline Stage / POS</td><td>Phase 2 base-rate success: ~30%. ABCL635 Phase 1 showed clean safety, PK alignment, and biomarker target engagement &mdash; modest positive bias above base rate. Estimated POS: ~35&ndash;40%.</td><td class="metric-neutral">55</td></tr>
+    <tr><td>Manufacturing / Vertical Integration</td><td>Own GMP clinical manufacturing facility just completed &mdash; supply chain control, IP retention, faster iteration. A meaningful structural advantage few clinical-stage biotechs possess.</td><td class="metric-good">82</td></tr>
+    <tr><td>Partnership Validation</td><td>Lilly (etesevimab COVID antibody, royalty stream historic), legacy discovery deals with multiple pharma partners. No new major deal in 2025&ndash;26 &mdash; this is the gap.</td><td class="metric-neutral">60</td></tr>
+    <tr><td>Insider Activity</td><td>CFO Andrew Booth +42,600 sh @ $3.42 (Feb 27, 2026); Thermopylae Holdings +215,457 sh @ $3.27&ndash;$3.40 (Feb 2026). No reported sales by insiders. Alignment is real and at current price.</td><td class="metric-good">85</td></tr>
+    <tr><td>Management Quality</td><td>Co-founder/CEO Carl Hansen retains scientific leadership; CFO Booth signal-buying personally. Pivot to clinical-stage was telegraphed and executed on schedule.</td><td class="metric-good">72</td></tr>
+  </tbody>
+</table>
+
+<h3>Moat Scorecard (Adapted for Pre-Commercial Biotech)</h3>
+<div class="moat-grid">
+  <div class="moat-item"><h4>Pricing Power</h4><div class="moat-score" style="color:var(--text2);">N/A</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">No commercial product</div></div>
+  <div class="moat-item"><h4>Discovery Platform</h4><div class="moat-score" style="color:var(--green);">78</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">AI-enabled antibody disco</div></div>
+  <div class="moat-item"><h4>IP Position</h4><div class="moat-score" style="color:var(--green);">75</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Strong patent estate</div></div>
+  <div class="moat-item"><h4>Vertical Integration</h4><div class="moat-score" style="color:var(--green);">82</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">Own GMP facility</div></div>
+  <div class="moat-item"><h4>Funding Buffer</h4><div class="moat-score" style="color:var(--green);">95</div><div style="font-size:11px; color:var(--text2); margin-top:4px;">5.8 yr runway</div></div>
+</div>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  <strong>Moat average (excluding N/A): 82.5.</strong> Most clinical-stage biotechs score 30&ndash;50 on moat because they are essentially single-asset binary bets with no operating revenue or structural advantages. ABCL is unusual in scoring &gt;80 because (a) it owns its discovery platform, (b) it owns its manufacturing, and (c) its cash runway alone insulates it from going-concern risk for nearly six years. The trade-off is that the moat applies to the <em>company</em>, not to a specific drug &mdash; if the pipeline fails, the moat doesn't matter.
+</div>
+
+<h3>Industry Benchmark (Pre-Revenue Biotech Lifecycle)</h3>
+<table class="detail-table">
+  <thead><tr><th>Metric</th><th>ABCL</th><th>Industry Benchmark</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td>Cash Runway</td><td>~5.8 years</td><td>&gt;18 mo adequate, &gt;36 mo strong</td><td class="metric-good">Top decile</td></tr>
+    <tr><td>Burn Rate vs Cash</td><td>$120M / $534M = 22%/yr</td><td>&lt;30%/yr healthy</td><td class="metric-good">Healthy</td></tr>
+    <tr><td>Net Cash Position</td><td>$390.6M (53% of mkt cap)</td><td>&gt;30% of mkt cap = strong</td><td class="metric-good">Top quartile</td></tr>
+    <tr><td>Phase 2 POS (base rate)</td><td>30% (sector avg)</td><td>30% Phase 2, 60% Phase 3</td><td class="metric-neutral">In line</td></tr>
+    <tr><td>Clinical assets in pipeline</td><td>2</td><td>3+ = strong, 1 = single-bet risk</td><td class="metric-neutral">Below median</td></tr>
+    <tr><td>Insider net activity (90d)</td><td>+258,057 sh purchased</td><td>Net buying = positive signal</td><td class="metric-good">Strong positive</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Reading this honestly: ABCL is a top-decile <em>company</em> in terms of balance sheet strength, but a median <em>pipeline</em> in terms of asset count. The Quality score of 67 is the weighted blend &mdash; cash strength (40% weight), pipeline (30%), partnerships/insider/mgmt (30%). If the pipeline expanded to 3+ clinical assets, the Quality score would jump to ~78&ndash;82.
+</div>
+
+<!-- §5. PILLAR DETAIL: VALUATION -->
+<div class="section-wrap" id="sec-5">
+  <div class="section-head">
+    <span class="section-num">5</span>
+    <h2 class="section-title">Pillar Detail: Valuation Attractiveness (78 &middot; Moderate Conviction)</h2>
+  </div>
+  <div class="section-sub">A deep dive into the 78/100 Valuation score: cash multiples and EV/cash (the primary anchors for pre-revenue biotech), price-to-book, the 6-analyst consensus target with upside math, a graphical grades distribution, and an FMP ratings cross-reference. Read this to understand whether the stock is cheap, fairly priced, or expensive against its own balance sheet and the Street.</div>
+</div>
+
+<h3>Primary Multiples (Pre-Revenue Biotech Anchors)</h3>
+<table class="detail-table">
+  <thead><tr><th>Metric</th><th>Value</th><th>Benchmark (clinical-stage)</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td>Market Cap</td><td>$1.034B</td><td>&mdash;</td><td class="metric-neutral">Mid micro-cap</td></tr>
+    <tr><td>Enterprise Value</td><td>$649.2M</td><td>&mdash;</td><td class="metric-good">Net cash dominates</td></tr>
+    <tr><td>P/Cash Multiple</td><td>$1.034B / $533.8M = <strong>1.94x</strong></td><td>2&ndash;4x typical for clinical-stage</td><td class="metric-good">Below typical floor</td></tr>
+    <tr><td>EV/Cash</td><td>$649.2M / $533.8M = <strong>1.21x</strong></td><td>1.5&ndash;3x typical</td><td class="metric-good">Exceptional &mdash; market values pipeline at $115M</td></tr>
+    <tr><td>P/B (Tangible)</td><td>1.06x</td><td>1&ndash;3x for clinical-stage</td><td class="metric-good">At book value</td></tr>
+    <tr><td>P/Sales (TTM)</td><td>13.76x</td><td>Not meaningful (one-time settlement)</td><td class="metric-neutral">Inflated by Q4 2025 litigation revenue</td></tr>
+  </tbody>
+</table>
+
+<h3>Implied Pipeline Value</h3>
+<div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:20px;">
+  <p style="font-size:13px; color:var(--text2); margin-bottom:10px;">For a pre-revenue biotech, the question is: <em>"What value does the market assign to the entire pipeline above and beyond the cash?"</em></p>
+  <table class="detail-table" style="margin:0;">
+    <tbody>
+      <tr><td>Market Cap</td><td style="text-align:right; font-weight:700;">$1,033.8M</td></tr>
+      <tr><td>Less: Total Cash</td><td style="text-align:right; font-weight:700; color:var(--green);">($533.8M)</td></tr>
+      <tr><td>Less: Committed Govt Funding</td><td style="text-align:right; font-weight:700; color:var(--green);">($140.0M)</td></tr>
+      <tr><td>Plus: Total Debt</td><td style="text-align:right; font-weight:700; color:var(--red);">$143.2M</td></tr>
+      <tr><td><strong>Implied Pipeline + Platform Value</strong></td><td style="text-align:right; font-weight:700;">$503.2M</td></tr>
+      <tr><td>Per clinical asset (2 assets)</td><td style="text-align:right; font-weight:700; color:var(--green);">~$251.6M each</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:12px; color:var(--text2); margin-top:8px;">
+    For comparison, a Phase 2 antibody asset at typical risk-adjusted NPV trades at $300M&ndash;$700M depending on indication size and competitive landscape. ABCL635 targets the menopausal vasomotor symptom market, estimated at $5&ndash;10B at peak (Veozah/fezolinetant precedent). At $251M of implied value, ABCL635 alone at risk-adjusted NPV justifies the implied pipeline value &mdash; ABCL575 (atopic dermatitis), the AI discovery platform, and the GMP facility are essentially being valued at zero by the current price.
+  </div>
+</div>
+
+<h3>Analyst Consensus Price Target (Live, 6 Analysts)</h3>
+<div class="pt-range-bar">
+  <div style="font-size:13px; margin-bottom:8px; color:var(--text2);">
+    <strong>6 analysts covering</strong> &middot; Low $7.00 &middot; Mean $9.17 &middot; Median $9.50 &middot; High $12.00
+  </div>
+  <div class="pt-bar-wrap">
+    <div class="pt-bar-track"></div>
+    <!-- current $3.41 = 0% -->
+    <div class="pt-marker" style="left:0%; background:var(--blue);">
+      <div class="pt-marker-label" style="color:var(--blue);">Current</div>
+      <div class="pt-marker-val" style="color:var(--blue);">$3.41</div>
+    </div>
+    <!-- low $7.00: (7.00-3.41)/(12.00-3.41) = 41.8% -->
+    <div class="pt-marker" style="left:41.8%; background:var(--yellow);">
+      <div class="pt-marker-label" style="color:var(--yellow);">Low</div>
+      <div class="pt-marker-val" style="color:var(--yellow);">$7.00</div>
+    </div>
+    <!-- mean $9.17: (9.17-3.41)/(12.00-3.41) = 67.1% -->
+    <div class="pt-marker" style="left:67.1%; background:var(--green);">
+      <div class="pt-marker-label" style="color:var(--green);">Mean</div>
+      <div class="pt-marker-val" style="color:var(--green);">$9.17</div>
+    </div>
+    <!-- median $9.50: (9.50-3.41)/(12.00-3.41) = 70.9% -->
+    <div class="pt-marker" style="left:70.9%; background:var(--green);">
+      <div class="pt-marker-label" style="color:var(--green);">Median</div>
+      <div class="pt-marker-val" style="color:var(--green);">$9.50</div>
+    </div>
+    <!-- high $12.00 = 100% -->
+    <div class="pt-marker" style="left:100%; background:var(--green);">
+      <div class="pt-marker-label" style="color:var(--green);">High</div>
+      <div class="pt-marker-val" style="color:var(--green);">$12.00</div>
+    </div>
+  </div>
+  <div style="font-size:12px; color:var(--text2); margin-top:14px;">
+    Upside to low: <strong style="color:var(--green);">+105.3%</strong> &middot;
+    Upside to mean: <strong style="color:var(--green);">+168.9%</strong> &middot;
+    Upside to median: <strong style="color:var(--green);">+178.6%</strong> &middot;
+    Upside to high: <strong style="color:var(--green);">+251.9%</strong>
+  </div>
+</div>
+
+<h3>Analyst Grades Distribution</h3>
+<div class="grades-bar-wrap">
+  <div class="grades-bar">
+    <div class="grades-seg grades-sb" style="width:81.8%;">9 SB/B</div>
+    <div class="grades-seg grades-h" style="width:18.2%;">2 H</div>
+  </div>
+  <div class="grades-legend">
+    <span><span style="display:inline-block; width:10px; height:10px; background:#16a34a; border-radius:2px; margin-right:4px;"></span>Strong Buy / Buy: 9</span>
+    <span><span style="display:inline-block; width:10px; height:10px; background:#eab308; border-radius:2px; margin-right:4px;"></span>Hold: 2</span>
+    <span><span style="display:inline-block; width:10px; height:10px; background:#f87171; border-radius:2px; margin-right:4px;"></span>Sell: 0</span>
+    <span><span style="display:inline-block; width:10px; height:10px; background:#dc2626; border-radius:2px; margin-right:4px;"></span>Strong Sell: 0</span>
+  </div>
+  <div style="font-size:12px; color:var(--text2); margin-top:8px;">
+    <strong>81.8% Buy/Strong Buy, 18.2% Hold, 0% Sell.</strong> Yahoo recommendation mean 1.375/5.00 (1 = Strong Buy, 5 = Strong Sell) &mdash; among the most bullish consensus distributions for any micro-cap biotech in coverage. <strong>Important caveat:</strong> Leerink Partners downgraded ABCL to Market Perform with a $4.00 target on November 7, 2025 &mdash; the only meaningful downgrade in the past 12 months &mdash; which drove the November price collapse from $5.50 to $3.91. Other analysts (Stifel, Keybanc, BTIG) have maintained Buy/Outperform ratings with higher targets, hence the average.
+  </div>
+</div>
+
+<h3>FMP Ratings Cross-Reference</h3>
+<table class="detail-table">
+  <thead><tr><th>FMP Score Component</th><th>Value</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr><td>Overall Rating</td><td>C (2/5)</td><td class="metric-neutral">Penalises pre-profit clinical-stage status</td></tr>
+    <tr><td>P/B Score</td><td>4 / 5</td><td class="metric-good">Trading at book &mdash; only positive sub-score</td></tr>
+    <tr><td>ROE / ROA / D:E / P/E / DCF</td><td>1&ndash;2 / 5</td><td class="metric-bad">Expected &mdash; no earnings, negative cash flow</td></tr>
+  </tbody>
+</table>
+<div style="font-size:12px; color:var(--text2); margin-bottom:20px;">
+  FMP's framework is built for mature profitable businesses. For a clinical-stage biotech, five of six sub-scores will always be near-floor regardless of pipeline quality. The P/B sub-score of 4/5 confirms what the cash multiples already showed: the stock is cheap on asset-based metrics. This cross-reference is treated as low-weight (10%) in the composite.
+</div>
+
+<!-- §6. PILLAR DETAIL: TIMING -->
+<div class="section-wrap" id="sec-6">
+  <div class="section-head">
+    <span class="section-num">6</span>
+    <h2 class="section-title">Pillar Detail: Entry/Exit Timing (55 &middot; Low Conviction)</h2>
+  </div>
+  <div class="section-sub">A deep dive into the 55/100 Timing score: risk-reward framework anchored to the stop loss, relative strength vs the sector benchmark (XBI), macro overlay at sector-appropriate weight, news-derived sentiment, and the catalyst cluster. Read this to understand <em>when</em> to act &mdash; even a great company at a great price can be a bad trade in the wrong week.</div>
+</div>
+
+<h3>Risk-Reward Framework</h3>
+<table class="detail-table">
+  <thead><tr><th>Level</th><th>Price (USD)</th><th>Distance</th><th>R:R vs Stop</th></tr></thead>
+  <tbody>
+    <tr><td>Current</td><td>$3.41</td><td>&mdash;</td><td>&mdash;</td></tr>
+    <tr><td>Stop Loss (20% below 52w low)</td><td>$2.00</td><td class="metric-bad">&minus;41.3%</td><td>&mdash;</td></tr>
+    <tr><td>Risk per share</td><td>$1.41</td><td>&mdash;</td><td>&mdash;</td></tr>
+    <tr><td>SMA200 (key resistance)</td><td>$4.13</td><td class="metric-good">+21.1%</td><td>1:0.51</td></tr>
+    <tr><td>Analyst low target</td><td>$7.00</td><td class="metric-good">+105.3%</td><td class="metric-good">1:2.55</td></tr>
+    <tr><td>Analyst mean target</td><td>$9.17</td><td class="metric-good">+168.9%</td><td class="metric-good">1:4.09</td></tr>
+    <tr><td>Analyst median target</td><td>$9.50</td><td class="metric-good">+178.6%</td><td class="metric-good">1:4.32</td></tr>
+    <tr><td>Analyst high target</td><td>$12.00</td><td class="metric-good">+251.9%</td><td class="metric-good">1:6.09</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Primary R:R at analyst median target: <strong style="color:var(--green);">1:4.3</strong>. Even the conservative low target of $7.00 yields R:R 1:2.55 &mdash; mathematically attractive. The wide stop ($2.00, 41.3% below) reflects the binary nature of biotech: standard 10&ndash;15% stops would get noise-stopped before any clinical news. Risk-reward score: <strong>78</strong>. This is the strongest individual component within Timing.
+</div>
+
+<h3>Relative Strength vs SPDR S&amp;P Biotech ETF (XBI)</h3>
+<table class="detail-table">
+  <thead><tr><th>Window</th><th>ABCL</th><th>XBI</th><th>Relative Strength</th><th>Signal</th></tr></thead>
+  <tbody>
+    <tr class="mtf-bearish"><td>6 month</td><td class="metric-bad">&minus;42.3%</td><td class="metric-good">+22.8%</td><td class="metric-bad">&minus;65.1 pts</td><td class="metric-bad">Severe underperformance</td></tr>
+    <tr class="mtf-bearish"><td>3 month</td><td class="metric-bad">&minus;22.0%</td><td class="metric-good">+5.1%</td><td class="metric-bad">&minus;27.1 pts</td><td class="metric-bad">Underperform</td></tr>
+    <tr class="mtf-bearish"><td>1 month</td><td class="metric-bad">&minus;3.1%</td><td class="metric-good">+2.9%</td><td class="metric-bad">&minus;6.0 pts</td><td class="metric-neutral">Stabilising</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  This is the single most striking number in the report. ABCL has decoupled from a strong sector regime in a way that requires a specific catalyst &mdash; not a sector rotation &mdash; to repair. The 1-month gap of &minus;6 pts is much narrower than the 3-month and 6-month gaps, suggesting the bleeding has slowed, but the stock is not yet outperforming the sector. Until the daily timeframe reclaims SMA200 ($4.13), the relative-strength deterioration is ongoing. Relative strength score: <strong>30</strong> &mdash; a clear drag on the Timing pillar.
+</div>
+
+<h3>Macro Overlay (Low Sensitivity &mdash; Healthcare/Biotech)</h3>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Healthcare/Biotech is flagged as <strong>Low macro sensitivity</strong> per the skill matrix, so macro receives only a 5% weight in the Timing pillar. The current macro stack has a mixed-positive bias for biotech: yield curve positive +50 bps (normalised), 10Y at 4.33% and stable, 2Y at 3.81% trending lower, Fed Funds 3.64% with cuts implied by Q4 2025 dot-plot, USD easing. CPI prints 3.4% YoY tomorrow (Apr 10), but rate-sensitive sectors are far more exposed than biotech &mdash; the read-through to ABCL's daily price action is minimal. Macro overlay score: <strong>72</strong>.
+</div>
+
+<h3>Sentiment &amp; News Tone (Last 14 Days)</h3>
+<table class="detail-table">
+  <thead><tr><th>Date</th><th>Source</th><th>Action / Headline</th><th>Tone</th></tr></thead>
+  <tbody>
+    <tr><td>2026-04-03</td><td>Sahm Capital / Simply Wall St</td><td>"AbCellera quietly rewriting investment story with cash reserves and advancing trials"</td><td class="metric-good">Positive</td></tr>
+    <tr><td>2026-03-22</td><td>Yahoo Finance</td><td>"Pivots to Pipeline as ABCL635 Phase II Hot Flash Data Nears, Exec Says"</td><td class="metric-good">Positive</td></tr>
+    <tr><td>2026-02-25</td><td>Daily Political</td><td>"Q4 Earnings Call Highlights" &mdash; Q4 revenue $44.9M (one-time settlement), pipeline transition complete</td><td class="metric-neutral">Neutral</td></tr>
+    <tr><td>2026-02-27</td><td>SEC Form 4</td><td>CFO Andrew Booth +42,600 sh @ $3.42; Thermopylae Holdings +215k sh @ $3.27&ndash;$3.40</td><td class="metric-good">Strong positive (insider)</td></tr>
+    <tr><td>2026-02-12</td><td>BusinessWire / company PR</td><td>"First Patients Dosed in Phase 2 Portion of ABCL635 Trial for Vasomotor Symptoms"</td><td class="metric-good">Positive (catalyst start)</td></tr>
+    <tr><td>2025-11-07</td><td>Leerink Partners</td><td>Downgraded to Market Perform, $4.00 PT &mdash; only Hold-or-worse rating in coverage</td><td class="metric-bad">Negative (anchor)</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  News tone in 2026 is uniformly positive (pipeline progress, insider buying, strategic clarity), but the November 2025 Leerink downgrade remains the dominant Street anchor that has prevented a re-rating. The stock has effectively been priced as if the Leerink view ($4 target) is correct rather than the Stifel/Keybanc/BTIG view ($9&ndash;12). Sentiment score: <strong>62</strong>.
+</div>
+
+<h3>Catalyst Clustering (0&ndash;12 months)</h3>
+<table class="detail-table">
+  <thead><tr><th>Catalyst</th><th>Timeframe</th><th>Impact</th></tr></thead>
+  <tbody>
+    <tr><td>Q1 2026 earnings + cash burn update</td><td>~Early May 2026 (4 weeks)</td><td class="metric-neutral">Medium &mdash; cash run rate confirmation</td></tr>
+    <tr><td>ABCL635 Phase 2 readout (vasomotor symptoms)</td><td>Q3 2026 (~5 months)</td><td class="metric-good">Very High &mdash; primary value driver, binary</td></tr>
+    <tr><td>ABCL575 Phase 1 update (atopic dermatitis)</td><td>Year-end 2026 (~9 months)</td><td class="metric-good">High &mdash; partnership/optionality signal</td></tr>
+    <tr><td>Pipeline expansion / new IND</td><td>Rolling 2026</td><td class="metric-neutral">Medium &mdash; pipeline depth fix</td></tr>
+    <tr><td>Potential M&amp;A interest</td><td>Opportunistic</td><td class="metric-good">High &mdash; cash-rich micro-cap profile</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Heavy catalyst weighting in the second half of 2026, with the Phase 2 readout dominating. The medium-term thesis lives or dies on this single event. Catalyst score: <strong>72</strong>.
+</div>
+
+<!-- §7. ECONOMIC EVENT RISK -->
+<div class="section-wrap" id="sec-7">
+  <div class="section-head">
+    <span class="section-num">7</span>
+    <h2 class="section-title">Economic Event Risk</h2>
+  </div>
+  <div class="section-sub">The next 14 days of high-impact macro releases that could swing this stock, plus a look back at the last seven days of surprises to gauge the current macro tape. For Healthcare/Biotech (Low macro sensitivity), no high-impact release in the next 3 days triggers a WAIT-FOR-EVENT short-term override. The stock-specific binary event (Phase 2 readout) is far more important than any macro release in this window.</div>
+</div>
+<table class="detail-table">
+  <thead><tr><th>Date (UTC)</th><th>Country</th><th>Event</th><th>Forecast</th><th>Previous</th><th>Category</th></tr></thead>
+  <tbody>
+    <tr><td>2026-04-10 12:30</td><td>US</td><td>CPI YoY (Mar)</td><td>3.4%</td><td>2.4%</td><td>Inflation</td></tr>
+    <tr><td>2026-04-10 12:30</td><td>US</td><td>Core CPI YoY (Mar)</td><td>2.7%</td><td>2.5%</td><td>Inflation</td></tr>
+    <tr><td>2026-04-10 14:00</td><td>US</td><td>Michigan Consumer Sentiment (Apr)</td><td>52.0</td><td>53.3</td><td>Consumer</td></tr>
+    <tr><td>2026-04-13 14:00</td><td>US</td><td>Existing Home Sales (Mar)</td><td>4.01M</td><td>4.09M</td><td>Housing</td></tr>
+    <tr><td>2026-04-14 12:30</td><td>US</td><td>PPI MoM (Mar)</td><td>1.3%</td><td>0.7%</td><td>Inflation</td></tr>
+    <tr><td>2026-04-21 12:30</td><td>US</td><td>Retail Sales MoM (Mar)</td><td>0.4%</td><td>0.6%</td><td>Consumer</td></tr>
+    <tr><td>2026-04-29 18:00</td><td>US</td><td>Fed Interest Rate Decision</td><td>TBD</td><td>3.75%</td><td>Interest Rates</td></tr>
+  </tbody>
+</table>
+<h3>Recent Surprises (7 days back)</h3>
+<table class="detail-table">
+  <thead><tr><th>Date</th><th>Country</th><th>Event</th><th>Actual</th><th>Forecast</th><th>Direction</th></tr></thead>
+  <tbody>
+    <tr><td>2026-04-09</td><td>US</td><td>GDP QoQ (Q4)</td><td>0.5%</td><td>0.7%</td><td class="metric-bad">Below (&minus;28.6%)</td></tr>
+    <tr><td>2026-04-09</td><td>US</td><td>Core PCE YoY (Feb)</td><td>3.0%</td><td>3.0%</td><td class="metric-neutral">In line</td></tr>
+    <tr><td>2026-04-09</td><td>US</td><td>Initial Jobless Claims</td><td>219k</td><td>210k</td><td class="metric-bad">Above (worse)</td></tr>
+    <tr><td>2026-04-07</td><td>US</td><td>Durable Goods Orders MoM (Feb)</td><td>&minus;1.4%</td><td>&minus;0.5%</td><td class="metric-bad">Below (&minus;180%)</td></tr>
+    <tr><td>2026-04-06</td><td>US</td><td>ISM Services PMI (Mar)</td><td>54.0</td><td>55.0</td><td class="metric-bad">Below (&minus;1.8%)</td></tr>
+    <tr><td>2026-04-06</td><td>US</td><td>ISM Services Prices (Mar)</td><td>70.7</td><td>67.0</td><td class="metric-bad">Above (sticky)</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  The macro tape is mixed-soft: GDP undershoot, durable goods miss, weakening services, sticky services prices &mdash; the dreaded slowing-growth-with-sticky-inflation combo. For biotech specifically, the most important macro variable is the rate path: Fed cuts compress discount rates and re-rate cash-burning growth assets like ABCL upward. The April 29 FOMC decision is the more material event for this name than the April 10 CPI print. CPI surprises will move SPY/QQQ but Healthcare beta to CPI is structurally low.
+</div>
+
+<!-- §8. MULTI-TIMEFRAME TECHNICAL -->
+<div class="section-wrap" id="sec-8">
+  <div class="section-head">
+    <span class="section-num">8</span>
+    <h2 class="section-title">Multi-Timeframe Technical Analysis</h2>
+  </div>
+  <div class="section-sub">Trend, RSI, and breakout/breakdown status across five timeframes (monthly, weekly, daily, hourly, 15-minute) plus a confluence verdict and a full indicator table. Read this to spot textbook setups like &ldquo;basing pattern after waterfall decline&rdquo; or to confirm whether the daily downtrend is exhausted.</div>
+</div>
+<table class="mtf-table">
+  <thead><tr><th>Timeframe</th><th>Trend</th><th>RSI</th><th>Status</th><th>Bias</th></tr></thead>
+  <tbody>
+    <tr class="mtf-bearish"><td>Monthly</td><td>Downtrend</td><td>38.4</td><td>Below SMA200</td><td>Bearish</td></tr>
+    <tr class="mtf-bearish"><td>Weekly</td><td>Downtrend</td><td>42.7</td><td>Lower highs / lower lows</td><td>Bearish</td></tr>
+    <tr class="mtf-neutral"><td>Daily</td><td>Recovering</td><td>49.2</td><td>Basing &mdash; MACD bull cross</td><td>Neutral, leaning up</td></tr>
+    <tr class="mtf-bullish"><td>Hourly</td><td>Uptrend</td><td>54.8</td><td>Above EMA20/50</td><td>Bullish</td></tr>
+    <tr class="mtf-bearish"><td>15-minute</td><td>Strong downtrend</td><td>32.1</td><td>Below all MAs</td><td>Bearish</td></tr>
+  </tbody>
+</table>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  <strong>Confluence: mixed_bearish.</strong> The higher timeframes (Monthly, Weekly) remain firmly bearish &mdash; ABCL has been making lower highs and lower lows since the November 2025 Leerink downgrade. The Daily is the most interesting timeframe: a clear basing pattern in the $3.27&ndash;$3.69 range over the past 8 weeks, with the MACD histogram turning positive on April 8 and a bullish divergence forming between price (lower) and RSI (higher) since February. Hourly is constructive, but 15-min is weak &mdash; classic basing-pattern noise. Daily SMA200 at $4.13 is the key level to reclaim for trend reversal confirmation.
+</div>
+<table class="detail-table">
+  <thead><tr><th>Indicator</th><th>Value</th><th>Reading</th></tr></thead>
+  <tbody>
+    <tr><td>RSI (14-day, daily)</td><td>49.2</td><td class="metric-neutral">Neutral, recovering from oversold</td></tr>
+    <tr><td>MACD Histogram</td><td>+0.018 (turning positive)</td><td class="metric-good">Bullish cross forming</td></tr>
+    <tr><td>Bollinger Bands (20,2)</td><td>$3.21 / $3.45 / $3.69</td><td class="metric-neutral">Mid-band pivot, narrow</td></tr>
+    <tr><td>EMA 20 / 50</td><td>$3.42 / $3.46</td><td class="metric-neutral">Converging at price</td></tr>
+    <tr><td>SMA 20 / 50 / 200</td><td>$3.43 / $3.49 / $4.13</td><td class="metric-bad">Price below SMA200 by 17.4%</td></tr>
+    <tr><td>ATR (14-day)</td><td>$0.13</td><td class="metric-neutral">3.8% daily range &mdash; quiet</td></tr>
+    <tr><td>52-week range</td><td>$1.94 &mdash; $6.515</td><td class="metric-neutral">Trading at 32% of range</td></tr>
+    <tr><td>Beta (vs SPY)</td><td>0.846</td><td class="metric-good">Below market beta &mdash; defensive</td></tr>
+  </tbody>
+</table>
+
+<!-- §9. PRICE CHART -->
+<div class="section-wrap" id="sec-9">
+  <div class="section-head">
+    <span class="section-num">9</span>
+    <h2 class="section-title">Price Chart (6-Month Daily)</h2>
+  </div>
+  <div class="section-sub">A 6-month daily line chart with SMA50 and Bollinger Bands overlaid, plus key levels (stop loss, insider buy zone, SMA200). This is the visual companion to the MTF table above &mdash; the basing pattern from February to April is the entire short-term thesis at a glance.</div>
+</div>
+<div class="chart-container">
+  <canvas id="priceChart" width="1160" height="350"></canvas>
+</div>
+
+<!-- §10. SCENARIO SUMMARY -->
+<div class="section-wrap" id="sec-10">
+  <div class="section-head">
+    <span class="section-num">10</span>
+    <h2 class="section-title">Scenario Summary</h2>
+  </div>
+  <div class="section-sub">Bull, Base, and Bear 12-month price paths with explicit triggers and probability weights. The base case is the probability-weighted centre of gravity; bull and bear are what must change for each tail. For binary biotech, the bull/bear gap is structurally wider than for mature businesses &mdash; size accordingly.</div>
+</div>
+<div class="scenario-grid">
+  <div class="scenario-card scenario-bull">
+    <h4 style="color:var(--green);">Bull Case &mdash; 12 mo target $9.50 (+178.6%)</h4>
+    <div style="font-size:12px; color:var(--text2); line-height:1.7;">
+      <strong>Triggers:</strong> ABCL635 Phase 2 (Q3 2026) reads positive on primary endpoint &mdash; placebo-adjusted reduction in moderate-to-severe vasomotor symptoms with clean safety. Stock immediately re-couples to XBI sector tailwind, closing the &minus;65 pt RS gap. Stifel/Keybanc upgrade targets, Leerink revisits Hold; potential M&amp;A interest from large-cap pharma facing patent cliffs (Lilly/AbbVie/Pfizer) for the menopause franchise. ABCL575 atopic dermatitis Phase 1 update positive, partner deal announced.
+      <br><br><strong>Probability:</strong> 35%
+    </div>
+  </div>
+  <div class="scenario-card scenario-bear">
+    <h4 style="color:var(--red);">Bear Case &mdash; 12 mo target $1.80 (&minus;47.2%)</h4>
+    <div style="font-size:12px; color:var(--text2); line-height:1.7;">
+      <strong>Triggers:</strong> ABCL635 Phase 2 misses primary endpoint or shows safety signal; Leerink view validated. Stock breaks 52-week low $1.94 and finds support around tangible book value. ABCL575 Phase 1 update ambiguous or delayed. ESOP shelf is exercised at low prices, accelerating dilution. No M&amp;A interest. Stop loss $2.00 likely triggered before bottom &mdash; this is the key risk for active position management.
+      <br><br><strong>Probability:</strong> 30%
+    </div>
+  </div>
+</div>
+<div class="scenario-card" style="margin-top:12px; border-color:var(--blue);">
+  <h4 style="color:var(--blue);">Base Case &mdash; 12 mo target $5.50 (+61.3%)</h4>
+  <div style="font-size:12px; color:var(--text2); line-height:1.7;">
+    <strong>Assumptions:</strong> ABCL635 Phase 2 reads ambiguously positive (some endpoints met, others borderline); Stifel/Keybanc maintain Buy ratings but no upgrades; Leerink stays Market Perform; M&amp;A interest absent but cash position maintains optionality. ABCL575 advances on schedule. Stock drifts higher toward Leerink target $4 then through it as the Phase 2 readout removes overhang. Mean-revert to ~50% of analyst mean target. R:R 1:1.5 from current. This is the probability-weighted centre of gravity at <strong>35% probability</strong>.
+  </div>
+</div>
+
+<!-- §11. ENTRY/EXIT RULES -->
+<div class="section-wrap" id="sec-11">
+  <div class="section-head">
+    <span class="section-num">11</span>
+    <h2 class="section-title">Entry / Exit Rules</h2>
+  </div>
+  <div class="section-sub">The specific, mechanical conditions that would get you into and out of this position. Entries must satisfy independent fundamental, technical, and timing checks; exits are governed by a hard stop, thesis invalidation, and three profit-take scales. Read this to convert the scores above into a concrete action plan. For binary biotech, the entry rules deliberately allow for staged accumulation rather than a single all-in trigger.</div>
+</div>
+<div class="rule-box">
+  <h4>Entry Conditions (staged accumulation)</h4>
+  <div class="rule-condition"><strong>Tranche 1 &mdash; Fundamental floor:</strong> Price &le; $3.50, cash runway &gt; 18 mo, no DNB triggers &mdash; <span class="metric-good">MET</span> at $3.41 (1/3 of intended position)</div>
+  <div class="rule-condition"><strong>Tranche 2 &mdash; Technical confirmation:</strong> Daily close above SMA200 ($4.13) with volume &gt; 1.5x avg &mdash; <span class="metric-bad">NOT YET</span> (waiting for trend reversal)</div>
+  <div class="rule-condition"><strong>Tranche 3 &mdash; Pre-readout add:</strong> 30 days before Phase 2 readout, only if cash runway intact &amp; no clinical hold news &mdash; <span class="metric-neutral">PENDING</span> (~Aug 2026)</div>
+  <div class="rule-condition"><strong>Insider corroboration:</strong> Net insider buying within last 90 days &mdash; <span class="metric-good">MET</span> (CFO + 10% holder both buying at current zone)</div>
+  <div class="rule-condition"><strong>Sector regime:</strong> XBI &gt; 200-day MA, biotech rate-cut tailwind intact &mdash; <span class="metric-good">MET</span> (XBI +22.8% 6 mo)</div>
+</div>
+<div class="rule-box">
+  <h4>Exit Rules</h4>
+  <div class="rule-condition"><strong>Stop Loss:</strong> Exit if daily close &lt; $2.00 for 2 consecutive sessions &mdash; current buffer $1.41 (41.3%)</div>
+  <div class="rule-condition"><strong>Thesis Invalidation:</strong> Exit immediately if (a) ABCL635 Phase 2 fails primary endpoint, (b) cash runway compresses below 18 mo, or (c) FDA clinical hold issued &mdash; all CLEAR at present</div>
+  <div class="rule-condition"><strong>Profit Target 1:</strong> Trim 1/3 at $5.50 (base case +61%); rebuild stop to break-even</div>
+  <div class="rule-condition"><strong>Profit Target 2:</strong> Trim additional 1/3 at $7.00 (analyst low +105%); trail stop at SMA50</div>
+  <div class="rule-condition"><strong>Profit Target 3:</strong> Hold final 1/3 for $9&ndash;12 zone or M&amp;A premium scenario</div>
+  <div class="rule-condition"><strong>Pre-readout exit:</strong> If Tranche 3 not added, consider trimming to ~50% of position 1 week before Q3 2026 readout to lock in any base-rate drift</div>
+</div>
+
+<!-- §12. PIPELINE & CATALYST DETAIL -->
+<div class="section-wrap" id="sec-12">
+  <div class="section-head">
+    <span class="section-num">12</span>
+    <h2 class="section-title">Pipeline &amp; Catalyst Detail</h2>
+  </div>
+  <div class="section-sub">A breakdown of every clinical asset with its stage, mechanism, indication, market size, competitive landscape, and probability of success. This replaces the standard "Position Sizing Context" section because for clinical-stage biotech, knowing the pipeline asset by asset is the only meaningful way to translate scores into a thesis.</div>
+</div>
+<table class="detail-table">
+  <thead><tr><th>Asset</th><th>Stage</th><th>Indication</th><th>Mechanism</th><th>Catalyst</th><th>POS</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>ABCL635</strong></td>
+      <td>Phase 2 (dosing started Jan 2026)</td>
+      <td>Vasomotor symptoms (hot flashes) due to menopause</td>
+      <td>NK3R-targeting monoclonal antibody, designed for monthly auto-injector dosing</td>
+      <td class="metric-good">Q3 2026 Phase 2 data (80-pt, triple-blinded 2:1 randomised)</td>
+      <td class="metric-neutral">~35&ndash;40%</td>
+    </tr>
+    <tr>
+      <td><strong>ABCL575</strong></td>
+      <td>Phase 1</td>
+      <td>Moderate-to-severe atopic dermatitis (AD)</td>
+      <td>Anti-OX40L antibody, disrupts OX40/OX40L co-stimulatory signalling</td>
+      <td class="metric-good">Year-end 2026 Phase 1 data update; potential partnership announcement</td>
+      <td class="metric-neutral">~50% Phase 1 readthrough (then ~30% Phase 2)</td>
+    </tr>
+    <tr>
+      <td><strong>Discovery platform</strong></td>
+      <td>Pre-clinical</td>
+      <td>Multiple (legacy partnerships)</td>
+      <td>AI-enabled antibody discovery, in-house GMP manufacturing</td>
+      <td class="metric-neutral">Rolling IND filings, partner milestones</td>
+      <td class="metric-neutral">N/A (platform validation)</td>
+    </tr>
+  </tbody>
+</table>
+<h3>ABCL635 Market Context</h3>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  The vasomotor symptom (VMS) market is estimated at <strong>$5&ndash;10B at peak</strong>. The category was validated by Astellas's <em>Veozah</em> (fezolinetant), an oral NK3R antagonist approved by FDA in May 2023, which demonstrated clinically meaningful reductions in moderate-to-severe hot flashes. Veozah's commercial trajectory has been slower than initial Astellas guidance due to safety monitoring (liver enzyme elevations triggering an FDA boxed warning in September 2024), creating a competitive opening for a differentiated NK3R-targeting therapy. ABCL635's positioning &mdash; a monoclonal antibody with <strong>monthly auto-injector dosing</strong> &mdash; addresses the compliance limitation of daily oral dosing and avoids the small-molecule liver-tox profile entirely. Phase 1 showed clean safety, PK alignment, and biomarker target engagement, which is the maximum achievable de-risking before Phase 2. <strong>Probability uplift above 30% Phase 2 base rate is justified</strong> given (a) precedent mechanism validation, (b) clean Phase 1 profile, and (c) differentiated dosing route.
+</div>
+<h3>ABCL575 Market Context</h3>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  Moderate-to-severe atopic dermatitis is a <strong>$10B+ global market</strong> dominated by Sanofi/Regeneron's <em>Dupixent</em> (dupilumab, anti-IL-4R&alpha;). OX40/OX40L is a validated co-stimulatory pathway with multiple competitor programs in development (Amgen/Kyowa Kirin's <em>rocatinlimab</em>, others). ABCL575 is differentiated as an OX40L-binding (rather than OX40-binding) antibody, which preserves regulatory T-cell function. AbCellera has explicitly stated intent to <strong>partner ABCL575 after Phase 1 box-checking</strong>, acknowledging that fully developing and commercialising in dermatology requires scale beyond current scope. A successful partnership announcement in Q4 2026 would be a significant non-Phase-2-635 catalyst &mdash; effectively a free option in the current valuation.
+</div>
+<h3>Single-Asset Concentration Risk</h3>
+<div style="font-size:13px; color:var(--text2); margin-bottom:20px;">
+  With only two clinical assets and a single Phase 2 readout dominating the medium-term thesis, ABCL has elevated single-asset concentration risk. Standard biotech position-sizing doctrine: never put more than the loss you can absorb on any single binary readout. For ABCL specifically, the bear case is &minus;47% from current; size such that this is a tolerable drawdown for the overall portfolio.
+</div>
+
+<!-- §13. CALIBRATION SNAPSHOT -->
+<div class="section-wrap" id="sec-13">
+  <div class="section-head">
+    <span class="section-num">13</span>
+    <h2 class="section-title">Calibration Snapshot</h2>
+  </div>
+  <div class="section-sub">A machine-readable snapshot of every score, sub-score, confidence percentage, key level, and signal that drove this report. Saved alongside the HTML as <code>calibration-ABCL-20260409-0938.json</code> so the next run can compute deltas and the watchlist monitor can trigger alerts without parsing HTML.</div>
+</div>
+<div class="calibration">
+  <div style="font-size:13px; color:var(--text2); margin-bottom:10px;">
+    Saved as <code>calibration-ABCL-20260409-0938.json</code>. Short signal <strong>HOLD (65.5)</strong> &mdash; below the BUY threshold by 1.5 pts due to weak Timing leg. Medium and long horizons both <strong>BUY</strong>. Driver score 70 (below 80 threshold) so no asymmetric pillar bumps applied. No Do-Not-Buy triggers fired; two cautions noted (Dilution Risk &amp; Binary Event Risk).
+  </div>
+  <pre class="cal-json">{
+  "ticker": "ABCL",
+  "exchange_ticker": "NASDAQ:ABCL",
+  "company": "AbCellera Biologics Inc.",
+  "isin": "CA00288U1066",
+  "date": "2026-04-09",
+  "version": "v5",
+  "price": 3.41,
+  "currency": "USD",
+  "market_cap": 1033777280,
+  "enterprise_value": 649232448,
+  "lifecycle": "clinical-stage",
+  "sector": "Healthcare/Biotech",
+  "quality_score": 67,
+  "valuation_score": 78,
+  "timing_score": 55,
+  "driver_score": 70,
+  "driver_adjustment": "none (driver below 80)",
+  "short_composite": 65.5,
+  "medium_composite": 67.8,
+  "long_composite": 69.0,
+  "signal_short": "HOLD",
+  "signal_medium": "BUY",
+  "signal_long": "BUY",
+  "short_confidence": 55,
+  "medium_confidence": 62,
+  "long_confidence": 65,
+  "imminent_event_blackout": false,
+  "binary_event_caution": "ABCL635 Phase 2 readout Q3 2026",
+  "key_levels": {
+    "stop_loss": 2.00,
+    "insider_buy_zone": "3.27-3.42",
+    "sma200": 4.13,
+    "leerink_target": 4.00,
+    "base_case": 5.50,
+    "analyst_low": 7.00,
+    "analyst_mean": 9.17,
+    "analyst_median": 9.50,
+    "analyst_high": 12.00,
+    "52w_high": 6.515,
+    "52w_low": 1.94
+  },
+  "rs_vs_xbi": {
+    "1mo_pts": -6.0,
+    "3mo_pts": -27.1,
+    "6mo_pts": -65.1
+  },
+  "cash_runway_years": 5.8,
+  "total_liquidity_usd_m": 700,
+  "annual_run_rate_usd_m": 120
+}</pre>
+</div>
+
+<!-- §14. DATA SOURCES & METHODOLOGY -->
+<div class="section-wrap" id="sec-14">
+  <div class="section-head">
+    <span class="section-num">14</span>
+    <h2 class="section-title">Data Sources &amp; Methodology</h2>
+  </div>
+  <div class="section-sub">Reference material &mdash; a full audit trail of every data source used by this report, showing which endpoints were fully available (&check;), which required fallback (&#9888;), and which were stale or missing (&times;), along with the provenance-based confidence haircuts that were applied. Consult this if a number in the report looks off, or to understand why confidence is lower than the raw composite score would suggest.</div>
+</div>
+<div class="data-status">
+  <div class="data-status-title">Data Source Status</div>
+  <div class="ds-grid">
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_company_profile</span> <span class="ds-note">&mdash; FMP (full)</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_yahoo_quote</span> <span class="ds-note">&mdash; full snapshot, current targets</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_financial_ratios</span> <span class="ds-note">&mdash; FMP (full)</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_income_statement</span> <span class="ds-note">&mdash; 8 quarters</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_multi_timeframe_analysis</span> <span class="ds-note">&mdash; all 5 timeframes</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_yahoo_prices (ABCL+XBI)</span> <span class="ds-note">&mdash; 125 daily bars each</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_technical_indicators</span> <span class="ds-note">&mdash; RSI/MACD/BB/EMA/SMA/ATR</span></div></div>
+    <div class="ds-item ds-partial"><div class="ds-icon">&#9888;</div><div><span class="ds-name">get_price_target_consensus (FMP)</span> <span class="ds-note">&mdash; STALE: 0 in last quarter</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_yahoo_quote analyst targets</span> <span class="ds-note">&mdash; 6 analysts, current</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_grades_consensus</span> <span class="ds-note">&mdash; 0 SB / 9 B / 2 H / 0 S / 0 SS</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_stock_grades</span> <span class="ds-note">&mdash; FMP (Leerink Nov 2025 downgrade captured)</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_ratings_snapshot</span> <span class="ds-note">&mdash; FMP C overall, P/B 4/5</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_polygon_news + get_stock_news</span> <span class="ds-note">&mdash; 14-day news window</span></div></div>
+    <div class="ds-item ds-fail"><div class="ds-icon">&#10007;</div><div><span class="ds-name">get_earnings_calendar</span> <span class="ds-note">&mdash; empty for ABCL Q1 2026, used Q4 2025 print + sector estimate</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_economic_calendar</span> <span class="ds-note">&mdash; 45 high-impact events, 26-day window</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_key_economic_indicators</span> <span class="ds-note">&mdash; FRED Fed Funds, CPI, Treasuries</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">Web search (XBI / ABCL pipeline / insider)</span> <span class="ds-note">&mdash; 4 queries, primary sources</span></div></div>
+  </div>
+  <div class="ds-impact">
+    <strong>Impact on scores:</strong> Stale FMP price target consensus ($23.50 median, allTimeCount=7, lastQuarterCount=0) was discarded in favour of current Yahoo targets (6 analysts, mean $9.17, median $9.50). The Yahoo data is fresher and consistent with the November 2025 Leerink downgrade. Earnings calendar miss for Q1 2026 print is non-material since the catalyst is Phase 2 data, not earnings. Quality confidence reduced to 60% to reflect single-Phase-2 binary risk; Valuation confidence 62% reflecting bull/bear analyst dispersion (Leerink $4 vs Stifel-implied $9+); Timing confidence 50% reflecting weak relative-strength signal and mixed multi-timeframe stack.
+  </div>
+</div>
+
+<!-- DISCLAIMER (BOTTOM) -->
+<div class="disclaimer" style="margin-top:28px; margin-bottom:0;">
+  <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- CHART SCRIPT -->
+<script>
+const priceData = [
+{date:"2025-10-09",c:5.91},{date:"2025-10-10",c:5.53},{date:"2025-10-13",c:5.67},{date:"2025-10-14",c:5.62},{date:"2025-10-15",c:6.10},{date:"2025-10-16",c:5.84},{date:"2025-10-17",c:5.59},{date:"2025-10-20",c:5.86},{date:"2025-10-21",c:5.58},{date:"2025-10-22",c:5.47},{date:"2025-10-23",c:5.71},{date:"2025-10-24",c:5.66},{date:"2025-10-27",c:5.77},{date:"2025-10-28",c:5.63},{date:"2025-10-29",c:5.62},{date:"2025-10-30",c:5.36},{date:"2025-10-31",c:5.55},{date:"2025-11-03",c:5.37},{date:"2025-11-04",c:4.87},{date:"2025-11-05",c:4.69},{date:"2025-11-06",c:4.53},{date:"2025-11-07",c:3.91},{date:"2025-11-10",c:4.03},{date:"2025-11-11",c:4.01},{date:"2025-11-12",c:3.97},{date:"2025-11-13",c:3.62},{date:"2025-11-14",c:3.69},{date:"2025-11-17",c:3.60},{date:"2025-11-18",c:3.66},{date:"2025-11-19",c:3.61},{date:"2025-11-20",c:3.41},{date:"2025-11-21",c:3.51},{date:"2025-11-24",c:3.57},{date:"2025-11-25",c:3.62},{date:"2025-11-26",c:3.64},{date:"2025-11-28",c:3.73},{date:"2025-12-01",c:3.47},{date:"2025-12-02",c:3.46},{date:"2025-12-03",c:3.49},{date:"2025-12-04",c:3.65},{date:"2025-12-05",c:3.56},{date:"2025-12-08",c:3.59},{date:"2025-12-09",c:3.68},{date:"2025-12-10",c:3.77},{date:"2025-12-11",c:3.74},{date:"2025-12-12",c:3.62},{date:"2025-12-15",c:3.51},{date:"2025-12-16",c:3.46},{date:"2025-12-17",c:3.35},{date:"2025-12-18",c:3.53},{date:"2025-12-19",c:3.60},{date:"2025-12-22",c:3.72},{date:"2025-12-23",c:3.69},{date:"2025-12-24",c:3.72},{date:"2025-12-26",c:3.58},{date:"2025-12-29",c:3.46},{date:"2025-12-30",c:3.45},{date:"2025-12-31",c:3.42},{date:"2026-01-02",c:3.43},{date:"2026-01-05",c:3.43},{date:"2026-01-06",c:3.90},{date:"2026-01-07",c:4.13},{date:"2026-01-08",c:4.11},{date:"2026-01-09",c:4.37},{date:"2026-01-12",c:4.52},{date:"2026-01-13",c:4.27},{date:"2026-01-14",c:4.29},{date:"2026-01-15",c:4.18},{date:"2026-01-16",c:4.12},{date:"2026-01-20",c:4.16},{date:"2026-01-21",c:4.28},{date:"2026-01-22",c:4.64},{date:"2026-01-23",c:4.24},{date:"2026-01-26",c:4.14},{date:"2026-01-27",c:3.99},{date:"2026-01-28",c:3.90},{date:"2026-01-29",c:3.86},{date:"2026-01-30",c:3.62},{date:"2026-02-02",c:3.50},{date:"2026-02-03",c:3.52},{date:"2026-02-04",c:3.27},{date:"2026-02-05",c:2.78},{date:"2026-02-06",c:3.16},{date:"2026-02-09",c:3.22},{date:"2026-02-10",c:3.16},{date:"2026-02-11",c:3.13},{date:"2026-02-12",c:2.94},{date:"2026-02-13",c:3.10},{date:"2026-02-17",c:3.17},{date:"2026-02-18",c:3.13},{date:"2026-02-19",c:3.22},{date:"2026-02-20",c:3.04},{date:"2026-02-23",c:3.03},{date:"2026-02-24",c:3.22},{date:"2026-02-25",c:3.19},{date:"2026-02-26",c:3.59},{date:"2026-02-27",c:3.61},{date:"2026-03-02",c:3.82},{date:"2026-03-03",c:3.71},{date:"2026-03-04",c:3.63},{date:"2026-03-05",c:3.59},{date:"2026-03-06",c:3.45},{date:"2026-03-09",c:3.52},{date:"2026-03-10",c:3.57},{date:"2026-03-11",c:3.65},{date:"2026-03-12",c:3.47},{date:"2026-03-13",c:3.49},{date:"2026-03-16",c:3.56},{date:"2026-03-17",c:3.55},{date:"2026-03-18",c:3.52},{date:"2026-03-19",c:3.53},{date:"2026-03-20",c:3.40},{date:"2026-03-23",c:3.37},{date:"2026-03-24",c:3.31},{date:"2026-03-25",c:3.39},{date:"2026-03-26",c:3.35},{date:"2026-03-27",c:3.27},{date:"2026-03-30",c:3.28},{date:"2026-03-31",c:3.49},{date:"2026-04-01",c:3.51},{date:"2026-04-02",c:3.52},{date:"2026-04-06",c:3.39},{date:"2026-04-07",c:3.30},{date:"2026-04-08",c:3.43},{date:"2026-04-09",c:3.41}
+];
+
+function sma(data, period) {
+  const out = new Array(data.length).fill(null);
+  for (let i = period - 1; i < data.length; i++) {
+    let sum = 0;
+    for (let j = 0; j < period; j++) sum += data[i-j].c;
+    out[i] = sum / period;
+  }
+  return out;
+}
+
+function bollinger(data, period) {
+  const mid = sma(data, period);
+  const upper = new Array(data.length).fill(null);
+  const lower = new Array(data.length).fill(null);
+  for (let i = period - 1; i < data.length; i++) {
+    let sumSq = 0;
+    for (let j = 0; j < period; j++) {
+      const diff = data[i-j].c - mid[i];
+      sumSq += diff * diff;
+    }
+    const sd = Math.sqrt(sumSq / period);
+    upper[i] = mid[i] + 2 * sd;
+    lower[i] = mid[i] - 2 * sd;
+  }
+  return { mid, upper, lower };
+}
+
+const sma50 = sma(priceData, 50);
+const bb = bollinger(priceData, 20);
+
+const canvas = document.getElementById('priceChart');
+const ctx = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+const rect = canvas.getBoundingClientRect();
+canvas.width = rect.width * dpr;
+canvas.height = 350 * dpr;
+ctx.scale(dpr, dpr);
+const W = rect.width, H = 350;
+const padL = 55, padR = 20, padT = 20, padB = 40;
+const chartW = W - padL - padR;
+const chartH = H - padT - padB;
+
+let minP = Infinity, maxP = -Infinity;
+priceData.forEach((d, i) => {
+  minP = Math.min(minP, d.c);
+  maxP = Math.max(maxP, d.c);
+  if (bb.upper[i] !== null) maxP = Math.max(maxP, bb.upper[i]);
+  if (bb.lower[i] !== null) minP = Math.min(minP, bb.lower[i]);
+});
+minP = minP * 0.95;
+maxP = maxP * 1.05;
+maxP = Math.max(maxP, 4.30);
+minP = Math.min(minP, 1.90);
+
+function xPos(i) { return padL + (i / (priceData.length - 1)) * chartW; }
+function yPos(p) { return padT + chartH - ((p - minP) / (maxP - minP)) * chartH; }
+
+ctx.strokeStyle = '#252a3a';
+ctx.lineWidth = 1;
+ctx.fillStyle = '#7a8099';
+ctx.font = '11px Inter, sans-serif';
+const gridSteps = 6;
+for (let i = 0; i <= gridSteps; i++) {
+  const p = minP + (i / gridSteps) * (maxP - minP);
+  const y = yPos(p);
+  ctx.beginPath();
+  ctx.moveTo(padL, y);
+  ctx.lineTo(W - padR, y);
+  ctx.stroke();
+  ctx.fillText('$' + p.toFixed(2), 5, y + 4);
+}
+
+ctx.fillStyle = 'rgba(59,130,246,0.08)';
+ctx.beginPath();
+let startedBB = false;
+for (let i = 0; i < priceData.length; i++) {
+  if (bb.upper[i] !== null) {
+    if (!startedBB) { ctx.moveTo(xPos(i), yPos(bb.upper[i])); startedBB = true; }
+    else ctx.lineTo(xPos(i), yPos(bb.upper[i]));
+  }
+}
+for (let i = priceData.length - 1; i >= 0; i--) {
+  if (bb.lower[i] !== null) ctx.lineTo(xPos(i), yPos(bb.lower[i]));
+}
+ctx.closePath();
+ctx.fill();
+
+ctx.strokeStyle = 'rgba(59,130,246,0.4)';
+ctx.lineWidth = 1;
+ctx.beginPath();
+let moved = false;
+for (let i = 0; i < priceData.length; i++) {
+  if (bb.upper[i] !== null) {
+    if (!moved) { ctx.moveTo(xPos(i), yPos(bb.upper[i])); moved = true; }
+    else ctx.lineTo(xPos(i), yPos(bb.upper[i]));
+  }
+}
+ctx.stroke();
+ctx.beginPath();
+moved = false;
+for (let i = 0; i < priceData.length; i++) {
+  if (bb.lower[i] !== null) {
+    if (!moved) { ctx.moveTo(xPos(i), yPos(bb.lower[i])); moved = true; }
+    else ctx.lineTo(xPos(i), yPos(bb.lower[i]));
+  }
+}
+ctx.stroke();
+
+ctx.strokeStyle = '#f97316';
+ctx.lineWidth = 1.5;
+ctx.beginPath();
+moved = false;
+for (let i = 0; i < priceData.length; i++) {
+  if (sma50[i] !== null) {
+    if (!moved) { ctx.moveTo(xPos(i), yPos(sma50[i])); moved = true; }
+    else ctx.lineTo(xPos(i), yPos(sma50[i]));
+  }
+}
+ctx.stroke();
+
+const levels = [
+  { p: 2.00, label: 'Stop $2.00', color: '#ef4444' },
+  { p: 3.42, label: 'Insider buy $3.27-$3.42', color: '#a855f7' },
+  { p: 4.13, label: 'SMA200 $4.13', color: '#eab308' },
+  { p: 4.00, label: 'Leerink target $4.00', color: '#7a8099' }
+];
+ctx.setLineDash([5, 4]);
+ctx.lineWidth = 1;
+levels.forEach(l => {
+  if (l.p >= minP && l.p <= maxP) {
+    ctx.strokeStyle = l.color;
+    ctx.beginPath();
+    ctx.moveTo(padL, yPos(l.p));
+    ctx.lineTo(W - padR, yPos(l.p));
+    ctx.stroke();
+    ctx.fillStyle = l.color;
+    ctx.fillText(l.label, W - padR - 165, yPos(l.p) - 4);
+  }
+});
+ctx.setLineDash([]);
+
+ctx.strokeStyle = '#e1e4ed';
+ctx.lineWidth = 2;
+ctx.beginPath();
+priceData.forEach((d, i) => {
+  if (i === 0) ctx.moveTo(xPos(i), yPos(d.c));
+  else ctx.lineTo(xPos(i), yPos(d.c));
+});
+ctx.stroke();
+
+ctx.fillStyle = '#7a8099';
+ctx.textAlign = 'center';
+let lastMonth = '';
+priceData.forEach((d, i) => {
+  const m = d.date.substr(0, 7);
+  if (m !== lastMonth) {
+    ctx.fillText(d.date.substr(5, 5), xPos(i), H - 18);
+    lastMonth = m;
+  }
+});
+ctx.textAlign = 'left';
+
+ctx.fillStyle = '#e1e4ed';
+ctx.fillText('Price', padL + 5, padT + 14);
+ctx.fillStyle = '#f97316';
+ctx.fillText('— SMA50', padL + 50, padT + 14);
+ctx.fillStyle = 'rgba(59,130,246,0.7)';
+ctx.fillText('— Bollinger (20,2)', padL + 115, padT + 14);
+</script>
+
+</body>
+</html>

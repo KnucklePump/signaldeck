@@ -1,0 +1,92 @@
+{
+  "ticker": "ABCL",
+  "exchange_ticker": "NASDAQ:ABCL",
+  "company": "AbCellera Biologics Inc.",
+  "isin": "CA00288U1066",
+  "date": "2026-04-09",
+  "version": "v5",
+  "price": 3.41,
+  "currency": "USD",
+  "market_cap": 1033777280,
+  "enterprise_value": 649232448,
+  "lifecycle": "clinical-stage",
+  "sector": "Healthcare/Biotech",
+  "quality_score": 67,
+  "valuation_score": 78,
+  "timing_score": 55,
+  "driver_score": 70,
+  "driver_adjustment": "none (driver below 80)",
+  "short_composite": 65.5,
+  "medium_composite": 67.8,
+  "long_composite": 69.0,
+  "signal_short": "HOLD",
+  "signal_medium": "BUY",
+  "signal_long": "BUY",
+  "short_confidence": 55,
+  "medium_confidence": 62,
+  "long_confidence": 65,
+  "imminent_event_blackout": false,
+  "binary_event_caution": "ABCL635 Phase 2 readout Q3 2026",
+  "key_levels": {
+    "stop_loss": 2.00,
+    "insider_buy_zone": "3.27-3.42",
+    "sma200": 4.13,
+    "leerink_target": 4.00,
+    "base_case": 5.50,
+    "analyst_low": 7.00,
+    "analyst_mean": 9.17,
+    "analyst_median": 9.50,
+    "analyst_high": 12.00,
+    "52w_high": 6.515,
+    "52w_low": 1.94
+  },
+  "rs_vs_xbi": {
+    "1mo_pts": -6.0,
+    "3mo_pts": -27.1,
+    "6mo_pts": -65.1
+  },
+  "cash_runway_years": 5.8,
+  "total_liquidity_usd_m": 700,
+  "annual_run_rate_usd_m": 120,
+  "hard_gates": {
+    "imminent_event_blackout": false,
+    "do_not_buy_triggered": false,
+    "cautions": ["Dilution Risk (ESOP shelf)", "Binary Event Risk (Phase 2 readout)"]
+  },
+  "pillar_breakdown": {
+    "quality": {
+      "score": 67,
+      "confidence": 60,
+      "sub_signals": {
+        "cash_runway": 95,
+        "balance_sheet": 90,
+        "moat_platform": 75,
+        "pipeline_depth": 52,
+        "execution_history": 60,
+        "revenue_quality": 35
+      }
+    },
+    "valuation": {
+      "score": 78,
+      "confidence": 62,
+      "metrics": {
+        "ev_to_cash": 1.21,
+        "p_to_b": 1.06,
+        "upside_to_mean_target_pct": 169,
+        "upside_to_median_target_pct": 179
+      }
+    },
+    "timing": {
+      "score": 55,
+      "confidence": 50,
+      "rs_6mo_pts": -65.1,
+      "trend_stack": "mixed",
+      "momentum": "stabilising"
+    },
+    "driver": {
+      "score": 70,
+      "label": "Biotech sector regime + Phase 2 execution window",
+      "asymmetric_bump": false
+    }
+  }
+}
