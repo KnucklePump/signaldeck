@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MacroEconomic Report — 9 April 2026</title>
+<style>
+:root{
+  --bg:#0a0c10;--surface:#12151c;--surface2:#1a1e28;
+  --border:#252a3a;--text:#e1e4ed;--text2:#7a8099;
+  --green:#22c55e;--green-bg:rgba(34,197,94,0.12);
+  --red:#ef4444;--red-bg:rgba(239,68,68,0.12);
+  --yellow:#eab308;--yellow-bg:rgba(234,179,8,0.12);
+  --blue:#3b82f6;--blue-bg:rgba(59,130,246,0.12);
+  --orange:#f97316;--orange-bg:rgba(249,115,22,0.12);
+  --purple:#a855f7;--purple-bg:rgba(168,85,247,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:14px;}
+.container{max-width:1200px;margin:0 auto;padding:0 24px;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;}
+.site-header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 0;}
+.header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.site-title{font-size:22px;font-weight:700;letter-spacing:-0.5px;}
+.header-meta{text-align:right;font-size:13px;color:var(--text2);}
+.nav-links{display:flex;gap:18px;margin-top:10px;border-top:1px solid var(--border);padding-top:10px;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:600;padding:4px 0;border-bottom:2px solid transparent;}
+.nav-links a.active{color:var(--orange);border-bottom-color:var(--orange);}
+.disclaimer{background:var(--yellow-bg);border:1px solid rgba(234,179,8,0.25);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--yellow);margin:16px 0;}
+.section{margin:28px 0;}
+.section-title{font-size:18px;font-weight:800;letter-spacing:-0.3px;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.section-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font-size:14px;font-weight:800;flex-shrink:0;line-height:1;}
+.section-sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.65;}
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:4px;display:inline-block;}
+.badge-orange{background:rgba(249,115,22,0.15);color:var(--orange);border:1px solid rgba(249,115,22,0.25);}
+.badge-red{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.25);}
+.badge-green{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.25);}
+.badge-blue{background:rgba(59,130,246,0.15);color:var(--blue);border:1px solid rgba(59,130,246,0.25);}
+.badge-purple{background:rgba(168,85,247,0.15);color:var(--purple);border:1px solid rgba(168,85,247,0.25);}
+.data-status{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;}
+.data-status-title{font-weight:700;font-size:14px;margin-bottom:10px;color:var(--text);}
+.ds-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;}
+.ds-item{display:flex;align-items:center;gap:8px;padding:4px 0;}
+.ds-icon{width:18px;text-align:center;flex-shrink:0;}
+.ds-ok .ds-icon{color:var(--green);}
+.ds-partial .ds-icon{color:var(--yellow);}
+.ds-name{color:var(--text);}
+.ds-note{color:var(--text2);font-size:12px;}
+/* Intro */
+.intro-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin:0 0 28px;}
+.intro-block h2{font-size:15px;font-weight:800;color:var(--text);margin:0 0 12px;letter-spacing:-0.2px;}
+.intro-block p{font-size:13px;color:var(--text2);line-height:1.7;margin:0;}
+.intro-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px;}
+.intro-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+.intro-item-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--orange);color:#fff;font-size:11px;font-weight:800;margin-right:7px;vertical-align:middle;}
+.intro-item a{text-decoration:none;font-size:13px;font-weight:700;color:var(--orange);}
+.intro-item a:hover{text-decoration:underline;}
+.intro-item p{font-size:12px;color:var(--text2);margin:5px 0 0;line-height:1.55;}
+/* Scenario cards */
+.scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+.scenario-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;position:relative;overflow:hidden;}
+.scenario-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.sc-stag::before{background:var(--orange);}
+.sc-defl::before{background:var(--red);}
+.sc-soft::before{background:var(--green);}
+.sc-reacc::before{background:var(--blue);}
+.scenario-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text2);}
+.scenario-prob{font-size:32px;font-weight:800;margin:4px 0;}
+.scenario-bar-vis{height:5px;background:var(--surface2);border-radius:3px;margin-top:8px;overflow:hidden;}
+.scenario-bar-fill{height:100%;border-radius:3px;}
+.scenario-drivers{margin-top:10px;font-size:11px;color:var(--text2);}
+.asset-chip{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin:1px;display:inline-block;}
+.chip-bull{background:rgba(34,197,94,0.15);color:var(--green);}
+.chip-bear{background:rgba(239,68,68,0.15);color:var(--red);}
+.chip-neut{background:rgba(122,128,153,0.12);color:var(--text2);}
+/* Cascade matrix */
+.cascade-wrap{overflow-x:auto;}
+.cascade-reading{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.7;}
+.cascade-table{border-collapse:collapse;table-layout:fixed;width:100%;min-width:1100px;font-size:11px;}
+.cascade-table th,.cascade-table td{border:1px solid var(--border);padding:0;}
+.cascade-table thead th{background:var(--surface2);font-weight:700;vertical-align:bottom;}
+.col-driver{width:210px;text-align:left;}
+.col-dom{width:110px;}
+.col-asset{width:54px;text-align:center;}
+th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
+.asset-label{writing-mode:vertical-rl;transform:rotate(180deg);font-size:9px;font-weight:700;color:var(--text2);letter-spacing:0.3px;display:block;padding:4px 0 2px;}
+.asset-dot{width:8px;height:8px;border-radius:50%;display:block;margin:2px auto 4px;}
+.driver-row td{padding:6px 8px;}
+.driver-name-cell{padding:6px 10px!important;}
+.type-badge{font-size:8px;font-weight:800;padding:1px 5px;border-radius:3px;margin-right:5px;display:inline-block;vertical-align:middle;}
+.type-temp{background:rgba(249,115,22,0.15);color:var(--orange);}
+.type-end{background:rgba(59,130,246,0.15);color:var(--blue);}
+.dom-bar-cell{padding:4px 8px!important;}
+.dom-bar{height:6px;border-radius:3px;margin-top:2px;}
+.cell-impact{text-align:center;vertical-align:middle;padding:5px 2px!important;}
+.imp-val{font-size:9px;color:var(--text2);display:block;margin-top:1px;}
+.net-row td{border-top:2px solid var(--orange)!important;background:rgba(249,115,22,0.06);}
+.net-badge{font-size:10px;font-weight:800;padding:2px 5px;border-radius:3px;display:inline-block;}
+/* Driver sections */
+.driver-section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:16px;}
+.driver-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+.driver-title{font-size:15px;font-weight:700;}
+.driver-desc{font-size:13px;color:var(--text2);line-height:1.65;margin:10px 0 14px;}
+.ind-table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:12px;}
+.ind-table th{background:var(--surface2);padding:5px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;}
+.ind-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.ind-val{font-size:15px;font-weight:800;color:var(--text);}
+.ind-breach{color:var(--red);font-weight:700;}
+.ind-watch{color:var(--orange);font-weight:700;}
+.ind-ok{color:var(--green);font-weight:700;}
+.forecast-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:4px;}
+.fc-col{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.fc-horizon{font-size:11px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px;}
+.fc-text{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:8px;}
+.fc-label{font-size:10px;font-weight:700;color:var(--text2);margin-bottom:3px;}
+.fc-chips{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px;}
+.fc-wl-label{font-size:10px;font-weight:700;color:var(--text2);margin:6px 0 3px;padding-top:6px;border-top:1px solid var(--border);}
+.sig-chip{font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;display:inline-block;white-space:nowrap;}
+.sig-so{background:rgba(34,197,94,0.15);color:#22c55e;}
+.sig-o{background:rgba(134,239,172,0.12);color:#86efac;}
+.sig-n{background:rgba(122,128,153,0.12);color:#7a8099;}
+.sig-u{background:rgba(249,115,22,0.15);color:#f97316;}
+.sig-su{background:rgba(239,68,68,0.15);color:#ef4444;}
+.conf-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;display:inline-block;}
+.conf-high{background:#14532d;color:#86efac;}
+.conf-medium{background:#78350f;color:#fcd34d;}
+.conf-low{background:#7f1d1d;color:#fca5a5;}
+.dom-badge-h{background:rgba(249,115,22,0.2);color:var(--orange);padding:3px 9px;border-radius:4px;font-size:11px;font-weight:800;border:1px solid rgba(249,115,22,0.3);}
+.dom-badge-c{background:rgba(239,68,68,0.2);color:var(--red);padding:3px 9px;border-radius:4px;font-size:11px;font-weight:800;border:1px solid rgba(239,68,68,0.3);}
+.dom-badge-m{background:rgba(234,179,8,0.15);color:var(--yellow);padding:3px 9px;border-radius:4px;font-size:11px;font-weight:800;border:1px solid rgba(234,179,8,0.25);}
+.dom-badge-b{background:rgba(122,128,153,0.15);color:var(--text2);padding:3px 9px;border-radius:4px;font-size:11px;font-weight:800;border:1px solid rgba(122,128,153,0.25);}
+/* Forecast table */
+.forecast-table{width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);border-radius:12px;overflow:hidden;}
+.forecast-table th{background:var(--surface2);padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.4px;}
+.forecast-table td{padding:10px 12px;border-bottom:1px solid var(--border);}
+.forecast-table tr:hover td{background:rgba(255,255,255,0.02);}
+.forecast-group-header td{background:var(--surface2);font-size:10px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:0.6px;padding:6px 12px;}
+.score-pos{color:var(--green);font-weight:700;}
+.score-neg{color:var(--red);font-weight:700;}
+.score-zero{color:var(--text2);font-weight:600;}
+/* Watchlist */
+.watchlist-table{width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);border-radius:12px;overflow:hidden;}
+.watchlist-table th{background:var(--surface2);padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.4px;}
+.watchlist-table td{padding:12px;border-bottom:1px solid var(--border);vertical-align:top;}
+/* Flow items */
+.flow-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.flow-arrow{font-size:20px;font-weight:900;flex-shrink:0;width:28px;text-align:center;margin-top:2px;}
+.flow-body{flex:1;}
+.flow-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;}
+.flow-asset{font-size:13px;font-weight:700;color:var(--text);}
+.flow-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;}
+.flow-chip{font-size:10px;padding:1px 7px;border-radius:3px;font-weight:700;}
+.chip-money-real{background:#1e3a5f;color:#93c5fd;}
+.chip-money-fast{background:#3b0764;color:#d8b4fe;}
+.chip-conf-high{background:#14532d;color:#86efac;}
+.chip-conf-med{background:#78350f;color:#fcd34d;}
+.chip-horizon{background:var(--surface2);color:var(--text2);}
+.hz-wrap{display:inline-flex;gap:3px;align-items:center;}
+.hz-chip{font-size:9px;padding:2px 5px;border-radius:3px;font-weight:800;letter-spacing:0.4px;}
+.hz-on{background:var(--orange);color:#fff;}
+.hz-off{background:var(--surface2);color:var(--text2);opacity:0.35;}
+.chip-driver{font-size:10px;padding:1px 7px;border-radius:3px;font-weight:700;background:#7c2d12;color:#fdba74;}
+.flow-rationale{font-size:12px;color:var(--text2);}
+.divergence-box{background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:8px;padding:14px;margin:10px 0;}
+.loop-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+.loop-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+/* Calendar */
+.cal-week-header{background:var(--surface2);padding:8px 12px;font-size:12px;font-weight:700;color:var(--text2);border-radius:6px;margin:12px 0 6px;}
+.cal-item{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;}
+.cal-date{text-align:center;flex-shrink:0;}
+.cal-day{font-size:24px;font-weight:800;line-height:1;}
+.cal-month{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.6px;}
+.fcal-body{flex:1;}
+.fcal-top{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
+.cal-event{font-size:14px;font-weight:700;}
+.cal-impact{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;}
+.impact-critical{background:rgba(239,68,68,0.15);color:var(--red);}
+.impact-high{background:rgba(249,115,22,0.15);color:var(--orange);}
+.impact-medium{background:rgba(234,179,8,0.12);color:var(--yellow);}
+.fcal-context{font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.6;}
+.fcal-forecast-row{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;background:var(--surface2);border-radius:6px;padding:10px 12px;}
+.fcal-col-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;color:var(--text2);margin-bottom:3px;}
+.fcal-col-value{font-size:13px;font-weight:700;color:var(--text);}
+.fcal-col-value.boris{color:var(--orange);}
+.fcal-assets{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;align-items:center;}
+.fcal-assets-lbl{font-size:10px;color:var(--text2);font-weight:600;}
+/* Interactions */
+.interactions-table{width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);border-radius:12px;overflow:hidden;}
+.interactions-table th{background:var(--surface2);padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:var(--text2);}
+.interactions-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+/* State */
+.state-pre{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:11px;color:var(--text2);overflow-x:auto;white-space:pre-wrap;font-family:monospace;}
+.site-footer{background:var(--surface);border-top:1px solid var(--border);padding:18px 0;text-align:center;font-size:12px;color:var(--text2);margin-top:36px;}
+@media(max-width:768px){.scenario-grid{grid-template-columns:1fr 1fr;}.intro-row{grid-template-columns:1fr;}.forecast-cols{grid-template-columns:1fr;}.loop-grid{grid-template-columns:1fr;}.fcal-forecast-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="container">
+    <div class="header-row">
+      <div>
+        <div class="site-title"><span style="color:var(--orange);">Macro</span><span style="color:#fff;">Economic Report</span></div>
+        <div style="font-size:13px;color:var(--text2);">Driver-Based Economic Intelligence &middot; 9 April 2026</div>
+      </div>
+      <div class="header-meta">
+        <div style="font-weight:700;">Thursday, 9 April 2026</div>
+        <div>MacroDriver-20260409-weekly</div>
+        <div style="color:var(--red);font-weight:600;">&#9888; Q4 GDP Shock 0.5% &middot; Private Credit CRITICAL &middot; CPI Tomorrow</div>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="https://donatien.ca/">Watchlist</a>
+      <a href="https://donatien.ca/economics/">Economic Summary</a>
+      <a href="#" class="active">Full Economic Report</a>
+    </nav>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="disclaimer">
+  &#9888; <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+<!-- Introduction / Navigation -->
+<div class="intro-block">
+  <h2>How to read this report</h2>
+  <p>This report translates live macro conditions into a time-framed playbook across asset classes and your watchlist. Each numbered section below drills into one layer of the analysis &mdash; from the dominant economic regime, through the driver-level evidence, all the way to the capital flows and catalysts that will move markets in the coming weeks.</p>
+  <div class="intro-row">
+    <div class="intro-item"><span class="intro-item-num">1</span><a href="#sec1">Current Economic Regime</a><p>The four macro scenarios, their probabilities, and which assets/stocks lead or lag under each.</p></div>
+    <div class="intro-item"><span class="intro-item-num">2</span><a href="#sec2">Driver-Asset Impact Matrix</a><p>Heat-map of every active driver against 15 asset classes with a net aggregated signal row.</p></div>
+    <div class="intro-item"><span class="intro-item-num">3</span><a href="#sec3">Economic Driver Deep Dives</a><p>Evidence per driver: indicators vs thresholds, 3-horizon trajectory, winners/losers.</p></div>
+    <div class="intro-item"><span class="intro-item-num">4</span><a href="#sec4">Economic Asset Class Forecast</a><p>Your macro-driven playbook across 15 asset classes over Short/Medium/Long horizons.</p></div>
+    <div class="intro-item"><span class="intro-item-num">5</span><a href="#sec5">Economic Watchlist Forecast</a><p>SOFI, DLO, MNO.TO &mdash; macro tail- and headwinds through each horizon.</p></div>
+    <div class="intro-item"><span class="intro-item-num">6</span><a href="#sec6">Net Capital Flow Forecast</a><p>Where real and fast money is actually moving, with divergence setups and feedback loops.</p></div>
+    <div class="intro-item"><span class="intro-item-num">7</span><a href="#sec7">Economic Forecast Calendar</a><p>Next 7 days of scheduled events with Boris forecast vs market consensus.</p></div>
+    <div class="intro-item"><span class="intro-item-num">8</span><a href="#sec8">Driver Interactions &amp; Double-Count Prevention</a><p>Where drivers overlap and how double-counting has been prevented in the aggregation.</p></div>
+    <div class="intro-item"><span class="intro-item-num">9</span><a href="#sec9">State Snapshot</a><p>Machine-readable JSON state for continuity into the next run.</p></div>
+  </div>
+</div>
+
+<!-- ============== SECTION 1 ============== -->
+<div class="section" id="sec1">
+  <div class="section-title"><span class="section-num">1</span>Current Economic Regime</div>
+  <div class="section-sub">Four candidate macro scenarios with probability weights, supporting drivers, falsification signals, and asset-level winners/losers. The dominant regime this week is <strong style="color:var(--orange);">Stagflation-to-Contraction at 45%</strong> &mdash; conviction upgraded after the Q4 GDP shock to 0.5% QoQ (from 4.4% Q3) and private-credit stress escalating from High (4) to Critical (5).</div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card sc-stag">
+      <div class="scenario-name">Stagflation &#8594; Contraction</div>
+      <div class="scenario-prob" style="color:var(--orange);">45%</div>
+      <div style="font-size:11px;color:var(--text2);">Unchanged weight, <strong style="color:var(--orange);">higher conviction</strong></div>
+      <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:45%;background:var(--orange);"></div></div>
+      <div class="scenario-drivers">
+        <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:4px;">SUPPORTING DRIVERS</div>
+        <div style="font-size:11px;">Q4 GDP 0.5% QoQ (from 4.4% Q3) &middot; Core CPI sticky at 2.47% YoY &middot; March CPI Apr 10 consensus 3.3% (tariff shock) &middot; ISM services contracting &middot; Durable Goods &minus;1.4% &middot; Ivey PMI 49.7</div>
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin:6px 0 2px;">FALSIFICATION SIGNALS</div>
+        <div style="font-size:11px;">Friday CPI prints below 3.0% YoY &middot; ISM services back above 52 &middot; Weekly claims drop below 210k for 3 weeks &middot; Fed signals pause on cuts</div>
+      </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">&#9650; OUTPERFORM</div>
+        <div>
+          <span class="asset-chip chip-bull">Gold (GLD)</span><span class="asset-chip chip-bull">TIPS</span><span class="asset-chip chip-bull">Silver</span><span class="asset-chip chip-bull">Long Bonds (TLT)</span><span class="asset-chip chip-bull">JPY</span><span class="asset-chip chip-bull">Defense (XAR)</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin:6px 0 4px;">&#9660; UNDERPERFORM</div>
+        <div>
+          <span class="asset-chip chip-bear">SPY</span><span class="asset-chip chip-bear">QQQ</span><span class="asset-chip chip-bear">HYG</span><span class="asset-chip chip-bear">USD</span><span class="asset-chip chip-bear">USO (demand risk)</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--text2);margin:6px 0 4px;">WATCHLIST</div>
+        <div>
+          <span class="asset-chip chip-bear">SOFI &darr; &mdash; rate relief vs credit losses</span><span class="asset-chip chip-neut">DLO &rarr; &mdash; soft USD helps, EM growth hurts</span><span class="asset-chip chip-bull">MNO.TO &uarr;&uarr; &mdash; gold torque lead</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card sc-defl">
+      <div class="scenario-name">Deflationary Bust</div>
+      <div class="scenario-prob" style="color:var(--red);">30%</div>
+      <div style="font-size:11px;color:var(--text2);">Unchanged &mdash; private credit risk sustains</div>
+      <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:30%;background:var(--red);"></div></div>
+      <div class="scenario-drivers">
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;">SUPPORTING DRIVERS</div>
+        <div style="font-size:11px;">NYT &quot;slow-motion bank run&quot; headlines &middot; BX &minus;30% YTD &middot; APO &minus;25% YTD &middot; $1T insurer exposure to private credit &middot; Q4 GDP 0.5% &middot; Rising default mention counts</div>
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin:6px 0 2px;">FALSIFICATION SIGNALS</div>
+        <div style="font-size:11px;">No major BDC/BDC-adjacent gate event &middot; Fed emergency cut announced &middot; M2 YoY accelerates above 6% &middot; IG spreads tighten 20bp</div>
+      </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">&#9650; OUTPERFORM</div>
+        <div>
+          <span class="asset-chip chip-bull">TLT</span><span class="asset-chip chip-bull">Gold</span><span class="asset-chip chip-bull">USD</span><span class="asset-chip chip-bull">Short UST</span><span class="asset-chip chip-bull">XLU / XLP</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin:6px 0 4px;">&#9660; UNDERPERFORM</div>
+        <div>
+          <span class="asset-chip chip-bear">All Equities</span><span class="asset-chip chip-bear">HYG</span><span class="asset-chip chip-bear">LQD</span><span class="asset-chip chip-bear">EEM</span><span class="asset-chip chip-bear">Crypto</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--text2);margin:6px 0 4px;">WATCHLIST</div>
+        <div>
+          <span class="asset-chip chip-bear">SOFI &darr;&darr; &mdash; fintech credit-crushed</span><span class="asset-chip chip-bear">DLO &darr;&darr; &mdash; EM risk-off</span><span class="asset-chip chip-bear">MNO.TO &darr; &mdash; junior miner risk-off</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card sc-soft">
+      <div class="scenario-name">Soft Landing</div>
+      <div class="scenario-prob" style="color:var(--green);">15%</div>
+      <div style="font-size:11px;color:var(--text2);">Unchanged &mdash; VIX relief offset by GDP shock</div>
+      <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:15%;background:var(--green);"></div></div>
+      <div class="scenario-drivers">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">SUPPORTING DRIVERS</div>
+        <div style="font-size:11px;">VIX compressed to 21.04 (from 25.78) &middot; Iran ceasefire still holding (fragile) &middot; FOMC Apr 8 minutes dovish &middot; 10Y drifted to 4.29% &middot; Yield curve steepening (+51bp 10Y&minus;2Y)</div>
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin:6px 0 2px;">TRANSITION RISKS</div>
+        <div style="font-size:11px;">Friday CPI at or above 3.3% &middot; Blackstone/Apollo gate event &middot; Ceasefire breaks down &middot; BOJ hike triggers carry unwind</div>
+      </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">&#9650; OUTPERFORM</div>
+        <div>
+          <span class="asset-chip chip-bull">SPY</span><span class="asset-chip chip-bull">QQQ</span><span class="asset-chip chip-bull">HYG/LQD</span><span class="asset-chip chip-bull">EEM</span><span class="asset-chip chip-bull">IWM</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin:6px 0 4px;">&#9660; UNDERPERFORM</div>
+        <div>
+          <span class="asset-chip chip-bear">Gold</span><span class="asset-chip chip-bear">TLT</span><span class="asset-chip chip-bear">Defensives</span><span class="asset-chip chip-bear">USD (unwind)</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--text2);margin:6px 0 4px;">WATCHLIST</div>
+        <div>
+          <span class="asset-chip chip-bull">SOFI &uarr; &mdash; credit benign + rate cuts</span><span class="asset-chip chip-bull">DLO &uarr; &mdash; EM risk-on recovery</span><span class="asset-chip chip-neut">MNO.TO &rarr; &mdash; gold caps offset by risk-on</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card sc-reacc">
+      <div class="scenario-name">Reacceleration</div>
+      <div class="scenario-prob" style="color:var(--blue);">10%</div>
+      <div style="font-size:11px;color:var(--text2);">Unchanged &mdash; low-probability tail</div>
+      <div class="scenario-bar-vis"><div class="scenario-bar-fill" style="width:10%;background:var(--blue);"></div></div>
+      <div class="scenario-drivers">
+        <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:4px;">REQUIRED CONDITIONS</div>
+        <div style="font-size:11px;">Tariff truce + Fed deep cut path + China fiscal bazooka + Iran final resolution &mdash; all simultaneously. Still considered a low-probability tail given the Q4 GDP print.</div>
+      </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">&#9650; OUTPERFORM</div>
+        <div>
+          <span class="asset-chip chip-bull">Cyclicals</span><span class="asset-chip chip-bull">EEM</span><span class="asset-chip chip-bull">Copper</span><span class="asset-chip chip-bull">IWM</span><span class="asset-chip chip-bull">Energy</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin:6px 0 4px;">&#9660; UNDERPERFORM</div>
+        <div>
+          <span class="asset-chip chip-bear">TLT</span><span class="asset-chip chip-bear">Gold</span><span class="asset-chip chip-bear">Defensives</span><span class="asset-chip chip-bear">USD</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--text2);margin:6px 0 4px;">WATCHLIST</div>
+        <div>
+          <span class="asset-chip chip-bull">SOFI &uarr;&uarr; &mdash; growth cycle fintech boom</span><span class="asset-chip chip-bull">DLO &uarr;&uarr; &mdash; EM payments surge</span><span class="asset-chip chip-bull">MNO.TO &uarr; &mdash; mining boom carries juniors</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== SECTION 2 ============== -->
+<div class="section" id="sec2">
+  <div class="section-title"><span class="section-num">2</span>Driver-Asset Impact Matrix</div>
+  <div class="section-sub">A heat-map showing how each active driver is pushing every tracked asset class. Read across any row for one driver's full market footprint; scan down any column for every force acting on one asset. The bottom row aggregates all drivers into a net weighted signal.</div>
+  <div class="cascade-reading">
+    <strong>Reading guide:</strong> <span style="color:var(--orange);font-weight:700;">TEMP</span> = Temporary event-driven driver. <span style="color:var(--blue);font-weight:700;">END</span> = Enduring structural force. Cells show directional impact and weighted contribution (impact &times; dominance &divide; total dominance). The <strong style="color:var(--orange);">NET SIGNAL</strong> row aggregates all active drivers into the net forecast. <strong>Total active dominance this run = 38</strong> (vs 35 last week: Private Credit 4&rarr;5, US Econ 3&rarr;4, Monetary 3&rarr;4, Iran 4&rarr;3, Energy Transition 2&rarr;3).
+  </div>
+  <div class="cascade-wrap">
+  <table class="cascade-table">
+    <thead>
+      <tr>
+        <th class="col-driver" style="padding:8px 10px;text-align:left;font-size:11px;color:var(--text2);">Driver</th>
+        <th class="col-dom" style="padding:8px;font-size:11px;color:var(--text2);">Dominance</th>
+        <th class="col-asset asset-header"><span class="asset-label">Gold (GLD)</span><span class="asset-dot" style="background:#f97316;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">TIPS</span><span class="asset-dot" style="background:#3b82f6;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">Silver (SLV)</span><span class="asset-dot" style="background:#f97316;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">JPY (FXY)</span><span class="asset-dot" style="background:#a855f7;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">Defense (XAR)</span><span class="asset-dot" style="background:#22c55e;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">Agri (DBA)</span><span class="asset-dot" style="background:#f97316;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">Oil (USO)</span><span class="asset-dot" style="background:#f97316;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">Copper / Ind</span><span class="asset-dot" style="background:#f97316;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">EM Eq (EEM)</span><span class="asset-dot" style="background:#22c55e;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">LT UST (TLT)</span><span class="asset-dot" style="background:#3b82f6;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">USD (UUP)</span><span class="asset-dot" style="background:#a855f7;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">US Eq (SPY)</span><span class="asset-dot" style="background:#22c55e;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">US Tech (QQQ)</span><span class="asset-dot" style="background:#22c55e;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">HY (HYG)</span><span class="asset-dot" style="background:#3b82f6;"></span></th>
+        <th class="col-asset asset-header"><span class="asset-label">IG (LQD)</span><span class="asset-dot" style="background:#3b82f6;"></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Private Credit (5) -->
+      <tr class="driver-row">
+        <td class="driver-name-cell"><span class="type-badge type-end">END</span><span style="font-size:12px;font-weight:600;">Private Credit &amp; Shadow Banking</span></td>
+        <td class="dom-bar-cell"><span style="font-size:10px;font-weight:700;color:var(--red);">Critical (5)</span><div class="dom-bar" style="width:100%;background:var(--red);"></div></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.26</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.13</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.26</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.13</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.13</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.13</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.26</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.13</span></td>
+        <td class="cell-impact"><span style="color:#ef4444;font-weight:700;">&darr;&darr;</span><span class="imp-val">&minus;0.26</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.13</span></td>
+        <td class="cell-impact"><span style="color:#ef4444;font-weight:700;">&darr;&darr;</span><span class="imp-val">&minus;0.26</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.13</span></td>
+      </tr>
+      <!-- US Econ (4) -->
+      <tr class="driver-row">
+        <td class="driver-name-cell"><span class="type-badge type-end">END</span><span style="font-size:12px;font-weight:600;">US Economic Health</span></td>
+        <td class="dom-bar-cell"><span style="font-size:10px;font-weight:700;color:var(--orange);">High (4)</span><div class="dom-bar" style="width:80%;background:var(--orange);"></div></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.11</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.21</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.11</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.11</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.11</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.11</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.11</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.21</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.11</span></td>
+        <td class="cell-impact"><span style="color:#ef4444;font-weight:700;">&darr;&darr;</span><span class="imp-val">&minus;0.21</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.11</span></td>
+        <td class="cell-impact"><span style="color:#ef4444;font-weight:700;">&darr;&darr;</span><span class="imp-val">&minus;0.21</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.11</span></td>
+      </tr>
+      <!-- Monetary (4) -->
+      <tr class="driver-row">
+        <td class="driver-name-cell"><span class="type-badge type-end">END</span><span style="font-size:12px;font-weight:600;">Global Monetary Policy</span></td>
+        <td class="dom-bar-cell"><span style="font-size:10px;font-weight:700;color:var(--orange);">High (4)</span><div class="dom-bar" style="width:80%;background:var(--orange);"></div></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.21</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.21</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.21</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.21</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.11</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.11</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.21</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.21</span></td>
+        <td class="cell-impact"><span style="color:#ef4444;font-weight:700;">&darr;&darr;</span><span class="imp-val">&minus;0.21</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.11</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.11</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.11</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.21</span></td>
+      </tr>
+      <!-- Iran (3) -->
+      <tr class="driver-row">
+        <td class="driver-name-cell"><span class="type-badge type-temp">TEMP</span><span style="font-size:12px;font-weight:600;">Iran / Hormuz War</span></td>
+        <td class="dom-bar-cell"><span style="font-size:10px;font-weight:700;color:var(--yellow);">Moderate (3)</span><div class="dom-bar" style="width:60%;background:var(--yellow);"></div></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.16</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.16</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+      </tr>
+      <!-- Tariff (3) -->
+      <tr class="driver-row">
+        <td class="driver-name-cell"><span class="type-badge type-temp">TEMP</span><span style="font-size:12px;font-weight:600;">US-China Tariff War</span></td>
+        <td class="dom-bar-cell"><span style="font-size:10px;font-weight:700;color:var(--yellow);">Moderate (3)</span><div class="dom-bar" style="width:60%;background:var(--yellow);"></div></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.16</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#ef4444;font-weight:700;">&darr;&darr;</span><span class="imp-val">&minus;0.16</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#ef4444;font-weight:700;">&darr;&darr;</span><span class="imp-val">&minus;0.16</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+      </tr>
+      <!-- Fiscal (3) -->
+      <tr class="driver-row">
+        <td class="driver-name-cell"><span class="type-badge type-end">END</span><span style="font-size:12px;font-weight:600;">US Fiscal &amp; Sovereign Debt</span></td>
+        <td class="dom-bar-cell"><span style="font-size:10px;font-weight:700;color:var(--yellow);">Moderate (3)</span><div class="dom-bar" style="width:60%;background:var(--yellow);"></div></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.16</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+      </tr>
+      <!-- Deglobalisation (3) -->
+      <tr class="driver-row">
+        <td class="driver-name-cell"><span class="type-badge type-end">END</span><span style="font-size:12px;font-weight:600;">Structural Deglobalisation</span></td>
+        <td class="dom-bar-cell"><span style="font-size:10px;font-weight:700;color:var(--yellow);">Moderate (3)</span><div class="dom-bar" style="width:60%;background:var(--yellow);"></div></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.16</span></td>
+        <td class="cell-impact"><span style="color:#86efac;font-weight:700;">&uarr;</span><span class="imp-val">+0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+      </tr>
+      <!-- Energy Transition (3) -->
+      <tr class="driver-row">
+        <td class="driver-name-cell"><span class="type-badge type-end">END</span><span style="font-size:12px;font-weight:600;">Energy Transition &amp; Electrification</span></td>
+        <td class="dom-bar-cell"><span style="font-size:10px;font-weight:700;color:var(--yellow);">Moderate (3)</span><div class="dom-bar" style="width:60%;background:var(--yellow);"></div></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.16</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#f97316;font-weight:700;">&darr;</span><span class="imp-val">&minus;0.08</span></td>
+        <td class="cell-impact"><span style="color:#22c55e;font-weight:700;">&uarr;&uarr;</span><span class="imp-val">+0.16</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+        <td class="cell-impact"><span style="color:#4a5066;font-weight:700;">&middot;</span><span class="imp-val">0.00</span></td>
+      </tr>
+      <!-- NET SIGNAL ROW -->
+      <tr class="net-row">
+        <td class="driver-name-cell"><strong style="color:var(--orange);">NET SIGNAL</strong></td>
+        <td class="dom-bar-cell"><span style="font-size:10px;font-weight:800;color:var(--orange);">&Sigma; = 38</span></td>
+        <td class="cell-impact"><span class="net-badge sig-so">SO</span><span class="imp-val">+1.08</span></td>
+        <td class="cell-impact"><span class="net-badge sig-so">SO</span><span class="imp-val">+0.82</span></td>
+        <td class="cell-impact"><span class="net-badge sig-so">SO</span><span class="imp-val">+0.63</span></td>
+        <td class="cell-impact"><span class="net-badge sig-o">O</span><span class="imp-val">+0.34</span></td>
+        <td class="cell-impact"><span class="net-badge sig-o">O</span><span class="imp-val">+0.34</span></td>
+        <td class="cell-impact"><span class="net-badge sig-n">N</span><span class="imp-val">+0.24</span></td>
+        <td class="cell-impact"><span class="net-badge sig-u">U</span><span class="imp-val">&minus;0.29</span></td>
+        <td class="cell-impact"><span class="net-badge sig-n">N</span><span class="imp-val">&minus;0.05</span></td>
+        <td class="cell-impact"><span class="net-badge sig-n">N</span><span class="imp-val">&minus;0.18</span></td>
+        <td class="cell-impact"><span class="net-badge sig-so">SO</span><span class="imp-val">+0.61</span></td>
+        <td class="cell-impact"><span class="net-badge sig-u">U</span><span class="imp-val">&minus;0.37</span></td>
+        <td class="cell-impact"><span class="net-badge sig-su">SU</span><span class="imp-val">&minus;0.58</span></td>
+        <td class="cell-impact"><span class="net-badge sig-u">U</span><span class="imp-val">&minus;0.32</span></td>
+        <td class="cell-impact"><span class="net-badge sig-u">U</span><span class="imp-val">&minus;0.45</span></td>
+        <td class="cell-impact"><span class="net-badge sig-n">N</span><span class="imp-val">&minus;0.03</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ============== SECTION 3 ============== -->
+<div class="section" id="sec3">
+  <div class="section-title"><span class="section-num">3</span>Economic Driver Deep Dives</div>
+  <div class="section-sub">The evidence behind every signal in this report. Each active macro driver is broken down into its live indicators &mdash; showing exactly where thresholds are being breached &mdash; followed by a Short, Medium, and Long horizon forecast with specific asset class and watchlist winners and losers. Read this to understand <em>why</em> a signal exists, not just what it is.</div>
+
+  <!-- DRIVER 1: Private Credit -->
+  <div class="driver-section">
+    <div class="driver-header">
+      <span class="badge badge-blue">END</span>
+      <span class="driver-title">Private Credit &amp; Shadow Banking Stress</span>
+      <span class="dom-badge-c">CRITICAL (5) &uarr; from 4</span>
+      <span class="conf-badge conf-high">Confidence: High</span>
+    </div>
+    <div class="driver-desc">The &#36;3T private credit market is under live stress. NYT ran front-page coverage of a &ldquo;slow-motion bank run&rdquo; on BDCs and private credit funds. Blackstone (BX) is &minus;30% YTD, Apollo (APO) &minus;25% YTD, and industry reports flag &sim;&#36;1T of insurer exposure to direct-lending portfolios. With Q4 GDP printing 0.5%, default cycle risk is rising and illiquid assets are re-pricing faster than fund gates can absorb. Upgraded to Critical this week: the contagion vector has moved from &ldquo;tail&rdquo; to &ldquo;base-case risk.&rdquo;</div>
+    <table class="ind-table">
+      <thead><tr><th>Indicator</th><th>Current</th><th>Watch</th><th>Breach</th><th>Status</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>BX Equity YTD</td><td class="ind-val">&minus;30%</td><td>&minus;20%</td><td>&minus;30%</td><td><span class="ind-breach">BREACH</span></td><td>&darr;</td></tr>
+        <tr><td>APO Equity YTD</td><td class="ind-val">&minus;25%</td><td>&minus;15%</td><td>&minus;30%</td><td><span class="ind-watch">WATCH</span></td><td>&darr;</td></tr>
+        <tr><td>US HY OAS (HYG proxy)</td><td class="ind-val">&sim;395 bp</td><td>400 bp</td><td>500 bp</td><td><span class="ind-watch">WATCH</span></td><td>&uarr;</td></tr>
+        <tr><td>Insurer PC exposure</td><td class="ind-val">&sim;&#36;1T</td><td>&#36;750B</td><td>&#36;1T</td><td><span class="ind-breach">BREACH</span></td><td>&uarr;</td></tr>
+        <tr><td>Retail redemption requests</td><td class="ind-val">Elevated</td><td>Rising</td><td>Gate event</td><td><span class="ind-watch">WATCH</span></td><td>&uarr;</td></tr>
+      </tbody>
+    </table>
+    <div class="forecast-cols">
+      <div class="fc-col">
+        <div class="fc-horizon">Short (0&ndash;4w)</div>
+        <div class="fc-text">Gates likely at 1+ mid-tier BDC or direct-lending fund. HY spreads widen 30&ndash;60 bp. Flight to quality: TLT &uarr;, USD initially &uarr; then &darr; as Fed tilts dovish. Equity risk premium re-rates.</div>
+        <div class="fc-label" style="color:var(--green);">Outperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">TLT</span><span class="sig-chip sig-o">GLD</span><span class="sig-chip sig-o">JPY</span></div>
+        <div class="fc-label" style="color:var(--red);">Underperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-su">HYG</span><span class="sig-chip sig-u">SPY</span><span class="sig-chip sig-u">QQQ</span></div>
+        <div class="fc-wl-label">Watchlist impact</div>
+        <div class="fc-text" style="margin-top:4px;">SOFI down (credit losses rise). DLO neutral. MNO.TO up on safe-haven gold bid.</div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Medium (1&ndash;6m)</div>
+        <div class="fc-text">Fed forced into emergency or deep cuts if contagion spreads. Base case: 50&ndash;75 bp of additional cuts by end of cycle. IG widens selectively but government paper rallies hard.</div>
+        <div class="fc-label" style="color:var(--green);">Outperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">GLD</span><span class="sig-chip sig-so">TLT</span><span class="sig-chip sig-o">TIPS</span></div>
+        <div class="fc-label" style="color:var(--red);">Underperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-su">HYG</span><span class="sig-chip sig-u">SPY</span><span class="sig-chip sig-u">USD</span></div>
+        <div class="fc-wl-label">Watchlist impact</div>
+        <div class="fc-text" style="margin-top:4px;">SOFI mixed (cuts tailwind vs credit tail). DLO hurt via risk-off. MNO.TO strong tailwind.</div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Long (6&ndash;18m)</div>
+        <div class="fc-text">Either orderly resolution (15%) or forced regulatory intervention + recap (60%) or systemic event (25%). Outcome shapes the next cycle's risk premium baseline. Gold regime persists either way.</div>
+        <div class="fc-label" style="color:var(--green);">Outperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">GLD</span><span class="sig-chip sig-o">TLT</span><span class="sig-chip sig-o">TIPS</span></div>
+        <div class="fc-label" style="color:var(--red);">Underperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-su">HYG</span><span class="sig-chip sig-u">US Banks</span><span class="sig-chip sig-u">PE funds</span></div>
+        <div class="fc-wl-label">Watchlist impact</div>
+        <div class="fc-text" style="margin-top:4px;">SOFI neutral post-cycle reset. DLO recovering. MNO.TO strong &mdash; gold regime multi-year.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVER 2: US Econ -->
+  <div class="driver-section">
+    <div class="driver-header">
+      <span class="badge badge-blue">END</span>
+      <span class="driver-title">US Economic Health</span>
+      <span class="dom-badge-h">HIGH (4) &uarr; from 3</span>
+      <span class="conf-badge conf-high">Confidence: High</span>
+    </div>
+    <div class="driver-desc">Upgraded to High: Q4 GDP printed 0.5% QoQ vs 4.4% in Q3 &mdash; a sharper deceleration than any private forecast. ISM services trending toward contraction, Durable Goods &minus;1.4%, Ivey PMI 49.7, unemployment 4.3% and drifting. Headline CPI 2.43%, Core CPI 2.47% both sticky but well below the Apr 10 consensus of 3.3% headline (tariff pass-through). The economy is cooling, but inflation remains sticky &mdash; the defining setup for stagflation.</div>
+    <table class="ind-table">
+      <thead><tr><th>Indicator</th><th>Current</th><th>Watch</th><th>Breach</th><th>Status</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>Real GDP QoQ (Q4)</td><td class="ind-val">0.5%</td><td>1.5%</td><td>0.0%</td><td><span class="ind-breach">BREACH</span></td><td>&darr;</td></tr>
+        <tr><td>Unemployment Rate (Mar)</td><td class="ind-val">4.3%</td><td>4.5%</td><td>5.0%</td><td><span class="ind-watch">WATCH</span></td><td>&uarr;</td></tr>
+        <tr><td>Headline CPI YoY (Feb)</td><td class="ind-val">2.43%</td><td>3.0%</td><td>3.5%</td><td><span class="ind-ok">OK</span></td><td>&rarr;</td></tr>
+        <tr><td>Core CPI YoY (Feb)</td><td class="ind-val">2.47%</td><td>2.8%</td><td>3.2%</td><td><span class="ind-ok">OK</span></td><td>&rarr;</td></tr>
+        <tr><td>ISM Services</td><td class="ind-val">Contracting</td><td>50</td><td>48</td><td><span class="ind-watch">WATCH</span></td><td>&darr;</td></tr>
+        <tr><td>Durable Goods MoM</td><td class="ind-val">&minus;1.4%</td><td>0.0%</td><td>&minus;2.0%</td><td><span class="ind-watch">WATCH</span></td><td>&darr;</td></tr>
+      </tbody>
+    </table>
+    <div class="forecast-cols">
+      <div class="fc-col">
+        <div class="fc-horizon">Short (0&ndash;4w)</div>
+        <div class="fc-text">Apr 10 CPI is the single dominant print. Consensus 3.3% expects tariff shock; if confirmed, stagflation regime deepens. If CPI surprises to the downside (&lt;3.0%), mini relief rally in equities and Fed path accelerates.</div>
+        <div class="fc-label" style="color:var(--green);">Outperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">TIPS</span><span class="sig-chip sig-o">TLT</span><span class="sig-chip sig-o">GLD</span></div>
+        <div class="fc-label" style="color:var(--red);">Underperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-u">SPY</span><span class="sig-chip sig-u">HYG</span><span class="sig-chip sig-u">USD</span></div>
+        <div class="fc-wl-label">Watchlist impact</div>
+        <div class="fc-text" style="margin-top:4px;">SOFI exposed (consumer credit). DLO neutral. MNO.TO tailwind from gold.</div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Medium (1&ndash;6m)</div>
+        <div class="fc-text">Recession risk re-enters Fed projections. Growth slows further toward stall speed. Earnings revisions turn negative across cyclicals by Q2 reports.</div>
+        <div class="fc-label" style="color:var(--green);">Outperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">GLD</span><span class="sig-chip sig-o">TLT</span><span class="sig-chip sig-o">XLU/XLP</span></div>
+        <div class="fc-label" style="color:var(--red);">Underperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-su">SPY</span><span class="sig-chip sig-u">HYG</span><span class="sig-chip sig-u">Cyclicals</span></div>
+        <div class="fc-wl-label">Watchlist impact</div>
+        <div class="fc-text" style="margin-top:4px;">SOFI exposed to rising losses. DLO moderate. MNO.TO structurally strong.</div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Long (6&ndash;18m)</div>
+        <div class="fc-text">Either a typical cycle trough and recovery (with gold giving back gains) or a debt-monetisation pivot (gold second leg higher). Fed balance sheet expansion likely in both paths.</div>
+        <div class="fc-label" style="color:var(--green);">Outperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">GLD</span><span class="sig-chip sig-o">Recovery cyclicals</span></div>
+        <div class="fc-label" style="color:var(--red);">Underperform</div>
+        <div class="fc-chips"><span class="sig-chip sig-u">USD</span><span class="sig-chip sig-u">Long-duration UST nominal</span></div>
+        <div class="fc-wl-label">Watchlist impact</div>
+        <div class="fc-text" style="margin-top:4px;">SOFI recovery beneficiary. DLO EM recovery leverage. MNO.TO continues gold leverage.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVER 3: Monetary -->
+  <div class="driver-section">
+    <div class="driver-header">
+      <span class="badge badge-blue">END</span>
+      <span class="driver-title">Global Monetary Policy</span>
+      <span class="dom-badge-h">HIGH (4) &uarr; from 3</span>
+      <span class="conf-badge conf-high">Confidence: High</span>
+    </div>
+    <div class="driver-desc">Upgraded to High: the Apr 8 FOMC minutes reinforced a dovish tilt, the global cutting cycle is accelerating (ECB, BoE, BoC all cut or signalling), and the Fed Funds rate now sits at 3.64% with the 10Y at 4.29%. The 10Y&minus;2Y spread has steepened to +51 bp. This driver is now a major tailwind for duration, gold, and risk assets simultaneously &mdash; but the Q4 GDP shock means &ldquo;cuts for the wrong reason&rdquo; dominates the signal.</div>
+    <table class="ind-table">
+      <thead><tr><th>Indicator</th><th>Current</th><th>Watch</th><th>Breach</th><th>Status</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>Fed Funds Rate</td><td class="ind-val">3.64%</td><td>&ndash;</td><td>&ndash;</td><td><span class="ind-ok">Cutting</span></td><td>&darr;</td></tr>
+        <tr><td>10Y Treasury Yield</td><td class="ind-val">4.29%</td><td>4.50%</td><td>4.80%</td><td><span class="ind-ok">OK</span></td><td>&darr;</td></tr>
+        <tr><td>2Y Treasury Yield</td><td class="ind-val">3.79%</td><td>&ndash;</td><td>&ndash;</td><td><span class="ind-ok">Pricing cuts</span></td><td>&darr;</td></tr>
+        <tr><td>10Y&minus;2Y Curve</td><td class="ind-val">+51 bp</td><td>0</td><td>&minus;20 bp</td><td><span class="ind-ok">Steepening</span></td><td>&uarr;</td></tr>
+        <tr><td>DXY Proxy (DTWEXBGS)</td><td class="ind-val">120.66</td><td>125</td><td>130</td><td><span class="ind-ok">OK</span></td><td>&darr;</td></tr>
+        <tr><td>M2 YoY</td><td class="ind-val">4.88%</td><td>3.0%</td><td>2.0%</td><td><span class="ind-ok">OK</span></td><td>&uarr;</td></tr>
+      </tbody>
+    </table>
+    <div class="forecast-cols">
+      <div class="fc-col">
+        <div class="fc-horizon">Short (0&ndash;4w)</div>
+        <div class="fc-text">Apr 10 CPI dictates the 4-week path. Dovish path: 10Y toward 4.10%, USD weaker, gold higher. Tariff-shock CPI could whipsaw duration temporarily before growth reality reasserts.</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">GLD</span><span class="sig-chip sig-so">TLT</span><span class="sig-chip sig-so">SLV</span><span class="sig-chip sig-o">EEM</span><span class="sig-chip sig-u">USD</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Medium (1&ndash;6m)</div>
+        <div class="fc-text">50&ndash;75 bp additional cuts priced. ECB/BoE cuts likely first; Fed follows on growth data. Curve continues to steepen bull-style. Duration rally accelerates.</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">TLT</span><span class="sig-chip sig-so">GLD</span><span class="sig-chip sig-o">EM debt</span><span class="sig-chip sig-u">USD</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Long (6&ndash;18m)</div>
+        <div class="fc-text">End-state Fed Funds 2.50&ndash;2.75% base case. Structural dollar debasement cycle resumes. QE return is probability-weighted 40% within 12m.</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">GLD</span><span class="sig-chip sig-so">SLV</span><span class="sig-chip sig-o">EM Eq</span><span class="sig-chip sig-u">USD</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVER 4: Iran -->
+  <div class="driver-section">
+    <div class="driver-header">
+      <span class="badge badge-orange">TEMP</span>
+      <span class="driver-title">Iran / Hormuz War</span>
+      <span class="dom-badge-m">MODERATE (3) &darr; from 4</span>
+      <span class="conf-badge conf-medium">Confidence: Medium</span>
+    </div>
+    <div class="driver-desc">Downgraded from High as the 2-week ceasefire holds. VIX has compressed from 25.78 to 21.04 and oil risk premium is partially unwound. USO at 126.96 remains elevated but no Hormuz disruption is being priced. Still Moderate because the truce is fragile and geopolitical optionality is not zero.</div>
+    <table class="ind-table">
+      <thead><tr><th>Indicator</th><th>Current</th><th>Watch</th><th>Breach</th><th>Status</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>VIX</td><td class="ind-val">21.04</td><td>22</td><td>28</td><td><span class="ind-ok">OK</span></td><td>&darr;</td></tr>
+        <tr><td>USO ETF</td><td class="ind-val">126.96</td><td>130</td><td>145</td><td><span class="ind-ok">OK</span></td><td>&uarr;</td></tr>
+        <tr><td>Ceasefire status</td><td class="ind-val">Holding</td><td>Strained</td><td>Broken</td><td><span class="ind-watch">WATCH</span></td><td>&rarr;</td></tr>
+      </tbody>
+    </table>
+    <div class="forecast-cols">
+      <div class="fc-col">
+        <div class="fc-horizon">Short (0&ndash;4w)</div>
+        <div class="fc-text">Base case ceasefire holds. Modest relief for EEM/SPY already priced. Tail risk 25% for re-escalation.</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">XAR</span><span class="sig-chip sig-n">USO</span><span class="sig-chip sig-n">GLD</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Medium (1&ndash;6m)</div>
+        <div class="fc-text">If ceasefire holds: normalisation trade. If broken: full Hormuz premium returns (+$15&ndash;25 oil).</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">XAR</span><span class="sig-chip sig-n">USO</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Long (6&ndash;18m)</div>
+        <div class="fc-text">Structural rearmament persists regardless of Iran outcome (NATO 5% spending commitment).</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">XAR</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVER 5: Tariff -->
+  <div class="driver-section">
+    <div class="driver-header">
+      <span class="badge badge-orange">TEMP</span>
+      <span class="driver-title">US-China Tariff War</span>
+      <span class="dom-badge-m">MODERATE (3)</span>
+      <span class="conf-badge conf-medium">Confidence: Medium</span>
+    </div>
+    <div class="driver-desc">Unchanged at Moderate. Pass-through effects are still building &mdash; Apr 10 CPI (consensus 3.3% YoY) is the first major print to capture the tariff shock. Trade talks ongoing but no meaningful de-escalation yet. Impact falls hardest on EM supply chains and China equities.</div>
+    <table class="ind-table">
+      <thead><tr><th>Indicator</th><th>Current</th><th>Watch</th><th>Breach</th><th>Status</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>Effective US tariff rate</td><td class="ind-val">Elevated</td><td>Stable</td><td>Rising</td><td><span class="ind-watch">WATCH</span></td><td>&rarr;</td></tr>
+        <tr><td>China PMI</td><td class="ind-val">&lt;50</td><td>50</td><td>48</td><td><span class="ind-watch">WATCH</span></td><td>&darr;</td></tr>
+      </tbody>
+    </table>
+    <div class="forecast-cols">
+      <div class="fc-col">
+        <div class="fc-horizon">Short (0&ndash;4w)</div>
+        <div class="fc-text">CPI tomorrow will confirm or deny the tariff pass-through. A 3.3%+ print accelerates stagflation pricing.</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">TIPS</span><span class="sig-chip sig-u">EEM</span><span class="sig-chip sig-u">HYG</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Medium (1&ndash;6m)</div>
+        <div class="fc-text">Continued supply-chain drag on EM growth, US input-cost drag on earnings. No trade truce priced.</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">TIPS</span><span class="sig-chip sig-u">EEM</span><span class="sig-chip sig-u">SPY</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Long (6&ndash;18m)</div>
+        <div class="fc-text">Partial truce more likely than full escalation. Structural deglobalisation continues either way.</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">Gold</span><span class="sig-chip sig-n">EEM</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVER 6: Fiscal -->
+  <div class="driver-section">
+    <div class="driver-header">
+      <span class="badge badge-blue">END</span>
+      <span class="driver-title">US Fiscal &amp; Sovereign Debt</span>
+      <span class="dom-badge-m">MODERATE (3)</span>
+      <span class="conf-badge conf-medium">Confidence: Medium</span>
+    </div>
+    <div class="driver-desc">US deficit remains structurally wide; T-bill rollover schedule is manageable but demand at long-end auctions is softer. The debt trajectory remains the long-tail supporter of gold and a structural drag on USD &mdash; unchanged at Moderate.</div>
+    <table class="ind-table">
+      <thead><tr><th>Indicator</th><th>Current</th><th>Watch</th><th>Breach</th><th>Status</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>US Federal Debt / GDP</td><td class="ind-val">&sim;124%</td><td>125%</td><td>130%</td><td><span class="ind-watch">WATCH</span></td><td>&uarr;</td></tr>
+        <tr><td>10Y auction tails</td><td class="ind-val">Mild</td><td>Rising</td><td>&gt;3 bp</td><td><span class="ind-ok">OK</span></td><td>&rarr;</td></tr>
+      </tbody>
+    </table>
+    <div class="forecast-cols">
+      <div class="fc-col">
+        <div class="fc-horizon">Short (0&ndash;4w)</div>
+        <div class="fc-text">No immediate auction stress. Slightly supportive for duration given Fed path.</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">GLD</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Medium (1&ndash;6m)</div>
+        <div class="fc-text">Deficit pressure resumes as recession bites &mdash; tax receipts fall, spending rises.</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">GLD</span><span class="sig-chip sig-u">USD</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Long (6&ndash;18m)</div>
+        <div class="fc-text">Debt dynamics remain structural gold positive and USD negative over the cycle.</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">GLD</span><span class="sig-chip sig-u">USD</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVER 7: Deglob -->
+  <div class="driver-section">
+    <div class="driver-header">
+      <span class="badge badge-blue">END</span>
+      <span class="driver-title">Structural Deglobalisation</span>
+      <span class="dom-badge-m">MODERATE (3)</span>
+      <span class="conf-badge conf-medium">Confidence: Medium</span>
+    </div>
+    <div class="driver-desc">Friend-shoring, CHIPS Act capex, export controls all continue. World trade volume flat year-over-year. This driver is a persistent background positive for defense, nearshoring, agriculture, and a background negative for EM exporters.</div>
+    <table class="ind-table">
+      <thead><tr><th>Indicator</th><th>Current</th><th>Watch</th><th>Breach</th><th>Status</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>World trade volume YoY</td><td class="ind-val">Flat</td><td>&minus;1%</td><td>&minus;3%</td><td><span class="ind-watch">WATCH</span></td><td>&rarr;</td></tr>
+      </tbody>
+    </table>
+    <div class="forecast-cols">
+      <div class="fc-col">
+        <div class="fc-horizon">Short (0&ndash;4w)</div>
+        <div class="fc-text">No near-term catalyst beyond Apr 10 CPI pass-through.</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">XAR</span><span class="sig-chip sig-n">EEM</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Medium (1&ndash;6m)</div>
+        <div class="fc-text">Defense orders continue, EM exporter margins squeezed.</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">XAR</span><span class="sig-chip sig-u">EEM</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Long (6&ndash;18m)</div>
+        <div class="fc-text">Multi-year tailwind for capex onshore; structural headwind for global-growth plays.</div>
+        <div class="fc-chips"><span class="sig-chip sig-o">XAR</span><span class="sig-chip sig-o">DBA</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVER 8: Energy Transition -->
+  <div class="driver-section">
+    <div class="driver-header">
+      <span class="badge badge-blue">END</span>
+      <span class="driver-title">Energy Transition &amp; Electrification</span>
+      <span class="dom-badge-m">MODERATE (3) &uarr; from 2</span>
+      <span class="conf-badge conf-medium">Confidence: Medium</span>
+    </div>
+    <div class="driver-desc">Upgraded to Moderate. Silver at $85.22/oz &mdash; 6th consecutive year of supply deficit. Solar expansion, grid capex, and EV adoption are all pulling physical silver into use cases faster than primary mine supply can refill. Copper demand from electrification remains structural. This driver is now meaningful for silver and industrial metals, not just a slow-burn background force.</div>
+    <table class="ind-table">
+      <thead><tr><th>Indicator</th><th>Current</th><th>Watch</th><th>Breach</th><th>Status</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>Silver spot (USD/oz)</td><td class="ind-val">$85.22</td><td>$80</td><td>$100</td><td><span class="ind-watch">RALLY</span></td><td>&uarr;</td></tr>
+        <tr><td>Silver supply deficit</td><td class="ind-val">Year 6</td><td>Year 4</td><td>Year 8</td><td><span class="ind-breach">BREACH</span></td><td>&uarr;</td></tr>
+        <tr><td>Global solar install YoY</td><td class="ind-val">+22%</td><td>+10%</td><td>+5%</td><td><span class="ind-ok">OK</span></td><td>&uarr;</td></tr>
+      </tbody>
+    </table>
+    <div class="forecast-cols">
+      <div class="fc-col">
+        <div class="fc-horizon">Short (0&ndash;4w)</div>
+        <div class="fc-text">Silver remains bid on physical tightness + monetary dovish tailwind.</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">SLV</span><span class="sig-chip sig-o">Copper</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Medium (1&ndash;6m)</div>
+        <div class="fc-text">Industrial demand + monetary tailwind compound. $100/oz silver is a probability-weighted base case.</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">SLV</span><span class="sig-chip sig-o">Copper</span></div>
+      </div>
+      <div class="fc-col">
+        <div class="fc-horizon">Long (6&ndash;18m)</div>
+        <div class="fc-text">Structural supply deficit continues, mining capex lag means no new primary supply until 2028+.</div>
+        <div class="fc-chips"><span class="sig-chip sig-so">SLV</span><span class="sig-chip sig-o">Miners</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dormant / Background drivers compact -->
+  <div class="driver-section">
+    <div class="driver-header">
+      <span class="driver-title" style="color:var(--text2);">Background &amp; Dormant Drivers</span>
+    </div>
+    <table class="ind-table">
+      <thead><tr><th>Driver</th><th>Type</th><th>Dominance</th><th>Status</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>AI &amp; Productivity Revolution</td><td>END</td><td class="ind-val">2</td><td><span class="ind-ok">Background</span></td><td>Slowing hype cycle; capex still elevated but earnings beat leadership fading.</td></tr>
+        <tr><td>De-dollarisation &amp; Monetary Geopolitics</td><td>END</td><td class="ind-val">2</td><td><span class="ind-ok">Background</span></td><td>CB gold buying continues; DXY down &mdash; structural but not market-dominant this week.</td></tr>
+        <tr><td>NATO Rearmament &amp; Global Defense</td><td>END</td><td class="ind-val">2</td><td><span class="ind-ok">Background</span></td><td>European defense capex accelerating. Background positive for XAR.</td></tr>
+        <tr><td>China Economic Health</td><td>END</td><td class="ind-val">2</td><td><span class="ind-ok">Background</span></td><td>Property stress continues, PBOC easing slowly. Q1 GDP due Apr 16.</td></tr>
+        <tr><td>Climate &amp; Resource Stress</td><td>END</td><td class="ind-val">2</td><td><span class="ind-ok">Background</span></td><td>No El Nino/La Nina flip confirmed; agri watch but not active.</td></tr>
+        <tr><td>Global Demographics &amp; Debt</td><td>END</td><td class="ind-val">1</td><td><span class="ind-ok">Dormant</span></td><td>Slow-moving structural only.</td></tr>
+        <tr><td>Japan Carry Unwind</td><td>TEMP</td><td class="ind-val">1</td><td><span class="ind-ok">Dormant</span></td><td>BOJ unchanged, JPY stable. Watch Apr 17 Japan CPI.</td></tr>
+        <tr><td>Super El Nino</td><td>TEMP</td><td class="ind-val">1</td><td><span class="ind-ok">Dormant</span></td><td>NOAA neutral ENSO. Not active.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============== SECTION 4 ============== -->
+<div class="section" id="sec4">
+  <div class="section-title"><span class="section-num">4</span>Economic Asset Class Forecast</div>
+  <div class="section-sub">Your macro-driven playbook across 15 asset classes over Short (0&ndash;4 weeks), Medium (1&ndash;6 months), and Long (6&ndash;18 months) horizons. Read across any row to see how the outlook shifts as temporary drivers fade and structural forces take over.</div>
+
+  <table class="forecast-table">
+    <thead>
+      <tr>
+        <th style="width:26%;">Asset Class (Proxy)</th>
+        <th style="width:13%;">Net Score</th>
+        <th style="width:14%;">Short</th>
+        <th style="width:14%;">Medium</th>
+        <th style="width:14%;">Long</th>
+        <th>Lead Drivers</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="forecast-group-header"><td colspan="6">Commodities &amp; Precious</td></tr>
+      <tr><td>Gold (GLD)</td><td><span class="score-pos">+1.08</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td>Private Credit, Monetary, Fiscal, US Econ</td></tr>
+      <tr><td>TIPS (TIP)</td><td><span class="score-pos">+0.82</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td>US Econ, Tariff, Monetary</td></tr>
+      <tr><td>Silver (SLV)</td><td><span class="score-pos">+0.63</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td>Energy Transition, Monetary</td></tr>
+      <tr><td>Agriculture (DBA)</td><td><span class="score-zero">+0.24</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td>Deglob, Tariff, Climate</td></tr>
+      <tr><td>Oil (USO)</td><td><span class="score-neg">&minus;0.29</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td>US Econ demand, Iran off</td></tr>
+      <tr><td>Copper / Ind Metals</td><td><span class="score-zero">&minus;0.05</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td>Energy Transition vs US Econ drag</td></tr>
+
+      <tr class="forecast-group-header"><td colspan="6">Equities</td></tr>
+      <tr><td>US Large Cap (SPY)</td><td><span class="score-neg">&minus;0.58</span></td><td><span class="sig-chip sig-su">Strong Underperform</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td>US Econ, Private Credit, Tariff</td></tr>
+      <tr><td>US Tech (QQQ)</td><td><span class="score-neg">&minus;0.32</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td>Tariff &amp; rates mixed with AI tailwind</td></tr>
+      <tr><td>Defense ETFs (XAR)</td><td><span class="score-pos">+0.34</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td>NATO, Deglob, Iran residual</td></tr>
+      <tr><td>EM Equities (EEM)</td><td><span class="score-zero">&minus;0.18</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td>Tariff drag vs USD weakness</td></tr>
+
+      <tr class="forecast-group-header"><td colspan="6">Fixed Income</td></tr>
+      <tr><td>Long UST (TLT)</td><td><span class="score-pos">+0.61</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td><span class="sig-chip sig-so">Strong Outperform</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td>Monetary, US Econ, Private Credit</td></tr>
+      <tr><td>IG Credit (LQD)</td><td><span class="score-zero">&minus;0.03</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td>Rate rally vs spread widening</td></tr>
+      <tr><td>High Yield (HYG)</td><td><span class="score-neg">&minus;0.45</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td><span class="sig-chip sig-su">Strong Underperform</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td>Private Credit, US Econ, Tariff</td></tr>
+
+      <tr class="forecast-group-header"><td colspan="6">Currencies &amp; Alternatives</td></tr>
+      <tr><td>US Dollar (UUP)</td><td><span class="score-neg">&minus;0.37</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td><span class="sig-chip sig-u">Underperform</span></td><td>Monetary, Fiscal, US Econ</td></tr>
+      <tr><td>Japanese Yen (FXY)</td><td><span class="score-pos">+0.34</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td><span class="sig-chip sig-o">Outperform</span></td><td><span class="sig-chip sig-n">Neutral</span></td><td>Monetary, Iran residual, Private Credit</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============== SECTION 5 ============== -->
+<div class="section" id="sec5">
+  <div class="section-title"><span class="section-num">5</span>Economic Watchlist Forecast</div>
+  <div class="section-sub">How the current macro environment is affecting your specific holdings. Each stock is assessed against the active drivers based on its sector, geography, and business model &mdash; showing whether the macro backdrop is a tailwind, headwind, or neutral across Short, Medium, and Long horizons.</div>
+
+  <table class="watchlist-table">
+    <thead><tr><th style="width:14%;">Ticker</th><th style="width:14%;">Profile</th><th style="width:12%;">Short</th><th style="width:12%;">Medium</th><th style="width:12%;">Long</th><th>Macro rationale</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>SOFI</strong><br><span style="color:var(--text2);font-size:11px;">$16.11</span></td>
+        <td style="font-size:11px;">US Fintech<br>98% US revenue<br>High rate sensitivity</td>
+        <td><span class="sig-chip sig-u">Underperform</span></td>
+        <td><span class="sig-chip sig-n">Neutral</span></td>
+        <td><span class="sig-chip sig-o">Outperform</span></td>
+        <td>Short: US Econ weakness and private credit stress drive rising consumer losses, offsetting rate-cut tailwinds. Medium: 50&ndash;75 bp of cuts lifts originations but credit cycle still working through. Long: full rate-cut cycle + normalisation provides strong setup for consumer-fintech.</td>
+      </tr>
+      <tr>
+        <td><strong>DLO</strong><br><span style="color:var(--text2);font-size:11px;">$12.74</span></td>
+        <td style="font-size:11px;">EM Fintech<br>70% LatAm<br>USD negative sensitivity</td>
+        <td><span class="sig-chip sig-n">Neutral</span></td>
+        <td><span class="sig-chip sig-o">Outperform</span></td>
+        <td><span class="sig-chip sig-o">Outperform</span></td>
+        <td>Short: US Econ drag offset by USD weakness &mdash; close to flat. Medium: USD weakness compounds into LatAm earnings translation tailwind + EM payments volume stabilises. Long: EM recovery path leverages payment volume growth at scale.</td>
+      </tr>
+      <tr>
+        <td><strong>MNO.TO</strong><br><span style="color:var(--text2);font-size:11px;">C$1.72</span></td>
+        <td style="font-size:11px;">Junior Gold Miner<br>Development stage<br>2&ndash;3x gold beta</td>
+        <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+        <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+        <td><span class="sig-chip sig-so">Strong Outperform</span></td>
+        <td>All four dominant drivers &mdash; Private Credit Critical, US Econ High, Monetary High dovish, Fiscal structural &mdash; all support gold. With 2&ndash;3x beta to bullion and a dovish Fed path, this is the purest macro-aligned holding in the watchlist. Only risk: a general risk-off episode that hits junior miners on liquidity.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============== SECTION 6 ============== -->
+<div class="section" id="sec6">
+  <div class="section-title"><span class="section-num">6</span>Net Capital Flow Forecast</div>
+  <div class="section-sub">Where macro drivers translate into actual capital movement. Real money = slow, structural flows from institutions. Fast money = tactical, sentiment-driven positioning. When both agree, conviction is highest.</div>
+
+  <!-- Part A: Inflows -->
+  <h3 style="font-size:14px;color:var(--green);margin:18px 0 8px;">Part A &mdash; Inflows</h3>
+  <div>
+    <div class="flow-item">
+      <div class="flow-arrow" style="color:var(--green);">&uarr;&uarr;</div>
+      <div class="flow-body">
+        <div class="flow-title-row">
+          <div class="flow-asset">Gold (GLD, physical, miners)</div>
+          <div class="flow-chips">
+            <span class="flow-chip chip-money-real">Real Money</span>
+            <span class="flow-chip chip-money-fast">Fast Money</span>
+            <span class="flow-chip chip-conf-high">HIGH CONF</span>
+            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-on">L</span></div>
+            <span class="chip-driver">Private Credit</span><span class="chip-driver">Monetary</span><span class="chip-driver">Fiscal</span>
+          </div>
+        </div>
+        <div class="flow-rationale">Central banks continue structural bid. Both institutional ETF creations and retail fast-money flows are in agreement. Every active driver except Reacceleration points higher.</div>
+      </div>
+    </div>
+
+    <div class="flow-item">
+      <div class="flow-arrow" style="color:var(--green);">&uarr;&uarr;</div>
+      <div class="flow-body">
+        <div class="flow-title-row">
+          <div class="flow-asset">Long UST (TLT)</div>
+          <div class="flow-chips">
+            <span class="flow-chip chip-money-real">Real Money</span>
+            <span class="flow-chip chip-conf-high">HIGH CONF</span>
+            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-off">L</span></div>
+            <span class="chip-driver">Monetary</span><span class="chip-driver">US Econ</span>
+          </div>
+        </div>
+        <div class="flow-rationale">Pension funds rotating out of risk assets. Fed path + GDP shock = duration bid regardless of fiscal tail risk. Long-horizon flow turns neutral as debt dynamics re-assert.</div>
+      </div>
+    </div>
+
+    <div class="flow-item">
+      <div class="flow-arrow" style="color:var(--green);">&uarr;</div>
+      <div class="flow-body">
+        <div class="flow-title-row">
+          <div class="flow-asset">TIPS (inflation-linked)</div>
+          <div class="flow-chips">
+            <span class="flow-chip chip-money-real">Real Money</span>
+            <span class="flow-chip chip-conf-high">HIGH CONF</span>
+            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-off">L</span></div>
+            <span class="chip-driver">US Econ</span><span class="chip-driver">Tariff</span>
+          </div>
+        </div>
+        <div class="flow-rationale">Stagflation hedge with best real-yield profile. Break-evens still cheap vs forward CPI path.</div>
+      </div>
+    </div>
+
+    <div class="flow-item">
+      <div class="flow-arrow" style="color:var(--green);">&uarr;</div>
+      <div class="flow-body">
+        <div class="flow-title-row">
+          <div class="flow-asset">Silver (SLV + physical)</div>
+          <div class="flow-chips">
+            <span class="flow-chip chip-money-fast">Fast Money</span>
+            <span class="flow-chip chip-conf-med">MED CONF</span>
+            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-on">L</span></div>
+            <span class="chip-driver">Energy Transition</span><span class="chip-driver">Monetary</span>
+          </div>
+        </div>
+        <div class="flow-rationale">Fast-money driven rally on supply deficit + dovish Fed. Real money still under-allocated &mdash; catch-up flow likely if $100 breaches.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part B: Outflows -->
+  <h3 style="font-size:14px;color:var(--red);margin:24px 0 8px;">Part B &mdash; Outflows</h3>
+  <div>
+    <div class="flow-item">
+      <div class="flow-arrow" style="color:var(--red);">&darr;&darr;</div>
+      <div class="flow-body">
+        <div class="flow-title-row">
+          <div class="flow-asset">High Yield Credit (HYG)</div>
+          <div class="flow-chips">
+            <span class="flow-chip chip-money-real">Real Money</span>
+            <span class="flow-chip chip-money-fast">Fast Money</span>
+            <span class="flow-chip chip-conf-high">HIGH CONF</span>
+            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-on">L</span></div>
+            <span class="chip-driver">Private Credit</span><span class="chip-driver">US Econ</span>
+          </div>
+        </div>
+        <div class="flow-rationale">Both institutional and fast money selling. Private credit stress spilling into public HY market. No time horizon is safe.</div>
+      </div>
+    </div>
+
+    <div class="flow-item">
+      <div class="flow-arrow" style="color:var(--red);">&darr;&darr;</div>
+      <div class="flow-body">
+        <div class="flow-title-row">
+          <div class="flow-asset">US Large Cap Equities (SPY)</div>
+          <div class="flow-chips">
+            <span class="flow-chip chip-money-fast">Fast Money</span>
+            <span class="flow-chip chip-conf-med">MED CONF</span>
+            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-off">L</span></div>
+            <span class="chip-driver">US Econ</span><span class="chip-driver">Private Credit</span>
+          </div>
+        </div>
+        <div class="flow-rationale">Hedge funds reducing gross exposure. Real money still defensive but not yet selling structurally. Watch for pension reallocation if SPY breaks 10-week lows.</div>
+      </div>
+    </div>
+
+    <div class="flow-item">
+      <div class="flow-arrow" style="color:var(--red);">&darr;</div>
+      <div class="flow-body">
+        <div class="flow-title-row">
+          <div class="flow-asset">US Dollar (UUP)</div>
+          <div class="flow-chips">
+            <span class="flow-chip chip-money-real">Real Money</span>
+            <span class="flow-chip chip-conf-high">HIGH CONF</span>
+            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-on">L</span></div>
+            <span class="chip-driver">Monetary</span><span class="chip-driver">Fiscal</span><span class="chip-driver">US Econ</span>
+          </div>
+        </div>
+        <div class="flow-rationale">Structural CB rotation out of USD, dovish Fed, fiscal math &mdash; real-money view is unchanged. Fast money briefly bid USD during Iran risk-off but now unwinding.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part C: Divergences -->
+  <h3 style="font-size:14px;color:var(--yellow);margin:24px 0 8px;">Part C &mdash; Divergences</h3>
+  <div class="divergence-box">
+    <div style="font-weight:700;color:var(--yellow);margin-bottom:4px;">Oil (USO): Fast Money bullish / Real Money neutral-bear</div>
+    <div style="font-size:12px;color:var(--text2);">USO is being bid on tariff-fear commodity rotation (fast money) while real-money demand forecasts are marking down on the Q4 GDP print. Resolution: likely lower oil in 4&ndash;8 weeks as growth data compounds, unless Iran ceasefire breaks.</div>
+  </div>
+  <div class="divergence-box">
+    <div style="font-weight:700;color:var(--yellow);margin-bottom:4px;">EM Equities (EEM): Real Money accumulating / Fast Money dumping</div>
+    <div style="font-size:12px;color:var(--text2);">Sovereign wealth and EM-dedicated funds quietly rebuilding EM exposure on valuation + USD weakness, while hedge funds remain short on tariff drag. Resolution: real money tends to win at 6&ndash;12 months &mdash; watch for a Q3 mean-reversion rally.</div>
+  </div>
+
+  <!-- Part D: Feedback Loops -->
+  <h3 style="font-size:14px;color:var(--blue);margin:24px 0 8px;">Part D &mdash; Feedback Loops</h3>
+  <div class="loop-grid">
+    <div class="loop-card">
+      <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:var(--red);">Private Credit Stress &rarr; Growth Drag</div>
+      <div style="font-size:11px;color:var(--text2);">Gated funds reduce credit to SMEs &rarr; SME defaults rise &rarr; unemployment ticks up &rarr; consumer weakness &rarr; more defaults. Self-reinforcing until Fed intervention or orderly deleveraging.</div>
+    </div>
+    <div class="loop-card">
+      <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:var(--green);">Dovish Fed &rarr; USD Weakness &rarr; Gold / EM Bid</div>
+      <div style="font-size:11px;color:var(--text2);">Cuts weaken USD &rarr; gold and EM rally &rarr; further USD outflows &rarr; more gold bid. Persists until real yields bottom or Fed pauses.</div>
+    </div>
+    <div class="loop-card">
+      <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:var(--orange);">Tariff Shock &rarr; Sticky Inflation &rarr; Stagflation Lock-In</div>
+      <div style="font-size:11px;color:var(--text2);">Tariffs raise input costs &rarr; CPI sticky &rarr; real wages fall &rarr; demand weakens &rarr; growth slows with inflation sticky. Breakable only by trade truce or deep recession.</div>
+    </div>
+    <div class="loop-card">
+      <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:var(--blue);">Silver Tightness &rarr; Physical Draw &rarr; Fast-money Piling In</div>
+      <div style="font-size:11px;color:var(--text2);">6-year supply deficit &rarr; COMEX inventory draws &rarr; momentum players pile in &rarr; physical tightens further. Accelerates into year-end unless industrial demand rolls over.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== SECTION 7 ============== -->
+<div class="section" id="sec7">
+  <div class="section-title"><span class="section-num">7</span>Economic Forecast Calendar</div>
+  <div class="section-sub">9 April 2026 &mdash; 17 April 2026 &middot; Know what's coming and what it means before it happens. Each event shows the market consensus, the MacroDriver forecast, and &mdash; if the forecast is correct &mdash; which assets are likely to move and in which direction. &middot; Scenario weights: [Stagflation 45% | Deflationary Bust 30% | Soft Landing 15% | Reacceleration 10%]</div>
+
+  <div class="cal-week-header">Week of 9&ndash;17 April 2026</div>
+
+  <!-- CPI -->
+  <div class="cal-item">
+    <div class="cal-date">
+      <div class="cal-day">10</div>
+      <div class="cal-month">Apr</div>
+    </div>
+    <div class="fcal-body">
+      <div class="fcal-top">
+        <div class="cal-event">US CPI (March, YoY)</div>
+        <span class="cal-impact impact-critical">CRITICAL</span>
+        <span class="conf-badge conf-high">High conf</span>
+      </div>
+      <div class="fcal-context">The single largest catalyst of the week. Consensus at 3.3% YoY (from 2.43%) reflects tariff pass-through. This is the first major print to test the tariff-shock thesis, and the result will swing Fed path pricing and the stagflation regime conviction.</div>
+      <div class="fcal-forecast-row">
+        <div><div class="fcal-col-label">Market Consensus</div><div class="fcal-col-value">3.3% YoY</div></div>
+        <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">3.4&ndash;3.5% YoY</div></div>
+        <div><div class="fcal-col-label">Direction</div><div class="fcal-col-value" style="color:var(--red);">Higher than consensus</div></div>
+      </div>
+      <div class="fcal-assets">
+        <span class="fcal-assets-lbl">If correct:</span>
+        <span class="asset-chip chip-bull">GLD &uarr;</span><span class="asset-chip chip-bull">TIPS &uarr;</span><span class="asset-chip chip-bull">SLV &uarr;</span><span class="asset-chip chip-bear">SPY &darr;</span><span class="asset-chip chip-bear">HYG &darr;</span><span class="asset-chip chip-bear">USD &darr;</span><span class="asset-chip chip-bull">MNO.TO &uarr;</span><span class="asset-chip chip-bear">SOFI &darr;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core CPI -->
+  <div class="cal-item">
+    <div class="cal-date">
+      <div class="cal-day">10</div>
+      <div class="cal-month">Apr</div>
+    </div>
+    <div class="fcal-body">
+      <div class="fcal-top">
+        <div class="cal-event">US Core CPI (March, YoY)</div>
+        <span class="cal-impact impact-high">HIGH</span>
+        <span class="conf-badge conf-high">High conf</span>
+      </div>
+      <div class="fcal-context">Consensus 2.7% vs 2.47% prior. Core excludes food and energy so it better measures the underlying stagflation signal. A 2.7%+ print cements stickiness and increases real-yield pressure.</div>
+      <div class="fcal-forecast-row">
+        <div><div class="fcal-col-label">Market Consensus</div><div class="fcal-col-value">2.7% YoY</div></div>
+        <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">2.75&ndash;2.8% YoY</div></div>
+        <div><div class="fcal-col-label">Direction</div><div class="fcal-col-value" style="color:var(--orange);">Slightly high</div></div>
+      </div>
+      <div class="fcal-assets">
+        <span class="fcal-assets-lbl">If correct:</span>
+        <span class="asset-chip chip-bull">GLD &uarr;</span><span class="asset-chip chip-bull">TIPS &uarr;</span><span class="asset-chip chip-bear">QQQ &darr;</span><span class="asset-chip chip-bear">HYG &darr;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Michigan -->
+  <div class="cal-item">
+    <div class="cal-date">
+      <div class="cal-day">10</div>
+      <div class="cal-month">Apr</div>
+    </div>
+    <div class="fcal-body">
+      <div class="fcal-top">
+        <div class="cal-event">Michigan Consumer Sentiment (Prelim)</div>
+        <span class="cal-impact impact-medium">MEDIUM</span>
+        <span class="conf-badge conf-medium">Med conf</span>
+      </div>
+      <div class="fcal-context">Consensus 52.0 vs 53.3 prior. With Q4 GDP at 0.5%, consumer confidence is a leading indicator for services demand. A sub-50 print would confirm contraction risk.</div>
+      <div class="fcal-forecast-row">
+        <div><div class="fcal-col-label">Market Consensus</div><div class="fcal-col-value">52.0</div></div>
+        <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">50&ndash;51</div></div>
+        <div><div class="fcal-col-label">Direction</div><div class="fcal-col-value" style="color:var(--red);">Lower than consensus</div></div>
+      </div>
+      <div class="fcal-assets">
+        <span class="fcal-assets-lbl">If correct:</span>
+        <span class="asset-chip chip-bull">TLT &uarr;</span><span class="asset-chip chip-bear">SPY &darr;</span><span class="asset-chip chip-bear">SOFI &darr;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- China CPI -->
+  <div class="cal-item">
+    <div class="cal-date">
+      <div class="cal-day">10</div>
+      <div class="cal-month">Apr</div>
+    </div>
+    <div class="fcal-body">
+      <div class="fcal-top">
+        <div class="cal-event">China CPI (March, YoY)</div>
+        <span class="cal-impact impact-medium">MEDIUM</span>
+        <span class="conf-badge conf-medium">Med conf</span>
+      </div>
+      <div class="fcal-context">Consensus 1.2% YoY. Continued low print would strengthen the deflation-export thesis and pressure EM trading partners.</div>
+      <div class="fcal-forecast-row">
+        <div><div class="fcal-col-label">Market Consensus</div><div class="fcal-col-value">1.2% YoY</div></div>
+        <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">1.1%</div></div>
+        <div><div class="fcal-col-label">Direction</div><div class="fcal-col-value" style="color:var(--orange);">Slightly low</div></div>
+      </div>
+      <div class="fcal-assets">
+        <span class="fcal-assets-lbl">If correct:</span>
+        <span class="asset-chip chip-bear">Copper &darr;</span><span class="asset-chip chip-neut">EEM &rarr;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PPI -->
+  <div class="cal-item">
+    <div class="cal-date">
+      <div class="cal-day">14</div>
+      <div class="cal-month">Apr</div>
+    </div>
+    <div class="fcal-body">
+      <div class="fcal-top">
+        <div class="cal-event">US PPI (March, MoM)</div>
+        <span class="cal-impact impact-high">HIGH</span>
+        <span class="conf-badge conf-medium">Med conf</span>
+      </div>
+      <div class="fcal-context">Consensus 1.3% MoM vs 0.7% prior. This is the upstream tariff pass-through signal. A high PPI print that doesn't feed through to CPI would imply margin compression on corporates.</div>
+      <div class="fcal-forecast-row">
+        <div><div class="fcal-col-label">Market Consensus</div><div class="fcal-col-value">1.3% MoM</div></div>
+        <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">1.4% MoM</div></div>
+        <div><div class="fcal-col-label">Direction</div><div class="fcal-col-value" style="color:var(--orange);">Slightly high</div></div>
+      </div>
+      <div class="fcal-assets">
+        <span class="fcal-assets-lbl">If correct:</span>
+        <span class="asset-chip chip-bull">GLD &uarr;</span><span class="asset-chip chip-bull">TIPS &uarr;</span><span class="asset-chip chip-bear">SPY &darr;</span><span class="asset-chip chip-bear">QQQ &darr;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- China GDP -->
+  <div class="cal-item">
+    <div class="cal-date">
+      <div class="cal-day">16</div>
+      <div class="cal-month">Apr</div>
+    </div>
+    <div class="fcal-body">
+      <div class="fcal-top">
+        <div class="cal-event">China Q1 GDP (YoY)</div>
+        <span class="cal-impact impact-high">HIGH</span>
+        <span class="conf-badge conf-medium">Med conf</span>
+      </div>
+      <div class="fcal-context">Consensus 5.0% YoY. Miss would pressure EEM, commodities, and copper. Beat would support modest Reacceleration tail and lift EM.</div>
+      <div class="fcal-forecast-row">
+        <div><div class="fcal-col-label">Market Consensus</div><div class="fcal-col-value">5.0% YoY</div></div>
+        <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">4.7%</div></div>
+        <div><div class="fcal-col-label">Direction</div><div class="fcal-col-value" style="color:var(--red);">Below consensus</div></div>
+      </div>
+      <div class="fcal-assets">
+        <span class="fcal-assets-lbl">If correct:</span>
+        <span class="asset-chip chip-bear">EEM &darr;</span><span class="asset-chip chip-bear">Copper &darr;</span><span class="asset-chip chip-bull">GLD &uarr;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Japan CPI -->
+  <div class="cal-item">
+    <div class="cal-date">
+      <div class="cal-day">17</div>
+      <div class="cal-month">Apr</div>
+    </div>
+    <div class="fcal-body">
+      <div class="fcal-top">
+        <div class="cal-event">Japan CPI (March, YoY)</div>
+        <span class="cal-impact impact-medium">MEDIUM</span>
+        <span class="conf-badge conf-medium">Med conf</span>
+      </div>
+      <div class="fcal-context">Consensus 1.5% vs 1.3% prior. A hot print would raise BOJ hike odds and risk activating the Japan Carry Unwind temporary driver.</div>
+      <div class="fcal-forecast-row">
+        <div><div class="fcal-col-label">Market Consensus</div><div class="fcal-col-value">1.5% YoY</div></div>
+        <div><div class="fcal-col-label">Boris Forecast</div><div class="fcal-col-value boris">1.5&ndash;1.6%</div></div>
+        <div><div class="fcal-col-label">Direction</div><div class="fcal-col-value" style="color:var(--orange);">At / slightly above</div></div>
+      </div>
+      <div class="fcal-assets">
+        <span class="fcal-assets-lbl">If correct:</span>
+        <span class="asset-chip chip-bull">JPY &uarr;</span><span class="asset-chip chip-bear">QQQ &darr;</span><span class="asset-chip chip-bull">GLD &uarr;</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== SECTION 8 ============== -->
+<div class="section" id="sec8">
+  <div class="section-title"><span class="section-num">8</span>Driver Interactions &amp; Double-Count Prevention</div>
+  <div class="section-sub">Why you can trust the signals in this report aren't inflated. When multiple drivers point the same direction, there's a risk of double-counting the same underlying effect. This section maps where drivers interact and what adjustments were made to prevent the same risk from being counted twice.</div>
+
+  <table class="interactions-table">
+    <thead>
+      <tr><th>Interaction</th><th>Primary Source</th><th>Transmission</th><th>Double-Count Adjustment</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Private Credit &rarr; US Economic Health</strong></td>
+        <td>Private Credit (5)</td>
+        <td>Credit contraction flows through to SME defaults and consumer loss cycle</td>
+        <td>US Econ impact on HYG capped to &minus;0.5 (not &minus;1.0) to avoid double-counting Private Credit's direct HYG hit.</td>
+      </tr>
+      <tr>
+        <td><strong>Private Credit &rarr; Global Monetary Policy</strong></td>
+        <td>Private Credit (5)</td>
+        <td>Stress raises Fed cut probability (forces dovish path)</td>
+        <td>Monetary's bullish gold impact already captures the cut path &mdash; Private Credit's direct gold impact reduced from &uarr;&uarr;&uarr; to &uarr;&uarr; to prevent stacking.</td>
+      </tr>
+      <tr>
+        <td><strong>US Economic Health &rarr; Global Monetary Policy</strong></td>
+        <td>US Econ (4) &mdash; GDP shock is the growth signal</td>
+        <td>Weak growth is the reason for the dovish Fed tilt</td>
+        <td>Monetary rated High independently only because FOMC minutes + global cutting cycle are their own signal. Gold exposure credited once per chain.</td>
+      </tr>
+      <tr>
+        <td><strong>Tariff War &rarr; US Economic Health</strong></td>
+        <td>Tariff (3)</td>
+        <td>Tariff pass-through &rarr; sticky CPI &rarr; real wage hit &rarr; demand weakness</td>
+        <td>Tariff's bearish SPY/QQQ impact counted separately from US Econ's &mdash; scales are different (short-run pass-through vs structural growth weakness).</td>
+      </tr>
+      <tr>
+        <td><strong>Iran War &rarr; Monetary Policy</strong></td>
+        <td>Iran (3) &mdash; now downgraded</td>
+        <td>Oil spike risk kept Fed cautious earlier; ceasefire has reduced that pressure</td>
+        <td>No double-count since Iran is now Moderate and Monetary is High &mdash; they reinforce rather than overlap on gold.</td>
+      </tr>
+      <tr>
+        <td><strong>Energy Transition &rarr; Monetary</strong></td>
+        <td>Energy Transition (3)</td>
+        <td>Physical silver demand compounds with dovish real-rate tailwind</td>
+        <td>Silver has both channels explicitly modelled; LQD impact limited to avoid combining unrelated real-rate and supply effects.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============== SECTION 9 ============== -->
+<div class="section" id="sec9">
+  <div class="section-title"><span class="section-num">9</span>State Snapshot</div>
+  <div class="section-sub">Machine-readable state for continuity into the next run. This JSON is also saved to disk as MacroDriver-state-20260409.json.</div>
+  <pre class="state-pre">{
+  "run_id": "MacroDriver-20260409-weekly",
+  "date": "2026-04-09",
+  "total_active_dominance": 38,
+  "scenario_weights": {
+    "stagflation_to_contraction": 0.45,
+    "deflationary_bust": 0.30,
+    "soft_landing": 0.15,
+    "reacceleration": 0.10
+  },
+  "dominant_regime": "Stagflation-to-Contraction",
+  "conviction": "higher than last week (Q4 GDP 0.5%, Private Credit 5)",
+  "drivers": {
+    "private_credit":      { "type": "END",  "dominance": 5, "delta": "+1", "confidence": "high" },
+    "us_economic_health":  { "type": "END",  "dominance": 4, "delta": "+1", "confidence": "high" },
+    "global_monetary":     { "type": "END",  "dominance": 4, "delta": "+1", "confidence": "high" },
+    "iran_hormuz":         { "type": "TEMP", "dominance": 3, "delta": "-1", "confidence": "medium" },
+    "us_china_tariff":     { "type": "TEMP", "dominance": 3, "delta": "0",  "confidence": "medium" },
+    "us_fiscal":           { "type": "END",  "dominance": 3, "delta": "0",  "confidence": "medium" },
+    "deglobalisation":     { "type": "END",  "dominance": 3, "delta": "0",  "confidence": "medium" },
+    "energy_transition":   { "type": "END",  "dominance": 3, "delta": "+1", "confidence": "medium" },
+    "ai_productivity":     { "type": "END",  "dominance": 2, "delta": "0",  "confidence": "medium" },
+    "dedollarisation":     { "type": "END",  "dominance": 2, "delta": "0",  "confidence": "medium" },
+    "nato_rearmament":     { "type": "END",  "dominance": 2, "delta": "0",  "confidence": "medium" },
+    "china_economic":      { "type": "END",  "dominance": 2, "delta": "0",  "confidence": "medium" },
+    "climate_resource":    { "type": "END",  "dominance": 2, "delta": "0",  "confidence": "medium" },
+    "demographics":        { "type": "END",  "dominance": 1, "delta": "0",  "confidence": "medium" },
+    "japan_carry_unwind":  { "type": "TEMP", "dominance": 1, "delta": "0",  "confidence": "medium" },
+    "super_el_nino":       { "type": "TEMP", "dominance": 1, "delta": "0",  "confidence": "medium" }
+  },
+  "asset_net_signals": {
+    "GLD":  { "score": 1.08, "label": "Strong Outperform" },
+    "TIPS": { "score": 0.82, "label": "Strong Outperform" },
+    "SLV":  { "score": 0.63, "label": "Strong Outperform" },
+    "TLT":  { "score": 0.61, "label": "Strong Outperform" },
+    "JPY":  { "score": 0.34, "label": "Outperform" },
+    "XAR":  { "score": 0.34, "label": "Outperform" },
+    "DBA":  { "score": 0.24, "label": "Neutral" },
+    "COP":  { "score": -0.05, "label": "Neutral" },
+    "LQD":  { "score": -0.03, "label": "Neutral" },
+    "EEM":  { "score": -0.18, "label": "Neutral / Slight Under" },
+    "USO":  { "score": -0.29, "label": "Underperform" },
+    "QQQ":  { "score": -0.32, "label": "Underperform" },
+    "USD":  { "score": -0.37, "label": "Underperform" },
+    "HYG":  { "score": -0.45, "label": "Underperform" },
+    "SPY":  { "score": -0.58, "label": "Strong Underperform" }
+  },
+  "watchlist_signals": {
+    "SOFI":   { "short": "Underperform", "medium": "Neutral",     "long": "Outperform" },
+    "DLO":    { "short": "Neutral",       "medium": "Outperform",  "long": "Outperform" },
+    "MNO.TO": { "short": "Strong Outperform", "medium": "Strong Outperform", "long": "Strong Outperform" }
+  },
+  "key_prints": {
+    "fed_funds": 3.64,
+    "headline_cpi_yoy": 2.43,
+    "core_cpi_yoy": 2.47,
+    "unemployment": 4.3,
+    "q4_gdp_qoq": 0.5,
+    "dgs10": 4.29,
+    "dgs2": 3.79,
+    "t10y2y_bp": 51,
+    "vix": 21.04,
+    "m2_yoy": 4.88,
+    "dxy_proxy": 120.66
+  },
+  "dominant_catalyst_next_week": "US CPI (March) Apr 10 — consensus 3.3% YoY",
+  "prior_state": "MacroDriver-20260407-weekly.json"
+}</pre>
+</div>
+
+<!-- Data Source Status (moved to bottom of report) -->
+<div class="data-status" style="margin-top:24px;">
+  <div class="data-status-title">Data Source Status</div>
+  <div class="ds-grid">
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_key_economic_indicators</span> <span class="ds-note">&mdash; all series live</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_economic_series</span> <span class="ds-note">&mdash; FEDFUNDS/CPI/UNRATE/DGS10/VIX/M2/DXY OK</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_economic_calendar</span> <span class="ds-note">&mdash; 21 days forward window</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">get_stock_snapshot (15 ETFs)</span> <span class="ds-note">&mdash; all proxies priced 9 Apr close</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">search_financial_news (8 queries)</span> <span class="ds-note">&mdash; driver scrub complete</span></div></div>
+    <div class="ds-item ds-ok"><div class="ds-icon">&#10003;</div><div><span class="ds-name">watchlist.json / prior state</span> <span class="ds-note">&mdash; MacroDriver-20260407 loaded</span></div></div>
+  </div>
+</div>
+
+<div class="disclaimer">
+  &#9888; <strong>DISCLAIMER:</strong> This is a quantitative framework for educational purposes only. It is not financial advice. Always do your own research and consult a licensed financial advisor before making investment decisions.
+</div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    MacroDriver &middot; SignalDeck &middot; Driver-Based Economic Intelligence &middot; Not financial advice &middot; Run MacroDriver-20260409-weekly
+  </div>
+</footer>
+
+</body>
+</html>
