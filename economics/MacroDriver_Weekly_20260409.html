@@ -155,6 +155,10 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 .chip-money-fast{background:#3b0764;color:#d8b4fe;}
 .chip-conf-high{background:#14532d;color:#86efac;}
 .chip-conf-med{background:#78350f;color:#fcd34d;}
+.chip-conf-low{background:#374151;color:#9ca3af;}
+.flow-in{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;background:#14532d;color:#86efac;}
+.flow-out{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;background:#450a0a;color:#fca5a5;}
+.flow-null{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;background:var(--surface2);color:var(--text2);opacity:0.35;}
 .chip-horizon{background:var(--surface2);color:var(--text2);}
 .hz-wrap{display:inline-flex;gap:3px;align-items:center;}
 .hz-chip{font-size:9px;padding:2px 5px;border-radius:3px;font-weight:800;letter-spacing:0.4px;}
@@ -1001,161 +1005,153 @@ th.asset-header{padding:4px 2px 8px;vertical-align:bottom;}
 <!-- ============== SECTION 6 ============== -->
 <div class="section" id="sec6">
   <div class="section-title"><span class="section-num">6</span>Net Capital Flow Forecast</div>
-  <div class="section-sub">Where macro drivers translate into actual capital movement. Real money = slow, structural flows from institutions. Fast money = tactical, sentiment-driven positioning. When both agree, conviction is highest.</div>
+  <div class="section-sub">Where macro drivers translate into actual capital movement. Each row shows which assets are receiving inflows or outflows across Short, Medium, and Long horizons &mdash; traced back to the specific drivers causing each flow. <span style="color:var(--text);font-weight:600;">Real money</span> = slow, structural flows from institutions. <span style="color:var(--text);font-weight:600;">Fast money</span> = tactical, sentiment-driven positioning. When both agree, conviction is highest.</div>
 
-  <!-- Part A: Inflows -->
-  <h3 style="font-size:14px;color:var(--green);margin:18px 0 8px;">Part A &mdash; Inflows</h3>
-  <div>
-    <div class="flow-item">
-      <div class="flow-arrow" style="color:var(--green);">&uarr;&uarr;</div>
-      <div class="flow-body">
-        <div class="flow-title-row">
-          <div class="flow-asset">Gold (GLD, physical, miners)</div>
-          <div class="flow-chips">
-            <span class="flow-chip chip-money-real">Real Money</span>
-            <span class="flow-chip chip-money-fast">Fast Money</span>
-            <span class="flow-chip chip-conf-high">HIGH CONF</span>
-            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-on">L</span></div>
-            <span class="chip-driver">Private Credit</span><span class="chip-driver">Monetary</span><span class="chip-driver">Fiscal</span>
-          </div>
-        </div>
-        <div class="flow-rationale">Central banks continue structural bid. Both institutional ETF creations and retail fast-money flows are in agreement. Every active driver except Reacceleration points higher.</div>
-      </div>
-    </div>
+<table class="forecast-table">
+<thead><tr>
+  <th style="width:170px;">Asset</th>
+  <th style="width:40px;text-align:center;">Flow</th>
+  <th style="width:90px;">Money Type</th>
+  <th style="width:70px;">Conf</th>
+  <th style="width:70px;text-align:center;">Short<br><span style="font-weight:400;font-size:10px;">0&ndash;4w</span></th>
+  <th style="width:70px;text-align:center;">Med<br><span style="font-weight:400;font-size:10px;">1&ndash;6m</span></th>
+  <th style="width:70px;text-align:center;">Long<br><span style="font-weight:400;font-size:10px;">6&ndash;18m</span></th>
+  <th style="width:180px;">Key Drivers</th>
+  <th>Rationale</th>
+</tr></thead>
+<tbody>
 
-    <div class="flow-item">
-      <div class="flow-arrow" style="color:var(--green);">&uarr;&uarr;</div>
-      <div class="flow-body">
-        <div class="flow-title-row">
-          <div class="flow-asset">Long UST (TLT)</div>
-          <div class="flow-chips">
-            <span class="flow-chip chip-money-real">Real Money</span>
-            <span class="flow-chip chip-conf-high">HIGH CONF</span>
-            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-off">L</span></div>
-            <span class="chip-driver">Monetary</span><span class="chip-driver">US Econ</span>
-          </div>
-        </div>
-        <div class="flow-rationale">Pension funds rotating out of risk assets. Fed path + GDP shock = duration bid regardless of fiscal tail risk. Long-horizon flow turns neutral as debt dynamics re-assert.</div>
-      </div>
-    </div>
+<tr class="forecast-group-header"><td colspan="9" style="color:var(--green);">&#9650; Part A &mdash; Inflows</td></tr>
 
-    <div class="flow-item">
-      <div class="flow-arrow" style="color:var(--green);">&uarr;</div>
-      <div class="flow-body">
-        <div class="flow-title-row">
-          <div class="flow-asset">TIPS (inflation-linked)</div>
-          <div class="flow-chips">
-            <span class="flow-chip chip-money-real">Real Money</span>
-            <span class="flow-chip chip-conf-high">HIGH CONF</span>
-            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-off">L</span></div>
-            <span class="chip-driver">US Econ</span><span class="chip-driver">Tariff</span>
-          </div>
-        </div>
-        <div class="flow-rationale">Stagflation hedge with best real-yield profile. Break-evens still cheap vs forward CPI path.</div>
-      </div>
-    </div>
+<tr>
+  <td style="font-weight:600;">Gold (GLD, physical, miners)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#22c55e;">&uarr;&uarr;</td>
+  <td><span class="flow-chip chip-money-real">Real</span> <span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Priv Credit&times;5</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Monetary&times;4</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Fiscal&times;4</span></td>
+  <td style="font-size:11px;color:var(--text2);">Central banks continue structural bid. Institutional ETF creations and retail fast-money flows agree. Every active driver except Reacceleration points higher.</td>
+</tr>
 
-    <div class="flow-item">
-      <div class="flow-arrow" style="color:var(--green);">&uarr;</div>
-      <div class="flow-body">
-        <div class="flow-title-row">
-          <div class="flow-asset">Silver (SLV + physical)</div>
-          <div class="flow-chips">
-            <span class="flow-chip chip-money-fast">Fast Money</span>
-            <span class="flow-chip chip-conf-med">MED CONF</span>
-            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-on">L</span></div>
-            <span class="chip-driver">Energy Transition</span><span class="chip-driver">Monetary</span>
-          </div>
-        </div>
-        <div class="flow-rationale">Fast-money driven rally on supply deficit + dovish Fed. Real money still under-allocated &mdash; catch-up flow likely if $100 breaches.</div>
-      </div>
-    </div>
+<tr>
+  <td style="font-weight:600;">Long UST (TLT)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#22c55e;">&uarr;&uarr;</td>
+  <td><span class="flow-chip chip-money-real">Real</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-null">&mdash;</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Monetary&times;4</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">US Econ&times;4</span></td>
+  <td style="font-size:11px;color:var(--text2);">Pension funds rotating out of risk assets. Fed path + GDP shock = duration bid. Long-horizon flow turns neutral as debt dynamics re-assert.</td>
+</tr>
+
+<tr>
+  <td style="font-weight:600;">TIPS (inflation-linked)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#86efac;">&uarr;</td>
+  <td><span class="flow-chip chip-money-real">Real</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-null">&mdash;</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">US Econ&times;4</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Tariff&times;4</span></td>
+  <td style="font-size:11px;color:var(--text2);">Stagflation hedge with best real-yield profile. Break-evens still cheap vs forward CPI path.</td>
+</tr>
+
+<tr>
+  <td style="font-weight:600;">Silver (SLV + physical)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#86efac;">&uarr;</td>
+  <td><span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-med">Medium</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="text-align:center;"><span class="flow-in">IN</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#78350f;color:#fcd34d;">Energy Trans&times;3</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Monetary&times;4</span></td>
+  <td style="font-size:11px;color:var(--text2);">Fast-money rally on supply deficit + dovish Fed. Real money still under-allocated &mdash; catch-up flow likely if $100 breaches.</td>
+</tr>
+
+<tr class="forecast-group-header"><td colspan="9" style="color:var(--red);">&#9660; Part B &mdash; Outflows</td></tr>
+
+<tr>
+  <td style="font-weight:600;">High Yield Credit (HYG)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#ef4444;">&darr;&darr;</td>
+  <td><span class="flow-chip chip-money-real">Real</span> <span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Priv Credit&times;5</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">US Econ&times;4</span></td>
+  <td style="font-size:11px;color:var(--text2);">Both institutional and fast money selling. Private credit stress spilling into public HY market. No horizon is safe.</td>
+</tr>
+
+<tr>
+  <td style="font-weight:600;">US Large Cap Equities (SPY)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#ef4444;">&darr;&darr;</td>
+  <td><span class="flow-chip chip-money-fast">Fast</span></td>
+  <td><span class="flow-chip chip-conf-med">Medium</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-null">&mdash;</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">US Econ&times;4</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Priv Credit&times;5</span></td>
+  <td style="font-size:11px;color:var(--text2);">Hedge funds reducing gross exposure. Real money still defensive but not yet selling structurally. Watch for pension reallocation if SPY breaks 10-week lows.</td>
+</tr>
+
+<tr>
+  <td style="font-weight:600;">US Dollar (UUP)</td>
+  <td style="text-align:center;font-size:18px;font-weight:900;color:#f97316;">&darr;</td>
+  <td><span class="flow-chip chip-money-real">Real</span></td>
+  <td><span class="flow-chip chip-conf-high">High</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="text-align:center;"><span class="flow-out">OUT</span></td>
+  <td style="font-size:10px;line-height:1.8;"><span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Monetary&times;4</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">Fiscal&times;4</span> <span class="flow-chip" style="background:#7c2d12;color:#fdba74;">US Econ&times;4</span></td>
+  <td style="font-size:11px;color:var(--text2);">Structural CB rotation out of USD + dovish Fed + fiscal math. Fast money briefly bid USD during Iran risk-off but now unwinding.</td>
+</tr>
+
+</tbody>
+</table>
+
+<!-- Part C: Divergences -->
+<div style="font-size:14px;font-weight:700;color:var(--yellow);margin:18px 0 6px;">&#9889; Part C &mdash; Divergences (Highest Signal Quality)</div>
+<div class="divergence-box">
+  <div style="font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:8px;">&#9889; Oil (USO): Fast Money bullish vs Real Money neutral-bear</div>
+  <div style="font-size:12px;color:var(--text2);">
+    <strong style="color:var(--text);">Fast Money (bullish):</strong> Commodity-rotation trade on tariff inflation + Hormuz tail risk.<br>
+    <strong style="color:var(--text);">Real Money (neutral-bear):</strong> Demand forecasts being marked down on the Q4 GDP print and industrial slowdown.<br>
+    <strong style="color:var(--green);">Resolution:</strong> Likely lower oil in 4&ndash;8 weeks as growth data compounds &mdash; unless Iran ceasefire breaks, which flips this immediately.
   </div>
-
-  <!-- Part B: Outflows -->
-  <h3 style="font-size:14px;color:var(--red);margin:24px 0 8px;">Part B &mdash; Outflows</h3>
-  <div>
-    <div class="flow-item">
-      <div class="flow-arrow" style="color:var(--red);">&darr;&darr;</div>
-      <div class="flow-body">
-        <div class="flow-title-row">
-          <div class="flow-asset">High Yield Credit (HYG)</div>
-          <div class="flow-chips">
-            <span class="flow-chip chip-money-real">Real Money</span>
-            <span class="flow-chip chip-money-fast">Fast Money</span>
-            <span class="flow-chip chip-conf-high">HIGH CONF</span>
-            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-on">L</span></div>
-            <span class="chip-driver">Private Credit</span><span class="chip-driver">US Econ</span>
-          </div>
-        </div>
-        <div class="flow-rationale">Both institutional and fast money selling. Private credit stress spilling into public HY market. No time horizon is safe.</div>
-      </div>
-    </div>
-
-    <div class="flow-item">
-      <div class="flow-arrow" style="color:var(--red);">&darr;&darr;</div>
-      <div class="flow-body">
-        <div class="flow-title-row">
-          <div class="flow-asset">US Large Cap Equities (SPY)</div>
-          <div class="flow-chips">
-            <span class="flow-chip chip-money-fast">Fast Money</span>
-            <span class="flow-chip chip-conf-med">MED CONF</span>
-            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-off">L</span></div>
-            <span class="chip-driver">US Econ</span><span class="chip-driver">Private Credit</span>
-          </div>
-        </div>
-        <div class="flow-rationale">Hedge funds reducing gross exposure. Real money still defensive but not yet selling structurally. Watch for pension reallocation if SPY breaks 10-week lows.</div>
-      </div>
-    </div>
-
-    <div class="flow-item">
-      <div class="flow-arrow" style="color:var(--red);">&darr;</div>
-      <div class="flow-body">
-        <div class="flow-title-row">
-          <div class="flow-asset">US Dollar (UUP)</div>
-          <div class="flow-chips">
-            <span class="flow-chip chip-money-real">Real Money</span>
-            <span class="flow-chip chip-conf-high">HIGH CONF</span>
-            <div class="hz-wrap"><span class="hz-chip hz-on">S</span><span class="hz-chip hz-on">M</span><span class="hz-chip hz-on">L</span></div>
-            <span class="chip-driver">Monetary</span><span class="chip-driver">Fiscal</span><span class="chip-driver">US Econ</span>
-          </div>
-        </div>
-        <div class="flow-rationale">Structural CB rotation out of USD, dovish Fed, fiscal math &mdash; real-money view is unchanged. Fast money briefly bid USD during Iran risk-off but now unwinding.</div>
-      </div>
-    </div>
+</div>
+<div class="divergence-box" style="margin-top:10px;">
+  <div style="font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:8px;">&#9889; EM Equities (EEM): Real Money accumulating vs Fast Money dumping</div>
+  <div style="font-size:12px;color:var(--text2);">
+    <strong style="color:var(--text);">Real Money (accumulating):</strong> Sovereign wealth + EM-dedicated funds quietly rebuilding on valuation + USD weakness.<br>
+    <strong style="color:var(--text);">Fast Money (dumping):</strong> Hedge funds remain short on tariff drag and China slowdown.<br>
+    <strong style="color:var(--green);">Resolution:</strong> Real money tends to win at 6&ndash;12 months &mdash; watch for a Q3 mean-reversion rally.
   </div>
+</div>
 
-  <!-- Part C: Divergences -->
-  <h3 style="font-size:14px;color:var(--yellow);margin:24px 0 8px;">Part C &mdash; Divergences</h3>
-  <div class="divergence-box">
-    <div style="font-weight:700;color:var(--yellow);margin-bottom:4px;">Oil (USO): Fast Money bullish / Real Money neutral-bear</div>
-    <div style="font-size:12px;color:var(--text2);">USO is being bid on tariff-fear commodity rotation (fast money) while real-money demand forecasts are marking down on the Q4 GDP print. Resolution: likely lower oil in 4&ndash;8 weeks as growth data compounds, unless Iran ceasefire breaks.</div>
+<!-- Part D: Feedback Loops -->
+<div style="font-size:14px;font-weight:700;color:var(--blue);margin:18px 0 6px;">&#128260; Part D &mdash; Active Feedback Loop Watch</div>
+<div class="loop-grid">
+  <div class="loop-card" style="border-top:2px solid var(--red);">
+    <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px;">MOST ACTIVE: Private Credit &rarr; Growth Drag &rarr; Default &rarr; Credit</div>
+    <div style="font-size:11px;color:var(--text2);">Gated funds reduce credit to SMEs &rarr; SME defaults rise &rarr; unemployment ticks up &rarr; consumer weakness &rarr; more defaults. <strong style="color:var(--red);">Self-reinforcing</strong> until Fed intervention or orderly deleveraging.</div>
   </div>
-  <div class="divergence-box">
-    <div style="font-weight:700;color:var(--yellow);margin-bottom:4px;">EM Equities (EEM): Real Money accumulating / Fast Money dumping</div>
-    <div style="font-size:12px;color:var(--text2);">Sovereign wealth and EM-dedicated funds quietly rebuilding EM exposure on valuation + USD weakness, while hedge funds remain short on tariff drag. Resolution: real money tends to win at 6&ndash;12 months &mdash; watch for a Q3 mean-reversion rally.</div>
+  <div class="loop-card" style="border-top:2px solid var(--green);">
+    <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">ACTIVE: Dovish Fed &rarr; USD Weakness &rarr; Gold / EM Bid</div>
+    <div style="font-size:11px;color:var(--text2);">Cuts weaken USD &rarr; gold and EM rally &rarr; further USD outflows &rarr; more gold bid. Persists until real yields bottom or Fed pauses.</div>
   </div>
+  <div class="loop-card" style="border-top:2px solid var(--orange);">
+    <div style="font-size:11px;font-weight:700;color:var(--orange);margin-bottom:6px;">ACTIVE: Tariff Shock &rarr; Sticky Inflation &rarr; Stagflation Lock-In</div>
+    <div style="font-size:11px;color:var(--text2);">Tariffs raise input costs &rarr; CPI sticky &rarr; real wages fall &rarr; demand weakens &rarr; growth slows with inflation sticky. Breakable only by trade truce or deep recession.</div>
+  </div>
+  <div class="loop-card" style="border-top:2px solid var(--blue);">
+    <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:6px;">DEVELOPING: Silver Tightness &rarr; Physical Draw &rarr; Fast-money Piling In</div>
+    <div style="font-size:11px;color:var(--text2);">6-year supply deficit &rarr; COMEX inventory draws &rarr; momentum players pile in &rarr; physical tightens further. Accelerates into year-end unless industrial demand rolls over.</div>
+  </div>
+</div>
 
-  <!-- Part D: Feedback Loops -->
-  <h3 style="font-size:14px;color:var(--blue);margin:24px 0 8px;">Part D &mdash; Feedback Loops</h3>
-  <div class="loop-grid">
-    <div class="loop-card">
-      <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:var(--red);">Private Credit Stress &rarr; Growth Drag</div>
-      <div style="font-size:11px;color:var(--text2);">Gated funds reduce credit to SMEs &rarr; SME defaults rise &rarr; unemployment ticks up &rarr; consumer weakness &rarr; more defaults. Self-reinforcing until Fed intervention or orderly deleveraging.</div>
-    </div>
-    <div class="loop-card">
-      <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:var(--green);">Dovish Fed &rarr; USD Weakness &rarr; Gold / EM Bid</div>
-      <div style="font-size:11px;color:var(--text2);">Cuts weaken USD &rarr; gold and EM rally &rarr; further USD outflows &rarr; more gold bid. Persists until real yields bottom or Fed pauses.</div>
-    </div>
-    <div class="loop-card">
-      <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:var(--orange);">Tariff Shock &rarr; Sticky Inflation &rarr; Stagflation Lock-In</div>
-      <div style="font-size:11px;color:var(--text2);">Tariffs raise input costs &rarr; CPI sticky &rarr; real wages fall &rarr; demand weakens &rarr; growth slows with inflation sticky. Breakable only by trade truce or deep recession.</div>
-    </div>
-    <div class="loop-card">
-      <div style="font-weight:700;font-size:12px;margin-bottom:4px;color:var(--blue);">Silver Tightness &rarr; Physical Draw &rarr; Fast-money Piling In</div>
-      <div style="font-size:11px;color:var(--text2);">6-year supply deficit &rarr; COMEX inventory draws &rarr; momentum players pile in &rarr; physical tightens further. Accelerates into year-end unless industrial demand rolls over.</div>
-    </div>
-  </div>
 </div>
 
 <!-- ============== SECTION 7 ============== -->
