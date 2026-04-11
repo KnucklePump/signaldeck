@@ -617,10 +617,12 @@ function fmtTime(iso) {
 }
 
 function fmtDuration(mins) {
-  if (mins == null) return '';
-  if (mins < 60) return mins.toFixed(0) + 'm';
-  if (mins < 1440) return (mins/60).toFixed(1) + 'h';
-  return (mins/1440).toFixed(1) + 'd';
+  if (mins == null || mins === '') return '';
+  const m = typeof mins === 'number' ? mins : parseFloat(mins);
+  if (isNaN(m)) return '';
+  if (m < 60) return m.toFixed(0) + 'm';
+  if (m < 1440) return (m/60).toFixed(1) + 'h';
+  return (m/1440).toFixed(1) + 'd';
 }
 
 function exitChip(reason) {
