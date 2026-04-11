@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignalDeck — Trade Log</title>
+<meta name="description" content="DayTrader AI trade log across Dev/Test, Paper Trading, and Live environments.">
+<style>
+:root {
+  --bg: #0a0c10; --surface: #12151c; --surface2: #1a1e28;
+  --border: #252a3a; --text: #e1e4ed; --text2: #7a8099;
+  --green: #22c55e; --green-bg: rgba(34,197,94,0.10);
+  --red: #ef4444; --red-bg: rgba(239,68,68,0.10);
+  --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.10);
+  --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.10);
+  --orange: #f97316; --orange-bg: rgba(249,115,22,0.10);
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; line-height:1.6; }
+
+.site-header { background:var(--surface); border-bottom:1px solid var(--border); padding:16px 0; }
+.container { max-width:1400px; margin:0 auto; padding:0 24px; }
+.header-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+.site-title { font-size:22px; font-weight:700; letter-spacing:-0.5px; }
+.site-title span { color:var(--blue); }
+.site-subtitle { color:var(--text2); font-size:13px; }
+.header-meta { text-align:right; font-size:13px; color:var(--text2); }
+
+/* Stats bar */
+.stats-bar { display:flex; gap:16px; margin:20px 0; flex-wrap:wrap; }
+.stat-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 20px; flex:1; min-width:120px; }
+.stat-value { font-size:26px; font-weight:700; }
+.stat-label { font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
+
+/* Environment tabs */
+.env-tabs { display:flex; gap:0; margin:24px 0 0; border-bottom:2px solid var(--border); }
+.env-tab { padding:10px 24px; font-size:14px; font-weight:600; color:var(--text2); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:color 0.15s, border-color 0.15s; user-select:none; }
+.env-tab:hover { color:var(--text); }
+.env-tab.active { color:var(--blue); border-bottom-color:var(--blue); }
+.env-tab .tab-badge { display:inline-block; margin-left:8px; padding:1px 8px; border-radius:10px; font-size:11px; font-weight:700; }
+.badge-dev { background:var(--blue-bg); color:var(--blue); }
+.badge-paper { background:var(--yellow-bg); color:var(--yellow); }
+.badge-live { background:var(--green-bg); color:var(--green); }
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* Config strip */
+.config-strip { display:flex; gap:14px; flex-wrap:wrap; padding:12px 16px; background:var(--surface); border:1px solid var(--border); border-radius:10px; font-size:12px; color:var(--text2); margin:16px 0; }
+.cfg { display:flex; align-items:center; gap:4px; }
+.cfg-label { font-weight:600; color:var(--text2); }
+.cfg-val { color:var(--text); font-weight:700; }
+
+/* Trade table */
+.wl-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
+table.trades { width:100%; border-collapse:collapse; font-size:13px; min-width:1100px; }
+table.trades thead { background:var(--surface2); }
+table.trades th { padding:10px 10px; text-align:left; font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; font-weight:600; white-space:nowrap; border-bottom:1px solid var(--border); }
+table.trades th.c, table.trades td.c { text-align:center; }
+table.trades th.r, table.trades td.r { text-align:right; }
+table.trades td { padding:8px 10px; vertical-align:middle; border-bottom:1px solid rgba(37,42,58,0.5); }
+table.trades tbody tr:hover td { background:var(--surface2); }
+
+.ticker-cell { font-weight:800; font-size:14px; }
+.dir-long { color:var(--green); font-weight:700; font-size:12px; text-transform:uppercase; }
+.dir-short { color:var(--red); font-weight:700; font-size:12px; text-transform:uppercase; }
+.pnl-pos { color:var(--green); font-weight:700; }
+.pnl-neg { color:var(--red); font-weight:700; }
+.r-pos { color:var(--green); }
+.r-neg { color:var(--red); }
+
+.exit-chip { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
+.exit-target { background:var(--green-bg); color:var(--green); }
+.exit-stop { background:var(--red-bg); color:var(--red); }
+.exit-time { background:var(--yellow-bg); color:var(--yellow); }
+.exit-trailing { background:var(--blue-bg); color:var(--blue); }
+
+.pattern-name { font-size:12px; color:var(--text2); max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* Empty state */
+.empty-state { text-align:center; padding:80px 20px; color:var(--text2); }
+.empty-state h3 { font-size:18px; color:var(--text); margin-bottom:8px; }
+.empty-state p { font-size:14px; }
+
+/* Filter bar */
+.filter-bar { display:flex; gap:10px; margin:16px 0; align-items:center; flex-wrap:wrap; }
+.filter-bar select, .filter-bar input { background:var(--surface); border:1px solid var(--border); color:var(--text); padding:6px 12px; border-radius:8px; font-size:13px; font-family:inherit; }
+.filter-bar select:focus, .filter-bar input:focus { outline:none; border-color:var(--blue); }
+.filter-label { font-size:12px; color:var(--text2); font-weight:600; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-row">
+      <div>
+        <div class="site-title"><span>Signal</span>Deck</div>
+        <div class="site-subtitle">DayTrader AI &middot; Trade Log</div>
+      </div>
+      <div class="header-meta">
+        <div>Last updated: <strong id="last-updated">Loading...</strong></div>
+      </div>
+    </div>
+    <nav style="display:flex; gap:18px; margin-top:10px;">
+      <a href="../index.html" style="color:var(--text2); text-decoration:none; font-size:13px; font-weight:600; padding:4px 0; border-bottom:2px solid transparent;">Watchlist</a>
+      <a href="../economics/index.html" style="color:var(--text2); text-decoration:none; font-size:13px; font-weight:600; padding:4px 0; border-bottom:2px solid transparent;">Economic Summary</a>
+      <a href="index.html" style="color:var(--blue); text-decoration:none; font-size:13px; font-weight:600; padding:4px 0; border-bottom:2px solid var(--blue);">Trades</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Environment Tabs -->
+  <div class="env-tabs">
+    <div class="env-tab active" data-env="dev">Dev / Test <span class="tab-badge badge-dev">Backtest</span></div>
+    <div class="env-tab" data-env="paper">Paper Trading <span class="tab-badge badge-paper">Pending</span></div>
+    <div class="env-tab" data-env="live">Live <span class="tab-badge badge-live">Pending</span></div>
+  </div>
+
+  <!-- DEV/TEST TAB -->
+  <div class="tab-content active" id="tab-dev">
+    <div class="stats-bar" id="dev-stats"></div>
+    <div class="config-strip" id="dev-config"></div>
+    <div class="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <select id="dev-filter-ticker"><option value="">All Tickers</option></select>
+      <select id="dev-filter-direction"><option value="">All Directions</option><option value="long">Long</option><option value="short">Short</option></select>
+      <select id="dev-filter-exit"><option value="">All Exits</option><option value="target_hit">Target Hit</option><option value="stop_hit">Stop Hit</option><option value="time_exit">Time Exit</option><option value="trailing_stop">Trailing Stop</option></select>
+      <select id="dev-filter-pnl"><option value="">All P&L</option><option value="win">Winners</option><option value="loss">Losers</option></select>
+    </div>
+    <div class="wl-wrap">
+      <table class="trades" id="dev-trades-table">
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th class="c">Dir</th>
+            <th>Pattern</th>
+            <th class="r">Entry</th>
+            <th class="r">Stop</th>
+            <th class="r">Target</th>
+            <th class="r">Exit</th>
+            <th class="c">Exit Reason</th>
+            <th class="r">Shares</th>
+            <th class="r">Gross</th>
+            <th class="r">Costs</th>
+            <th class="r">Net P&L</th>
+            <th class="r">R</th>
+            <th class="r">R:R</th>
+            <th class="r">Conf</th>
+            <th class="r">Confl</th>
+          </tr>
+        </thead>
+        <tbody id="dev-trades-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PAPER TRADING TAB -->
+  <div class="tab-content" id="tab-paper">
+    <div class="empty-state">
+      <h3>Paper Trading Not Yet Active</h3>
+      <p>Paper trading will begin once Dev/Test validation is complete and promoted to the test environment.<br>
+      Trades will appear here automatically when the system connects to Interactive Brokers paper trading.</p>
+    </div>
+  </div>
+
+  <!-- LIVE TAB -->
+  <div class="tab-content" id="tab-live">
+    <div class="empty-state">
+      <h3>Live Trading Not Yet Active</h3>
+      <p>Live trading requires successful paper trading validation and explicit approval.<br>
+      See PROJECT-STANDARDS.md for the promotion policy.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- Embedded data for local file:// viewing (fetch doesn't work with file://) -->
+<script src="data/dev-trades.js"></script>
+
+<script>
+// ── Tab switching ──
+document.querySelectorAll('.env-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.env-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.env).classList.add('active');
+  });
+});
+
+// ── Load trade data ──
+// Works both on GitHub Pages (fetch) and local file:// (embedded JS fallback)
+async function loadTradeData(url, env) {
+  // Try global variable first (set by data/dev-trades.js for local viewing)
+  if (env === 'dev' && window.DEV_TRADES_DATA) return window.DEV_TRADES_DATA;
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    return await resp.json();
+  } catch (e) { return null; }
+}
+
+function exitChip(reason) {
+  const map = {
+    'target_hit': ['Target', 'exit-target'],
+    'stop_hit': ['Stop', 'exit-stop'],
+    'time_exit': ['Time', 'exit-time'],
+    'trailing_stop': ['Trail', 'exit-trailing'],
+    'close_all': ['Close All', 'exit-stop'],
+    'discretionary': ['Manual', 'exit-time'],
+  };
+  const [label, cls] = map[reason] || [reason, 'exit-time'];
+  return `<span class="exit-chip ${cls}">${label}</span>`;
+}
+
+function renderStats(containerId, data) {
+  const s = data.summary;
+  const el = document.getElementById(containerId);
+  el.innerHTML = `
+    <div class="stat-item"><div class="stat-value">${s.total_trades}</div><div class="stat-label">Total Trades</div></div>
+    <div class="stat-item"><div class="stat-value" style="color:var(--green)">${s.wins}</div><div class="stat-label">Winners</div></div>
+    <div class="stat-item"><div class="stat-value" style="color:var(--red)">${s.losses}</div><div class="stat-label">Losers</div></div>
+    <div class="stat-item"><div class="stat-value">${(s.win_rate * 100).toFixed(1)}%</div><div class="stat-label">Win Rate</div></div>
+    <div class="stat-item"><div class="stat-value ${s.net_pnl >= 0 ? 'pnl-pos' : 'pnl-neg'}">$${s.net_pnl >= 0 ? '+' : ''}${s.net_pnl.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}</div><div class="stat-label">Net P&L</div></div>
+    <div class="stat-item"><div class="stat-value">${s.return_pct >= 0 ? '+' : ''}${s.return_pct.toFixed(2)}%</div><div class="stat-label">Return</div></div>
+    <div class="stat-item"><div class="stat-value">${s.max_drawdown_pct.toFixed(2)}%</div><div class="stat-label">Max Drawdown</div></div>
+    <div class="stat-item"><div class="stat-value">${s.avg_r >= 0 ? '+' : ''}${s.avg_r.toFixed(2)}R</div><div class="stat-label">Avg R</div></div>
+    <div class="stat-item"><div class="stat-value">$${s.total_costs.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}</div><div class="stat-label">Total Costs</div></div>
+  `;
+}
+
+function renderConfig(containerId, data) {
+  const c = data.config;
+  const el = document.getElementById(containerId);
+  el.innerHTML = `
+    <div class="cfg"><span class="cfg-label">Risk/Trade:</span><span class="cfg-val">${c.risk_per_trade_pct}%</span></div>
+    <div class="cfg"><span class="cfg-label">Max Position:</span><span class="cfg-val">${(c.max_position_pct_equity * 100).toFixed(0)}% equity</span></div>
+    <div class="cfg"><span class="cfg-label">Min Confidence:</span><span class="cfg-val">${c.min_confidence}</span></div>
+    <div class="cfg"><span class="cfg-label">Min Confluence:</span><span class="cfg-val">${c.min_confluence}</span></div>
+    <div class="cfg"><span class="cfg-label">Max Positions:</span><span class="cfg-val">${c.max_concurrent_positions}</span></div>
+    <div class="cfg"><span class="cfg-label">Daily Loss Limit:</span><span class="cfg-val">${c.daily_loss_limit_pct}%</span></div>
+    <div class="cfg"><span class="cfg-label">Commission:</span><span class="cfg-val">$${c.commission_per_share}/sh</span></div>
+    <div class="cfg"><span class="cfg-label">Trail Stop:</span><span class="cfg-val">${c.trailing_stop_trigger_r}R</span></div>
+    <div class="cfg"><span class="cfg-label">Period:</span><span class="cfg-val">${data.backtest_period || 'N/A'}</span></div>
+  `;
+}
+
+function renderTrades(bodyId, trades) {
+  const el = document.getElementById(bodyId);
+  if (!trades || trades.length === 0) {
+    el.innerHTML = '<tr><td colspan="16" style="text-align:center; padding:40px; color:var(--text2);">No trades match filters</td></tr>';
+    return;
+  }
+  el.innerHTML = trades.map(t => {
+    const dirCls = t.direction === 'long' ? 'dir-long' : 'dir-short';
+    const pnlCls = t.net_pnl >= 0 ? 'pnl-pos' : 'pnl-neg';
+    const rCls = t.r_multiple >= 0 ? 'r-pos' : 'r-neg';
+    return `<tr>
+      <td class="ticker-cell">${t.ticker}</td>
+      <td class="c"><span class="${dirCls}">${t.direction}</span></td>
+      <td class="pattern-name" title="${t.pattern_name}">${t.pattern_name}</td>
+      <td class="r">$${t.entry_price.toFixed(2)}</td>
+      <td class="r">$${t.stop_price.toFixed(2)}</td>
+      <td class="r">$${t.target_price.toFixed(2)}</td>
+      <td class="r">$${t.exit_price.toFixed(2)}</td>
+      <td class="c">${exitChip(t.exit_reason)}</td>
+      <td class="r">${t.size_shares}</td>
+      <td class="r ${pnlCls}">$${t.gross_pnl >= 0 ? '+' : ''}${t.gross_pnl.toFixed(2)}</td>
+      <td class="r" style="color:var(--text2)">$${t.trade_costs.toFixed(2)}</td>
+      <td class="r ${pnlCls}">$${t.net_pnl >= 0 ? '+' : ''}${t.net_pnl.toFixed(2)}</td>
+      <td class="r ${rCls}">${t.r_multiple >= 0 ? '+' : ''}${t.r_multiple.toFixed(2)}</td>
+      <td class="r">${t.rr_ratio.toFixed(1)}</td>
+      <td class="r">${(t.confidence * 100).toFixed(0)}%</td>
+      <td class="r">${(t.confluence * 100).toFixed(0)}%</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Dev/Test data loading ──
+let devData = null;
+
+async function initDev() {
+  devData = await loadTradeData('data/dev-trades.json', 'dev');
+  if (!devData) return;
+
+  document.getElementById('last-updated').textContent = new Date(devData.generated_at).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+
+  renderStats('dev-stats', devData);
+  renderConfig('dev-config', devData);
+  renderTrades('dev-trades-body', devData.trades);
+
+  // Populate ticker filter
+  const tickers = [...new Set(devData.trades.map(t => t.ticker))].sort();
+  const sel = document.getElementById('dev-filter-ticker');
+  tickers.forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; sel.appendChild(o); });
+
+  // Wire up filters
+  ['dev-filter-ticker', 'dev-filter-direction', 'dev-filter-exit', 'dev-filter-pnl'].forEach(id => {
+    document.getElementById(id).addEventListener('change', applyDevFilters);
+  });
+}
+
+function applyDevFilters() {
+  if (!devData) return;
+  const ticker = document.getElementById('dev-filter-ticker').value;
+  const direction = document.getElementById('dev-filter-direction').value;
+  const exit = document.getElementById('dev-filter-exit').value;
+  const pnl = document.getElementById('dev-filter-pnl').value;
+
+  let filtered = devData.trades;
+  if (ticker) filtered = filtered.filter(t => t.ticker === ticker);
+  if (direction) filtered = filtered.filter(t => t.direction === direction);
+  if (exit) filtered = filtered.filter(t => t.exit_reason === exit);
+  if (pnl === 'win') filtered = filtered.filter(t => t.net_pnl > 0);
+  if (pnl === 'loss') filtered = filtered.filter(t => t.net_pnl <= 0);
+
+  renderTrades('dev-trades-body', filtered);
+}
+
+initDev();
+</script>
+</body>
+</html>
