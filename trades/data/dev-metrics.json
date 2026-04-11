@@ -1,53 +1,54 @@
 {
   "environment": "dev",
-  "generated_at": "2026-04-11T16:05:08.746444+00:00",
-  "elapsed_seconds": 135.6,
+  "generated_at": "2026-04-11T18:58:03.519264+00:00",
+  "elapsed_seconds": 495.9,
   "latencies": {
     "evb_enrich": {
       "operation": "evb_enrich",
-      "count": 6,
-      "avg_ms": 450.38,
-      "min_ms": 325.27,
-      "max_ms": 561.13,
+      "count": 20,
+      "avg_ms": 554.73,
+      "min_ms": 338.06,
+      "max_ms": 807.94,
       "slo_target_ms": 0.0,
       "slo_breaches": 0,
       "slo_compliance_pct": 100.0
     },
     "evb_structure": {
       "operation": "evb_structure",
-      "count": 6,
-      "avg_ms": 8482.23,
-      "min_ms": 6883.26,
-      "max_ms": 9707.48,
+      "count": 20,
+      "avg_ms": 10221.2,
+      "min_ms": 7102.42,
+      "max_ms": 14498.66,
       "slo_target_ms": 5000.0,
-      "slo_breaches": 6,
+      "slo_breaches": 20,
       "slo_compliance_pct": 0.0
     },
     "prd_predict": {
       "operation": "prd_predict",
-      "count": 6,
-      "avg_ms": 7709.32,
-      "min_ms": 5601.04,
-      "max_ms": 9690.22,
+      "count": 20,
+      "avg_ms": 8906.01,
+      "min_ms": 5560.17,
+      "max_ms": 10004.85,
       "slo_target_ms": 2000.0,
-      "slo_breaches": 6,
+      "slo_breaches": 20,
       "slo_compliance_pct": 0.0
     },
     "rsk_evaluate": {
       "operation": "rsk_evaluate",
-      "count": 1301,
-      "avg_ms": 0.12,
+      "count": 6119,
+      "avg_ms": 0.1,
       "min_ms": 0.06,
-      "max_ms": 0.4,
+      "max_ms": 1.19,
       "slo_target_ms": 500.0,
       "slo_breaches": 0,
       "slo_compliance_pct": 100.0
     }
   },
   "counters": {
-    "lrn_shadow": 306,
-    "rsk_vetoes": 1068,
-    "rsk_approvals": 233
+    "rsk_vetoes": 4495,
+    "rsk_approvals": 1624,
+    "lrn_shadow": 416,
+    "rgm_shadow": 9
   },
   "slo_summary": {
     "operations_with_slo": 3,
