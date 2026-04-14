@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SignalDeck — DayTrader Visualizer</title>
-<meta name="description" content="DayTrader AI visualizer: watchlist, patterns, trade performance, trade detail, and learning engine.">
+<meta name="description" content="DayTrader AI visualizer: client performance, watchlist, patterns, prospect details, learning engine, and pair parameters.">
 <style>
 /* ═══════════════════════════════════════════
    CSS VARIABLES & RESET
@@ -250,83 +250,26 @@ table.dt .matrix-row-label { font-weight:700; font-size:12px; white-space:nowrap
        VIEW TABS
        ═══════════════════════════════════════════ -->
   <div class="view-tabs">
-    <div class="view-tab active" data-view="watchlist">Watchlist</div>
+    <div class="view-tab active" data-view="performance">Client Performance</div>
+    <div class="view-tab" data-view="watchlist">Watchlist</div>
     <div class="view-tab" data-view="patterns">Patterns</div>
-    <div class="view-tab" data-view="performance">Trade Performance</div>
-    <div class="view-tab" data-view="detail">Trade Detail</div>
+    <div class="view-tab" data-view="detail">Prospect Details</div>
     <div class="view-tab" data-view="learning">Learning Engine</div>
-    <div class="view-tab" data-view="regime">Regime Router</div>
+    <div class="view-tab" data-view="pairs">Pair Parameters</div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════
-       VIEW 1: WATCHLIST DASHBOARD
+       VIEW 1: CLIENT PERFORMANCE
        ═══════════════════════════════════════════════════ -->
-  <div class="view-content active" id="view-watchlist">
-    <div class="summary-cards" id="wl-summary"></div>
-    <div class="tbl-wrap">
-      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('wl-table','Watchlist')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
-      <table class="dt" id="wl-table">
-        <thead><tr>
-          <th data-sort="ticker">Ticker <span class="sort-arrow">▼</span></th>
-          <th class="c" data-sort="status">Status <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="trades">Trades <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="wins">Wins <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="losses">Losses <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="winRate">Win Rate <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="grossPnl">Gross P&L <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="netPnl">Net P&L <span class="sort-arrow active">▼</span></th>
-          <th class="r" data-sort="avgR">Avg R <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="totalR">Total R <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="patternCount">Patterns <span class="sort-arrow">▼</span></th>
-          <th data-sort="bestPattern">Best Pattern <span class="sort-arrow">▼</span></th>
-          <th data-sort="worstPattern">Worst Pattern <span class="sort-arrow">▼</span></th>
-          <th class="c" data-sort="macroRegime">Macro <span class="sort-arrow">▼</span></th>
-          <th class="c" data-sort="sectorLabel">Sector <span class="sort-arrow">▼</span></th>
-          <th class="c" data-sort="stockLabel">Stock <span class="sort-arrow">▼</span></th>
-          <th class="c" data-sort="compositeLabel">Regime <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="positionScale">Scale <span class="sort-arrow">▼</span></th>
-        </tr></thead>
-        <tbody id="wl-body"></tbody>
-      </table>
+  <div class="view-content active" id="view-performance">
+    <div class="filter-bar" style="margin-bottom:16px;">
+      <label style="font-size:12px; color:var(--text2); font-weight:600; margin-right:8px;">Client:</label>
+      <select id="client-select" style="background:var(--surface); border:1px solid var(--border); color:var(--text); padding:6px 12px; border-radius:8px; font-size:13px; font-family:inherit;">
+        <option value="default">Default ($100k, 1% risk)</option>
+        <option value="client_2">Client 2 ($10k, 2% risk)</option>
+      </select>
     </div>
-  </div>
 
-  <!-- ═══════════════════════════════════════════════════
-       VIEW 2: PATTERN PERFORMANCE
-       ═══════════════════════════════════════════════════ -->
-  <div class="view-content" id="view-patterns">
-    <div class="summary-cards" id="pat-summary"></div>
-    <div class="chart-container" id="pat-chart-wrap">
-      <div class="chart-title">Pattern Net P&L</div>
-      <div id="pat-bar-chart"></div>
-    </div>
-    <div class="tbl-wrap">
-      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('pat-table','Patterns')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
-      <table class="dt" id="pat-table">
-        <thead><tr>
-          <th data-sort="pattern">Pattern <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="triggered">Triggered <span class="sort-arrow">▼</span></th>
-          <th data-sort="tickers">Tickers <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="wins">Wins <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="losses">Losses <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="winRate">Win Rate <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="grossPnl">Gross P&L <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="netPnl">Net P&L <span class="sort-arrow active">▼</span></th>
-          <th class="r" data-sort="avgR">Avg R <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="totalR">Total R <span class="sort-arrow">▼</span></th>
-          <th class="r" data-sort="avgHold">Avg Hold <span class="sort-arrow">▼</span></th>
-          <th data-sort="bestTicker">Best Ticker <span class="sort-arrow">▼</span></th>
-          <th data-sort="worstTicker">Worst Ticker <span class="sort-arrow">▼</span></th>
-        </tr></thead>
-        <tbody id="pat-body"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════
-       VIEW 3: TRADE PERFORMANCE
-       ═══════════════════════════════════════════════════ -->
-  <div class="view-content" id="view-performance">
     <div class="summary-cards" id="perf-summary"></div>
     <div class="config-strip" id="perf-config"></div>
 
@@ -367,55 +310,136 @@ table.dt .matrix-row-label { font-weight:700; font-size:12px; white-space:nowrap
       <div class="chart-title">Hold Duration Distribution</div>
       <div id="perf-hold-hist"></div>
     </div>
+
+    <!-- Client Trades Table -->
+    <div style="margin-top:32px;">
+      <h3 style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:12px;">Client Trades</h3>
+      <p style="font-size:11px;color:var(--text2);margin-bottom:16px;">All trades evaluated for this client — Live (executed) and Rejected (blocked by Risk Governor structural gates).</p>
+      <div class="tbl-wrap">
+        <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('client-trades-table','ClientTrades')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
+        <table class="dt" id="client-trades-table">
+          <thead><tr>
+            <th class="c">Status</th>
+            <th data-sort="ticker">Ticker <span class="sort-arrow">▼</span></th>
+            <th data-sort="pattern_name">Pattern <span class="sort-arrow">▼</span></th>
+            <th class="c" data-sort="direction">Direction <span class="sort-arrow">▼</span></th>
+            <th class="r" data-sort="entry_price">Entry Price <span class="sort-arrow">▼</span></th>
+            <th class="r" data-sort="exit_price">Exit Price <span class="sort-arrow">▼</span></th>
+            <th class="r" data-sort="stop_price">Stop Price <span class="sort-arrow">▼</span></th>
+            <th class="r" data-sort="target_price">Target Price <span class="sort-arrow">▼</span></th>
+            <th class="r" data-sort="r_multiple">R Multiple <span class="sort-arrow">▼</span></th>
+            <th class="r" data-sort="net_pnl">P&L $ <span class="sort-arrow">▼</span></th>
+            <th class="c" data-sort="exit_reason">Exit Reason <span class="sort-arrow">▼</span></th>
+            <th class="r" data-sort="scale_factor">Scale <span class="sort-arrow">▼</span></th>
+            <th data-sort="opened_at">Date <span class="sort-arrow">▼</span></th>
+          </tr></thead>
+          <tbody id="client-trades-body"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════
-       VIEW 4: TRADE DETAIL
+       VIEW 2: WATCHLIST DASHBOARD
+       ═══════════════════════════════════════════════════ -->
+  <div class="view-content" id="view-watchlist">
+    <div class="summary-cards" id="wl-summary"></div>
+    <div class="tbl-wrap">
+      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('wl-table','Watchlist')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
+      <table class="dt" id="wl-table">
+        <thead><tr>
+          <th data-sort="ticker">Ticker <span class="sort-arrow">▼</span></th>
+          <th class="c" data-sort="status">Status <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="trades">Trades <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="wins">Wins <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="losses">Losses <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="winRate">Win Rate <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="grossPnl">Gross P&L <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="netPnl">Net P&L <span class="sort-arrow active">▼</span></th>
+          <th class="r" data-sort="avgR">Avg R <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="totalR">Total R <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="patternCount">Patterns <span class="sort-arrow">▼</span></th>
+          <th data-sort="bestPattern">Best Pattern <span class="sort-arrow">▼</span></th>
+          <th data-sort="worstPattern">Worst Pattern <span class="sort-arrow">▼</span></th>
+          <th class="c" data-sort="sectorLabel">Sector <span class="sort-arrow">▼</span></th>
+          <th class="c" data-sort="stockLabel">Stock <span class="sort-arrow">▼</span></th>
+        </tr></thead>
+        <tbody id="wl-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       VIEW 3: PATTERN PERFORMANCE
+       ═══════════════════════════════════════════════════ -->
+  <div class="view-content" id="view-patterns">
+    <div class="summary-cards" id="pat-summary"></div>
+    <div class="chart-container" id="pat-chart-wrap">
+      <div class="chart-title">Pattern Net P&L</div>
+      <div id="pat-bar-chart"></div>
+    </div>
+    <div class="tbl-wrap">
+      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('pat-table','Patterns')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
+      <table class="dt" id="pat-table">
+        <thead><tr>
+          <th data-sort="pattern">Pattern <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="triggered">Triggered <span class="sort-arrow">▼</span></th>
+          <th data-sort="tickers">Tickers <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="wins">Wins <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="losses">Losses <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="winRate">Win Rate <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="grossPnl">Gross P&L <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="netPnl">Net P&L <span class="sort-arrow active">▼</span></th>
+          <th class="r" data-sort="avgR">Avg R <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="totalR">Total R <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="avgHold">Avg Hold <span class="sort-arrow">▼</span></th>
+          <th data-sort="bestTicker">Best Ticker <span class="sort-arrow">▼</span></th>
+          <th data-sort="worstTicker">Worst Ticker <span class="sort-arrow">▼</span></th>
+        </tr></thead>
+        <tbody id="pat-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       VIEW 4: PROSPECT DETAILS
        ═══════════════════════════════════════════════════ -->
   <div class="view-content" id="view-detail">
+    <div style="font-size:12px; color:var(--text2); margin:12px 0 12px;">Every Prospect evaluated by the Trade Optimizer — Shadow (failed signal-quality gates) and Proposed (passed gates, scaled by Edge Scaler). Universal across all clients.</div>
     <div class="filter-bar" style="flex-wrap:wrap; gap:6px;">
       <span class="filter-label">Filter:</span>
       <select id="td-filter-ticker"><option value="">All Tickers</option></select>
       <select id="td-filter-dir"><option value="">All Directions</option><option value="long">Long</option><option value="short">Short</option></select>
       <select id="td-filter-pattern"><option value="">All Patterns</option></select>
-      <select id="td-filter-exit"><option value="">All Exits</option><option value="target_hit">Target Hit</option><option value="stop_hit">Stop Hit</option><option value="time_exit">Time Exit</option><option value="trailing_stop">Trailing Stop</option></select>
+      <select id="td-filter-exit"><option value="">All Exits</option><option value="target_hit">Target Hit</option><option value="stop_hit">Stop Hit</option><option value="time_exit">Time Exit</option></select>
       <select id="td-filter-pnl"><option value="">All P&L</option><option value="win">Winners</option><option value="loss">Losers</option></select>
-      <select id="td-filter-regime"><option value="">All Regimes</option></select>
-      <select id="td-filter-vix"><option value="">All VIX</option></select>
-      <select id="td-filter-prd"><option value="">All PRD</option><option value="bullish">Bullish</option><option value="bearish">Bearish</option><option value="neutral">Neutral</option></select>
-      <select id="td-filter-learning"><option value="">All States</option><option value="learning">Learning</option><option value="active">Active</option><option value="probation">Probation</option><option value="suppressed">Suppressed</option></select>
-      <select id="td-filter-streak"><option value="">All Streak</option><option value="active">Active</option><option value="probation">Probation</option><option value="suppressed">Suppressed</option></select>
-      <select id="td-filter-mode"><option value="">All Modes</option><option value="trade">Live</option><option value="shadow">Shadow</option></select>
+      <select id="td-filter-mode"><option value="">All Status</option><option value="proposed">Proposed</option><option value="shadow">Shadow</option></select>
       <span style="margin-left:auto; font-size:12px; color:var(--text2)" id="td-count"></span>
     </div>
 
     <div class="tbl-wrap">
-      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('td-table','TradeDetail')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
+      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('td-table','ProspectDetails')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
       <table class="dt" id="td-table">
         <thead><tr>
-          <th data-sort="opened_at">Date</th>
-          <th data-sort="ticker">Ticker</th>
-          <th class="c" data-sort="direction">Dir</th>
-          <th data-sort="pattern_name">Pattern</th>
-          <th class="r" data-sort="entry_price">Entry</th>
-          <th class="r" data-sort="exit_price">Exit</th>
-          <th class="c" data-sort="exit_reason">Exit Reason</th>
-          <th class="r" data-sort="size_shares">Shares</th>
-          <th class="r" data-sort="net_pnl">Net P&L <span class="sort-arrow active">▼</span></th>
-          <th class="r" data-sort="r_multiple">R</th>
-          <th class="r" data-sort="rr_ratio">R:R</th>
-          <th class="r" data-sort="confidence">Conf</th>
-          <th class="r" data-sort="confluence">Confl</th>
-          <th class="r" data-sort="vix_level">VIX</th>
-          <th class="c" data-sort="regime_label">Regime</th>
-          <th class="r" data-sort="range_position">Range</th>
-          <th class="c" data-sort="prd_direction">PRD</th>
-          <th class="c" data-sort="learning_state">Lrn</th>
-          <th class="c" data-sort="streak_state">Streak</th>
-          <th class="r" data-sort="hold_duration_mins">Hold</th>
-          <th class="r" data-sort="max_favorable_r">MFE</th>
-          <th class="r" data-sort="max_adverse_r">MAE</th>
-          <th class="c" data-sort="effective_mode">Mode</th>
+          <th data-sort="timestamp">Date <span class="sort-arrow">▼</span></th>
+          <th data-sort="ticker">Ticker <span class="sort-arrow">▼</span></th>
+          <th class="c" data-sort="direction">Dir <span class="sort-arrow">▼</span></th>
+          <th data-sort="pattern_name">Pattern <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="confidence">Conf <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="confluence">Confl <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="rr_ratio">R:R <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="edge_scale">Edge Scale <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="entry_price">Entry <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="stop_price">Stop <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="target_price">Target <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="sim_exit_price">Sim Exit <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="sim_pnl_r">Sim R <span class="sort-arrow active">▼</span></th>
+          <th class="c" data-sort="sim_exit_reason">Exit Reason <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="sim_max_favorable_r">MFE <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="sim_max_adverse_r">MAE <span class="sort-arrow">▼</span></th>
+          <th class="c">Gates</th>
+          <th class="c">Failed</th>
+          <th class="c" data-sort="status">Status <span class="sort-arrow">▼</span></th>
         </tr></thead>
         <tbody id="td-body"></tbody>
       </table>
@@ -424,7 +448,7 @@ table.dt .matrix-row-label { font-weight:700; font-size:12px; white-space:nowrap
     <!-- Detail Panel (appears when a trade row is clicked) -->
     <div class="detail-panel" id="td-detail">
       <button class="detail-close" onclick="closeDetail()">Close ✕</button>
-      <h3 style="font-size:16px; margin-bottom:16px;" id="td-detail-title">Trade Detail</h3>
+      <h3 style="font-size:16px; margin-bottom:16px;" id="td-detail-title">Prospect Details</h3>
       <div class="detail-grid" id="td-detail-grid"></div>
     </div>
   </div>
@@ -473,12 +497,12 @@ table.dt .matrix-row-label { font-weight:700; font-size:12px; white-space:nowrap
       <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('lrn-thresh-table','Thresholds')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
       <table class="dt" id="lrn-thresh-table">
         <thead><tr>
-          <th>Time</th>
-          <th class="r">Old Confidence</th>
-          <th class="r">New Confidence</th>
-          <th class="r">Old Confluence</th>
-          <th class="r">New Confluence</th>
-          <th>Reason</th>
+          <th data-sort="time">Time <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="old_confidence">Old Confidence <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="new_confidence">New Confidence <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="old_confluence">Old Confluence <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="new_confluence">New Confluence <span class="sort-arrow">▼</span></th>
+          <th data-sort="reason">Reason <span class="sort-arrow">▼</span></th>
         </tr></thead>
         <tbody id="lrn-thresh-body"></tbody>
       </table>
@@ -486,83 +510,39 @@ table.dt .matrix-row-label { font-weight:700; font-size:12px; white-space:nowrap
   </div>
 
   <!-- ═══════════════════════════════════════════════════
-       VIEW 6: REGIME ROUTER PERFORMANCE
+       VIEW 6: PAIR PARAMETERS
        ═══════════════════════════════════════════════════ -->
-  <div class="view-content" id="view-regime">
-
-    <!-- Summary Cards -->
-    <div class="summary-cards" id="reg-summary"></div>
-
-    <!-- Current Regime Snapshot Table -->
-    <div class="sec-head">
-      <div class="sec-icon" style="background:var(--cyan-bg); color:var(--cyan);">S</div>
-      <h3>Current Regime Snapshot</h3>
-      <span class="sec-count" id="reg-snap-count"></span>
+  <div class="view-content" id="view-pairs">
+    <div class="sec-head" style="margin-bottom:4px">
+      <h3>Pair Parameters — Per-Ticker/Pattern Calibration</h3>
     </div>
+    <div style="font-size:12px; color:var(--text2); margin:4px 0 12px;">Edge Scaler tracks win rate and impact per pair. Scale factors adjust position sizing.</div>
+
+    <div class="filter-bar" style="flex-wrap:wrap; gap:6px;">
+      <span class="filter-label">Filter:</span>
+      <select id="pp-filter-ticker"><option value="">All Tickers</option></select>
+      <select id="pp-filter-pattern"><option value="">All Patterns</option></select>
+    </div>
+
     <div class="tbl-wrap">
-      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('reg-snap-table','RegimeSnapshot')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
-      <table class="dt" id="reg-snap-table">
+      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('pp-table','PairParameters')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
+      <table class="dt" id="pp-table">
         <thead><tr>
-          <th data-sort="ticker">Ticker</th>
-          <th data-sort="sector">Sector</th>
-          <th class="r" data-sort="stock_score">Stock Score</th>
-          <th class="c" data-sort="stock_label">Stock Label</th>
-          <th class="r" data-sort="sector_score">Sector Score</th>
-          <th class="c" data-sort="sector_label">Sector Label</th>
-          <th class="c" data-sort="macro_regime">Macro Regime</th>
-          <th class="r" data-sort="macro_modifier">Macro Mod</th>
-          <th class="r" data-sort="composite_score">Composite</th>
-          <th class="c" data-sort="composite_label">Label</th>
-          <th class="r" data-sort="position_scale">Scale</th>
+          <th data-sort="ticker">Ticker <span class="sort-arrow">▼</span></th>
+          <th data-sort="pattern_name">Pattern <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="win_rate">Win Rate <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="avg_win_r">Avg Win R <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="avg_loss_r">Avg Loss R <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="edge_scale">Edge Scale <span class="sort-arrow active">▼</span></th>
+          <th class="r" data-sort="min_confidence">Conf Floor <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="max_confidence">Conf Cap <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="min_confluence">Confluence Floor <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="min_rr">R:R Floor <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="streak_threshold">Streak Thresh <span class="sort-arrow">▼</span></th>
+          <th class="r" data-sort="sample_size">Sample Size <span class="sort-arrow">▼</span></th>
+          <th data-sort="calibrated_at">Last Calibrated <span class="sort-arrow">▼</span></th>
         </tr></thead>
-        <tbody id="reg-snap-body"></tbody>
-      </table>
-    </div>
-
-    <!-- Performance by Regime Label -->
-    <div class="sec-head" style="margin-top:32px">
-      <div class="sec-icon" style="background:var(--green-bg); color:var(--green);">P</div>
-      <h3>Performance by Regime Label</h3>
-    </div>
-    <div class="chart-container" id="reg-perf-chart-wrap">
-      <div class="chart-title">Net P&L by Composite Regime Label</div>
-      <div id="reg-perf-chart"></div>
-    </div>
-    <div class="tbl-wrap">
-      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('reg-perf-table','RegimePerformance')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
-      <table class="dt" id="reg-perf-table">
-        <thead><tr>
-          <th>Regime Label</th>
-          <th class="r">Trades</th>
-          <th class="r">Wins</th>
-          <th class="r">Losses</th>
-          <th class="r">Win Rate</th>
-          <th class="r">Net P&L</th>
-          <th class="r">Avg R</th>
-          <th class="r">Total R</th>
-        </tr></thead>
-        <tbody id="reg-perf-body"></tbody>
-      </table>
-    </div>
-
-    <!-- Regime Events Timeline -->
-    <div class="sec-head" style="margin-top:32px">
-      <div class="sec-icon" style="background:var(--orange-bg); color:var(--orange);">E</div>
-      <h3>Regime Events</h3>
-      <span class="sec-count" id="reg-events-count"></span>
-    </div>
-    <div class="tbl-wrap">
-      <div class="export-bar"><button class="export-btn" onclick="exportTableToExcel('reg-events-table','RegimeEvents')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Export to Excel</button></div>
-      <table class="dt" id="reg-events-table">
-        <thead><tr>
-          <th>Time</th>
-          <th>Ticker</th>
-          <th>Event</th>
-          <th>From</th>
-          <th>To</th>
-          <th>Detail</th>
-        </tr></thead>
-        <tbody id="reg-events-body"></tbody>
+        <tbody id="pp-body"></tbody>
       </table>
     </div>
   </div>
@@ -578,7 +558,8 @@ table.dt .matrix-row-label { font-weight:700; font-size:12px; white-space:nowrap
 <script src="data/dev-decisions.js"></script>
 <script src="data/dev-traces.js"></script>
 <script src="data/dev-metrics.js"></script>
-<script src="data/dev-regime.js"></script>
+<script src="data/dev-pairs.js"></script>
+<script src="data/dev-prospects.js"></script>
 
 <script>
 // ════════════════════════════════════════════════════════════════
@@ -649,7 +630,8 @@ let RAW_RISK = [];         // All risk ledger entries
 let RAW_DECISIONS = [];    // All learning engine decisions
 let RAW_TRACES = [];       // All signal traces
 let RAW_METRICS = null;    // Observability metrics
-let RAW_REGIME = null;     // Regime router data (snapshots + events)
+let RAW_PAIRS = null;      // Pair parameters (per-ticker/pattern calibration)
+let RAW_PROSPECTS = null;  // Prospect data (TRO-level, universal)
 
 let FILTERED_TRADES = [];  // Trades after time filter
 let FILTERED_RISK = [];
@@ -688,8 +670,12 @@ function loadData() {
   // Metrics
   RAW_METRICS = window.devMetrics || null;
 
-  // Regime router
-  RAW_REGIME = window.devRegime || null;
+  // Pair parameters
+  RAW_PAIRS = window.devPairs || null;
+
+  // Prospects (TRO-level, universal)
+  const prospectsData = window.devProspects || null;
+  RAW_PROSPECTS = prospectsData ? (prospectsData.prospects || []) : [];
 }
 
 // ── Decision-based trade mode lookup ──
@@ -866,6 +852,14 @@ function fmtDuration(mins) {
   if (m < 60) return m.toFixed(0) + 'm';
   if (m < 1440) return (m/60).toFixed(1) + 'h';
   return (m/1440).toFixed(1) + 'd';
+}
+
+function fmtScale(scale) {
+  if (scale == null || scale === '') return '—';
+  const s = typeof scale === 'number' ? scale : parseFloat(scale);
+  if (isNaN(s)) return '—';
+  const color = s > 1.0 ? 'var(--green)' : s < 1.0 ? 'var(--red)' : 'var(--text2)';
+  return `<span style="color:${color}; font-weight:700">${s.toFixed(2)}x</span>`;
 }
 
 function exitChip(reason) {
@@ -1096,19 +1090,13 @@ function svgHistogram(containerId, buckets, { width=700, height=180, color='#3b8
 }
 
 // ════════════════════════════════════════════════════════════════
-//  VIEW 1: WATCHLIST DASHBOARD
+//  VIEW 2: WATCHLIST DASHBOARD
 // ════════════════════════════════════════════════════════════════
 
 function buildWatchlistData() {
   const liveTrades = FILTERED_TRADES.filter(t => t.effective_mode === 'trade' || t.effective_mode === 'live');
   const byTicker = groupBy(liveTrades, t => t.ticker);
   const tickers = Object.keys(byTicker).sort();
-
-  // Build regime snapshot lookup by ticker
-  const regimeLookup = {};
-  if (RAW_REGIME && RAW_REGIME.snapshots) {
-    RAW_REGIME.snapshots.forEach(s => { regimeLookup[s.ticker] = s; });
-  }
 
   return tickers.map(ticker => {
     const trades = byTicker[ticker];
@@ -1117,8 +1105,6 @@ function buildWatchlistData() {
     const patterns = [...new Set(trades.map(t => t.pattern_name))];
     const byPat = groupBy(trades, t => t.pattern_name);
     const bw = bestWorst(byPat, items => sum(items, t => t.r_multiple));
-
-    const regime = regimeLookup[ticker] || {};
 
     return {
       ticker,
@@ -1134,14 +1120,10 @@ function buildWatchlistData() {
       patternCount: patterns.length,
       bestPattern: bw.best || '—',
       worstPattern: bw.worst || '—',
-      macroRegime: regime.macro_regime || '—',
-      sectorLabel: regime.sector_label || '—',
-      sectorScore: regime.sector_score != null ? regime.sector_score : null,
-      stockLabel: regime.stock_label || '—',
-      stockScore: regime.stock_score != null ? regime.stock_score : null,
-      compositeLabel: regime.composite_label || '—',
-      compositeScore: regime.composite_score != null ? regime.composite_score : null,
-      positionScale: regime.position_scale != null ? regime.position_scale : null,
+      sectorLabel: '—',
+      sectorScore: null,
+      stockLabel: '—',
+      stockScore: null,
     };
   });
 }
@@ -1168,30 +1150,9 @@ function renderWatchlist() {
   renderWatchlistTable(data);
 }
 
-function regimeChip(label) {
-  const colors = { favorable: 'var(--green)', mixed: 'var(--orange)', stressed: 'var(--red)' };
-  const bgs = { favorable: 'var(--green-bg)', mixed: 'var(--orange-bg)', stressed: 'var(--red-bg)' };
-  const c = colors[label] || 'var(--text2)';
-  const bg = bgs[label] || 'var(--surface2)';
-  return label && label !== '—'
-    ? `<span style="display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600;background:${bg};color:${c}">${label}</span>`
-    : '—';
-}
-
-function macroChip(regime) {
-  const colors = {
-    expansion: 'var(--green)', recovery: '#22d3ee', goldilocks: '#a78bfa',
-    stagflation: 'var(--red)', contraction: 'var(--red)', slowdown: 'var(--orange)'
-  };
-  const c = colors[regime] || 'var(--text2)';
-  return regime && regime !== '—'
-    ? `<span style="display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600;color:${c}">${regime}</span>`
-    : '—';
-}
-
 function renderWatchlistTable(data) {
   const body = document.getElementById('wl-body');
-  if (!data.length) { body.innerHTML = emptyRow(18, 'No trades in selected time frame'); return; }
+  if (!data.length) { body.innerHTML = emptyRow(13, 'No trades in selected time frame'); return; }
 
   body.innerHTML = data.map(d => `<tr data-ticker="${d.ticker}">
     <td class="ticker-cell">${d.ticker}</td>
@@ -1207,14 +1168,9 @@ function renderWatchlistTable(data) {
     <td class="r">${d.patternCount}</td>
     <td class="pattern-name" title="${d.bestPattern}">${d.bestPattern}</td>
     <td class="pattern-name" title="${d.worstPattern}">${d.worstPattern}</td>
-    <td class="c">${macroChip(d.macroRegime)}</td>
-    <td class="c">${regimeChip(d.sectorLabel)}</td>
-    <td class="c">${regimeChip(d.stockLabel)}</td>
-    <td class="c">${regimeChip(d.compositeLabel)}</td>
-    <td class="r">${d.positionScale != null ? (d.positionScale * 100).toFixed(0) + '%' : '—'}</td>
   </tr>`).join('');
 
-  // Click to drill into Trade Detail filtered by ticker
+  // Click to drill into Prospect Details filtered by ticker
   body.querySelectorAll('tr').forEach(row => {
     row.addEventListener('click', () => {
       resetDetailFilters();
@@ -1226,7 +1182,7 @@ function renderWatchlistTable(data) {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  VIEW 2: PATTERN PERFORMANCE
+//  VIEW 3: PATTERN PERFORMANCE
 // ════════════════════════════════════════════════════════════════
 
 function buildPatternData() {
@@ -1314,14 +1270,28 @@ function renderPatternTable(data) {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  VIEW 3: TRADE PERFORMANCE
+//  VIEW 1: CLIENT PERFORMANCE
 // ════════════════════════════════════════════════════════════════
 
 function renderPerformance() {
+  const selectedClient = document.getElementById('client-select').value;
+
+  // Show message for client_2 (not yet implemented)
+  if (selectedClient === 'client_2') {
+    document.getElementById('perf-container').innerHTML =
+      '<div style="text-align:center; padding:40px; color:var(--text2);">' +
+      '<p style="font-size:14px; margin-bottom:8px;">Client 2 ($10,000 equity, 2% risk/trade)</p>' +
+      '<p style="font-size:12px;">No backtest data available for this client yet.</p>' +
+      '<p style="font-size:11px; margin-top:8px; color:var(--text3);">Run a multi-client backtest to populate this view.</p>' +
+      '</div>';
+    return;
+  }
+
   const trades = FILTERED_TRADES.filter(t => t.effective_mode === 'trade' || t.effective_mode === 'live');
   if (!trades.length) {
     document.getElementById('perf-summary').innerHTML = '<div class="summary-card" style="flex:auto"><div class="card-value" style="color:var(--text2)">No trades in selected time frame</div></div>';
     ['perf-config','equity-chart','perf-by-ticker','perf-by-pattern','perf-by-exit','perf-r-hist','perf-hold-hist'].forEach(id => { document.getElementById(id).innerHTML = ''; });
+    renderClientTrades();
     return;
   }
 
@@ -1522,54 +1492,53 @@ function renderPerformance() {
     }
   });
   svgHistogram('perf-hold-hist', holdBuckets, { width: Math.min(900, window.innerWidth - 100), height: 160, color: '#3b82f6' });
+
+  // Render client trades table
+  renderClientTrades();
+}
+
+// ── Client Trades Table ──
+function renderClientTrades() {
+  const selectedClient = document.getElementById('client-select').value;
+  const body = document.getElementById('client-trades-body');
+
+  if (selectedClient !== 'default') {
+    body.innerHTML = emptyRow(13, 'No trade data available for ' + selectedClient + '. Run a multi-client backtest to populate.');
+    return;
+  }
+
+  const trades = FILTERED_TRADES;
+  if (!trades.length) { body.innerHTML = emptyRow(13, 'No trades in selected time frame'); return; }
+
+  body.innerHTML = trades.map((t, i) => {
+    const effectiveMode = getEffectiveMode(t, DECISION_LOOKUP);
+    const isLive = effectiveMode === 'live' || effectiveMode === 'trade';
+    const statusChip = isLive ? '<span class="chip chip-green">Live</span>' : '<span class="chip chip-red">Rejected</span>';
+    const exitPrice = t.exit_price != null ? '$' + t.exit_price.toFixed(2) : '—';
+    const pnlVal = t.net_pnl != null && t.net_pnl !== '' ? t.net_pnl : '—';
+    const pnlDisplay = pnlVal !== '—' ? (pnlVal >= 0 ? '+$' + pnlVal.toFixed(2) : '$' + pnlVal.toFixed(2)) : '—';
+    const pnlColor = pnlVal !== '—' && pnlVal >= 0 ? 'pnl-pos' : pnlVal !== '—' ? 'pnl-neg' : '';
+    return `<tr>
+      <td class="c">${statusChip}</td>
+      <td class="ticker-cell">${t.ticker}</td>
+      <td class="pattern-name" title="${t.pattern_name}">${t.pattern_name.replace('pat_','')}</td>
+      <td class="c"><span class="${t.direction === 'long' ? 'dir-long' : 'dir-short'}">${t.direction}</span></td>
+      <td class="r">$${t.entry_price.toFixed(2)}</td>
+      <td class="r">${exitPrice}</td>
+      <td class="r">$${t.stop_price.toFixed(2)}</td>
+      <td class="r">$${t.target_price.toFixed(2)}</td>
+      <td class="r">${fmtR(t.r_multiple)}</td>
+      <td class="r ${pnlColor}">${pnlDisplay}</td>
+      <td class="c">${t.exit_reason ? exitChip(t.exit_reason) : '—'}</td>
+      <td class="r">${fmtScale(t.scale_factor)}</td>
+      <td style="font-size:11px; white-space:nowrap">${fmtDateTime(t.opened_at)}</td>
+    </tr>`;
+  }).join('');
 }
 
 // ════════════════════════════════════════════════════════════════
-//  VIEW 4: TRADE DETAIL
+//  VIEW 4: PROSPECT DETAILS
 // ════════════════════════════════════════════════════════════════
-
-function getFilteredDetailTrades() {
-  let trades = [...FILTERED_TRADES];
-  const ticker = document.getElementById('td-filter-ticker').value;
-  const dir = document.getElementById('td-filter-dir').value;
-  const pattern = document.getElementById('td-filter-pattern').value;
-  const exit = document.getElementById('td-filter-exit').value;
-  const pnl = document.getElementById('td-filter-pnl').value;
-  const regime = document.getElementById('td-filter-regime').value;
-  const vix = document.getElementById('td-filter-vix').value;
-  const prd = document.getElementById('td-filter-prd').value;
-  const learning = document.getElementById('td-filter-learning').value;
-
-  if (ticker) trades = trades.filter(t => t.ticker === ticker);
-  if (dir) trades = trades.filter(t => t.direction === dir);
-  if (pattern) trades = trades.filter(t => t.pattern_name === pattern);
-  if (exit) trades = trades.filter(t => t.exit_reason === exit);
-  if (pnl === 'win') trades = trades.filter(t => t.net_pnl >= 0);
-  if (pnl === 'loss') trades = trades.filter(t => t.net_pnl < 0);
-  if (regime) trades = trades.filter(t => (t.regime_label || '').toLowerCase() === regime.toLowerCase());
-  if (vix) trades = trades.filter(t => (t.vix_regime || '').toLowerCase() === vix.toLowerCase());
-  if (prd) {
-    trades = trades.filter(t => {
-      const d = parseFloat(t.prd_direction);
-      if (isNaN(d)) return false;
-      if (prd === 'bullish') return d > 0.1;
-      if (prd === 'bearish') return d < -0.1;
-      return d >= -0.1 && d <= 0.1; // neutral
-    });
-  }
-  if (learning) trades = trades.filter(t => (t.learning_state || '').toLowerCase() === learning);
-  const streak = document.getElementById('td-filter-streak').value;
-  if (streak) trades = trades.filter(t => (t.streak_state || '').toLowerCase() === streak);
-  const mode = document.getElementById('td-filter-mode').value;
-  if (mode) {
-    trades = trades.filter(t => {
-      const em = getEffectiveMode(t, DECISION_LOOKUP);
-      return em === mode;
-    });
-  }
-
-  return trades;
-}
 
 function resetDetailFilters() {
   document.getElementById('td-filter-ticker').value = '';
@@ -1577,94 +1546,96 @@ function resetDetailFilters() {
   document.getElementById('td-filter-pattern').value = '';
   document.getElementById('td-filter-exit').value = '';
   document.getElementById('td-filter-pnl').value = '';
-  document.getElementById('td-filter-regime').value = '';
-  document.getElementById('td-filter-vix').value = '';
-  document.getElementById('td-filter-prd').value = '';
-  document.getElementById('td-filter-learning').value = '';
-  document.getElementById('td-filter-streak').value = '';
   document.getElementById('td-filter-mode').value = '';
+}
+
+function getFilteredProspects() {
+  if (!RAW_PROSPECTS || !RAW_PROSPECTS.length) return [];
+  let prospects = [...RAW_PROSPECTS];
+  const ticker = document.getElementById('td-filter-ticker').value;
+  const dir = document.getElementById('td-filter-dir').value;
+  const pattern = document.getElementById('td-filter-pattern').value;
+  const exit = document.getElementById('td-filter-exit').value;
+  const pnl = document.getElementById('td-filter-pnl').value;
+  const mode = document.getElementById('td-filter-mode').value;
+
+  if (ticker) prospects = prospects.filter(p => p.ticker === ticker);
+  if (dir) prospects = prospects.filter(p => p.direction === dir);
+  if (pattern) prospects = prospects.filter(p => p.pattern_name === pattern);
+  if (exit) prospects = prospects.filter(p => p.sim_exit_reason === exit);
+  if (pnl === 'win') prospects = prospects.filter(p => p.sim_won === true);
+  if (pnl === 'loss') prospects = prospects.filter(p => p.sim_won === false);
+  if (mode === 'proposed') prospects = prospects.filter(p => p.status === 'proposed');
+  if (mode === 'shadow') prospects = prospects.filter(p => p.status === 'shadow');
+
+  return prospects;
 }
 
 function renderTradeDetail() {
   populateDetailFilters();
-  const trades = getFilteredDetailTrades();
-  // Annotate trades with effective mode for sorting
-  trades.forEach(t => { t.effective_mode = getEffectiveMode(t, DECISION_LOOKUP); });
-  document.getElementById('td-count').textContent = `${trades.length} trades`;
+  if (!RAW_PROSPECTS || !RAW_PROSPECTS.length) {
+    const body = document.getElementById('td-body');
+    body.innerHTML = emptyRow(19, 'No prospect data available. Run a backtest to populate.');
+    return;
+  }
+
+  const prospects = getFilteredProspects();
+  document.getElementById('td-count').textContent = `${prospects.length} prospects`;
 
   const body = document.getElementById('td-body');
-  if (!trades.length) { body.innerHTML = emptyRow(22, 'No trades match filters'); return; }
+  if (!prospects.length) { body.innerHTML = emptyRow(19, 'No prospects match filters'); return; }
 
-  body.innerHTML = trades.map((t, i) => {
-    const pnlCls = t.net_pnl >= 0 ? 'pnl-pos' : 'pnl-neg';
-    const effectiveMode = getEffectiveMode(t, DECISION_LOOKUP);
-    const mfeVal = t.max_favorable_r != null && t.max_favorable_r !== '' ? parseFloat(t.max_favorable_r) : null;
-    const maeVal = t.max_adverse_r != null && t.max_adverse_r !== '' ? parseFloat(t.max_adverse_r) : null;
-    const vixVal = t.vix_level != null && t.vix_level !== '' ? parseFloat(t.vix_level) : null;
-    const rpVal = t.range_position != null && t.range_position !== '' ? parseFloat(t.range_position) : null;
-    const prdVal = t.prd_direction != null && t.prd_direction !== '' ? parseFloat(t.prd_direction) : null;
+  body.innerHTML = prospects.map((p, i) => {
+    const statusChip = p.status === 'proposed'
+      ? `<span class="chip chip-green">PROPOSED</span>`
+      : `<span class="chip chip-red">SHADOW</span>`;
+    const pnlCls = p.sim_pnl_r >= 0 ? 'pnl-pos' : 'pnl-neg';
+    const mfeVal = p.sim_max_favorable_r != null ? parseFloat(p.sim_max_favorable_r) : null;
+    const maeVal = p.sim_max_adverse_r != null ? parseFloat(p.sim_max_adverse_r) : null;
+    const prdVal = p.prd_direction != null ? parseFloat(p.prd_direction) : null;
     const prdLabel = prdVal != null ? (prdVal > 0.1 ? 'Bull' : prdVal < -0.1 ? 'Bear' : 'Neut') : '—';
     const prdColor = prdVal != null ? (prdVal > 0.1 ? 'var(--green)' : prdVal < -0.1 ? 'var(--red)' : 'var(--text2)') : '';
-    const regimeLabel = t.regime_label || '—';
-    const lrnState = t.learning_state || '—';
-    const lrnColor = lrnState === 'active' ? 'var(--green)' : lrnState === 'probation' ? 'var(--orange, orange)' : lrnState === 'suppressed' ? 'var(--red)' : 'var(--text2)';
-    const streakState = t.streak_state || '—';
-    const streakColor = streakState === 'active' ? 'var(--green)' : streakState === 'probation' ? 'var(--orange, orange)' : streakState === 'suppressed' ? 'var(--red)' : 'var(--text2)';
-    return `<tr data-idx="${i}" data-trade-id="${t.trade_id}">
-      <td style="font-size:11px; white-space:nowrap">${fmtDateTime(t.opened_at)}</td>
-      <td class="ticker-cell">${t.ticker}</td>
-      <td class="c"><span class="${t.direction === 'long' ? 'dir-long' : 'dir-short'}">${t.direction}</span></td>
-      <td class="pattern-name" title="${t.pattern_name}">${t.pattern_name.replace('pat_','')}</td>
-      <td class="r">$${t.entry_price.toFixed(2)}</td>
-      <td class="r">$${t.exit_price.toFixed(2)}</td>
-      <td class="c">${exitChip(t.exit_reason)}</td>
-      <td class="r">${t.size_shares}</td>
-      <td class="r ${pnlCls}">${t.net_pnl >= 0 ? '+' : ''}$${t.net_pnl.toFixed(2)}</td>
-      <td class="r">${fmtR(t.r_multiple)}</td>
-      <td class="r">${t.rr_ratio.toFixed(1)}</td>
-      <td class="r">${(t.confidence * 100).toFixed(0)}%</td>
-      <td class="r">${(t.confluence * 100).toFixed(0)}%</td>
-      <td class="r">${vixVal != null ? vixVal.toFixed(1) : '—'}</td>
-      <td class="c" style="font-size:11px">${regimeLabel}</td>
-      <td class="r">${rpVal != null ? (rpVal * 100).toFixed(0) + '%' : '—'}</td>
-      <td class="c" style="color:${prdColor}">${prdLabel}</td>
-      <td class="c" style="color:${lrnColor}; font-size:11px">${lrnState}</td>
-      <td class="c" style="color:${streakColor}; font-size:11px">${streakState}</td>
-      <td class="r">${fmtDuration(t.hold_duration_mins)}</td>
-      <td class="r" style="color:var(--green)">${mfeVal != null ? '+' + mfeVal.toFixed(2) + 'R' : '—'}</td>
-      <td class="r" style="color:var(--red)">${maeVal != null ? maeVal.toFixed(2) + 'R' : '—'}</td>
-      <td class="c">${modeChip(effectiveMode)}</td>
+    const edgeScale = p.edge_scale != null ? parseFloat(p.edge_scale) : 1.0;
+    const edgeColor = edgeScale > 1.0 ? 'var(--green)' : edgeScale < 1.0 ? 'var(--red)' : 'var(--text2)';
+    const gatesPassed = p.gates_passed ? p.gates_passed.length : 0;
+    const gatesFailed = p.gates_failed ? p.gates_failed.length : 0;
+
+    return `<tr data-idx="${i}" data-signal-id="${p.signal_id}">
+      <td style="font-size:11px; white-space:nowrap">${p.timestamp.slice(0,10)}</td>
+      <td class="ticker-cell">${p.ticker}</td>
+      <td class="c"><span class="${p.direction === 'long' ? 'dir-long' : 'dir-short'}">${p.direction}</span></td>
+      <td class="pattern-name" title="${p.pattern_name}">${p.pattern_name.replace('pat_','')}</td>
+      <td class="r">${(p.confidence * 100).toFixed(0)}%</td>
+      <td class="r">${(p.confluence * 100).toFixed(0)}%</td>
+      <td class="r">${p.rr_ratio.toFixed(1)}</td>
+      <td class="r" style="color:${edgeColor}">${edgeScale.toFixed(2)}</td>
+      <td class="r">$${p.entry_price.toFixed(2)}</td>
+      <td class="r">$${p.stop_price.toFixed(2)}</td>
+      <td class="r">$${p.target_price.toFixed(2)}</td>
+      <td class="r">${p.sim_exit_reason !== 'pending' ? '$' + p.sim_exit_price.toFixed(2) : '—'}</td>
+      <td class="r ${pnlCls}">${p.sim_pnl_r >= 0 ? '+' : ''}${p.sim_pnl_r.toFixed(2)}R</td>
+      <td class="c">${exitChip(p.sim_exit_reason)}</td>
+      <td class="r" style="color:${mfeVal > 0 ? 'var(--green)' : 'var(--text2)'}">${mfeVal != null ? '+' + mfeVal.toFixed(2) + 'R' : '—'}</td>
+      <td class="r" style="color:${maeVal < 0 ? 'var(--red)' : 'var(--text2)'}">${maeVal != null ? maeVal.toFixed(2) + 'R' : '—'}</td>
+      <td class="c">${gatesPassed}/${gatesPassed + gatesFailed}</td>
+      <td class="c">${gatesFailed > 0 ? `<span title="${p.gates_failed.join(', ')}">${gatesFailed}</span>` : '—'}</td>
+      <td class="c">${statusChip}</td>
     </tr>`;
   }).join('');
-
-  // Click to show detail panel
-  body.querySelectorAll('tr').forEach(row => {
-    row.addEventListener('click', () => {
-      const trade = trades[parseInt(row.dataset.idx)];
-      showTradeDetailPanel(trade);
-    });
-  });
 }
 
 function populateDetailFilters() {
-  const tickers = [...new Set(FILTERED_TRADES.map(t => t.ticker))].sort();
-  const patterns = [...new Set(FILTERED_TRADES.map(t => t.pattern_name))].sort();
-  const regimes = [...new Set(FILTERED_TRADES.map(t => t.regime_label).filter(Boolean))].sort();
-  const vixRegimes = [...new Set(FILTERED_TRADES.map(t => t.vix_regime).filter(Boolean))].sort();
+  const sourceData = RAW_PROSPECTS || FILTERED_TRADES;
+  const tickers = [...new Set(sourceData.map(t => t.ticker))].sort();
+  const patterns = [...new Set(sourceData.map(t => t.pattern_name))].sort();
 
   const tickerSel = document.getElementById('td-filter-ticker');
   const patSel = document.getElementById('td-filter-pattern');
-  const regimeSel = document.getElementById('td-filter-regime');
-  const vixSel = document.getElementById('td-filter-vix');
   const currTicker = tickerSel.value;
   const currPat = patSel.value;
-  const currRegime = regimeSel.value;
-  const currVix = vixSel.value;
 
   tickerSel.innerHTML = '<option value="">All Tickers</option>' + tickers.map(t => `<option value="${t}" ${t===currTicker?'selected':''}>${t}</option>`).join('');
   patSel.innerHTML = '<option value="">All Patterns</option>' + patterns.map(p => `<option value="${p}" ${p===currPat?'selected':''}>${p.replace('pat_','')}</option>`).join('');
-  regimeSel.innerHTML = '<option value="">All Regimes</option>' + regimes.map(r => `<option value="${r}" ${r===currRegime?'selected':''}>${r}</option>`).join('');
-  vixSel.innerHTML = '<option value="">All VIX</option>' + vixRegimes.map(v => `<option value="${v}" ${v===currVix?'selected':''}>${v}</option>`).join('');
 }
 
 function showTradeDetailPanel(trade) {
@@ -1694,7 +1665,7 @@ function showTradeDetailPanel(trade) {
     ${detailRow('Direction', trade.direction.toUpperCase())}
     ${detailRow('Horizon', trade.horizon)}
     ${detailRow('Pattern', trade.pattern_name)}
-    ${detailRow('Mode', getEffectiveMode(trade, DECISION_LOOKUP) === 'trade' ? 'Live' : 'Shadow')}
+    ${detailRow('Mode', (getEffectiveMode(trade, DECISION_LOOKUP) === 'live' || getEffectiveMode(trade, DECISION_LOOKUP) === 'trade') ? 'Live' : 'Shadow')}
   </div>`;
 
   // Entry/Exit
@@ -1753,9 +1724,6 @@ function showTradeDetailPanel(trade) {
     ${detailRow('VIX Regime', trade.vix_regime || '—')}
     ${detailRow('VIX Position Scale', trade.vix_position_scale ? (parseFloat(trade.vix_position_scale) * 100).toFixed(0) + '%' : '—')}
     ${detailRow('ATR Range Position', !isNaN(rpVal) ? (rpVal * 100).toFixed(0) + '%' : '—')}
-    ${detailRow('Regime Label', trade.regime_label || '—')}
-    ${detailRow('Regime Score', trade.regime_score ? parseFloat(trade.regime_score).toFixed(2) : '—')}
-    ${detailRow('Regime Scale', trade.regime_scale ? (parseFloat(trade.regime_scale) * 100).toFixed(0) + '%' : '—')}
   </div>`;
 
   // Learning Engine State (from trade record)
@@ -2115,128 +2083,90 @@ function showLearningCellDetail(c) {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  VIEW 6: REGIME ROUTER PERFORMANCE
+//  VIEW 6: PAIR PARAMETERS
 // ════════════════════════════════════════════════════════════════
 
-function renderRegime() {
-  const snapshots = RAW_REGIME ? (RAW_REGIME.snapshots || []) : [];
-  const events = RAW_REGIME ? (RAW_REGIME.log || RAW_REGIME.events || []) : [];
-  const trades = FILTERED_TRADES.filter(t => t.effective_mode === 'trade' || t.effective_mode === 'live');
+let ppCurrentSort = { field: 'edge_scale', ascending: false };
 
-  // ── Build regime lookup for trades ──
-  const regimeLookup = {};
-  snapshots.forEach(s => { regimeLookup[s.ticker] = s; });
+function renderPairParameters() {
+  const pairs = RAW_PAIRS ? (RAW_PAIRS.pairs || []) : [];
+  if (!pairs.length) {
+    document.getElementById('pp-body').innerHTML = emptyRow(13, 'No pair parameter data available. Run a backtest to populate.');
+    populateTickerFilter('pp-filter-ticker', pairs, 'ticker');
+    populatePatternFilter('pp-filter-pattern', pairs, 'pattern_name');
+    return;
+  }
 
-  // ── Summary Cards ──
-  const favorable = snapshots.filter(s => s.composite_label === 'favorable').length;
-  const mixed = snapshots.filter(s => s.composite_label === 'mixed').length;
-  const stressed = snapshots.filter(s => s.composite_label === 'stressed').length;
-  const macroRegime = snapshots.length > 0 ? snapshots[0].macro_regime : '—';
-  const avgScale = snapshots.length ? (snapshots.reduce((s, r) => s + (r.position_scale || 0), 0) / snapshots.length) : 0;
+  // Populate ticker and pattern filters
+  populateTickerFilter('pp-filter-ticker', pairs, 'ticker');
+  populatePatternFilter('pp-filter-pattern', pairs, 'pattern_name');
 
-  // Performance by regime: tag each trade with its regime label
-  const tradesByRegime = { favorable: [], mixed: [], stressed: [], unknown: [] };
-  trades.forEach(t => {
-    const r = regimeLookup[t.ticker];
-    const label = r ? r.composite_label : 'unknown';
-    (tradesByRegime[label] || tradesByRegime.unknown).push(t);
+  // Get filter values
+  const tickerFilter = document.getElementById('pp-filter-ticker').value;
+  const patternFilter = document.getElementById('pp-filter-pattern').value;
+  let filtered = pairs;
+  if (tickerFilter) {
+    filtered = filtered.filter(p => p.ticker === tickerFilter);
+  }
+  if (patternFilter) {
+    filtered = filtered.filter(p => (p.pattern_name || p.pattern_id || '') === patternFilter);
+  }
+
+  // Sort filtered data
+  filtered.sort((a, b) => {
+    let aVal = a[ppCurrentSort.field];
+    let bVal = b[ppCurrentSort.field];
+    if (aVal == null) aVal = '';
+    if (bVal == null) bVal = '';
+    const cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+    return ppCurrentSort.ascending ? cmp : -cmp;
   });
 
-  const regimeNetPnl = {};
-  Object.entries(tradesByRegime).forEach(([label, trs]) => {
-    regimeNetPnl[label] = sum(trs, t => t.net_pnl);
-  });
-
-  document.getElementById('reg-summary').innerHTML = `
-    <div class="summary-card"><div class="card-value">${snapshots.length}</div><div class="card-label">Tickers Tracked</div></div>
-    <div class="summary-card"><div class="card-value" style="color:var(--text1)">${macroRegime}</div><div class="card-label">Macro Regime</div></div>
-    <div class="summary-card"><div class="card-value" style="color:var(--green)">${favorable}</div><div class="card-label">Favorable</div></div>
-    <div class="summary-card"><div class="card-value" style="color:var(--orange)">${mixed}</div><div class="card-label">Mixed</div></div>
-    <div class="summary-card"><div class="card-value" style="color:var(--red)">${stressed}</div><div class="card-label">Stressed</div></div>
-    <div class="summary-card"><div class="card-value">${(avgScale * 100).toFixed(0)}%</div><div class="card-label">Avg Position Scale</div></div>
-    <div class="summary-card"><div class="card-value">${events.length}</div><div class="card-label">Regime Events</div></div>
-  `;
-
-  // ── Snapshot Table ──
-  document.getElementById('reg-snap-count').textContent = snapshots.length + ' tickers';
-  const snapBody = document.getElementById('reg-snap-body');
-  if (!snapshots.length) {
-    snapBody.innerHTML = emptyRow(11, 'No regime data available');
+  // Render table
+  const body = document.getElementById('pp-body');
+  if (!filtered.length) {
+    body.innerHTML = emptyRow(13, 'No pairs match filter');
   } else {
-    snapBody.innerHTML = snapshots.map(s => {
-      const scoreColor = v => v >= 0.1 ? 'var(--green)' : v <= -0.1 ? 'var(--red)' : 'var(--text2)';
+    body.innerHTML = filtered.map(p => {
+      const winRateColor = p.win_rate >= 0.55 ? 'var(--green)' : p.win_rate >= 0.45 ? 'var(--yellow)' : 'var(--red)';
+      const edgeColor = p.edge_scale >= 1.1 ? 'var(--green)' : p.edge_scale >= 0.9 ? 'var(--yellow)' : 'var(--red)';
       return `<tr>
-        <td class="ticker-cell">${s.ticker}</td>
-        <td style="font-size:12px; color:var(--text2)">${s.sector || '—'}</td>
-        <td class="r" style="color:${scoreColor(s.stock_score)}">${s.stock_score != null ? s.stock_score.toFixed(3) : '—'}</td>
-        <td class="c">${regimeChip(s.stock_label)}</td>
-        <td class="r" style="color:${scoreColor(s.sector_score)}">${s.sector_score != null ? s.sector_score.toFixed(3) : '—'}</td>
-        <td class="c">${regimeChip(s.sector_label)}</td>
-        <td class="c">${macroChip(s.macro_regime)}</td>
-        <td class="r" style="color:${scoreColor(s.macro_modifier)}">${s.macro_modifier != null ? s.macro_modifier.toFixed(2) : '—'}</td>
-        <td class="r" style="color:${scoreColor(s.composite_score)};font-weight:700">${s.composite_score != null ? s.composite_score.toFixed(3) : '—'}</td>
-        <td class="c">${regimeChip(s.composite_label)}</td>
-        <td class="r" style="font-weight:700">${s.position_scale != null ? (s.position_scale * 100).toFixed(0) + '%' : '—'}</td>
+        <td class="ticker-cell">${p.ticker}</td>
+        <td style="font-size:12px; color:var(--text2)">${p.pattern_name || p.pattern_id || '—'}</td>
+        <td class="r" style="color:${winRateColor}">${fmtPct(p.win_rate)}</td>
+        <td class="r">${p.avg_win_r != null ? p.avg_win_r.toFixed(2) : '—'}</td>
+        <td class="r">${p.avg_loss_r != null ? p.avg_loss_r.toFixed(2) : '—'}</td>
+        <td class="r" style="color:${edgeColor}; font-weight:700">${p.edge_scale != null ? p.edge_scale.toFixed(3) : '—'}</td>
+        <td class="r">${p.min_confidence != null ? p.min_confidence.toFixed(2) : '—'}</td>
+        <td class="r">${p.max_confidence != null ? p.max_confidence.toFixed(2) : '—'}</td>
+        <td class="r">${p.min_confluence != null ? p.min_confluence.toFixed(2) : '—'}</td>
+        <td class="r">${p.min_rr != null ? p.min_rr.toFixed(2) : '—'}</td>
+        <td class="r">${p.streak_threshold != null ? p.streak_threshold.toFixed(2) : '—'}</td>
+        <td class="r">${p.sample_size || '—'}</td>
+        <td style="font-size:11px; color:var(--text2)">${p.calibrated_at ? p.calibrated_at.slice(0, 10) : '—'}</td>
       </tr>`;
     }).join('');
   }
+}
 
-  // ── Performance by Regime Label ──
-  const regimeLabels = ['favorable', 'mixed', 'stressed', 'unknown'];
-  const perfData = regimeLabels.map(label => {
-    const trs = tradesByRegime[label] || [];
-    const wins = trs.filter(t => t.net_pnl >= 0);
-    return {
-      label,
-      trades: trs.length,
-      wins: wins.length,
-      losses: trs.length - wins.length,
-      winRate: trs.length ? wins.length / trs.length : 0,
-      netPnl: sum(trs, t => t.net_pnl),
-      avgR: avg(trs, t => t.r_multiple),
-      totalR: sum(trs, t => t.r_multiple),
-    };
-  }).filter(d => d.trades > 0);
+function populateTickerFilter(selectId, pairs, field) {
+  const select = document.getElementById(selectId);
+  const current = select.value;
+  const tickers = [...new Set(pairs.map(p => p[field]))].sort();
+  const options = '<option value="">All Tickers</option>' + tickers.map(t => `<option value="${t}">${t}</option>`).join('');
+  select.innerHTML = options;
+  select.value = current;
+  select.onchange = () => renderPairParameters();
+}
 
-  // Bar chart
-  const chartData = perfData.map(d => ({
-    label: d.label.charAt(0).toUpperCase() + d.label.slice(1),
-    value: d.netPnl
-  }));
-  svgBarChart('reg-perf-chart', chartData, { width: Math.min(600, window.innerWidth - 100), barHeight: 28 });
-
-  // Perf table
-  const perfBody = document.getElementById('reg-perf-body');
-  if (!perfData.length) {
-    perfBody.innerHTML = emptyRow(8, 'No trades to analyze by regime');
-  } else {
-    perfBody.innerHTML = perfData.map(d => `<tr>
-      <td>${regimeChip(d.label)}</td>
-      <td class="r">${d.trades}</td>
-      <td class="r" style="color:var(--green)">${d.wins}</td>
-      <td class="r" style="color:var(--red)">${d.losses}</td>
-      <td class="r">${fmtPct(d.winRate)}</td>
-      <td class="r">${fmtPnl(d.netPnl)}</td>
-      <td class="r">${fmtR(d.avgR)}</td>
-      <td class="r">${fmtR(d.totalR)}</td>
-    </tr>`).join('');
-  }
-
-  // ── Events Timeline ──
-  document.getElementById('reg-events-count').textContent = events.length + ' events';
-  const evBody = document.getElementById('reg-events-body');
-  if (!events.length) {
-    evBody.innerHTML = emptyRow(6, 'No regime events recorded');
-  } else {
-    evBody.innerHTML = events.map(e => `<tr>
-      <td style="font-size:11px; white-space:nowrap">${fmtTime(e.timestamp)}</td>
-      <td class="ticker-cell">${e.ticker || '—'}</td>
-      <td style="font-size:12px">${(e.event_type || '').replace(/_/g, ' ')}</td>
-      <td class="c">${regimeChip(e.from_label || e.old_label || '')}</td>
-      <td class="c">${regimeChip(e.to_label || e.new_label || '')}</td>
-      <td style="font-size:11px; color:var(--text2)">${e.detail || e.reason || ''}</td>
-    </tr>`).join('');
-  }
+function populatePatternFilter(selectId, pairs, field) {
+  const select = document.getElementById(selectId);
+  const current = select.value;
+  const patterns = [...new Set(pairs.map(p => p[field] || p.pattern_id || '').filter(p => p))].sort();
+  const options = '<option value="">All Patterns</option>' + patterns.map(p => `<option value="${p}">${p}</option>`).join('');
+  select.innerHTML = options;
+  select.value = current;
+  select.onchange = () => renderPairParameters();
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -2266,7 +2196,7 @@ function renderCurrentView(view) {
     case 'performance': renderPerformance(); break;
     case 'detail': renderTradeDetail(); break;
     case 'learning': renderLearning(); break;
-    case 'regime': renderRegime(); break;
+    case 'pairs': renderPairParameters(); break;
   }
 }
 
@@ -2328,8 +2258,13 @@ document.getElementById('tf-apply').addEventListener('click', () => {
   }
 });
 
+// Client selector
+document.getElementById('client-select').addEventListener('change', () => {
+  if (getCurrentView() === 'performance') renderPerformance();
+});
+
 // Trade detail filters
-['td-filter-ticker','td-filter-dir','td-filter-pattern','td-filter-exit','td-filter-pnl','td-filter-regime','td-filter-vix','td-filter-prd','td-filter-learning','td-filter-streak','td-filter-mode'].forEach(id => {
+['td-filter-ticker','td-filter-dir','td-filter-pattern','td-filter-exit','td-filter-pnl','td-filter-mode'].forEach(id => {
   document.getElementById(id).addEventListener('change', () => {
     if (getCurrentView() === 'detail') renderTradeDetail();
   });
@@ -2348,12 +2283,11 @@ document.querySelectorAll('table.dt th[data-sort]').forEach(th => {
     } else if (tableId === 'pat-table') {
       const data = buildPatternData();
       sortTable(tableId, data, key, renderPatternTable);
-    } else if (tableId === 'td-table') {
-      // For trade detail, sort and re-render
-      const trades = getFilteredDetailTrades();
-      sortTable(tableId, trades, key, (sorted) => {
-        // Re-use same render logic with sorted data
-        FILTERED_TRADES.sort((a, b) => {
+    } else if (tableId === 'client-trades-table') {
+      sortTable(tableId, FILTERED_TRADES, key, renderClientTrades);
+    } else if (tableId === 'pp-table') {
+      if (RAW_PAIRS && RAW_PAIRS.length) {
+        RAW_PAIRS.sort((a, b) => {
           const st = SORT_STATES[tableId];
           let va = a[st.key], vb = b[st.key];
           if (typeof va === 'string') { va = va.toLowerCase(); vb = (vb||'').toLowerCase(); }
@@ -2361,6 +2295,36 @@ document.querySelectorAll('table.dt th[data-sort]').forEach(th => {
           if (va > vb) return st.dir === 'asc' ? 1 : -1;
           return 0;
         });
+      }
+      renderPairParameters();
+    } else if (tableId === 'lrn-thresh-table') {
+      if (RAW_DECISIONS && RAW_DECISIONS.length) {
+        const thresholdEvents = RAW_DECISIONS.filter(d => d.event_type === 'threshold_update');
+        thresholdEvents.sort((a, b) => {
+          const st = SORT_STATES[tableId];
+          let va = a[st.key], vb = b[st.key];
+          if (typeof va === 'string') { va = va.toLowerCase(); vb = (vb||'').toLowerCase(); }
+          if (va < vb) return st.dir === 'asc' ? -1 : 1;
+          if (va > vb) return st.dir === 'asc' ? 1 : -1;
+          return 0;
+        });
+      }
+      renderThresholdHistory();
+    } else if (tableId === 'td-table') {
+      // For prospect details, sort and re-render
+      const trades = getFilteredProspects();
+      sortTable(tableId, trades, key, (sorted) => {
+        // Sort prospects (not FILTERED_TRADES) and re-render
+        if (RAW_PROSPECTS && RAW_PROSPECTS.length) {
+          RAW_PROSPECTS.sort((a, b) => {
+            const st = SORT_STATES[tableId];
+            let va = a[st.key], vb = b[st.key];
+            if (typeof va === 'string') { va = va.toLowerCase(); vb = (vb||'').toLowerCase(); }
+            if (va < vb) return st.dir === 'asc' ? -1 : 1;
+            if (va > vb) return st.dir === 'asc' ? 1 : -1;
+            return 0;
+          });
+        }
         renderTradeDetail();
       });
     }
