@@ -938,7 +938,7 @@ function sortTable(tableId, data, key, renderFn) {
 }
 
 // ── SVG Bar Chart ──
-function svgBarChart(containerId, items, { width=700, barHeight=22, gap=4, maxLabelWidth=160 }={}) {
+function svgBarChart(containerId, items, { width=700, barHeight=22, gap=4, maxLabelWidth=280 }={}) {
   if (!items.length) { document.getElementById(containerId).innerHTML = '<div style="color:var(--text2);padding:20px;text-align:center">No data</div>'; return; }
   const maxVal = Math.max(...items.map(i => Math.abs(i.value)), 1);
   const chartW = width - maxLabelWidth - 80;
@@ -957,7 +957,7 @@ function svgBarChart(containerId, items, { width=700, barHeight=22, gap=4, maxLa
     const labelColor = '#7a8099';
 
     // Label
-    svg += `<text x="${maxLabelWidth - 8}" y="${y + barHeight * 0.7}" fill="${labelColor}" font-size="11" text-anchor="end" font-weight="600">${item.label.length > 20 ? item.label.slice(0,18) + '…' : item.label}</text>`;
+    svg += `<text x="${maxLabelWidth - 8}" y="${y + barHeight * 0.7}" fill="${labelColor}" font-size="11" text-anchor="end" font-weight="600">${item.label.length > 40 ? item.label.slice(0,38) + '…' : item.label}</text>`;
     // Bar
     svg += `<rect x="${barX}" y="${y}" width="${Math.max(barW, 1)}" height="${barHeight}" rx="4" fill="${color}" opacity="0.7"/>`;
     // Value
@@ -1234,7 +1234,7 @@ function renderPatterns() {
   // Bar chart
   const chartData = data.map(d => ({ label: d.pattern.replace('pat_',''), value: d.netPnl }))
     .sort((a, b) => b.value - a.value);
-  svgBarChart('pat-bar-chart', chartData, { width: Math.min(900, window.innerWidth - 100) });
+  svgBarChart('pat-bar-chart', chartData, { width: Math.min(1100, window.innerWidth - 100) });
 
   renderPatternTable(data);
 }
